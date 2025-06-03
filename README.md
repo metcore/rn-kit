@@ -12,7 +12,7 @@ npm install @herca/ui-kit
 
 
 ```js
-import { multiply } from '@herca/ui-kit';
+import { Button } from '@herca/ui-kit';
 
 // ...
 

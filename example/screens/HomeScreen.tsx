@@ -1,0 +1,190 @@
+import React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Typography, Button, Container } from '@herca/ui-kit';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  Home: undefined;
+  Button: undefined;
+  Typography: undefined;
+  Input: undefined;
+  Card: undefined;
+  Modal: undefined;
+  BottomSheet: undefined;
+  Checkbox: undefined;
+  Radio: undefined;
+  Switch: undefined;
+  List: undefined;
+};
+
+type HomeScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+
+const HomeScreen: React.FC = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Container style={{ gap: 2 }}>
+        <Typography variant="h2" weight="bold">
+          All Components
+        </Typography>
+
+        <Typography variant="h3" weight="bold">
+          Layouts
+        </Typography>
+        <Button
+          color="success"
+          title="Typography"
+          onPress={() => navigation.navigate('Typography')}
+          block
+        />
+        <Button
+          color="success"
+          title="Container"
+          onPress={() => navigation.navigate('Container')}
+          block
+        />
+        <Button
+          color="success"
+          title="Card"
+          onPress={() => navigation.navigate('Card')}
+          block
+        />
+        <Button
+          color="success"
+          title="List"
+          onPress={() => navigation.navigate('List')}
+          block
+        />
+        <Button
+          color="success"
+          title="Footer"
+          onPress={() => navigation.navigate('Footer')}
+          block
+        />
+        <Button
+          color="success"
+          title="Avatar"
+          onPress={() => navigation.navigate('Avatar')}
+          block
+        />
+        <Button
+          color="success"
+          title="Badge"
+          onPress={() => navigation.navigate('Badge')}
+          block
+        />
+        <Button
+          color="success"
+          title="Alert"
+          onPress={() => navigation.navigate('Alert')}
+          block
+        />
+
+        <Typography variant="h3" weight="bold">
+          Form Requirment
+        </Typography>
+        <Button
+          color="success"
+          title="Button"
+          onPress={() => navigation.navigate('Button')}
+          block
+        />
+        <Button
+          color="success"
+          title="Input"
+          onPress={() => navigation.navigate('Input')}
+          block
+        />
+        <Button
+          color="success"
+          title="Input Password"
+          onPress={() => navigation.navigate('InputPassword')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Select"
+          onPress={() => navigation.navigate('Select')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Checkbox"
+          onPress={() => navigation.navigate('CheckBox')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Radio Button"
+          onPress={() => navigation.navigate('Radio')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Switch"
+          onPress={() => navigation.navigate('Switch')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Drawing"
+          onPress={() => navigation.navigate('Drawing')}
+          block
+        />
+
+        <Typography variant="h3" weight="bold">
+          Tool
+        </Typography>
+        <Button
+          color="success"
+          title="List"
+          onPress={() => navigation.navigate('List')}
+          block
+        />
+        <Button
+          color="success"
+          title="Bottom Sheet"
+          onPress={() => navigation.navigate('BottomSheet')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Modal"
+          onPress={() => navigation.navigate('Modal')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Accordion"
+          onPress={() => navigation.navigate('Modal')}
+          block
+        />
+        <Typography variant="h3" weight="bold" style={styles.title}>
+          Example Screen
+        </Typography>
+        <Button
+          color="success"
+          title="Example"
+          onPress={() => navigation.navigate('Example')}
+          block
+        />
+      </Container>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  title: {
+    marginBottom: 24,
+  },
+  button: {
+    marginBottom: 12,
+  },
+});
+
+export default HomeScreen;

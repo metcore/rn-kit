@@ -1,0 +1,58 @@
+import React from 'react';
+import { ViewStyle } from 'react-native';
+import User from './icons/User';
+import Eye from './icons/Eye';
+import XCircle from './icons/XCircle';
+import ArrowRight from './icons/ArrowRight';
+import Document from './icons/Document';
+import Calendar from './icons/Calendar';
+import ExlamationMark from './icons/ExlmationMark';
+import Downnload from './icons/Download';
+import StickyNote from './icons/StickyNote';
+import Pdf from './icons/Pdf';
+import RadioButton from './icons/RadioButton';
+
+export type IconName = 'Home' | 'Search' | 'User' | 'x-circle' | 'ArrowRight';
+
+interface IconProps {
+  name: IconName;
+  size?: number;
+  color?: string;
+  style?: ViewStyle;
+}
+
+const icons: Record<
+  IconName,
+  React.FC<{ size: number; color: string; style?: ViewStyle }>
+> = {
+  'Home': User,
+  'Search': User,
+  'User': User,
+  'Eye': Eye,
+  'ArrowRight': ArrowRight,
+  'Document': Document,
+  'Calendar': Calendar,
+  'ExlamationMark': ExlamationMark,
+  'Download': Downnload,
+  'x-circle': XCircle,
+  'StickyNote': StickyNote,
+  'RadioButton': RadioButton,
+  'Pdf': Pdf,
+};
+
+const Icon: React.FC<IconProps> = ({
+  name,
+  size = 24,
+  color = '#000',
+  style,
+}) => {
+  const SelectedIcon = icons[name];
+
+  if (!SelectedIcon) {
+    return null;
+  }
+
+  return <SelectedIcon size={size} color={color} style={style} />;
+};
+
+export default Icon;
