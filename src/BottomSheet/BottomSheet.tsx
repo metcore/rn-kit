@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
-
 interface PropsBottomSheet {
   label?: string;
   isOpen: boolean;

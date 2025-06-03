@@ -153,7 +153,7 @@ const HomeScreen: React.FC = () => {
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Modal"
           onPress={() => navigation.navigate('Modal')}
           block

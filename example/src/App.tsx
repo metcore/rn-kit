@@ -23,6 +23,7 @@ import { Provider } from '@herca/ui-kit';
 import SpSignatureScreen from '../screens/SpSignatureScreen';
 import DrawingScreen from '../screens/DrawingScreen';
 import SpLatterScreen from '../screens/SpLatterScreen';
+import SwitchScreen from '../screens/SwitchScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +59,7 @@ const App = () => {
           <Stack.Screen name="Badge" component={BadgeScreen} />
           <Stack.Screen name="Alert" component={AlertScreen} />
           <Stack.Screen name="Drawing" component={DrawingScreen} />
+          <Stack.Screen name="Switch" component={SwitchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -59,7 +59,9 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
       // stiffness: 150,
     }).start(() => {
       setIsVisible(false);
-      onClose(false);
+      if (onClose) {
+        onClose(false);
+      }
     });
   }, [scaleAnim, onClose]);
 
@@ -146,7 +148,6 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     borderRadius: 16,
-    padding: 16,
     ...Platform.select({
       ios: {
         shadowColor: '#000',

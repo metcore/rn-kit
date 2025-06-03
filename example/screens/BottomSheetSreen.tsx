@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@herca/ui-kit';
 import { useState } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 
 export default function BottomSheetScreen() {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
@@ -22,9 +22,7 @@ export default function BottomSheetScreen() {
         isOpen={isOpenBottomSheet}
         onClose={() => setIsOpenBottomSheet(false)}
       >
-        <View
-          style={{ gap: 15, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={styles.containerBottomSheet}>
           <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
             Judul Modal
           </Typography>
@@ -78,9 +76,7 @@ export default function BottomSheetScreen() {
         height={'100%'}
         onClose={() => setIsOpenBottomSheetFull(false)}
       >
-        <View
-          style={{ gap: 15, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={styles.containerBottomSheet}>
           <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
             Judul Modal
           </Typography>
@@ -108,9 +104,7 @@ export default function BottomSheetScreen() {
           />
         }
       >
-        <View
-          style={{ gap: 15, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={styles.containerBottomSheet}>
           <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
             Judul Modal
           </Typography>
@@ -155,21 +149,33 @@ export default function BottomSheetScreen() {
       <View style={{ gap: 10, marginTop: 20 }}>
         <Button
           title="Open Bottom Sheet"
+          color="primary"
           onPress={() => setIsOpenBottomSheet(true)}
         />
         <Button
           title="Open Bottom Sheet w/ Custom PullBar"
+          color="primary"
           onPress={() => setIsOpenBottomSheetPullBar(true)}
         />
         <Button
           title="Open Bottom Sheet Full"
+          color="primary"
           onPress={() => setIsOpenBottomSheetFull(true)}
         />
         <Button
           title="Open Bottom With Footer"
+          color="primary"
           onPress={() => setIsOpenBottomSheetFooter(true)}
         />
       </View>
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  containerBottomSheet: {
+    gap: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

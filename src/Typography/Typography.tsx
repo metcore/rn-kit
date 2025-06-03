@@ -21,9 +21,12 @@ interface TypographyProps {
   children: React.ReactNode;
   variant?: Variant;
   weight?: Weight;
-  color?: TypographyColor;
+  color?: TypographyColor | string;
   style?: TextStyle;
   numberOfLines?: number;
+  center?: boolean;
+  right?: boolean;
+  left?: boolean;
 }
 
 const fontSizeMap: Record<Variant, number> = {
@@ -60,7 +63,7 @@ const fontWeightMap: Record<Weight, TextStyle['fontWeight']> = {
 };
 
 const colorMap: Record<TypographyColor, string> = {
-  default: Color.primary[1000],
+  default: '',
   success: '#4caf50',
   danger: '#f44336',
 };
@@ -69,17 +72,21 @@ const Typography: React.FC<TypographyProps> = ({
   children,
   variant = 'p3',
   weight = 'regular',
-  color,
+  color = 'default',
   style,
   numberOfLines,
+  center,
+  right,
+  left,
 }) => {
   const textStyle: TextStyle = {
     fontSize: fontSizeMap[variant],
     lineHeight: lineHeightMap[variant],
     fontWeight: fontWeightMap[weight],
-    color: colorMap[color] ?? color,
-    flexShrink: 1,
-    flexWrap: 'wrap',
+    color:
+      colorMap[color as TypographyColor] ??
+      (typeof color === 'string' ? color : Color.primary[1000]),
+    textAlign: center ? 'center' : right ? 'right' : left ? 'left' : undefined,
   };
 
   return (

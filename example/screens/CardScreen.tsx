@@ -22,14 +22,27 @@ export default function CardScreen() {
           </Typography>
         </Card>
         <Typography variant="h4" weight="semibold">
-          Background
+          Background Image
         </Typography>
         <Card backgroundImage={require('../assets/sp_banner.png')}>
-          <Typography color={Color.gray[800]} weight="bold">
+          <Typography color={Color.base.white100} weight="bold">
             What is Lorem Ipsum?
           </Typography>
-          <Typography color={Color.gray[800]}>
+          <Typography color={Color.base.white100}>
             Lorem Ipsum is simply dummy text of
+          </Typography>
+        </Card>
+        <Typography variant="h4" weight="semibold">
+          Background Color
+        </Typography>
+        <Card backgroundColor={Color.primary[1000]}>
+          <Typography color={Color.base.white100} weight="bold">
+            What is Lorem Ipsum?
+          </Typography>
+          <Typography color={Color.base.white100}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s,
           </Typography>
         </Card>
       </Container>

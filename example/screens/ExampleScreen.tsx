@@ -14,7 +14,13 @@ import {
   Timeline,
   TimelineItem,
 } from '@herca/ui-kit';
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ListItem from '../../src/List/ListItem';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -180,12 +186,7 @@ export default function ExampleScreen() {
           </Typography>
           <List>
             <ListItem>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <View style={styles.containerListItem}>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                   <Icon name="Pdf" size={39} color={Color.danger[500]} />
                   <View>
@@ -211,12 +212,7 @@ export default function ExampleScreen() {
               </View>
             </ListItem>
             <ListItem>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <View style={styles.containerListItem}>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                   <Icon name="Pdf" size={39} color={Color.danger[500]} />
                   <View>
@@ -242,12 +238,7 @@ export default function ExampleScreen() {
               </View>
             </ListItem>
             <ListItem>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <View style={styles.containerListItem}>
                 <Typography
                   variant="t1"
                   weight="semibold"
@@ -261,12 +252,7 @@ export default function ExampleScreen() {
               </View>
             </ListItem>
             <ListItem>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <View style={styles.containerListItem}>
                 <Typography
                   variant="t1"
                   weight="semibold"
@@ -304,10 +290,17 @@ export default function ExampleScreen() {
       <Footer>
         <Container>
           <Button
-            title="Setuju"
             onPress={() => navigation.navigate('SpLatter')}
             color="primary"
-          />
+          >
+            <Typography
+              variant="t1"
+              weight="semibold"
+              color={Color.base.white100}
+            >
+              Setuju
+            </Typography>
+          </Button>
         </Container>
       </Footer>
 
@@ -338,12 +331,7 @@ export default function ExampleScreen() {
           <Card>
             <Timeline>
               <TimelineItem color={'warning'}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
+                <View style={styles.containerTimeLineItem}>
                   <View>
                     <Typography
                       variant="t3"
@@ -371,12 +359,7 @@ export default function ExampleScreen() {
                 </View>
               </TimelineItem>
               <TimelineItem color={'primary'}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
+                <View style={styles.containerTimeLineItem}>
                   <View>
                     <Typography
                       variant="t3"
@@ -404,12 +387,7 @@ export default function ExampleScreen() {
                 </View>
               </TimelineItem>
               <TimelineItem color={'success'}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
+                <View style={styles.containerTimeLineItem}>
                   <View>
                     <Typography
                       variant="t3"
@@ -443,3 +421,15 @@ export default function ExampleScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  containerListItem: {
+    gap: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerTimelineItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});

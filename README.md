@@ -16,9 +16,20 @@ import { Button } from '@herca/ui-kit';
 
 // ...
 
-const result = multiply(3, 7);
+<Button />
 ```
 
+
+## Available component
+
+
+```js
+import { Button } from '@herca/ui-kit';
+
+// ...
+
+<Button />
+```
 
 ## Contributing
 

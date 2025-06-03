@@ -11,6 +11,8 @@ import Downnload from './icons/Download';
 import StickyNote from './icons/StickyNote';
 import Pdf from './icons/Pdf';
 import RadioButton from './icons/RadioButton';
+import ArrowBackAlt from './icons/ArrowBackAlt';
+import ArrowForwardAlt from './icons/ArrowForwardAlt';
 
 export type IconName = 'Home' | 'Search' | 'User' | 'x-circle' | 'ArrowRight';
 
@@ -38,6 +40,8 @@ const icons: Record<
   'StickyNote': StickyNote,
   'RadioButton': RadioButton,
   'Pdf': Pdf,
+  'ArrowBackAlt': ArrowBackAlt,
+  'ArrowForwardAlt': ArrowForwardAlt,
 };
 
 const Icon: React.FC<IconProps> = ({

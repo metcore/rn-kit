@@ -15,6 +15,7 @@ export { default as Select } from './Select/Select';
 export { default as LabelForm } from './LabelForm/LabelForm';
 export { default as Input } from './Input/Input';
 export { default as InputPassword } from './Input/InputPassword';
+export { default as Switch } from './Input/Switch';
 export { default as CheckBox } from './CheckBox/CheckBox';
 export { default as SwitchButton } from './SwitchButton/SwitchButton';
 export { default as Icon } from './Icon/Icon';

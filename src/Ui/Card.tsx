@@ -7,14 +7,21 @@ import {
   StyleProp,
 } from 'react-native';
 import Color from '../Color/Color';
+import type { ColorProps } from 'react-native-svg';
 
 interface CardProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   backgroundImage?: any;
+  backgroundColo?: ColorProps;
 }
 
-export default function Card({ children, style, backgroundImage }: CardProps) {
+export default function Card({
+  children,
+  style,
+  backgroundImage,
+  backgroundColor,
+}: CardProps) {
   if (backgroundImage) {
     return (
       <ImageBackground
@@ -26,8 +33,17 @@ export default function Card({ children, style, backgroundImage }: CardProps) {
       </ImageBackground>
     );
   }
-
-  return <View style={[styles.container, style]}>{children}</View>;
+  return (
+    <View
+      style={[
+        styles.container,
+        style,
+        { backgroundColor: backgroundColor ? backgroundColor : '' },
+      ]}
+    >
+      {children}
+    </View>
+  );
 }
 
 const sharedCardStyle = {
