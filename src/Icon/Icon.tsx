@@ -13,6 +13,7 @@ import Pdf from './icons/Pdf';
 import RadioButton from './icons/RadioButton';
 import ArrowBackAlt from './icons/ArrowBackAlt';
 import ArrowForwardAlt from './icons/ArrowForwardAlt';
+import Check from './icons/Check';
 
 export type IconName = 'Home' | 'Search' | 'User' | 'x-circle' | 'ArrowRight';
 
@@ -42,6 +43,7 @@ const icons: Record<
   'Pdf': Pdf,
   'ArrowBackAlt': ArrowBackAlt,
   'ArrowForwardAlt': ArrowForwardAlt,
+  'Check': Check,
 };
 
 const Icon: React.FC<IconProps> = ({

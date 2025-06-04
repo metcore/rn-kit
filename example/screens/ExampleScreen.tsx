@@ -331,7 +331,7 @@ export default function ExampleScreen() {
           <Card>
             <Timeline>
               <TimelineItem color={'warning'}>
-                <View style={styles.containerTimeLineItem}>
+                <View style={styles.containerListItem}>
                   <View>
                     <Typography
                       variant="t3"
@@ -340,26 +340,28 @@ export default function ExampleScreen() {
                     >
                       Pembuatn
                     </Typography>
-                    <Typography
-                      variant="t1"
-                      weight="semibold"
-                      color={Color.gray[800]}
-                    >
-                      Mamet core
-                    </Typography>
-                    <Typography
-                      variant="t2"
-                      weight="medium"
-                      color={Color.gray[500]}
-                    >
-                      Jumat, 1 Februari 2025 - 14:03
-                    </Typography>
+                    <View style={{ gap: 4 }}>
+                      <Typography
+                        variant="t1"
+                        weight="semibold"
+                        color={Color.gray[800]}
+                      >
+                        Mamet core
+                      </Typography>
+                      <Typography
+                        variant="t2"
+                        weight="medium"
+                        color={Color.gray[500]}
+                      >
+                        Jumat, 1 Februari 2025 - 14:03
+                      </Typography>
+                    </View>
                   </View>
                   <Badge value={'Terbuka'} color="warning" />
                 </View>
               </TimelineItem>
-              <TimelineItem color={'primary'}>
-                <View style={styles.containerTimeLineItem}>
+              <TimelineItem color={'success'}>
+                <View style={styles.containerListItem}>
                   <View>
                     <Typography
                       variant="t3"
@@ -368,26 +370,28 @@ export default function ExampleScreen() {
                     >
                       Pembuatn
                     </Typography>
-                    <Typography
-                      variant="t1"
-                      weight="semibold"
-                      color={Color.gray[800]}
-                    >
-                      Mamet core
-                    </Typography>
-                    <Typography
-                      variant="t2"
-                      weight="medium"
-                      color={Color.gray[500]}
-                    >
-                      Jumat, 1 Februari 2025 - 14:03
-                    </Typography>
+                    <View style={{ gap: 4 }}>
+                      <Typography
+                        variant="t1"
+                        weight="semibold"
+                        color={Color.gray[800]}
+                      >
+                        Mamet core
+                      </Typography>
+                      <Typography
+                        variant="t2"
+                        weight="medium"
+                        color={Color.gray[500]}
+                      >
+                        Jumat, 1 Februari 2025 - 14:03
+                      </Typography>
+                    </View>
                   </View>
-                  <Badge value={'Approve'} color="primary" />
+                  <Badge value={'Terbuka'} color="success" />
                 </View>
               </TimelineItem>
-              <TimelineItem color={'success'}>
-                <View style={styles.containerTimeLineItem}>
+              <TimelineItem color={'primary'}>
+                <View style={styles.containerListItem}>
                   <View>
                     <Typography
                       variant="t3"
@@ -396,22 +400,24 @@ export default function ExampleScreen() {
                     >
                       Pembuatn
                     </Typography>
-                    <Typography
-                      variant="t1"
-                      weight="semibold"
-                      color={Color.gray[800]}
-                    >
-                      Mamet core
-                    </Typography>
-                    <Typography
-                      variant="t2"
-                      weight="medium"
-                      color={Color.gray[500]}
-                    >
-                      Jumat, 1 Februari 2025 - 14:03
-                    </Typography>
+                    <View style={{ gap: 4 }}>
+                      <Typography
+                        variant="t1"
+                        weight="semibold"
+                        color={Color.gray[800]}
+                      >
+                        Mamet core
+                      </Typography>
+                      <Typography
+                        variant="t2"
+                        weight="medium"
+                        color={Color.gray[500]}
+                      >
+                        Jumat, 1 Februari 2025 - 14:03
+                      </Typography>
+                    </View>
                   </View>
-                  <Badge value={'Finish'} color="success" />
+                  <Badge value={'paid'} color="primary" />
                 </View>
               </TimelineItem>
             </Timeline>
@@ -424,11 +430,6 @@ export default function ExampleScreen() {
 
 const styles = StyleSheet.create({
   containerListItem: {
-    gap: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  containerTimelineItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

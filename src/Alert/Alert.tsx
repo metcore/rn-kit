@@ -4,7 +4,7 @@ import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import { Icon } from '../Icon';
 
-type Variant =
+type ColorProps =
   | 'success'
   | 'info'
   | 'warning'
@@ -17,13 +17,13 @@ interface AlertProps {
   icon?: string;
   title?: string;
   message?: string;
-  variant?: Variant;
+  color?: ColorProps;
   style?: ViewStyle;
   titleStyle?: TextStyle;
   messageStyle?: TextStyle;
 }
 
-const COLORS: Record<Variant, { background: string; color: string }> = {
+const COLORS: Record<ColorProps, { background: string; color: string }> = {
   success: {
     background: Color.success[50],
     fontColor: Color.success[500],
@@ -54,7 +54,6 @@ const Alert: React.FC<AlertProps> = ({
   title,
   message,
   color = 'primary',
-  style,
   titleStyle,
   messageStyle,
 }) => {
@@ -65,7 +64,6 @@ const Alert: React.FC<AlertProps> = ({
       style={[
         styles.container,
         { backgroundColor: background, borderColor: borderColor },
-        style,
       ]}
     >
       <View style={{ marginRight: 10 }}>

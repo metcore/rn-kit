@@ -9,7 +9,7 @@ export default function LayoutWithFooter({ children }) {
       <View style={[styles.content, footer && { marginBottom: 60 }]}>
         {children}
       </View>
-      {footer && <View style={styles.footer}>{footer}</View>}
+      {footer}
     </View>
   );
 }

@@ -24,12 +24,25 @@ import SpSignatureScreen from '../screens/SpSignatureScreen';
 import DrawingScreen from '../screens/DrawingScreen';
 import SpLatterScreen from '../screens/SpLatterScreen';
 import SwitchScreen from '../screens/SwitchScreen';
+import AvatarGroupScreen from '../screens/AvatarGroupScreen';
+import RadioButtonScreen from '../screens/RadioButtonScreen';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <Provider>
+    <Provider
+      requiredUpdated={false}
+      updateConfig={{
+        title: 'Update terbaru tersedia',
+        description:
+          'Kami telah menambahkan fitur penting. Silakan update sekarang.',
+        onUpdate: () =>
+          Linking.openURL(
+            'https://play.google.com/store/apps/details?id=com.herca.hris2'
+          ),
+      }}
+    >
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Home"
@@ -47,12 +60,14 @@ const App = () => {
           <Stack.Screen name="Input" component={InputScreen} />
           <Stack.Screen name="Select" component={SelectScreen} />
           <Stack.Screen name="CheckBox" component={CheckBox} />
+          <Stack.Screen name="RadioButton" component={RadioButtonScreen} />
           <Stack.Screen name="Typography" component={TypographyScreen} />
           <Stack.Screen name="BottomSheet" component={BottomSheetScreen} />
           <Stack.Screen name="Modal" component={ModalScreen} />
           <Stack.Screen name="List" component={List} />
           <Stack.Screen name="Footer" component={FooterScreen} />
           <Stack.Screen name="Avatar" component={AvatarScreen} />
+          <Stack.Screen name="AvatarGroup" component={AvatarGroupScreen} />
           <Stack.Screen name="Example" component={ExampleScreen} />
           <Stack.Screen name="SpSignature" component={SpSignatureScreen} />
           <Stack.Screen name="SpLatter" component={SpLatterScreen} />

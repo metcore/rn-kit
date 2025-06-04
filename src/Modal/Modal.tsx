@@ -20,7 +20,7 @@ interface ModalPopUpProps {
   onRequestClose?: () => void;
   bgColor?: string;
   width?: DimensionValue;
-  height?: DimensionValue;
+  height?: DimensionValue; // tetap ada, tapi tidak akan digunakan kalau ingin auto height
   containerStyle?: ViewStyle;
   modalStyle?: ViewStyle;
 }
@@ -34,7 +34,6 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   onRequestClose,
   bgColor = '#fff',
   width = '90%',
-  height = '50%',
   containerStyle,
   modalStyle,
 }) => {
@@ -55,8 +54,6 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     Animated.spring(scaleAnim, {
       toValue: 0,
       useNativeDriver: true,
-      // damping: 15,
-      // stiffness: 150,
     }).start(() => {
       setIsVisible(false);
       if (onClose) {
@@ -89,7 +86,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
       transform: [{ scale: scaleAnim }],
       backgroundColor: bgColor,
       width: width,
-      height: height,
+      maxHeight: '80%', // auto height dengan batas maksimal
     },
     modalStyle,
   ];
@@ -148,6 +145,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     borderRadius: 16,
+    overflow: 'visible',
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -176,7 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   contentContainer: {
-    flex: 1,
+    padding: 16, // bisa diubah sesuai kebutuhan
   },
 });
 

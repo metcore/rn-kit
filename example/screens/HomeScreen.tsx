@@ -74,6 +74,12 @@ const HomeScreen: React.FC = () => {
         />
         <Button
           color="success"
+          title="Avatar Group"
+          onPress={() => navigation.navigate('AvatarGroup')}
+          block
+        />
+        <Button
+          color="success"
           title="Badge"
           onPress={() => navigation.navigate('Badge')}
           block
@@ -113,19 +119,19 @@ const HomeScreen: React.FC = () => {
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Checkbox"
           onPress={() => navigation.navigate('CheckBox')}
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Radio Button"
-          onPress={() => navigation.navigate('Radio')}
+          onPress={() => navigation.navigate('RadioButton')}
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Switch"
           onPress={() => navigation.navigate('Switch')}
           block
@@ -136,16 +142,9 @@ const HomeScreen: React.FC = () => {
           onPress={() => navigation.navigate('Drawing')}
           block
         />
-
         <Typography variant="h3" weight="bold">
           Tool
         </Typography>
-        <Button
-          color="success"
-          title="List"
-          onPress={() => navigation.navigate('List')}
-          block
-        />
         <Button
           color="success"
           title="Bottom Sheet"

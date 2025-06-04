@@ -7,7 +7,6 @@ const Theme = {
     xl: 24,
     xxl: 32,
   },
-
   radius: {
     sm: 4,
     md: 8,

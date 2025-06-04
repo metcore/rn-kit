@@ -15,7 +15,6 @@ const Footer: React.FC<FooterProps> = ({ children, style }) => {
     const footerElement = (
       <View style={[styles.container, style]}>{children}</View>
     );
-
     setFooter(footerElement);
 
     return () => setFooter(null);
