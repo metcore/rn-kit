@@ -25,7 +25,6 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Container style={{ gap: 2 }}>
@@ -149,6 +148,12 @@ const HomeScreen: React.FC = () => {
           color="success"
           title="Bottom Sheet"
           onPress={() => navigation.navigate('BottomSheet')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Calendar"
+          onPress={() => navigation.navigate('Calendar')}
           block
         />
         <Button

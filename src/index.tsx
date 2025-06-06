@@ -32,4 +32,5 @@ export { default as TimelineItem } from './Timeline/TimelineItem';
 export { default as Provider } from './Provider/Provider';
 export { default as useFooter } from './Provider/Provider';
 export { default as Drawing } from './Drawing/Drawing';
+export { default as Calendar } from './Calendar/Calendar';
 // export { default as PdfView } from './FileView/PdfView';

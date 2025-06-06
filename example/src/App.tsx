@@ -26,6 +26,7 @@ import SpLatterScreen from '../screens/SpLatterScreen';
 import SwitchScreen from '../screens/SwitchScreen';
 import AvatarGroupScreen from '../screens/AvatarGroupScreen';
 import RadioButtonScreen from '../screens/RadioButtonScreen';
+import CalendarScreen from '../screens/CalendarScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +75,7 @@ const App = () => {
           <Stack.Screen name="Badge" component={BadgeScreen} />
           <Stack.Screen name="Alert" component={AlertScreen} />
           <Stack.Screen name="Drawing" component={DrawingScreen} />
+          <Stack.Screen name="Calendar" component={CalendarScreen} />
           <Stack.Screen name="Switch" component={SwitchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
