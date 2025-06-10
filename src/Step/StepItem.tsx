@@ -4,22 +4,10 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  type StyleProp,
-  type ViewStyle,
   type FlatListProps,
 } from 'react-native';
 import Color from '../Color/Color';
-
-interface StepItemProps {
-  index?: number;
-  isActive?: boolean;
-  isCompleted?: boolean;
-  isLast?: boolean;
-  isHeader?: boolean;
-  children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
-  title: string;
-}
+import type { StepItemProps } from './type';
 
 const StepItem = ({
   index = 0,
@@ -29,7 +17,6 @@ const StepItem = ({
   isHeader,
   children,
   style,
-  title,
 }: StepItemProps) => {
   if (isHeader) {
     return (
@@ -57,7 +44,6 @@ const StepItem = ({
         flatListElement.props.contentContainerStyle,
       ],
       nestedScrollEnabled: true,
-      title: title,
     });
   }
 

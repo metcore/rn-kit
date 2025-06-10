@@ -1,49 +1,47 @@
-// CalendarPropTypes.js
-import PropTypes from 'prop-types';
-import Color from '../Color/Color';
+import type { GestureResponderEvent } from 'react-native';
 
-export const CalendarPropTypes = {
-  markedDates: PropTypes.objectOf(
-    PropTypes.shape({
-      selected: PropTypes.bool,
-      backgroundColor: PropTypes.string,
-      textColor: PropTypes.string,
-      disabled: PropTypes.bool,
-      dots: PropTypes.arrayOf(
-        PropTypes.shape({
-          key: PropTypes.string.isRequired,
-          color: PropTypes.string,
-        })
-      ),
-    })
-  ),
-  disabledDates: PropTypes.arrayOf(PropTypes.string),
-  disabledDays: PropTypes.objectOf(
-    PropTypes.shape({
-      backgroundColor: PropTypes.string,
-      textColor: PropTypes.string,
-      disabled: PropTypes.bool,
-    })
-  ),
-  minDate: PropTypes.instanceOf(Date),
-  maxDate: PropTypes.instanceOf(Date),
-  mode: PropTypes.oneOf(['single', 'range']),
-  onChange: PropTypes.func.isRequired,
-  selectedBackgroundColor: PropTypes.string,
-  selectedTextColor: PropTypes.string,
-  disabledBackgroundColor: PropTypes.string,
-  disabledTextColor: PropTypes.string,
+export type CalendarMatrix = (number | string)[][];
+
+export type DisabledDayStyle = {
+  backgroundColor?: string | undefined;
+  textColor?: string | undefined;
 };
 
-export const CalendarDefaultProps = {
-  markedDates: {},
-  disabledDates: [],
-  disabledDays: {},
-  minDate: null,
-  maxDate: null,
-  mode: 'single',
-  selectedBackgroundColor: Color.primary[1000],
-  selectedTextColor: Color.primary[1000],
-  disabledBackgroundColor: Color.base.white100,
-  disabledTextColor: Color.gray[400],
+export type WeekDay = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export type DateRange = {
+  startDate?: Date | undefined | null;
+  endDate?: Date | undefined | null;
+  date?: Date | undefined | null;
 };
+
+export type CalendarDisabledProp = {
+  backgroundColor?: string | undefined;
+  textColor?: string | undefined;
+};
+
+export type MarkedDate = {
+  selected?: boolean;
+  backgroundColor?: string;
+  textColor?: string;
+  disabled?: boolean | CalendarDisabledProp;
+  dots?: string[];
+};
+
+export interface CalendarTypes {
+  mode?: 'single' | 'range';
+  markedDates?: {
+    [date: string]: MarkedDate;
+  };
+  minDate?: Date | null;
+  maxDate?: Date | null;
+  onPress?: (event: GestureResponderEvent) => void;
+  onChange?: (value: DateRange) => void;
+  selectedBackgroundColor?: string;
+  selectedTextColor?: string;
+  disabledBackgroundColor?: string;
+  disabledTextColor?: string;
+  disabledDays?: {
+    [day in WeekDay]?: boolean | DisabledDayStyle;
+  };
+}

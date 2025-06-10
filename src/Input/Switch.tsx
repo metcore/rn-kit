@@ -3,11 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
-import type { ColorProps } from 'react-native-svg';
 
 interface SwitchProps {
   label?: string;
-  dotColor?: ColorProps;
+  dotColor?: string;
   value?: boolean;
   onChange?: (newValue: boolean) => void;
   hint?: string;
@@ -76,7 +75,7 @@ export default function Switch({
               styles.circle,
               {
                 transform: [{ translateX }],
-                backgroundColor: dotColor ?? Color.base.white100,
+                backgroundColor: dotColor ? dotColor : Color.base.white100,
               },
             ]}
           />

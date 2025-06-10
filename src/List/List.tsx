@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { type ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Color from '../Color/Color';
 import Theme from '../Theme/Theme';
+import type { ListItemProps } from './type';
+interface ListProps {
+  children: ReactElement<ListItemProps> | ReactElement<ListItemProps>[];
+}
 
-export default function List({ children }: { children: React.ReactNode }) {
+export default function List({ children }: ListProps) {
   const validChildren = React.Children.toArray(children).filter((child) =>
     React.isValidElement(child)
   );
@@ -12,10 +16,9 @@ export default function List({ children }: { children: React.ReactNode }) {
     <View style={styles.container}>
       {React.Children.map(validChildren, (child, index) => {
         const isLast = index === validChildren.length - 1;
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, { isLast });
-        }
-        return child;
+        return React.isValidElement<ListItemProps>(child)
+          ? React.cloneElement(child, { isLast })
+          : child;
       })}
     </View>
   );
@@ -23,7 +26,6 @@ export default function List({ children }: { children: React.ReactNode }) {
 
 const styles = StyleSheet.create({
   container: {
-    // marginBottom: 16,
     borderWidth: 1,
     borderRadius: Theme.radius.md,
     borderColor: Color.gray[100],

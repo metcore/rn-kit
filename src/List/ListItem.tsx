@@ -1,20 +1,7 @@
-import { type ReactNode } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  type StyleProp,
-  type ViewStyle,
-} from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Color from '../Color/Color';
 import Theme from '../Theme/Theme';
-
-interface ListItemProps {
-  children: ReactNode;
-  onPress?: () => void;
-  style?: StyleProp<ViewStyle>;
-  isLast?: boolean;
-}
+import type { ListItemProps } from './type';
 
 export default function ListItem({
   children,

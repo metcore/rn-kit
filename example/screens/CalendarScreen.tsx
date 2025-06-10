@@ -1,18 +1,11 @@
 import { Calendar, Card, Color, Container, Typography } from '@herca/ui-kit';
 import { useState } from 'react';
+import type { DateRange } from '../../src/Calendar/CalendarPropsType';
 
-const vacation = { key: 'vacation', color: 'red', selectedDotColor: 'blue' };
-const massage = { key: 'massage', color: 'blue', selectedDotColor: 'blue' };
-const workout = { key: 'workout', color: 'green' };
-
-interface OnChangeProps {
-  startDate: Date;
-  endDate: Date;
-}
 export default function CalendarScreen() {
   const [endDate, setEndDate] = useState<string | null>();
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date | undefined) => {
     if (!date) return null;
     const y = date.getFullYear();
     const m = `${date.getMonth() + 1}`.padStart(2, '0');
@@ -20,8 +13,12 @@ export default function CalendarScreen() {
     return `${y}-${m}-${d}`;
   };
 
-  const hanOnChange = (obj: OnChangeProps) => {
-    setEndDate(formatDate(obj.endDate));
+  const hanOnChange = (obj: DateRange) => {
+    if (obj?.endDate) {
+      setEndDate(formatDate(obj.endDate));
+    } else {
+      setEndDate('');
+    }
   };
   return (
     <Container>
@@ -53,41 +50,55 @@ export default function CalendarScreen() {
               dots: [Color.success[700], Color.danger[900]],
               disabled: true,
             },
+            '2025-06-12': {
+              dots: [Color.success[700], Color.danger[900]],
+              disabled: {
+                backgroundColor: Color.warning[500],
+                textColor: Color.success[900],
+              },
+            },
             '2025-06-19': { selected: true },
+            '2025-06-20': {
+              selected: true,
+              textColor: Color.base.white100,
+            },
           }}
           selectedBackgroundColor={Color.primary[1000]}
-          selectedTextColor={Color.danger[1000]}
+          selectedTextColor={Color.success[300]}
           disabledBackgroundColor={Color.base.white100}
           disabledTextColor={Color.gray[400]}
-          selectedStartDate={'2025-12-12'}
-          selectedEndDate={'2025-12-12'}
-          onChange={(obj: OnChangeProps) => {
+          onChange={(obj: DateRange) => {
+            console.log(obj);
             hanOnChange(obj);
           }}
         />
       </Card>
-      <Typography style={{ display: endDate ? 'none' : 'contents' }}>
-        Please select end date
-      </Typography>
+      {!endDate && <Typography>Please select end date</Typography>}
       <Typography>Mode : Single</Typography>
 
       <Card>
         <Calendar
           mode="single"
-          // disabledDays={{
-          //   days:0,
-          //   selectedColor:'black'
-          // }}
           minDate={new Date(2025, 5, 5)}
           maxDate={new Date(2025, 5, 20)}
+          selectedBackgroundColor={Color.primary[200]}
           markedDates={{
             '2025-06-10': {
-              dots: [vacation, massage, workout],
+              dots: [
+                Color.success[600],
+                Color.primary[1000],
+                Color.danger[600],
+              ],
               selected: true,
-              selectedColor: 'red',
+              backgroundColor: 'red',
+              textColor: 'white',
             },
-            '2025-06-11': { dots: [massage, workout], disabled: true },
+            '2025-06-11': {
+              dots: [Color.base.black100, Color.success[600]],
+              disabled: true,
+            },
           }}
+          disabledBackgroundColor={Color.danger[500]}
         />
       </Card>
     </Container>

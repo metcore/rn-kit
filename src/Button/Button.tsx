@@ -3,7 +3,7 @@ import {
   Pressable,
   StyleSheet,
   type ViewStyle,
-  GestureResponderEvent,
+  type GestureResponderEvent,
   ActivityIndicator,
   View,
 } from 'react-native';
@@ -181,13 +181,13 @@ const Button: React.FC<ButtonProps> = ({
   ];
 
   const textColor = variantStyles[safeVariant].text(colors, disabled).color;
-  const typographyVariant = safeSize === 't1' ? 't2' : 't3';
+  const typographyVariant = 't1';
 
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={({ pressed, focused }) => {
+      style={({ pressed }) => {
         const dynamicStyle: ViewStyle = {};
         if (pressed) {
           if (variant === 'outline') {
@@ -200,13 +200,14 @@ const Button: React.FC<ButtonProps> = ({
             dynamicStyle.borderColor = colors.borderFocus;
             dynamicStyle.borderWidth = 1;
           }
-        } else if (focused) {
-          if (variant === 'outline') {
-            dynamicStyle.borderColor = colors.focus;
-          } else {
-            dynamicStyle.backgroundColor = colors.focus;
-          }
         }
+        // else if (focused) {
+        //   if (variant === 'outline') {
+        //     dynamicStyle.borderColor = colors.focus;
+        //   } else {
+        //     dynamicStyle.backgroundColor = colors.focus;
+        //   }
+        // }
 
         return [...baseContainerStyle, dynamicStyle];
       }}

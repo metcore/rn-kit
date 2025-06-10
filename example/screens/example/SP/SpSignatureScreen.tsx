@@ -37,6 +37,7 @@ export default function SpSignatureScreen() {
       });
       return unsubscribe;
     }
+    return undefined;
   }, [navigation, hasSuccess]);
 
   return (

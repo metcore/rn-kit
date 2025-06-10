@@ -3,8 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Calendar from '../Calendar/Calendar';
 import Button from '../Button/Button';
+import { type DateRange } from '../Calendar/CalendarPropsType';
 interface DatePickerProps {
-  onChange: (selectedDate: Date) => void;
+  onChange: (selectedDate: DateRange) => void;
   isOpen: boolean;
   onClose: () => void;
   [key: string]: any;
@@ -16,9 +17,13 @@ export default function DatePicker({
   onClose,
   ...calendarProps
 }: DatePickerProps) {
-  const [valueDatepicker, setValueDatepicker] = useState({});
+  const [valueDatepicker, setValueDatepicker] = useState<DateRange>({
+    startDate: null,
+    endDate: null,
+    date: null,
+  });
 
-  const handleOnChangeCalendar = useCallback((value: string | number) => {
+  const handleOnChangeCalendar = useCallback((value: DateRange) => {
     setValueDatepicker(value);
   }, []);
 

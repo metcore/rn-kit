@@ -80,16 +80,15 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     }
   }, [isOpen, showModal, hideModal]);
 
-  const modalContentStyle = [
-    styles.modalContent,
+  const modalContentStyle = StyleSheet.flatten([
     {
       transform: [{ scale: scaleAnim }],
       backgroundColor: bgColor,
       width: width,
-      maxHeight: '80%', // auto height dengan batas maksimal
+      maxHeight: '80%' as `${number}%`,
     },
     modalStyle,
-  ];
+  ]);
 
   return (
     <Modal
@@ -106,7 +105,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
             onPress={handleBackdropPress}
           />
         )}
-        <Animated.View style={modalContentStyle}>
+        <Animated.View style={[styles.modalContent, modalContentStyle]}>
           {closable && (
             <View style={styles.closeButtonContainer}>
               <TouchableOpacity

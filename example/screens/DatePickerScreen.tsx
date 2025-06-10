@@ -1,23 +1,23 @@
 import { Button, Container, DatePicker, Typography } from '@herca/ui-kit';
 import { useState } from 'react';
 import { View } from 'react-native';
-const formatDate = (date: Date) => {
+import type { DateRange } from '../../src/Calendar/CalendarPropsType';
+const formatDate = (date: Date | undefined | null) => {
   if (!date) return null;
   const y = date.getFullYear();
   const m = `${date.getMonth() + 1}`.padStart(2, '0');
   const d = `${date.getDate()}`.padStart(2, '0');
   return `${y}-${m}-${d}`;
 };
-interface OnChangeProps {
-  startDate: Date;
-  endDate: Date;
-}
 
 export default function DatePickerScreen() {
   const [isOpenDatePickerSingle, setIsOpenDatePickerSingle] = useState(false);
   const [isOpenDatePickerRange, setIsOpenDatePickerRange] = useState(false);
-  const [valueSingle, setValueSingle] = useState<string>();
-  const [valueRange, setValueRange] = useState<OnChangeProps>();
+  const [valueSingle, setValueSingle] = useState<string | null>();
+  const [valueRange, setValueRange] = useState<{
+    startDate: string | null;
+    endDate: string | null;
+  }>();
   return (
     <Container>
       <View style={{ gap: 4 }}>
@@ -39,7 +39,9 @@ export default function DatePickerScreen() {
       <DatePicker
         mode={'single'}
         isOpen={isOpenDatePickerSingle}
-        onChange={(value) => setValueSingle(formatDate(value.date))}
+        onChange={(value: DateRange) => {
+          setValueSingle(formatDate(value.date));
+        }}
         onClose={() => setIsOpenDatePickerSingle(false)}
         placholder={'Pilih tanggal'}
       />
@@ -47,7 +49,7 @@ export default function DatePickerScreen() {
       <DatePicker
         mode="range"
         isOpen={isOpenDatePickerRange}
-        onChange={(value: OnChangeProps) => {
+        onChange={(value: DateRange) => {
           setValueRange({
             startDate: formatDate(value.startDate),
             endDate: formatDate(value.endDate),

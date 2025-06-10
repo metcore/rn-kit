@@ -47,8 +47,7 @@ export default function InputFile({
   const handlePickFile = async () => {
     try {
       const result = await pick({ type: accept, multiple });
-      if (result.canceled || result.files.length === 0) return;
-      const pickedFiles = multiple ? result.files : [result.files[0]];
+      const pickedFiles = multiple ? result : [result[0]];
       const newFiles = [...files, ...pickedFiles];
       setFiles(newFiles);
       onChange?.(newFiles);
@@ -281,7 +280,7 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     borderStyle: 'dashed',
-    backgroundColor: Color.gray[25],
+    backgroundColor: Color.gray[100],
   },
   centerInput: {
     gap: 14,

@@ -7,35 +7,34 @@ import {
   Pressable,
 } from 'react-native';
 import Color from '../Color/Color';
-import { CalendarPropTypes } from './CalendarPropsType';
-
-type Dot = {
-  key: string;
-  color: string;
-};
+import type {
+  CalendarMatrix,
+  CalendarTypes,
+  MarkedDate,
+  WeekDay,
+} from './CalendarPropsType';
 
 //perlu locale untuk nama hari
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 // const DEFAULT_BACKGROUND_COLOR = Color.base.white100;
 // const DEFAULT_TEXT_COLOR = Color.gray[600];
 const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
-const DEFAULT_SELECTED_TEXT_COLOR = Color.primary[1000];
+const DEFAULT_SELECTED_TEXT_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_BACKGROUND_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_TEXT_COLOR = Color.gray[400];
 
 const Calendar = ({
   markedDates = {},
-  disabledDates = [],
-  disabledDays = {},
+  disabledDays,
   minDate = null,
   maxDate = null,
   mode = 'single',
   onChange,
-  selectedBackgroundColor = DEFAULT_SELECTED_TEXT_COLOR,
+  selectedBackgroundColor = DEFAULT_SELECTED_BACKGROUND_COLOR,
   selectedTextColor = DEFAULT_SELECTED_TEXT_COLOR,
   disabledBackgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR,
   disabledTextColor = DEFAULT_DISABLED_TEXT_COLOR,
-}: CalendarPropTypes) => {
+}: CalendarTypes) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -50,7 +49,7 @@ const Calendar = ({
     return `${year}-${mm}-${dd}`;
   };
 
-  const generateCalendarMatrix = () => {
+  const generateCalendarMatrix = (): CalendarMatrix => {
     const matrix = [];
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
@@ -99,7 +98,7 @@ const Calendar = ({
     setCurrentDate(newDate);
   };
 
-  const isDateInRange = (date: Date) => {
+  const isDateInRange = (date: number) => {
     if (!startDate || !endDate || !date) return false;
     const target = normalizeDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth(), date)
@@ -108,7 +107,7 @@ const Calendar = ({
     return target >= startDate && target <= endDate;
   };
 
-  const isSameDate = (dateObj: object, day: string | number) => {
+  const isSameDate = (dateObj: Date | null, day: string | number) => {
     if (!dateObj) return false;
     return (
       dateObj.getDate() === day &&
@@ -117,14 +116,18 @@ const Calendar = ({
     );
   };
 
+  function isWeekDay(day: number): day is WeekDay {
+    return day >= 0 && day <= 6;
+  }
   const isDisabledDate = (year: number, month: number, day: number) => {
     if (!day) return false;
+
     const dateObj = new Date(year, month, day);
     const dayOfWeek = dateObj.getDay();
-    const dateKey = formatDateKey(year, month, day);
-    if (disabledDays.hasOwnProperty(dayOfWeek) && disabledDays[dayOfWeek])
+
+    if (isWeekDay(dayOfWeek) && disabledDays?.[dayOfWeek]) {
       return true;
-    if (disabledDates.includes(dateKey)) return true;
+    }
     if (minDate && dateObj < minDate) return true;
     if (maxDate && dateObj > maxDate) return true;
 
@@ -134,8 +137,8 @@ const Calendar = ({
   const setBackgroundDay = (
     year: number,
     month: number,
-    date: string,
-    keyWeek: string | number
+    date: number,
+    keyWeek: WeekDay
   ) => {
     const inRange = isDateInRange(date);
     const isStart = isSameDate(startDate, date);
@@ -143,15 +146,13 @@ const Calendar = ({
     const dateKey = formatDateKey(year, month, date);
     const mark = markedDates[dateKey];
     let backgroundColor = 'white';
-
     if (
       (mode === 'single' && isStart) ||
       (mode === 'range' && (isStart || isEnd))
     ) {
       backgroundColor = selectedBackgroundColor;
     } else if (mark?.selected) {
-      backgroundColor =
-        mark.backgroundColor || DEFAULT_SELECTED_BACKGROUND_COLOR;
+      backgroundColor = mark.backgroundColor || selectedBackgroundColor;
     } else if (inRange) {
       backgroundColor = Color.primary[50];
     }
@@ -159,10 +160,22 @@ const Calendar = ({
     if (isDisabledDate(year, month, date)) {
       backgroundColor = disabledBackgroundColor;
     }
-    if (disabledDays.hasOwnProperty(keyWeek) && disabledDays[keyWeek]) {
-      backgroundColor = disabledDays[keyWeek]?.hasOwnProperty('backgroundColor')
-        ? disabledDays[keyWeek].backgroundColor
-        : DEFAULT_DISABLED_BACKGROUND_COLOR;
+
+    if (disabledDays && disabledDays[keyWeek]) {
+      backgroundColor =
+        typeof disabledDays[keyWeek] === 'object' &&
+        disabledDays[keyWeek].hasOwnProperty('backgroundColor')
+          ? disabledDays[keyWeek].backgroundColor!
+          : DEFAULT_DISABLED_BACKGROUND_COLOR;
+    }
+
+    if (isMarkDisableDate(mark)) {
+      if (mark && typeof mark.disabled === 'object') {
+        backgroundColor =
+          mark?.disabled?.backgroundColor ?? DEFAULT_DISABLED_BACKGROUND_COLOR;
+      } else if (mark && mark.disabled === true) {
+        backgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR;
+      }
     }
     return backgroundColor;
   };
@@ -171,7 +184,7 @@ const Calendar = ({
     year: number,
     month: number,
     date: number,
-    keyWeek: string | number
+    keyWeek: WeekDay
   ) => {
     const isStart = isSameDate(startDate, date);
     const isEnd = isSameDate(endDate, date);
@@ -186,19 +199,38 @@ const Calendar = ({
     ) {
       textColor = 'white';
     } else if (mark?.selected) {
-      textColor = selectedTextColor;
+      textColor = mark?.textColor || selectedTextColor;
+    }
+
+    if (isMarkDisableDate(mark)) {
+      if (mark && typeof mark.disabled === 'object') {
+        textColor = mark?.disabled?.textColor ?? DEFAULT_DISABLED_TEXT_COLOR;
+      } else if (mark && mark.disabled === true) {
+        textColor = DEFAULT_DISABLED_TEXT_COLOR;
+      }
     }
 
     if (isDisabledDate(year, month, date)) {
       textColor = disabledTextColor;
     }
-    if (disabledDays.hasOwnProperty(keyWeek) && disabledDays[keyWeek]) {
-      textColor = disabledDays[keyWeek]?.hasOwnProperty('textColor')
-        ? disabledDays[keyWeek].textColor
-        : DEFAULT_DISABLED_TEXT_COLOR;
+
+    if (disabledDays && disabledDays[keyWeek]) {
+      textColor =
+        typeof disabledDays[keyWeek] === 'object' &&
+        disabledDays[keyWeek].hasOwnProperty('textColor')
+          ? disabledDays[keyWeek].textColor!
+          : DEFAULT_DISABLED_TEXT_COLOR;
     }
 
     return textColor;
+  };
+
+  const isMarkDisableDate = (mark: MarkedDate | undefined) => {
+    let isDisable = false;
+    if (mark?.disabled) {
+      isDisable = true;
+    }
+    return isDisable;
   };
 
   const handlePressDay = (date: number) => {
@@ -217,7 +249,7 @@ const Calendar = ({
         setStartDate(selected);
         setEndDate(null);
         if (onChange) onChange({ startDate: selected, endDate: null });
-      } else if (selected >= startDate) {
+      } else if (selected && selected >= startDate) {
         setEndDate(selected);
         if (onChange) onChange({ startDate, endDate: selected });
       } else {
@@ -256,11 +288,11 @@ const Calendar = ({
 
       {calendarMatrix.map((week, rowIndex) => (
         <View key={rowIndex} style={styles.weekRow}>
-          {week.map((date, colIndex) => {
+          {week.map((date: number, colIndex: WeekDay) => {
             const dateKey = formatDateKey(year, month, date);
             const mark = markedDates[dateKey];
             const disabled =
-              mark?.disabled || isDisabledDate(year, month, date);
+              isMarkDisableDate(mark) || isDisabledDate(year, month, date);
             const backgroundColor = setBackgroundDay(
               year,
               month,
@@ -277,17 +309,17 @@ const Calendar = ({
               >
                 <View style={[styles.dayCell, { backgroundColor }]}>
                   <Text style={[styles.dateText, { color: textColor }]}>
-                    {date !== '' ? date : ''}
+                    {date ? date : ''}
                   </Text>
                 </View>
 
-                {mark?.dots && Array.isArray(mark.dots) && date !== '' && (
+                {mark?.dots && Array.isArray(mark.dots) && (
                   <View style={styles.dotsContainer}>
-                    {mark.dots.map((dot: Dot) => {
+                    {mark.dots.map((dot: string, index: number) => {
                       const dotColor = (mark.selected && dot) || dot || 'red';
                       return (
                         <View
-                          key={dot.key}
+                          key={index}
                           style={[styles.dot, { backgroundColor: dotColor }]}
                         />
                       );

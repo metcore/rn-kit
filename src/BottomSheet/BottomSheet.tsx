@@ -11,6 +11,7 @@ import {
   Dimensions,
   SafeAreaView,
   Platform,
+  type ViewStyle,
 } from 'react-native';
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
@@ -43,7 +44,7 @@ export default function BottomSheet({
 }: PropsBottomSheet) {
   const [isVisible, setIsVisible] = useState(false);
   const [heighContent, setHeighContent] = useState<
-    number | `${number}%` | 'auto'
+    number | `${number}%` | 'auto' | undefined | string
   >('auto');
   const [maxHeight, setMaxHeight] = useState<`${number}%` | 'auto'>('95%');
   const translateY = useRef(new Animated.Value(600)).current;
@@ -153,7 +154,15 @@ export default function BottomSheet({
           <Animated.View
             style={[
               styles.bottomSheet,
-              { transform: [{ translateY }], height: heighContent },
+              {
+                transform: [{ translateY }],
+                height:
+                  typeof heighContent === 'string'
+                    ? heighContent.includes('%')
+                      ? (heighContent as `${number}%`)
+                      : 'auto'
+                    : heighContent,
+              },
             ]}
           >
             {buttonClose && (
@@ -173,11 +182,13 @@ export default function BottomSheet({
               </View>
             )}
             <SafeAreaView
-              style={[
-                styles.contentContainer,
-                { maxHeight },
-                footer && styles.contentWithFooter,
-              ]}
+              style={
+                StyleSheet.flatten([
+                  styles.contentContainer,
+                  { maxHeight },
+                  footer ?? styles.contentWithFooter,
+                ]) as ViewStyle
+              }
             >
               <Container>{children}</Container>
             </SafeAreaView>

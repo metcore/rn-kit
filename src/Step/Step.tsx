@@ -1,22 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import Color from '../Color/Color';
+import type { StepItemProps, StepProps } from './type';
 
 const { width: screenWidth } = Dimensions.get('window');
-
-interface StepProps {
-  children: React.ReactNode;
-  current: number;
-  onChangeStep: (e: any) => void;
-}
 
 const Step = ({ children, current = 0, onChangeStep }: StepProps) => {
   const childrenArray = React.Children.toArray(children).filter(
     React.isValidElement
-  );
+  ) as React.ReactElement<StepItemProps>[];
   const totalSteps = childrenArray.length;
 
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<ScrollView>(null);
   const stepWidth = 100;
   useEffect(() => {
     onChangeStep?.(current);

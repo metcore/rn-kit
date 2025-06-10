@@ -93,16 +93,10 @@ interface ItemProps {
 }
 const Item = ({ navigation, item }: ItemProps) => (
   <TouchableOpacity onPress={() => navigation.navigate('SpDetail')}>
-    <Card style={{ marginBottom: 8, gap: 8, flex: 1 }}>
-      <View style={{ flexDirection: 'row', gap: 8 }}>
+    <Card style={styles.card}>
+      <View style={styles.cardHeader}>
         <Avatar source={item.user.image} />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
+        <View style={styles.cardHeaderContent}>
           <View>
             <Typography variant="t1" weight="semibold" color={Color.gray[800]}>
               {item.user.name}
@@ -120,18 +114,12 @@ const Item = ({ navigation, item }: ItemProps) => (
 
       <Devider />
 
-      <View style={{ gap: 8 }}>
-        <View style={{ flexDirection: 'row', gap: 8 }}>
-          <View style={{ justifyContent: 'center' }}>
+      <View style={styles.cardDetails}>
+        <View style={styles.detailRow}>
+          <View style={styles.iconContainer}>
             <Icon name="Document" size={18} color={Color.primary[1000]} />
           </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
+          <View style={styles.detailContent}>
             <View>
               <Typography variant="t3" weight="regular" color={Color.gray[600]}>
                 Level Reprimand
@@ -147,17 +135,11 @@ const Item = ({ navigation, item }: ItemProps) => (
           </View>
         </View>
 
-        <View style={{ flexDirection: 'row', gap: 8 }}>
-          <View style={{ justifyContent: 'center' }}>
+        <View style={styles.detailRow}>
+          <View style={styles.iconContainer}>
             <Icon name="Calendar" size={18} color={Color.primary[1000]} />
           </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
+          <View style={styles.detailContent}>
             <View>
               <Typography variant="t3" weight="regular" color={Color.gray[600]}>
                 Masa Periode Surat Peringatan
@@ -199,7 +181,7 @@ export default function SpScreen() {
       </Container>
       <Footer>
         <Container>
-          <Button title="Add Sp" size="small" color="primary" />
+          <Button title="Add Sp" color="primary" />
         </Container>
       </Footer>
     </SafeAreaProvider>
@@ -209,5 +191,34 @@ export default function SpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  card: {
+    marginBottom: 8,
+    gap: 8,
+    flex: 1,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  cardHeaderContent: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardDetails: {
+    gap: 8,
+  },
+  detailRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  iconContainer: {
+    justifyContent: 'center',
+  },
+  detailContent: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

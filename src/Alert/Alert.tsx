@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, type ViewStyle, type TextStyle } from 'react-native';
+import { View, StyleSheet, type ViewStyle, type StyleProp } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import { Icon } from '../Icon';
@@ -20,8 +20,8 @@ interface AlertProps {
   message?: string;
   color?: ColorProps;
   style?: ViewStyle;
-  titleStyle?: TextStyle;
-  messageStyle?: TextStyle;
+  titleStyle?: StyleProp<ViewStyle>;
+  messageStyle?: StyleProp<ViewStyle>;
 }
 
 const COLORS: Record<
@@ -95,7 +95,7 @@ const Alert: React.FC<AlertProps> = ({
             variant="t2"
             weight="bold"
             color={fontColor}
-            style={[styles.title, titleStyle]}
+            style={StyleSheet.flatten([styles.title, titleStyle])}
           >
             {title}
           </Typography>
@@ -104,7 +104,7 @@ const Alert: React.FC<AlertProps> = ({
           <Typography
             variant="t3"
             color={fontColor}
-            style={[styles.message, messageStyle]}
+            style={StyleSheet.flatten([styles.message, messageStyle])}
           >
             {message}
           </Typography>

@@ -1,25 +1,23 @@
-// colors.ts
-
 const Color = {
   base: {
-    white100: '#FFFFFF', // putih 100%
-    white60: 'rgba(255, 255, 255, 0.6)', // putih 60%
-    black100: '#282828', // hitam 100%
-    black60: 'rgba(40, 40, 40, 0.6)', // hitam 60%
+    white100: '#FFFFFF',
+    white60: 'rgba(255, 255, 255, 0.6)',
+    black100: '#282828',
+    black60: 'rgba(40, 40, 40, 0.6)',
   },
 
   gray: {
-    25: '#F7F7F7',
-    50: '#F2F2F2',
-    100: '#EBEBEB',
-    200: '#E5E5E5',
-    300: '#DEDEDE',
-    400: '#D7D7D7',
-    500: '#B4B4B4',
-    600: '#909090',
-    700: '#6C6C6C',
-    800: '#484848',
-    900: '#2B2B2B',
+    59: '#F7F7F7',
+    100: '#F2F2F2',
+    200: '#EBEBEB',
+    300: '#E5E5E5',
+    400: '#DEDEDE',
+    500: '#D7D7D7',
+    600: '#B4B4B4',
+    700: '#909090',
+    800: '#6C6C6C',
+    900: '#484848',
+    950: '#2B2B2B',
   },
 
   primary: {
@@ -35,8 +33,6 @@ const Color = {
     900: '#1B0CA6',
     950: '#14087D',
     1000: '#080355',
-    gradientStart: '#080355',
-    gradientEnd: '#130D7D',
   },
 
   warning: {
