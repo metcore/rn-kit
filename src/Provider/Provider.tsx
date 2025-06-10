@@ -3,14 +3,27 @@ import { createContext, useContext, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import LayoutWithFooter from './LayoutWithFooter';
 import RequiredUpdateAppsProvider from './RequiredUpdateAppsProvider';
+import { type ReactNode } from 'react';
+import type { RequiredUpdateAppsProviderProps } from './type';
 
-const FooterContext = createContext();
+interface FooterContextType {
+  footer: any | null;
+  setFooter: (value: any) => void;
+}
+
+interface ProviderProps {
+  children: ReactNode;
+  requiredUpdated: boolean;
+  updateConfig: RequiredUpdateAppsProviderProps;
+}
+
+const FooterContext = createContext<FooterContextType | undefined>(undefined);
 
 export default function Provider({
   children,
   requiredUpdated = false,
-  updateConfig = {},
-}) {
+  updateConfig,
+}: ProviderProps) {
   const [footer, setFooter] = useState(null);
 
   return (
@@ -25,7 +38,13 @@ export default function Provider({
   );
 }
 
-export const useFooter = () => useContext(FooterContext);
+export const useFooter = () => {
+  const context = useContext(FooterContext);
+  if (context === undefined) {
+    throw new Error('useFooter must be used within a Footer Provider');
+  }
+  return context;
+};
 
 const styles = StyleSheet.create({
   container: {

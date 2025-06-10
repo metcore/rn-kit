@@ -3,15 +3,15 @@ import { Pressable, View, Text, StyleSheet } from 'react-native';
 import { Color, Icon } from '@herca/ui-kit'; // Pastikan Icon sudah tersedia
 
 interface CheckBoxProps {
-  checked: boolean;
+  checked?: boolean;
   onChange: (checked: boolean) => void;
-  label?: string;
+  label?: string | React.ReactNode;
   disabled?: boolean;
   renderLabel?: () => React.ReactNode;
 }
 
 const CheckBox: React.FC<CheckBoxProps> = ({
-  checked,
+  checked = false,
   onChange,
   label,
   disabled = false,

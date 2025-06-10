@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -7,13 +7,19 @@ import {
   Pressable,
 } from 'react-native';
 import Color from '../Color/Color';
+import { CalendarPropTypes } from './CalendarPropsType';
+
+type Dot = {
+  key: string;
+  color: string;
+};
 
 //perlu locale untuk nama hari
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const DEFAULT_BACKGROUND_COLOR = Color.base.white100;
-const DEFAULT_TEXT_COLOR = Color.gray[600];
+// const DEFAULT_BACKGROUND_COLOR = Color.base.white100;
+// const DEFAULT_TEXT_COLOR = Color.gray[600];
 const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
-// const DEFAULT_SELECTED_TEXT_COLOR = Color.primary[1000];
+const DEFAULT_SELECTED_TEXT_COLOR = Color.primary[1000];
 const DEFAULT_DISABLED_BACKGROUND_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_TEXT_COLOR = Color.gray[400];
 
@@ -23,22 +29,22 @@ const Calendar = ({
   disabledDays = {},
   minDate = null,
   maxDate = null,
-  mode = 'range',
+  mode = 'single',
   onChange,
-  selectedBackgroundColor = DEFAULT_BACKGROUND_COLOR,
-  selectedTextColor = DEFAULT_TEXT_COLOR,
+  selectedBackgroundColor = DEFAULT_SELECTED_TEXT_COLOR,
+  selectedTextColor = DEFAULT_SELECTED_TEXT_COLOR,
   disabledBackgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR,
   disabledTextColor = DEFAULT_DISABLED_TEXT_COLOR,
-}) => {
+}: CalendarPropTypes) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const getDaysInMonth = (month, year) => {
+  const getDaysInMonth = (month: number, year: number) => {
     return new Date(year, month + 1, 0).getDate();
   };
 
-  const formatDateKey = (year, month, day) => {
+  const formatDateKey = (year: number, month: number, day: number) => {
     const mm = (month + 1).toString().padStart(2, '0');
     const dd = day.toString().padStart(2, '0');
     return `${year}-${mm}-${dd}`;
@@ -74,7 +80,7 @@ const Calendar = ({
     return matrix;
   };
 
-  const normalizeDate = (date) => {
+  const normalizeDate = (date: Date) => {
     if (!date) return null;
     const newDate = new Date(date);
     newDate.setHours(0, 0, 0, 0);
@@ -93,15 +99,16 @@ const Calendar = ({
     setCurrentDate(newDate);
   };
 
-  const isDateInRange = (date) => {
+  const isDateInRange = (date: Date) => {
     if (!startDate || !endDate || !date) return false;
     const target = normalizeDate(
       new Date(currentDate.getFullYear(), currentDate.getMonth(), date)
     );
+    if (!target) return false;
     return target >= startDate && target <= endDate;
   };
 
-  const isSameDate = (dateObj, day) => {
+  const isSameDate = (dateObj: object, day: string | number) => {
     if (!dateObj) return false;
     return (
       dateObj.getDate() === day &&
@@ -110,7 +117,7 @@ const Calendar = ({
     );
   };
 
-  const isDisabledDate = (year, month, day) => {
+  const isDisabledDate = (year: number, month: number, day: number) => {
     if (!day) return false;
     const dateObj = new Date(year, month, day);
     const dayOfWeek = dateObj.getDay();
@@ -124,7 +131,12 @@ const Calendar = ({
     return false;
   };
 
-  const setBackgroundDay = (year, month, date, keyWeek) => {
+  const setBackgroundDay = (
+    year: number,
+    month: number,
+    date: string,
+    keyWeek: string | number
+  ) => {
     const inRange = isDateInRange(date);
     const isStart = isSameDate(startDate, date);
     const isEnd = isSameDate(endDate, date);
@@ -155,12 +167,15 @@ const Calendar = ({
     return backgroundColor;
   };
 
-  const setTextColor = (year, month, date, keyWeek) => {
-    // const inRange = isDateInRange(date);
+  const setTextColor = (
+    year: number,
+    month: number,
+    date: number,
+    keyWeek: string | number
+  ) => {
     const isStart = isSameDate(startDate, date);
     const isEnd = isSameDate(endDate, date);
     const dateKey = formatDateKey(year, month, date);
-    // const disabled = mark?.disabled || isDisabledDate(year, month, date);
 
     const mark = markedDates[dateKey];
     let textColor = Color.gray[600];
@@ -186,7 +201,7 @@ const Calendar = ({
     return textColor;
   };
 
-  const handlePressDay = (date) => {
+  const handlePressDay = (date: number) => {
     if (!date) return;
 
     const selected = normalizeDate(
@@ -268,7 +283,7 @@ const Calendar = ({
 
                 {mark?.dots && Array.isArray(mark.dots) && date !== '' && (
                   <View style={styles.dotsContainer}>
-                    {mark.dots.map((dot) => {
+                    {mark.dots.map((dot: Dot) => {
                       const dotColor = (mark.selected && dot) || dot || 'red';
                       return (
                         <View

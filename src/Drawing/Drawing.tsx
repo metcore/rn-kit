@@ -1,13 +1,12 @@
 import { StyleSheet, View, Image } from 'react-native';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import SignatureCanvas from 'react-native-signature-canvas';
 
 export default function Drawing() {
   const [signature, setSignature] = useState(null);
   const ref = useRef();
 
-  const handleSignature = (signature) => {
-    console.log(signature);
+  const handleSignature = (signature: string) => {
     setSignature(signature);
   };
 

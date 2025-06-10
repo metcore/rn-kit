@@ -23,7 +23,7 @@ export default function List({ children }: { children: React.ReactNode }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    // marginBottom: 16,
     borderWidth: 1,
     borderRadius: Theme.radius.md,
     borderColor: Color.gray[100],

@@ -7,9 +7,10 @@ import {
   Typography,
 } from '@herca/ui-kit';
 import { useNavigation } from '@react-navigation/native';
+import type { NavigationProps } from '../../../type/navigation';
 
 export default function SpLatterScreen() {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProps>();
 
   return (
     <Container>

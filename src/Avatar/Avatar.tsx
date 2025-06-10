@@ -1,44 +1,31 @@
 import React from 'react';
-import {
-  Image,
-  Text,
-  View,
-  StyleSheet,
-  ImageSourcePropType,
-} from 'react-native';
+import { Image, Text, View, StyleSheet } from 'react-native';
+import type { AvatarProps, AvatarSizeType } from './type';
 
-interface AvatarProps {
-  size?: number;
-  source?: ImageSourcePropType;
-  name?: string;
-  backgroundColor?: string;
-  textColor?: string;
-  style?: object;
-}
+const SIZE_MAP: Record<AvatarSizeType, number> = {
+  small: 30,
+  medium: 40,
+  large: 50,
+};
 
 const Avatar: React.FC<AvatarProps> = ({
-  size = 50,
+  size = 'medium',
   source,
   name,
   backgroundColor = '#ccc',
   textColor = '#fff',
   style,
 }) => {
-  const getInitials = (name: string) => {
-    if (!name) return '';
-    const parts = name.trim().split(' ');
-    if (parts.length === 1) return parts[0][0].toUpperCase();
-    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-  };
+  const avatarSize = SIZE_MAP[size] || SIZE_MAP.medium;
 
   return (
     <View
       style={[
         styles.container,
         {
-          width: size,
-          height: size,
-          borderRadius: size / 2,
+          width: avatarSize,
+          height: avatarSize,
+          borderRadius: avatarSize / 2,
           backgroundColor,
         },
         style,
@@ -48,16 +35,19 @@ const Avatar: React.FC<AvatarProps> = ({
         <Image
           source={source}
           style={{
-            width: size,
-            height: size,
-            borderRadius: size / 2,
+            width: avatarSize,
+            height: avatarSize,
+            borderRadius: avatarSize / 2,
           }}
         />
       ) : (
         <Text
-          style={[styles.initials, { color: textColor, fontSize: size / 2 }]}
+          style={[
+            styles.initials,
+            { color: textColor, fontSize: avatarSize / 2 },
+          ]}
         >
-          {getInitials(name || '')}
+          {name}
         </Text>
       )}
     </View>

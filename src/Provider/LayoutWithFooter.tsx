@@ -1,14 +1,17 @@
 import { View, StyleSheet } from 'react-native';
 import { useFooter } from './Provider';
+import React from 'react';
 
-export default function LayoutWithFooter({ children }) {
+export default function LayoutWithFooter({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { footer } = useFooter();
 
   return (
     <View style={styles.container}>
-      <View style={[styles.content, footer && { marginBottom: 60 }]}>
-        {children}
-      </View>
+      <View style={[styles.content, footer && styles.footer]}>{children}</View>
       {footer}
     </View>
   );
@@ -17,4 +20,5 @@ export default function LayoutWithFooter({ children }) {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { flex: 1 },
+  footer: { marginBottom: 60 },
 });

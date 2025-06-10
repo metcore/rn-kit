@@ -10,8 +10,17 @@ const COLOR_MAP = {
   purple: Color.purple[500],
   danger: Color.danger[500],
 };
+type ColorKey = keyof typeof COLOR_MAP;
 
-export default function TimelineItem({ children, color = 'primary' }) {
+interface TimelineItemProps {
+  children: React.ReactNode;
+  color: ColorKey;
+}
+
+export default function TimelineItem({
+  children,
+  color = 'primary',
+}: TimelineItemProps) {
   const [contentHeight, setContentHeight] = useState(0);
 
   return (
@@ -21,7 +30,7 @@ export default function TimelineItem({ children, color = 'primary' }) {
         <View style={[styles.border, { height: contentHeight - 20 }]} />
       </View>
       <View
-        style={{ flex: 1 }}
+        style={styles.flex}
         onLayout={(e) => {
           const { height } = e.nativeEvent.layout;
           setContentHeight(height);
@@ -47,5 +56,8 @@ const styles = StyleSheet.create({
     borderLeftColor: Color.gray[400],
     borderStyle: 'dashed',
     marginTop: 4,
+  },
+  flex: {
+    flex: 1,
   },
 });

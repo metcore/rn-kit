@@ -3,17 +3,16 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  ViewStyle,
-  StyleProp,
+  type StyleProp,
+  type ViewStyle,
 } from 'react-native';
 import Color from '../Color/Color';
-import type { ColorProps } from 'react-native-svg';
 
 interface CardProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   backgroundImage?: any;
-  backgroundColo?: ColorProps;
+  backgroundColor?: string;
 }
 
 export default function Card({
@@ -38,7 +37,7 @@ export default function Card({
       style={[
         styles.container,
         style,
-        { backgroundColor: backgroundColor ? backgroundColor : '' },
+        typeof backgroundColor === 'string' && { backgroundColor },
       ]}
     >
       {children}

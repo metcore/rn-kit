@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import {
   StyleSheet,
   View,
   TouchableOpacity,
-  StyleProp,
-  ViewStyle,
+  type StyleProp,
+  type ViewStyle,
 } from 'react-native';
 import Color from '../Color/Color';
 import Theme from '../Theme/Theme';

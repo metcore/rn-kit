@@ -90,6 +90,10 @@ const styles = StyleSheet.create({
   section: {
     gap: 12,
   },
+  sectionTitle: {},
+  variantTitle: {},
+  buttonWrapper: {},
+  variantSection: {},
 });
 
 export default ButtonScreen;

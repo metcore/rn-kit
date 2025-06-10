@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
+
 interface PropsBottomSheet {
   label?: string;
   isOpen: boolean;
@@ -41,8 +42,10 @@ export default function BottomSheet({
   footer,
 }: PropsBottomSheet) {
   const [isVisible, setIsVisible] = useState(false);
-  const [heighContent, setHeighContent] = useState('auto');
-  const [maxHeight, setMaxHeight] = useState('95%');
+  const [heighContent, setHeighContent] = useState<
+    number | `${number}%` | 'auto'
+  >('auto');
+  const [maxHeight, setMaxHeight] = useState<`${number}%` | 'auto'>('95%');
   const translateY = useRef(new Animated.Value(600)).current;
 
   const panResponder = useRef(
@@ -116,14 +119,12 @@ export default function BottomSheet({
         setMaxHeight('90%');
       }
     );
-
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
         setMaxHeight('95%');
       }
     );
-
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
@@ -137,21 +138,17 @@ export default function BottomSheet({
       onRequestClose={handleRequestClose}
       animationType="fade"
     >
-      <View
-        style={[
-          styles.modalContainer,
-          backdrop && { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-        ]}
-      >
+      <View style={[styles.modalContainer, backdrop && styles.backdrop]}>
         <TouchableOpacity
           onPress={handleRequestClose}
           activeOpacity={1}
-          style={{ flex: 1 }}
+          style={styles.backdropTouchable}
         />
+
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           enabled
-          style={{ justifyContent: 'flex-end' }}
+          style={styles.keyboardAvoiding}
         >
           <Animated.View
             style={[
@@ -175,10 +172,16 @@ export default function BottomSheet({
                 {pullBar ? pullBar : <View style={styles.dragIndicator} />}
               </View>
             )}
-            <SafeAreaView style={{ maxHeight, flexGrow: 1 }}>
+            <SafeAreaView
+              style={[
+                styles.contentContainer,
+                { maxHeight },
+                footer && styles.contentWithFooter,
+              ]}
+            >
               <Container>{children}</Container>
-              {footer && <View style={styles.footer}>{footer}</View>}
             </SafeAreaView>
+            {footer && <View style={styles.footer}>{footer}</View>}
           </Animated.View>
         </KeyboardAvoidingView>
       </View>
@@ -189,6 +192,15 @@ export default function BottomSheet({
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
+    justifyContent: 'flex-end',
+  },
+  backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  backdropTouchable: {
+    flex: 1,
+  },
+  keyboardAvoiding: {
     justifyContent: 'flex-end',
   },
   bottomSheet: {
@@ -218,6 +230,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 2,
     backgroundColor: '#ccc',
+  },
+  contentContainer: {
+    flexGrow: 1,
+  },
+  contentWithFooter: {
+    marginBottom: 20,
   },
   footer: {
     position: 'absolute',

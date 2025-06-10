@@ -6,7 +6,7 @@ import {
   Pressable,
   Text,
 } from 'react-native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Card from '../Ui/Card';
 import Typography from '../Typography/Typography';
@@ -28,7 +28,6 @@ export default function Select() {
         transparent={false}
         visible={isOpenSelect}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setIsOpenSelect(!isOpenSelect);
         }}
       >

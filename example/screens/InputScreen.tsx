@@ -20,7 +20,7 @@ export default function InputScreen() {
         placeholder="Type Here ... "
         clearButton
         onPressIconLeft={() => console.log('Kiri')}
-        onPressIconRight={() => alert('Kanan')}
+        onPressIconRight={() => console.log('Kanan')}
       />
       <Input
         icon="User"

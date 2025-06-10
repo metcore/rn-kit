@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewStyle } from 'react-native';
+import { type ViewStyle } from 'react-native';
 import User from './icons/User';
 import Eye from './icons/Eye';
 import XCircle from './icons/XCircle';
@@ -14,18 +14,14 @@ import RadioButton from './icons/RadioButton';
 import ArrowBackAlt from './icons/ArrowBackAlt';
 import ArrowForwardAlt from './icons/ArrowForwardAlt';
 import Check from './icons/Check';
-
-export type IconName = 'Home' | 'Search' | 'User' | 'x-circle' | 'ArrowRight';
-
-interface IconProps {
-  name: IconName;
-  size?: number;
-  color?: string;
-  style?: ViewStyle;
-}
+import Filter from './icons/Filter';
+import AirPlane from './icons/AirPlane';
+import Camera from './icons/Camera';
+import Image from './icons/Image';
+import type { IconNameProps, IconProps } from './type';
 
 const icons: Record<
-  IconName,
+  IconNameProps,
   React.FC<{ size: number; color: string; style?: ViewStyle }>
 > = {
   'Home': User,
@@ -44,6 +40,10 @@ const icons: Record<
   'ArrowBackAlt': ArrowBackAlt,
   'ArrowForwardAlt': ArrowForwardAlt,
   'Check': Check,
+  'Filter': Filter,
+  'AirPlane': AirPlane,
+  'Camera': Camera,
+  'Image': Image,
 };
 
 const Icon: React.FC<IconProps> = ({

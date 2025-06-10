@@ -2,25 +2,29 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
+import type { TypographyVariantProps } from '../Typography/type';
 
 type Variant =
+  | 'default'
   | 'primary'
   | 'info'
   | 'success'
   | 'warning'
   | 'danger'
-  | 'neutral'
   | 'orange'
   | 'purple';
 
+type Size = 'small' | 'medium';
 interface BadgeProps {
-  value?: string | number;
-  size?: number;
+  value?: string | number | React.ReactNode;
+  color: Variant;
+  size?: Size;
   variant?: Variant;
   dot?: boolean;
+  children?: React.ReactNode;
 }
 
-const COLORS: Record<Variant, { background: string; color: string }> = {
+const COLORS: Record<Variant, { background: string; fontColor: string }> = {
   default: { background: Color.gray[100], fontColor: Color.gray[800] },
   primary: { background: Color.primary[50], fontColor: Color.primary[1000] },
   success: { background: Color.success[50], fontColor: Color.success[500] },
@@ -31,7 +35,15 @@ const COLORS: Record<Variant, { background: string; color: string }> = {
   purple: { background: Color.purple[50], fontColor: Color.purple[500] },
 };
 
-const SIZE_MAP: Record<Size, { height: number; fontSize: string }> = {
+interface SizeStyle {
+  height: number;
+  fontSize: TypographyVariantProps;
+  paddingHorizontal: number;
+  paddingVertical: number;
+  borderRadius: number;
+}
+
+const SIZE_MAP: Record<Size, SizeStyle> = {
   small: {
     height: 18,
     fontSize: 't3',
@@ -40,7 +52,7 @@ const SIZE_MAP: Record<Size, { height: number; fontSize: string }> = {
     borderRadius: 4,
   },
   medium: {
-    height: 32,
+    height: 24,
     fontSize: 't1',
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -52,11 +64,11 @@ const Badge: React.FC<BadgeProps> = ({
   size = 'medium',
   color = 'default',
   dot = false,
+  children,
 }) => {
   const safeSize: Size = ['small', 'medium'].includes(size) ? size : 'medium';
-
   const { background, fontColor } = COLORS[color];
-  const { height, fontSize, paddingHorizontal, paddingVertical } =
+  const { height, paddingHorizontal, paddingVertical, borderRadius } =
     SIZE_MAP[safeSize];
 
   if (dot) {
@@ -68,7 +80,7 @@ const Badge: React.FC<BadgeProps> = ({
             height: height,
             paddingHorizontal: paddingHorizontal,
             paddingVertical: paddingVertical,
-            borderRadius: size / 4,
+            borderRadius: borderRadius,
             backgroundColor: background,
           },
         ]}
@@ -81,8 +93,7 @@ const Badge: React.FC<BadgeProps> = ({
       style={[
         styles.badge,
         {
-          minWidth: size,
-          height: size,
+          height: height,
           borderRadius: 8,
           backgroundColor: background,
           paddingHorizontal: paddingHorizontal,
@@ -90,9 +101,17 @@ const Badge: React.FC<BadgeProps> = ({
         },
       ]}
     >
-      <Typography color={fontColor} variant={fontSize} weight="medium">
-        {value}
-      </Typography>
+      {children ? (
+        children
+      ) : (
+        <Typography
+          color={fontColor}
+          variant={SIZE_MAP[safeSize].fontSize}
+          weight="medium"
+        >
+          {value}
+        </Typography>
+      )}
     </View>
   );
 };

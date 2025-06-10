@@ -1,35 +1,28 @@
 import React from 'react';
-import { Text, TextStyle } from 'react-native';
+import {
+  Text,
+  type ColorValue,
+  type TextStyle,
+  type ViewStyle,
+} from 'react-native';
 import Color from '../Color/Color';
-
-type Variant =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'p1'
-  | 'p2'
-  | 'p3'
-  | 't1'
-  | 't2'
-  | 't3';
+import type { TypographyVariantProps } from './type';
 
 type Weight = 'regular' | 'medium' | 'semibold' | 'bold';
-type TypographyColor = 'default' | 'success' | 'danger';
 
 interface TypographyProps {
   children: React.ReactNode;
-  variant?: Variant;
+  variant?: TypographyVariantProps;
   weight?: Weight;
-  color?: TypographyColor | string;
-  style?: TextStyle;
+  color?: ColorValue;
+  style?: ViewStyle;
   numberOfLines?: number;
   center?: boolean;
   right?: boolean;
   left?: boolean;
 }
 
-const fontSizeMap: Record<Variant, number> = {
+const fontSizeMap: Record<TypographyVariantProps, number> = {
   h1: 36,
   h2: 32,
   h3: 28,
@@ -42,7 +35,7 @@ const fontSizeMap: Record<Variant, number> = {
   t3: 10,
 };
 
-const lineHeightMap: Record<Variant, number> = {
+const lineHeightMap: Record<TypographyVariantProps, number> = {
   h1: 46,
   h2: 42,
   h3: 38,
@@ -62,12 +55,6 @@ const fontWeightMap: Record<Weight, TextStyle['fontWeight']> = {
   bold: '700',
 };
 
-const colorMap: Record<TypographyColor, string> = {
-  default: '',
-  success: '#4caf50',
-  danger: '#f44336',
-};
-
 const Typography: React.FC<TypographyProps> = ({
   children,
   variant = 'p3',
@@ -83,9 +70,7 @@ const Typography: React.FC<TypographyProps> = ({
     fontSize: fontSizeMap[variant],
     lineHeight: lineHeightMap[variant],
     fontWeight: fontWeightMap[weight],
-    color:
-      colorMap[color as TypographyColor] ??
-      (typeof color === 'string' ? color : Color.primary[1000]),
+    color: color ? color : Color.primary[1000],
     textAlign: center ? 'center' : right ? 'right' : left ? 'left' : undefined,
   };
 

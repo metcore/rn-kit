@@ -1,0 +1,32 @@
+// src/icons/types.ts
+
+import { type ViewStyle } from 'react-native';
+
+export type IconNameProps =
+  | 'Home'
+  | 'Search'
+  | 'User'
+  | 'Eye'
+  | 'ArrowRight'
+  | 'Document'
+  | 'Calendar'
+  | 'ExlamationMark'
+  | 'Download'
+  | 'x-circle'
+  | 'StickyNote'
+  | 'RadioButton'
+  | 'Pdf'
+  | 'ArrowBackAlt'
+  | 'ArrowForwardAlt'
+  | 'Check'
+  | 'Filter'
+  | 'AirPlane'
+  | 'Camera'
+  | 'Image';
+
+export interface IconProps {
+  name: IconNameProps;
+  size?: number;
+  color?: string;
+  style?: ViewStyle;
+}

@@ -10,9 +10,9 @@ const TypographyScreen = () => {
     'p1',
     'p2',
     'p3',
-    'text-sm',
-    'text-xs',
-    'text-xxs',
+    't1',
+    't2',
+    't3',
   ] as const;
   const weights = ['regular', 'medium', 'semibold', 'bold'] as const;
 
@@ -20,11 +20,7 @@ const TypographyScreen = () => {
     <ScrollView contentContainerStyle={styles.container}>
       {variants.map((variant) => (
         <View key={variant} style={styles.section}>
-          <Typography
-            variant={variant}
-            weight="bold"
-            style={styles.sectionTitle}
-          >
+          <Typography variant={variant} weight="bold">
             {variant.toUpperCase()}
           </Typography>
           {weights.map((weight) => (
@@ -32,7 +28,6 @@ const TypographyScreen = () => {
               key={`${variant}-${weight}`}
               variant={variant}
               weight={weight}
-              style={styles.typographyItem}
             >
               {`${variant} - ${weight}`}
             </Typography>

@@ -1,5 +1,9 @@
 import { View } from 'react-native';
 
-export default function Timeline({ children }) {
+interface Timeline {
+  children: React.ReactNode;
+}
+
+export default function Timeline({ children }: Timeline) {
   return <View>{children}</View>;
 }

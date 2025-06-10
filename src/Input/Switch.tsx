@@ -1,18 +1,17 @@
 import { Animated, Pressable, StyleSheet, View, Easing } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
-import type { TextInputProps } from 'react-native';
 import type { ColorProps } from 'react-native-svg';
 
-interface SwitchProps extends TextInputProps {
+interface SwitchProps {
   label?: string;
   dotColor?: ColorProps;
   value?: boolean;
   onChange?: (newValue: boolean) => void;
-  hint: string;
-  hasError: true;
+  hint?: string;
+  hasError?: true;
   disabled?: boolean;
 }
 

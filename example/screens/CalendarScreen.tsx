@@ -5,10 +5,14 @@ const vacation = { key: 'vacation', color: 'red', selectedDotColor: 'blue' };
 const massage = { key: 'massage', color: 'blue', selectedDotColor: 'blue' };
 const workout = { key: 'workout', color: 'green' };
 
+interface OnChangeProps {
+  startDate: Date;
+  endDate: Date;
+}
 export default function CalendarScreen() {
-  const [endDate, setEndDate] = useState();
+  const [endDate, setEndDate] = useState<string | null>();
 
-  const formatDate = (date) => {
+  const formatDate = (date: Date) => {
     if (!date) return null;
     const y = date.getFullYear();
     const m = `${date.getMonth() + 1}`.padStart(2, '0');
@@ -16,8 +20,7 @@ export default function CalendarScreen() {
     return `${y}-${m}-${d}`;
   };
 
-  const hanOnChange = (obj) => {
-    console.log(obj);
+  const hanOnChange = (obj: OnChangeProps) => {
     setEndDate(formatDate(obj.endDate));
   };
   return (
@@ -58,7 +61,7 @@ export default function CalendarScreen() {
           disabledTextColor={Color.gray[400]}
           selectedStartDate={'2025-12-12'}
           selectedEndDate={'2025-12-12'}
-          onChange={(obj) => {
+          onChange={(obj: OnChangeProps) => {
             hanOnChange(obj);
           }}
         />

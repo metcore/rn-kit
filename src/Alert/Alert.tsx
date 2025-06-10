@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { View, StyleSheet, type ViewStyle, type TextStyle } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import { Icon } from '../Icon';
+import type { IconNameProps } from '../Icon/type';
 
 type ColorProps =
   | 'success'
@@ -14,7 +15,7 @@ type ColorProps =
   | 'purple';
 
 interface AlertProps {
-  icon?: string;
+  icon?: IconNameProps;
   title?: string;
   message?: string;
   color?: ColorProps;
@@ -23,7 +24,14 @@ interface AlertProps {
   messageStyle?: TextStyle;
 }
 
-const COLORS: Record<ColorProps, { background: string; color: string }> = {
+const COLORS: Record<
+  ColorProps,
+  {
+    background: string;
+    borderColor: string;
+    fontColor: string;
+  }
+> = {
   success: {
     background: Color.success[50],
     fontColor: Color.success[500],
@@ -44,9 +52,21 @@ const COLORS: Record<ColorProps, { background: string; color: string }> = {
     fontColor: Color.danger[500],
     borderColor: Color.danger[200],
   },
-  primary: { background: Color.primary[50], fontColor: Color.primary[500] },
-  orange: { background: '#FFEDD5', fontColor: '#F97316' },
-  purple: { background: '#EDE9FE', fontColor: '#8B5CF6' },
+  primary: {
+    background: Color.primary[50],
+    fontColor: Color.primary[500],
+    borderColor: Color.primary[200],
+  },
+  orange: {
+    background: Color.orange[50],
+    fontColor: Color.orange[500],
+    borderColor: Color.orange[200],
+  },
+  purple: {
+    background: Color.purple[50],
+    fontColor: Color.purple[500],
+    borderColor: Color.purple[200],
+  },
 };
 
 const Alert: React.FC<AlertProps> = ({
@@ -67,9 +87,9 @@ const Alert: React.FC<AlertProps> = ({
       ]}
     >
       <View style={{ marginRight: 10 }}>
-        <Icon name={icon} color={fontColor} />
+        <Icon name={icon || 'ExlamationMark'} color={fontColor} />
       </View>
-      <View style={{ justifyContent: 'center' }}>
+      <View style={styles.textContainer}>
         {title && (
           <Typography
             variant="t2"
@@ -102,11 +122,22 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderWidth: 1,
   },
+  iconContainer: {
+    marginRight: 10,
+    width: 24,
+  },
+  textContainer: {
+    justifyContent: 'center',
+    flex: 1,
+    maxWidth: '90%',
+  },
   title: {
-    marginBottom: 4,
+    flexShrink: 1,
+    flexWrap: 'wrap',
   },
   message: {
-    lineHeight: 18,
+    flexShrink: 1,
+    flexWrap: 'wrap',
   },
 });
 

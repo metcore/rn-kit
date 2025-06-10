@@ -13,7 +13,7 @@ interface RadioButtonProps {
   selectedValue: string | null;
   onChange: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
-  value: string;
+  value?: string;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({

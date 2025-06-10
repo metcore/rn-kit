@@ -31,7 +31,7 @@ export default function BottomSheetScreen() {
           </Typography>
           <Button
             size="medium"
-            type="primary"
+            color="primary"
             title="Close Bottom Sheet"
             block
             onPress={() => setIsOpenBottomSheet(false)}
@@ -62,7 +62,7 @@ export default function BottomSheetScreen() {
             </Typography>
             <Button
               size="medium"
-              type="primary"
+              color="primary"
               title="Close Bottom Sheet"
               block
               onPress={() => setIsOpenBottomSheetPullBar(false)}
@@ -85,7 +85,7 @@ export default function BottomSheetScreen() {
           </Typography>
           <Button
             size="medium"
-            type="primary"
+            color="primary"
             title="Close Bottom Sheet"
             block
             onPress={() => setIsOpenBottomSheetFull(false)}

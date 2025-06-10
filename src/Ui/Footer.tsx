@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import Color from '../Color/Color';
 import { useFooter } from '../Provider/Provider';
 
@@ -7,7 +8,6 @@ interface FooterProps {
   children: React.ReactNode;
   style?: ViewStyle;
 }
-
 const Footer: React.FC<FooterProps> = ({ children, style }) => {
   const { setFooter } = useFooter();
 

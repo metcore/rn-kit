@@ -5,15 +5,15 @@ import {
   Modal,
   TouchableOpacity,
   Animated,
-  DimensionValue,
+  type DimensionValue,
   SafeAreaView,
   Platform,
-  ViewStyle,
+  type ViewStyle,
 } from 'react-native';
 
 interface ModalPopUpProps {
   isOpen: boolean;
-  onClose: (isOpen: boolean) => void;
+  onClose?: (isOpen?: boolean) => void;
   children: React.ReactNode;
   backdrop?: boolean;
   closable?: boolean;

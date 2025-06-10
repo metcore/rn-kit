@@ -1,21 +1,19 @@
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { Icon } from '../Icon';
 import Color from '../Color/Color';
+import type { AvatarGroupProps, AvatarSizeType } from './type';
 
-const SIZE_MAP = {
+const SIZE_MAP: Record<AvatarSizeType, number> = {
   small: 30,
   medium: 40,
   large: 50,
 };
 
-const getInitials = (name) => {
-  if (!name) return '';
-  const parts = name.trim().split(' ');
-  if (parts.length === 1) return parts[0][0]?.toUpperCase();
-  return (parts[0][0] + parts[1][0]).toUpperCase();
-};
-
-const AvatarGroup = ({ avatars = [], maxVisible = 5, size = 'medium' }) => {
+const AvatarGroup: React.FC<AvatarGroupProps> = ({
+  avatars = [],
+  maxVisible = 5,
+  size = 'medium',
+}) => {
   const avatarSize = SIZE_MAP[size] || SIZE_MAP.medium;
   const visibleAvatars = avatars.slice(0, maxVisible);
   const remainingCount = avatars.length - maxVisible;
@@ -23,8 +21,8 @@ const AvatarGroup = ({ avatars = [], maxVisible = 5, size = 'medium' }) => {
   return (
     <View style={[styles.container, { height: avatarSize }]}>
       {visibleAvatars.map((avatar, index) => {
-        const hasImage = avatar.src;
-        const initials = getInitials(avatar.name);
+        const hasImage = avatar.source;
+        const initials = avatar.name;
         const styleSize = {
           width: avatarSize,
           height: avatarSize,
@@ -44,7 +42,7 @@ const AvatarGroup = ({ avatars = [], maxVisible = 5, size = 'medium' }) => {
           >
             {hasImage ? (
               <Image
-                source={{ uri: avatar.src }}
+                source={avatar.source}
                 style={[styles.avatar, styleSize]}
               />
             ) : initials ? (

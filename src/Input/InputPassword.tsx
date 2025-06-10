@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View } from 'react-native';
 import Input from './Input';
 import type { TextInputProps } from 'react-native';
+import type { IconNameProps } from '../Icon/type';
 
 interface InputPasswordProps extends TextInputProps {
-  icon?: string;
-  iconRight?: string;
+  icon?: IconNameProps;
+  iconRight?: IconNameProps;
   clearButton?: boolean;
   label?: string;
   hint?: string;

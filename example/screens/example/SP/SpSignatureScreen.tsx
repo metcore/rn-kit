@@ -12,10 +12,11 @@ import {
 } from '@herca/ui-kit';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
+import type { NavigationProps } from '../../../type/navigation';
 
 export default function SpSignatureScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const [isOpenConfirmSubmit, setIsOpenConfirmSubmit] = useState(false);
   const [isOpenConfirmBack, setIsOpenConfirmBack] = useState(false);
   const [isOpenModalSuccess, setIsOpenModalSuccess] = useState(false);
@@ -48,7 +49,9 @@ export default function SpSignatureScreen() {
           <Typography variant="t2" weight="medium" color={Color.gray[800]}>
             Tanda Tangan Persetujuan Peringatan.
           </Typography>
-          <Card style={{ height: 327 }}></Card>
+          <Card style={{ height: 327 }}>
+            <Typography>tes</Typography>
+          </Card>
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
@@ -108,9 +111,7 @@ export default function SpSignatureScreen() {
         onClose={() => setIsOpenConfirmSubmit(false)}
       >
         <View style={{ gap: 15 }}>
-          <View
-            style={{ gap: 15, justifyContent: 'center', alignItems: 'center' }}
-          >
+          <View style={styles.containerBottomSheet}>
             <Typography
               variant="p2"
               weight="semibold"
@@ -152,9 +153,7 @@ export default function SpSignatureScreen() {
         }}
       >
         <View style={{ gap: 15 }}>
-          <View
-            style={{ gap: 15, justifyContent: 'center', alignItems: 'center' }}
-          >
+          <View style={styles.containerBottomSheet}>
             <Typography
               variant="p2"
               weight="semibold"
@@ -198,7 +197,7 @@ export default function SpSignatureScreen() {
       <Modal isOpen={isOpenModalSuccess} closable={false}>
         <Container>
           <View style={{ gap: 32, alignItems: 'center' }}>
-            <Image source={require('../assets/positive-vote-1.png')} />
+            <Image source={require('../../../assets/positive-vote-1.png')} />
             <View>
               <Center style={{ gap: 4 }}>
                 <Typography
@@ -232,3 +231,11 @@ export default function SpSignatureScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  containerBottomSheet: {
+    gap: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

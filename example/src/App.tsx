@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -20,13 +19,20 @@ import AvatarScreen from '../screens/AvatarScreen';
 import BadgeScreen from '../screens/BadgeScreen';
 import AlertScreen from '../screens/AlertScreen';
 import { Provider } from '@herca/ui-kit';
-import SpSignatureScreen from '../screens/SpSignatureScreen';
 import DrawingScreen from '../screens/DrawingScreen';
-import SpLatterScreen from '../screens/SpLatterScreen';
 import SwitchScreen from '../screens/SwitchScreen';
 import AvatarGroupScreen from '../screens/AvatarGroupScreen';
 import RadioButtonScreen from '../screens/RadioButtonScreen';
 import CalendarScreen from '../screens/CalendarScreen';
+import DatePickerScreen from '../screens/DatePickerScreen';
+import SpScreen from '../screens/example/SP/SpScreen';
+import SpDetailScreen from '../screens/example/SP/SpDetailScreen';
+import SpSignatureScreen from '../screens/example/SP/SpSignatureScreen';
+import SpLatterScreen from '../screens/example/SP/SpLatterScreen';
+import LeaveScreen from '../screens/example/Leave/LeaveScreen';
+import LeaveFormScreen from '../screens/example/Leave/LeaveForm';
+import LeaveDetailScreen from '../screens/example/Leave/LeaveDetailScreen';
+import { Linking } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +83,14 @@ const App = () => {
           <Stack.Screen name="Drawing" component={DrawingScreen} />
           <Stack.Screen name="Calendar" component={CalendarScreen} />
           <Stack.Screen name="Switch" component={SwitchScreen} />
+          <Stack.Screen name="DatePicker" component={DatePickerScreen} />
+
+          <Stack.Screen name="Sp" component={SpScreen} />
+          <Stack.Screen name="SpDetail" component={SpDetailScreen} />
+
+          <Stack.Screen name="Leave" component={LeaveScreen} />
+          <Stack.Screen name="LeaveForm" component={LeaveFormScreen} />
+          <Stack.Screen name="LeaveDetail" component={LeaveDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

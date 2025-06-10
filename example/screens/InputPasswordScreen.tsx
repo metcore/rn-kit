@@ -29,7 +29,7 @@ export default function InputPasswordScreen() {
         placeholder="Type Here ... "
         clearButton
         onPressIconLeft={() => console.log('Kiri')}
-        onPressIconRight={() => alert('Kanan')}
+        onPressIconRight={() => console.log('Kanan')}
       />
       <InputPassword
         icon="User"

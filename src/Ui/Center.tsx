@@ -1,6 +1,12 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, type ViewStyle } from 'react-native';
 
-const Center = ({ children, style }) => {
+interface CenterProps {
+  children: React.ReactNode;
+  size?: number;
+  style?: ViewStyle;
+}
+
+const Center = ({ children, style }: CenterProps) => {
   return <View style={[styles.center, style]}>{children}</View>;
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Pressable,
   StyleSheet,
-  ViewStyle,
+  type ViewStyle,
   GestureResponderEvent,
   ActivityIndicator,
   View,
@@ -12,14 +12,22 @@ import Color from '../Color/Color';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'default' | 'outline' | 'tertiary';
-type ButtonColor = 'default' | 'success' | 'danger';
+type ButtonColor =
+  | 'default'
+  | 'success'
+  | 'danger'
+  | 'primary'
+  | 'warning'
+  | 'info'
+  | 'purple'
+  | 'orange';
 
 interface ButtonProps {
-  children: React.ReactNode;
-  title: string;
-  onPress: (event: GestureResponderEvent) => void;
+  children?: React.ReactNode;
+  title?: string | React.ReactNode;
+  onPress?: (event: GestureResponderEvent) => void;
   size?: ButtonSize;
-  variant?: ButtonVariant; // renamed from type to variant
+  variant?: ButtonVariant;
   color?: ButtonColor;
   disabled?: boolean;
   width?: number | string;
@@ -31,10 +39,14 @@ const COLOR_MAP: Record<
   ButtonColor,
   {
     bg: string;
-    border: string;
     text: string;
+    border: string;
+    borderFocus: string;
     press: string;
     focus: string;
+    disabledBg: string;
+    disabledText: string;
+    disabledBorder: string;
   }
 > = {
   default: {
@@ -52,8 +64,9 @@ const COLOR_MAP: Record<
     bg: Color.success[500],
     border: Color.success[500],
     borderFocus: Color.success[200],
-    text: '#fff',
     press: Color.success[600],
+    text: '#fff',
+    focus: Color.success[600],
     disabledBg: Color.success[100],
     disabledText: Color.success[950],
     disabledBorder: Color.success[950],
@@ -64,7 +77,7 @@ const COLOR_MAP: Record<
     borderFocus: Color.danger[200],
     text: '#fff',
     press: Color.danger[700],
-    focus: '#e57373',
+    focus: Color.danger[700],
     disabledBg: Color.danger[200],
     disabledText: Color.danger[950],
     disabledBorder: Color.danger[200],
@@ -85,8 +98,8 @@ const COLOR_MAP: Record<
     border: Color.warning[400],
     borderFocus: Color.warning[200],
     text: '#fff',
-    press: Color.warning[1000],
-    focus: Color.warning[1000],
+    press: Color.warning[700],
+    focus: Color.warning[600],
     disabledBg: Color.warning[100],
     disabledText: Color.warning[950],
     disabledBorder: Color.warning[950],
@@ -97,7 +110,7 @@ const COLOR_MAP: Record<
     borderFocus: Color.info[200],
     text: '#fff',
     press: Color.info[700],
-    focus: Color.info[1000],
+    focus: Color.info[600],
     disabledBg: Color.info[100],
     disabledText: Color.info[100],
     disabledBorder: Color.info[100],
@@ -108,7 +121,7 @@ const COLOR_MAP: Record<
     borderFocus: Color.orange[200],
     text: '#fff',
     press: Color.orange[700],
-    focus: Color.orange[1000],
+    focus: Color.orange[600],
     disabledBg: Color.orange[100],
     disabledText: Color.orange[100],
     disabledBorder: Color.orange[100],
@@ -119,7 +132,7 @@ const COLOR_MAP: Record<
     borderFocus: Color.purple[200],
     text: '#fff',
     press: Color.purple[700],
-    focus: Color.purple[1000],
+    focus: Color.purple[600],
     disabledBg: Color.purple[100],
     disabledText: Color.purple[100],
     disabledBorder: Color.purple[100],
@@ -168,7 +181,7 @@ const Button: React.FC<ButtonProps> = ({
   ];
 
   const textColor = variantStyles[safeVariant].text(colors, disabled).color;
-  const typographyVariant = safeSize === 'small' ? 'text-xs' : 'text-sm';
+  const typographyVariant = safeSize === 't1' ? 't2' : 't3';
 
   return (
     <Pressable
@@ -278,6 +291,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
   },
+  disabled: {},
 });
 
 export default Button;

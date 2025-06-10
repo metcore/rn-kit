@@ -40,7 +40,7 @@ export default function ListScreen() {
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <View size={9}>
+              <View>
                 <View>
                   <Typography variant="t2" color={Color.gray[600]}>
                     Nama Lengkap

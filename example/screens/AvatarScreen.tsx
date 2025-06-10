@@ -6,16 +6,11 @@ export default function AvatarScreen() {
       <Typography variant="h2" weight="semibold">
         Initial Name
       </Typography>
-      <Avatar
-        size={60}
-        name="Hercules Dev"
-        backgroundColor="#3b82f6"
-        textColor="#fff"
-      />
+      <Avatar name="Hercules Dev" backgroundColor="#3b82f6" textColor="#fff" />
       <Typography variant="h2" weight="semibold">
         Image{' '}
       </Typography>
-      <Avatar size={60} source={require('../assets/avatar.png')} />
+      <Avatar size="large" source={require('../assets/avatar.png')} />
     </Container>
   );
 }

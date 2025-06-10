@@ -2,24 +2,26 @@ import React, { useState } from 'react';
 import {
   TextInput,
   View,
-  TextInputProps,
+  type TextInputProps,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import { Icon } from '../Icon';
+import { type IconNameProps } from '../Icon/type';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
 
 interface InputProps extends TextInputProps {
-  icon?: string;
-  iconRight?: string;
-  label: string;
+  icon?: IconNameProps;
+  iconRight?: IconNameProps;
+  label?: string | undefined;
   clearButton?: boolean;
   hasError?: boolean;
   hint?: string;
   onPressIconLeft?: () => void;
   onPressIconRight?: () => void;
+  secureTextEntry?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -34,6 +36,7 @@ const Input: React.FC<InputProps> = ({
   onChangeText,
   onPressIconLeft,
   onPressIconRight,
+  secureTextEntry = false,
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState(value || '');
@@ -80,6 +83,7 @@ const Input: React.FC<InputProps> = ({
             showRightIcons && { paddingRight: 60 },
             style,
           ]}
+          secureTextEntry={secureTextEntry}
           value={inputValue}
           onChangeText={handleChange}
           placeholderTextColor={Color.gray[400]}

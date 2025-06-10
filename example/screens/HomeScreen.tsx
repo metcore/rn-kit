@@ -2,31 +2,12 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Typography, Button, Container } from '@herca/ui-kit';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-type RootStackParamList = {
-  Home: undefined;
-  Button: undefined;
-  Typography: undefined;
-  Input: undefined;
-  Card: undefined;
-  Modal: undefined;
-  BottomSheet: undefined;
-  Checkbox: undefined;
-  Radio: undefined;
-  Switch: undefined;
-  List: undefined;
-};
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Home'
->;
+import type { NavigationProps } from '../type/navigation';
 
 const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation<NavigationProps>();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView>
       <Container style={{ gap: 2 }}>
         <Typography variant="h2" weight="bold">
           All Components
@@ -79,6 +60,12 @@ const HomeScreen: React.FC = () => {
         />
         <Button
           color="success"
+          title="Flat List"
+          onPress={() => navigation.navigate('AvatarGroup')}
+          block
+        />
+        <Button
+          color="success"
           title="Badge"
           onPress={() => navigation.navigate('Badge')}
           block
@@ -87,6 +74,12 @@ const HomeScreen: React.FC = () => {
           color="success"
           title="Alert"
           onPress={() => navigation.navigate('Alert')}
+          block
+        />
+        <Button
+          color="primary"
+          title="Toast"
+          onPress={() => navigation.navigate('Toast')}
           block
         />
 
@@ -141,6 +134,12 @@ const HomeScreen: React.FC = () => {
           onPress={() => navigation.navigate('Drawing')}
           block
         />
+        <Button
+          color="success"
+          title="DatePicker"
+          onPress={() => navigation.navigate('DatePicker')}
+          block
+        />
         <Typography variant="h3" weight="bold">
           Tool
         </Typography>
@@ -151,7 +150,7 @@ const HomeScreen: React.FC = () => {
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Calendar"
           onPress={() => navigation.navigate('Calendar')}
           block

@@ -1,0 +1,96 @@
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import Color from '../Color/Color';
+
+const { width: screenWidth } = Dimensions.get('window');
+
+interface StepProps {
+  children: React.ReactNode;
+  current: number;
+  onChangeStep: (e: any) => void;
+}
+
+const Step = ({ children, current = 0, onChangeStep }: StepProps) => {
+  const childrenArray = React.Children.toArray(children).filter(
+    React.isValidElement
+  );
+  const totalSteps = childrenArray.length;
+
+  const scrollRef = useRef(null);
+  const stepWidth = 100;
+  useEffect(() => {
+    onChangeStep?.(current);
+
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        x: Math.max(0, current * stepWidth) - screenWidth / 2 + stepWidth / 2,
+        animated: true,
+      });
+    }
+  }, [current, onChangeStep]);
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={[styles.headerContainer]}>
+        <ScrollView
+          ref={scrollRef}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={[
+            styles.containerScrollView,
+            {
+              justifyContent:
+                totalSteps * stepWidth < screenWidth ? 'center' : 'flex-start',
+            },
+          ]}
+        >
+          {childrenArray.map((child, index) =>
+            React.cloneElement(child, {
+              index,
+              isActive: index === current,
+              isCompleted: index < current,
+              isLast: index === totalSteps - 1,
+              isHeader: true,
+              style: { width: stepWidth },
+            })
+          )}
+        </ScrollView>
+      </View>
+
+      {/* Content */}
+      <View style={styles.content}>
+        {React.cloneElement(childrenArray[current], {
+          index: current,
+          isActive: true,
+          isCompleted: false,
+          isLast: current === totalSteps - 1,
+          isHeader: false,
+        })}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    paddingHorizontal: 24,
+    width: screenWidth,
+    backgroundColor: Color.info[50],
+    paddingVertical: 16,
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+  },
+  containerScrollView: {
+    flexGrow: 1,
+  },
+});
+
+export default Step;

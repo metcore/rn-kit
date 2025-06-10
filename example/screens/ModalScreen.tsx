@@ -9,9 +9,10 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Image, View } from 'react-native';
+import type { NavigationProps } from '../type/navigation';
 
 export default function ModalScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const [isOpenModalDefault, setOpenModalDefault] = useState(false);
   const [isOpenModalDefaultCannotClose, setOpenModalDefaultCannotClose] =
     useState(false);
@@ -21,12 +22,12 @@ export default function ModalScreen() {
         <Button
           title="Modal Default"
           onPress={() => setOpenModalDefault(true)}
-          variant="primary"
+          color="primary"
         />
         <Button
           title="Modal Default Cannot Close"
           onPress={() => setOpenModalDefaultCannotClose(true)}
-          variant="primary"
+          color="primary"
         />
       </Container>
       <Modal
