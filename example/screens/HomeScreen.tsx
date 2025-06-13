@@ -77,7 +77,7 @@ const HomeScreen: React.FC = () => {
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Toast"
           onPress={() => navigation.navigate('Toast')}
           block

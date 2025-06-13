@@ -32,6 +32,7 @@ type RootStackParamList = {
   SpDetail: undefined;
   Badge: undefined;
   Alert: undefined;
+  Toast: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

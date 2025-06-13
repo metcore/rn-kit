@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.info[500],
     marginHorizontal: 8,
   },
-  content: {},
+  content: {
+    flex: 1,
+  },
   listContent: {},
 });
 export default StepItem;

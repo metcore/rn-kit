@@ -7,7 +7,7 @@ const Color = {
   },
 
   gray: {
-    59: '#F7F7F7',
+    50: '#F7F7F7',
     100: '#F2F2F2',
     200: '#EBEBEB',
     300: '#E5E5E5',

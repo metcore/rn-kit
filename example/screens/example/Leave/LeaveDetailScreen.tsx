@@ -3,9 +3,11 @@ import {
   Avatar,
   Badge,
   BottomSheet,
+  Button,
   Card,
   Color,
   Container,
+  Footer,
   Icon,
   List,
   ListItem,
@@ -22,8 +24,10 @@ import {
   View,
 } from 'react-native';
 import Attachment from '../../../components/Attachment';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LeaveDetailScreen() {
+  const navigation = useNavigation();
   const [isOpenModalStatus, setIosOpenModalStatus] = useState(false);
 
   return (
@@ -62,14 +66,14 @@ export default function LeaveDetailScreen() {
                 <Typography
                   variant="t1"
                   weight="semibold"
-                  color={Color.gray[800]}
+                  color={Color.gray[900]}
                 >
                   Mama Alkatiri User
                 </Typography>
                 <Typography
                   variant="t3"
                   weight="medium"
-                  color={Color.gray[600]}
+                  color={Color.gray[900]}
                 >
                   Finance
                 </Typography>
@@ -94,7 +98,7 @@ export default function LeaveDetailScreen() {
                     <Typography
                       variant="t2"
                       weight="semibold"
-                      color={Color.gray[800]}
+                      color={Color.gray[900]}
                     >
                       Selasa, 24 Des 2024 - 16:00:00
                     </Typography>
@@ -118,7 +122,7 @@ export default function LeaveDetailScreen() {
                     <Typography
                       variant="t2"
                       weight="semibold"
-                      color={Color.gray[800]}
+                      color={Color.gray[900]}
                     >
                       Selasa, 24 Des 2024 - 16:00:00
                     </Typography>
@@ -298,6 +302,22 @@ export default function LeaveDetailScreen() {
           </Card>
         </View>
       </BottomSheet>
+      <Footer>
+        <Container>
+          <View style={styles.containerFooter}>
+            <View style={styles.containerButton}>
+              <Button title="Tolak" variant="tertiary" color="danger" />
+            </View>
+            <View style={styles.containerButton}>
+              <Button
+                title="Setuju"
+                color="success"
+                onPress={() => navigation.navigate('LeaveApprove')}
+              />
+            </View>
+          </View>
+        </Container>
+      </Footer>
     </View>
   );
 }
@@ -345,5 +365,13 @@ const styles = StyleSheet.create({
   },
   timelineText: {
     gap: 4,
+  },
+  containerFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  containerButton: {
+    flex: 1,
   },
 });

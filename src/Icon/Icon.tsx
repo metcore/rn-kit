@@ -19,6 +19,7 @@ import AirPlane from './icons/AirPlane';
 import Camera from './icons/Camera';
 import Image from './icons/Image';
 import type { IconNameProps, IconProps } from './type';
+import Times from './icons/Times';
 
 const icons: Record<
   IconNameProps,
@@ -44,6 +45,7 @@ const icons: Record<
   'AirPlane': AirPlane,
   'Camera': Camera,
   'Image': Image,
+  'Times': Times,
 };
 
 const Icon: React.FC<IconProps> = ({

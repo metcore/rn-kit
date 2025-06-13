@@ -38,4 +38,6 @@ export { default as Calendar } from './Calendar/Calendar';
 export { default as DatePicker } from './DatePicker/DatePicker';
 export { default as Step } from './Step/Step';
 export { default as StepItem } from './Step/StepItem';
+export { default as Toast } from './Toast/Toast';
 // export { default as PdfView } from './FileView/PdfView';
+export { ToastProvider, useToast } from './Toast/ToastContext';

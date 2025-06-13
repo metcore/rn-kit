@@ -1,19 +1,21 @@
 import React, { type ReactElement } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, type ViewStyle } from 'react-native';
 import Color from '../Color/Color';
 import Theme from '../Theme/Theme';
 import type { ListItemProps } from './type';
+
 interface ListProps {
   children: ReactElement<ListItemProps> | ReactElement<ListItemProps>[];
+  style?: ViewStyle;
 }
 
-export default function List({ children }: ListProps) {
+export default function List({ children, style }: ListProps) {
   const validChildren = React.Children.toArray(children).filter((child) =>
     React.isValidElement(child)
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {React.Children.map(validChildren, (child, index) => {
         const isLast = index === validChildren.length - 1;
         return React.isValidElement<ListItemProps>(child)

@@ -25,10 +25,12 @@ import {
   Modal,
   Step,
   Typography,
+  useToast,
 } from '@herca/ui-kit';
 import { StepItem } from '@herca/ui-kit';
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProps } from '../../../type/navigation';
+import SelectDayLeave from '../../../components/Select/SelectDayLeave';
 
 const DATA = [
   {
@@ -72,6 +74,11 @@ const DATA = [
     max_day: 20,
   },
   {
+    id: 'bd7a1cbea-cz1b1-42c2-aed5-3ad53abb28ba',
+    leave_name: 'Cuti dsNikah',
+    max_day: 20,
+  },
+  {
     id: 'bd73acbea-czb1-42c2-aed5-3ad53abb28ba',
     leave_name: 'Cuti Nikah',
     max_day: 20,
@@ -93,32 +100,46 @@ interface DataCutiProps {
   leave_name: string;
   max_day: number;
 }
+
+interface LeaveData {
+  leave_id: number;
+  date: string;
+  remark?: string;
+  employee_id: number;
+  status: 'pending' | 'approved' | 'rejected';
+  day_type: number;
+}
+
 export default function LeaveForm() {
   const navigation = useNavigation<NavigationProps>();
   const [current, setCurrent] = useState(0);
-  const [selectedLeave, setSelectedLeave] = useState<string>();
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [isOpenSelectDayType, setIsOpenSelectDayType] = useState(false);
   const [isOpenConrimSubmitBottomSheet, setIsOpenConrimSubmitBottomSheet] =
     useState(false);
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false);
-  const [dayType, setDayType] = useState<number>();
   const [isSuccessSubmit, setIsSuccessSubmit] = useState(false);
+  const [data, setData] = useState<LeaveData | null>(null);
+  const toast = useToast();
 
   const handleNextStep = () => {
-    if (current == 0 && !dayType) {
-      setIsOpenBottomSheet(true);
+    if (current === 0) {
+      if (!data?.leave_id) {
+        toast.show('Harap pilih cuti terlebih dahulu', {
+          color: 'danger',
+        });
+      } else if (!data.day_type) {
+        setIsOpenSelectDayType(true);
+      } else {
+        setCurrent((prev) => Math.min(prev + 1, 3));
+      }
     } else {
-      setIsOpenBottomSheet(false);
+      setIsOpenSelectDayType(false);
       setCurrent((prev) => Math.min(prev + 1, 3));
     }
   };
 
   const handleChangeStep = (val: number) => {
     console.log(val);
-  };
-
-  const handlePressHalfDay = (val: number) => {
-    setDayType(val);
   };
 
   const handleSubmit = () => {
@@ -128,10 +149,17 @@ export default function LeaveForm() {
   };
 
   const handleOnPressBottomSheetDayType = () => {
-    if (dayType) {
+    if (data?.day_type) {
       setIsOpenConrimSubmitBottomSheet(false);
       setCurrent((prev) => Math.min(prev + 1, 3));
     }
+  };
+
+  const handleSetData = (name, val) => {
+    setData((prev) => ({
+      ...prev,
+      [name]: val,
+    }));
   };
 
   useEffect(() => {
@@ -147,7 +175,7 @@ export default function LeaveForm() {
 
   const Item = ({ item }: { item: DataCutiProps }) => (
     <TouchableOpacity
-      onPress={() => setSelectedLeave(item.id)}
+      onPress={() => handleSetData('leave_id', item.id)}
       style={{ gap: 8, flex: 1 }}
     >
       <Card
@@ -159,7 +187,7 @@ export default function LeaveForm() {
             flexDirection: 'row',
             alignItems: 'center',
           },
-          selectedLeave == item.id && {
+          data?.leave_id == item.id && {
             backgroundColor: Color.primary[50],
             borderColor: Color.primary[300],
           },
@@ -403,50 +431,14 @@ export default function LeaveForm() {
       <Footer>
         <Container>{renderFooter()}</Container>
       </Footer>
-      <BottomSheet
-        isOpen={isOpenBottomSheet}
-        footer={
-          <Button color="primary" title="Lanjutkan" onPress={handleNextStep} />
-        }
-        onClose={() => setIsOpenBottomSheet(false)}
-      >
-        <View style={{ flexDirection: 'row', gap: 18 }}>
-          <TouchableOpacity
-            onPress={() => handlePressHalfDay(1)}
-            style={{ height: 200, flex: 1 }}
-          >
-            <Card
-              backgroundImage={require('../../../assets/leave/type_cuti1.png')}
-              style={{ flex: 1 }}
-            >
-              <Typography
-                variant="p3"
-                weight="semibold"
-                color={Color.gray[600]}
-              >
-                Satu Hari Penuh
-              </Typography>
-            </Card>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handlePressHalfDay(2)}
-            style={{ height: 200, flex: 1 }}
-          >
-            <Card
-              backgroundImage={require('../../../assets/leave/type_cuti1.png')}
-              style={{ flex: 1 }}
-            >
-              <Typography
-                variant="p3"
-                weight="semibold"
-                color={Color.gray[600]}
-              >
-                Setengah Hari
-              </Typography>
-            </Card>
-          </TouchableOpacity>
-        </View>
-      </BottomSheet>
+      <SelectDayLeave
+        isOpen={isOpenSelectDayType}
+        onSubmit={(val) => {
+          setIsOpenSelectDayType(false);
+          handleSetData('day_type', val);
+          handleNextStep();
+        }}
+      />
       <BottomSheet
         isOpen={isOpenConrimSubmitBottomSheet}
         onClose={() => setIsOpenConrimSubmitBottomSheet(false)}

@@ -33,6 +33,9 @@ import LeaveScreen from '../screens/example/Leave/LeaveScreen';
 import LeaveFormScreen from '../screens/example/Leave/LeaveForm';
 import LeaveDetailScreen from '../screens/example/Leave/LeaveDetailScreen';
 import { Linking } from 'react-native';
+import { ToastProvider } from '../../src/Toast/ToastContext';
+import ToastScreen from '../screens/ToastScreen';
+import LeaveApproveScreen from '../screens/example/Leave/LeaveApproveScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,49 +53,56 @@ const App = () => {
           ),
       }}
     >
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            contentStyle: {
-              backgroundColor: 'white',
-            },
-          }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Container" component={ContainerScreen} />
-          <Stack.Screen name="Card" component={CardScreen} />
-          <Stack.Screen name="Button" component={ButtonScreen} />
-          <Stack.Screen name="InputPassword" component={InputPasswordScreen} />
-          <Stack.Screen name="Input" component={InputScreen} />
-          <Stack.Screen name="Select" component={SelectScreen} />
-          <Stack.Screen name="CheckBox" component={CheckBox} />
-          <Stack.Screen name="RadioButton" component={RadioButtonScreen} />
-          <Stack.Screen name="Typography" component={TypographyScreen} />
-          <Stack.Screen name="BottomSheet" component={BottomSheetScreen} />
-          <Stack.Screen name="Modal" component={ModalScreen} />
-          <Stack.Screen name="List" component={List} />
-          <Stack.Screen name="Footer" component={FooterScreen} />
-          <Stack.Screen name="Avatar" component={AvatarScreen} />
-          <Stack.Screen name="AvatarGroup" component={AvatarGroupScreen} />
-          <Stack.Screen name="Example" component={ExampleScreen} />
-          <Stack.Screen name="SpSignature" component={SpSignatureScreen} />
-          <Stack.Screen name="SpLatter" component={SpLatterScreen} />
-          <Stack.Screen name="Badge" component={BadgeScreen} />
-          <Stack.Screen name="Alert" component={AlertScreen} />
-          <Stack.Screen name="Drawing" component={DrawingScreen} />
-          <Stack.Screen name="Calendar" component={CalendarScreen} />
-          <Stack.Screen name="Switch" component={SwitchScreen} />
-          <Stack.Screen name="DatePicker" component={DatePickerScreen} />
+      <ToastProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              contentStyle: {
+                backgroundColor: 'white',
+              },
+            }}
+          >
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Container" component={ContainerScreen} />
+            <Stack.Screen name="Card" component={CardScreen} />
+            <Stack.Screen name="Button" component={ButtonScreen} />
+            <Stack.Screen
+              name="InputPassword"
+              component={InputPasswordScreen}
+            />
+            <Stack.Screen name="Input" component={InputScreen} />
+            <Stack.Screen name="Select" component={SelectScreen} />
+            <Stack.Screen name="CheckBox" component={CheckBox} />
+            <Stack.Screen name="RadioButton" component={RadioButtonScreen} />
+            <Stack.Screen name="Typography" component={TypographyScreen} />
+            <Stack.Screen name="BottomSheet" component={BottomSheetScreen} />
+            <Stack.Screen name="Modal" component={ModalScreen} />
+            <Stack.Screen name="List" component={List} />
+            <Stack.Screen name="Footer" component={FooterScreen} />
+            <Stack.Screen name="Avatar" component={AvatarScreen} />
+            <Stack.Screen name="AvatarGroup" component={AvatarGroupScreen} />
+            <Stack.Screen name="Example" component={ExampleScreen} />
+            <Stack.Screen name="SpSignature" component={SpSignatureScreen} />
+            <Stack.Screen name="SpLatter" component={SpLatterScreen} />
+            <Stack.Screen name="Badge" component={BadgeScreen} />
+            <Stack.Screen name="Alert" component={AlertScreen} />
+            <Stack.Screen name="Drawing" component={DrawingScreen} />
+            <Stack.Screen name="Calendar" component={CalendarScreen} />
+            <Stack.Screen name="Switch" component={SwitchScreen} />
+            <Stack.Screen name="DatePicker" component={DatePickerScreen} />
+            <Stack.Screen name="Toast" component={ToastScreen} />
 
-          <Stack.Screen name="Sp" component={SpScreen} />
-          <Stack.Screen name="SpDetail" component={SpDetailScreen} />
+            <Stack.Screen name="Sp" component={SpScreen} />
+            <Stack.Screen name="SpDetail" component={SpDetailScreen} />
 
-          <Stack.Screen name="Leave" component={LeaveScreen} />
-          <Stack.Screen name="LeaveForm" component={LeaveFormScreen} />
-          <Stack.Screen name="LeaveDetail" component={LeaveDetailScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen name="Leave" component={LeaveScreen} />
+            <Stack.Screen name="LeaveForm" component={LeaveFormScreen} />
+            <Stack.Screen name="LeaveDetail" component={LeaveDetailScreen} />
+            <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ToastProvider>
     </Provider>
   );
 };

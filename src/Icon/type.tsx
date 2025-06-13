@@ -22,7 +22,8 @@ export type IconNameProps =
   | 'Filter'
   | 'AirPlane'
   | 'Camera'
-  | 'Image';
+  | 'Image'
+  | 'Times';
 
 export interface IconProps {
   name: IconNameProps;
