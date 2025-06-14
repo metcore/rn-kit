@@ -1,27 +1,68 @@
-# Alert
+# 📢 Alert Component
 
-## Usage
+Komponen `Alert` digunakan untuk menampilkan pesan notifikasi dengan ikon, judul, dan pesan yang dapat dikustomisasi warnanya sesuai konteks (seperti *success*, *info*, *warning*, dll).
 
-```js
-import { Alert } from '@herca/ui-kit';
+![Deskripsi Alt](../../assets/doc/Alert/Alert.png)
+## ✨ Fitur
 
-export default function AlertScreen(){
-    return(
-      <Alert
-        title="Warning"
-        message="Hello everybody, im here."
-        color="warning"
-      />
-    )
-}
-<Button />
+- Menampilkan ikon notifikasi
+- Mendukung berbagai warna status
+- Mendukung judul dan pesan
+- Gaya dapat dikustomisasi
+
+## 🧱 Props
+
+| Prop           | Tipe                                                                 | Default            | Deskripsi                                                                 |
+|----------------|----------------------------------------------------------------------|---------------------|---------------------------------------------------------------------------|
+| `icon`         | `IconNameProps`                                                      | `'ExlamationMark'`  | Nama ikon dari komponen `Icon`                                           |
+| `title`        | `string`                                                             | `undefined`         | Judul alert                                                               |
+| `message`      | `string`                                                             | `undefined`         | Pesan tambahan                                                            |
+| `color`        | `'success' \| 'info' \| 'warning' \| 'danger' \| 'primary' \| 'orange' \| 'purple'` | `'primary'` | Warna tema alert                                                         |
+| `style`        | `ViewStyle`                                                          | `undefined`         | Gaya tambahan untuk container                                             |
+| `titleStyle`   | `StyleProp<ViewStyle>`                                               | `undefined`         | Gaya tambahan untuk judul                                                 |
+| `messageStyle` | `StyleProp<ViewStyle>`                                               | `undefined`         | Gaya tambahan untuk pesan                                                 |
+
+## 🎨 Warna yang Didukung
+
+```ts
+type ColorProps =
+  | 'success'
+  | 'info'
+  | 'warning'
+  | 'danger'
+  | 'primary'
+  | 'orange'
+  | 'purple';
 ```
 
-## Props
+## 📦 Cara Penggunaan
 
-| props name           | mandatory | types   | default                                                  |
-| -------------------- | --------- | ------- | -------------------------------------------------------- |
-| icon             |          | string | ExlamationMark                                            |
-| title              |         | title    | null                                              |
-| message       |           | string  | null       |
-| color          |           | string  | primary       |
+```tsx
+import React from 'react';
+import Alert from './Alert'; // sesuaikan dengan path Anda
+
+export default function MyScreen() {
+  return (
+    <Alert
+      icon="CheckCircle"
+      title="Berhasil"
+      message="Data Anda berhasil disimpan."
+      color="success"
+    />
+  );
+}
+```
+
+## 🛠️ Kustomisasi
+
+```tsx
+<Alert
+  icon="Warning"
+  title="Peringatan"
+  message="Pastikan semua data telah diisi."
+  color="warning"
+  style={{ marginTop: 16 }}
+  titleStyle={{ fontSize: 16 }}
+  messageStyle={{ fontStyle: 'italic' }}
+/>
+```

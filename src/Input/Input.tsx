@@ -1,28 +1,10 @@
 import React, { useState } from 'react';
-import {
-  TextInput,
-  View,
-  type TextInputProps,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from '../Icon';
-import { type IconNameProps } from '../Icon/type';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
-
-interface InputProps extends TextInputProps {
-  icon?: IconNameProps;
-  iconRight?: IconNameProps;
-  label?: string | undefined;
-  clearButton?: boolean;
-  hasError?: boolean;
-  hint?: string;
-  onPressIconLeft?: () => void;
-  onPressIconRight?: () => void;
-  secureTextEntry?: boolean;
-}
+import type { InputProps } from './type';
 
 const Input: React.FC<InputProps> = ({
   icon,
@@ -125,6 +107,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 36,
     borderRadius: 8,
+    gap: 8,
     borderWidth: 1,
     backgroundColor: Color.base.white100,
     justifyContent: 'center',

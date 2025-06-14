@@ -20,13 +20,17 @@ import Camera from './icons/Camera';
 import Image from './icons/Image';
 import type { IconNameProps, IconProps } from './type';
 import Times from './icons/Times';
+import ArrowDown from './icons/ArrowDown';
+import ArrowUp from './icons/ArrowUp';
+import Search from './icons/Search';
+import Home from './icons/Home';
 
 const icons: Record<
   IconNameProps,
   React.FC<{ size: number; color: string; style?: ViewStyle }>
 > = {
-  'Home': User,
-  'Search': User,
+  'Home': Home,
+  'Search': Search,
   'User': User,
   'Eye': Eye,
   'ArrowRight': ArrowRight,
@@ -46,6 +50,8 @@ const icons: Record<
   'Camera': Camera,
   'Image': Image,
   'Times': Times,
+  'ArrowDown': ArrowDown,
+  'ArrowUp': ArrowUp,
 };
 
 const Icon: React.FC<IconProps> = ({

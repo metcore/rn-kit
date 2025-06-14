@@ -32,7 +32,11 @@ type RootStackParamList = {
   SpDetail: undefined;
   Badge: undefined;
   Alert: undefined;
-  Toast: undefined;
+  TextArea: undefined;
+  Accordion: undefined;
+  DropDown: undefined;
+  Login: undefined;
+  ForgotPassword: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

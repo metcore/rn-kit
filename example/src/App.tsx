@@ -36,6 +36,11 @@ import { Linking } from 'react-native';
 import { ToastProvider } from '../../src/Toast/ToastContext';
 import ToastScreen from '../screens/ToastScreen';
 import LeaveApproveScreen from '../screens/example/Leave/LeaveApproveScreen';
+import AccordionScreen from '../screens/AccordionScreen';
+import TextAreaScreen from '../screens/TextAreaScreen';
+import DropDownScreen from '../screens/DropdownScreen';
+import LoginScreen from '../screens/example/Auth/LoginScreen';
+import ForgotPasswordScreen from '../screens/example/Auth/ForgotPasswordScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +81,7 @@ const App = () => {
             <Stack.Screen name="CheckBox" component={CheckBox} />
             <Stack.Screen name="RadioButton" component={RadioButtonScreen} />
             <Stack.Screen name="Typography" component={TypographyScreen} />
+            <Stack.Screen name="TextArea" component={TextAreaScreen} />
             <Stack.Screen name="BottomSheet" component={BottomSheetScreen} />
             <Stack.Screen name="Modal" component={ModalScreen} />
             <Stack.Screen name="List" component={List} />
@@ -100,6 +106,14 @@ const App = () => {
             <Stack.Screen name="LeaveForm" component={LeaveFormScreen} />
             <Stack.Screen name="LeaveDetail" component={LeaveDetailScreen} />
             <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />
+            <Stack.Screen name="Accordion" component={AccordionScreen} />
+            <Stack.Screen name="Dropdown" component={DropDownScreen} />
+
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen
+              name="ForgotPassword"
+              component={ForgotPasswordScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </ToastProvider>

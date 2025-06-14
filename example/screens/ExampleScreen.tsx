@@ -8,6 +8,7 @@ export default function ExampleScreen() {
     <Container style={{ gap: 8 }}>
       <Button title="sp" onPress={() => navigation.navigate('Sp')} />
       <Button title="Leave" onPress={() => navigation.navigate('Leave')} />
+      <Button title="Login" onPress={() => navigation.navigate('Login')} />
     </Container>
   );
 }

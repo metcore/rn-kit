@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
+import Color from '../Color/Color';
 
 interface PropsBottomSheet {
   label?: string;
@@ -78,7 +79,7 @@ export default function BottomSheet({
         onClose && onClose(false);
       });
     }
-  }, [closable, onClose, translateY]);
+  }, [closable, translateY, onClose]);
 
   const showModal = useCallback(() => {
     setIsVisible(true);
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   bottomSheet: {
     paddingBottom: Platform.OS === 'ios' ? 15 : 5,
-    maxHeight: Dimensions.get('window').height - 50,
+    maxHeight: Dimensions.get('window').height,
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
@@ -235,9 +236,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   contentWithFooter: {
-    marginBottom: 20,
+    marginBottom: 40,
   },
   footer: {
+    backgroundColor: Color.base.white100,
     position: 'absolute',
     bottom: 0,
     left: 0,

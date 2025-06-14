@@ -6,7 +6,20 @@ export default function AvatarScreen() {
       <Typography variant="h2" weight="semibold">
         Initial Name
       </Typography>
-      <Avatar name="Hercules Dev" backgroundColor="#3b82f6" textColor="#fff" />
+      <Avatar
+        name="OP"
+        size="large"
+        backgroundColor="#3b82f6"
+        textColor="#fff"
+      />
+      <Avatar name="OP" backgroundColor="#3b82f6" textColor="#fff" />
+      <Avatar
+        name="OP"
+        size="small"
+        backgroundColor="#3b82f6"
+        textColor="#fff"
+      />
+
       <Typography variant="h2" weight="semibold">
         Image{' '}
       </Typography>

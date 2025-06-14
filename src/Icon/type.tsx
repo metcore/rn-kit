@@ -18,6 +18,8 @@ export type IconNameProps =
   | 'Pdf'
   | 'ArrowBackAlt'
   | 'ArrowForwardAlt'
+  | 'ArrowDown'
+  | 'ArrowUp'
   | 'Check'
   | 'Filter'
   | 'AirPlane'

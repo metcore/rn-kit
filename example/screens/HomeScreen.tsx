@@ -60,12 +60,6 @@ const HomeScreen: React.FC = () => {
         />
         <Button
           color="success"
-          title="Flat List"
-          onPress={() => navigation.navigate('AvatarGroup')}
-          block
-        />
-        <Button
-          color="success"
           title="Badge"
           onPress={() => navigation.navigate('Badge')}
           block
@@ -105,7 +99,13 @@ const HomeScreen: React.FC = () => {
           block
         />
         <Button
-          color="primary"
+          color="success"
+          title="Text Area"
+          onPress={() => navigation.navigate('TextArea')}
+          block
+        />
+        <Button
+          color="success"
           title="Select"
           onPress={() => navigation.navigate('Select')}
           block
@@ -162,9 +162,15 @@ const HomeScreen: React.FC = () => {
           block
         />
         <Button
-          color="primary"
+          color="success"
           title="Accordion"
-          onPress={() => navigation.navigate('Modal')}
+          onPress={() => navigation.navigate('Accordion')}
+          block
+        />
+        <Button
+          color="success"
+          title="Dropdown"
+          onPress={() => navigation.navigate('Dropdown')}
           block
         />
         <Typography variant="h3" weight="bold" style={styles.title}>

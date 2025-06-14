@@ -1,94 +1,98 @@
-import {
-  View,
-  TouchableOpacity,
-  Modal,
-  StyleSheet,
-  Pressable,
-  Text,
-} from 'react-native';
-import { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { useState, useEffect } from 'react';
 
+import { SelectProps } from './type';
+import BottomSheet from '../BottomSheet/BottomSheet';
 import Card from '../Ui/Card';
 import Typography from '../Typography/Typography';
+import Button from '../Button/Button';
+import Color from '../Color/Color';
+import Input from '../Input/Input';
+export default function Select({
+  isOpen,
+  data,
+  renderItem,
+  onClose,
+  onSubmit,
+  onSearch,
+}: SelectProps) {
+  const [isOpenSelect, setIsOpenSelect] = useState<string | null>(false);
+  const [selected, setSelected] = useState(null);
 
-export default function Select() {
-  const [isOpenSelect, setIsOpenSelect] = useState(false);
+  const handleOnPressSelectItem = (val: string | number) => {
+    setSelected(val);
+  };
 
-  return (
-    <View>
-      <TouchableOpacity onPress={() => setIsOpenSelect(true)}>
-        <Card>
-          <View style={styles.buttonModal}>
-            <Typography>Open Select</Typography>
-          </View>
+  useEffect(() => {
+    setIsOpenSelect(isOpen);
+  }, [isOpen]);
+
+  const handleOnCloseBottom = (val) => {
+    onClose?.(val);
+  };
+
+  const handleOnPresSubmitSelect = () => {
+    setIsOpenSelect(false);
+    onSubmit?.(selected);
+  };
+
+  const DefaultItem = ({ item }) => <Typography>{item.label}</Typography>;
+
+  const renderItemWrapper = ({ item }) => {
+    const content = renderItem ? (
+      renderItem({ item, isSelected: selected === item.value })
+    ) : (
+      <DefaultItem item={item} />
+    );
+    return (
+      <TouchableOpacity onPress={() => handleOnPressSelectItem(item?.value)}>
+        <Card
+          style={[
+            { marginBottom: 6 },
+            selected == item.value && {
+              backgroundColor: Color.primary[50],
+              borderColor: Color.primary[300],
+            },
+          ]}
+        >
+          {content}
         </Card>
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isOpenSelect}
-        onRequestClose={() => {
-          setIsOpenSelect(!isOpenSelect);
-        }}
+    );
+  };
+  return (
+    <View>
+      <BottomSheet
+        onClose={handleOnCloseBottom}
+        isOpen={isOpenSelect}
+        footer={
+          <Button
+            title="lanjutkan"
+            color="primary"
+            onPress={handleOnPresSubmitSelect}
+          />
+        }
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setIsOpenSelect(!isOpenSelect)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
+        <View style={styles.containerSearch}>
+          <Input
+            icon="Search"
+            placeholder="Search"
+            onChangeText={(val) => onSearch?.(val)}
+          />
         </View>
-      </Modal>
+        <FlatList
+          data={data}
+          renderItem={renderItemWrapper}
+          keyExtractor={(item) => item.value}
+        />
+      </BottomSheet>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  buttonModal: {
-    justifyContent: 'space-between',
+  containerSearch: {
+    gap: 14,
+    padding: 12,
   },
 });

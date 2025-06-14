@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import type { AvatarProps, AvatarSizeType } from './type';
+import Typography from '../Typography/Typography';
 
 const SIZE_MAP: Record<AvatarSizeType, number> = {
   small: 30,
@@ -41,14 +42,13 @@ const Avatar: React.FC<AvatarProps> = ({
           }}
         />
       ) : (
-        <Text
-          style={[
-            styles.initials,
-            { color: textColor, fontSize: avatarSize / 2 },
-          ]}
+        <Typography
+          variant="p2"
+          weight="medium"
+          style={[styles.initials, { color: textColor }]}
         >
           {name}
-        </Text>
+        </Typography>
       )}
     </View>
   );
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   initials: {
-    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

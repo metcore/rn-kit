@@ -1,4 +1,6 @@
 export { default as Theme } from './Theme/Theme';
+export { default as Accordion } from './Accordion/Accordion';
+export { default as AccordionItem } from './Accordion/AccordionItem';
 export { default as Button } from './Button/Button';
 export { default as Color } from './Color/Color';
 export { default as Typography } from './Typography/Typography';
@@ -39,5 +41,6 @@ export { default as DatePicker } from './DatePicker/DatePicker';
 export { default as Step } from './Step/Step';
 export { default as StepItem } from './Step/StepItem';
 export { default as Toast } from './Toast/Toast';
+export { default as TextArea } from './Input/TextArea';
 // export { default as PdfView } from './FileView/PdfView';
 export { ToastProvider, useToast } from './Toast/ToastContext';

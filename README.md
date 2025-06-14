@@ -72,29 +72,60 @@ import { Button } from '@herca/ui-kit';
 
 ## 📚 Komponen Tersedia
 
-### 📐 Layout
+### 🔹 1. Input / Form Components
+
+Komponen untuk mengumpulkan input dari pengguna.
+
+- [Checkbox](../src/Checkbox/README.md)
+- [DatePicker](../src/DatePicker/README.md)
+- [DropDown](../src/DropDown/README.md)
+- [Input](../src/Input/README.md)
+- [Input Password](../src/InputPassword/README.md)
+- [Radio Button](../src/RadioButton/README.md)
+- [Select](../src/Select/README.md)
+- [Switch](../src/Switch/README.md)
+- [TextArea](../src/TextArea/README.md)
+
+---
+
+### 🔹 2. Overlay
+
+Komponen yang muncul di atas konten utama untuk interaksi sementara.
+
+- [Bottom Sheet](./src/BottomSheet/README.md)
+- [Modal](../src/Modal/README.md)
+
+---
+
+### 🔹 3. Disclosure / Navigation Components
+
+Komponen untuk menyembunyikan atau menampilkan konten.
+
+- [Accordion](../src/Accordion/README.md)
+
+---
+
+### 🔹 4. Feedback 
+
+Komponen untuk memberikan umpan balik atau informasi kepada pengguna.
+
 - [Alert](./src/Alert/README.md)
 - [Badge](./src/Badge/README.md)
-- [Container](./docs/components/Input.md)
-- [Card](./docs/components/Input.md)
-- [List](./docs/components/Input.md)
-- [Footer](./docs/components/Input.md)
-- [Typography](./docs/components/Input.md)
+- [Toast](./src/Toast/README.md)
 
-### 🧾 Form
-- [Button](./docs/components/Input.md)
-- [Checkbox](./docs/components/Input.md)
-- [Drawing](./docs/components/Input.md)
-- [Input](./docs/components/Input.md)
-- [Input Password](./docs/components/Input.md)
-- [Radio Button](./docs/components/Input.md)
-- [Select](./docs/components/Input.md)
-- [Switch](./docs/components/Input.md)
+---
 
-### 🛠️ Tool
-- [Bottom Sheet](./src/BottomSheet/README.md)
-- [Modal](./docs/components/Input.md)
-- [Accordion](./docs/components/Input.md)
+### 🔹 5. Data Display
+
+Komponen untuk menampilkan informasi atau elemen visual.
+
+- [Avatar](./src/Avatar/README.md)
+- [AvatarGroup](./src/Alert/README.md)
+- [Calendar](../src/Calendar/README.md)
+- [Card](../src/Card/README.md)
+- [Drawing](../src/Drawing/README.md)
+- [List](../src/List/README.md)
+- [Typography](../src/Typography/README.md)
 
 ---
 
