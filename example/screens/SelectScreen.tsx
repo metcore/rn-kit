@@ -55,10 +55,18 @@ const DATA = [
   },
   {
     value: 11,
-    label: 'tes',
+    label: 'tes11',
   },
   {
     value: 12,
+    label: 'tes',
+  },
+  {
+    value: 13,
+    label: 'tes',
+  },
+  {
+    value: 14,
     label: 'tes',
   },
 ];
@@ -73,7 +81,7 @@ export default function SelectScreen() {
     setSubmitValue(val);
     setIsOpenSelectCustom(false);
   };
-  const renderItem = ({ item }) => {
+  const renderItem = (item) => {
     return (
       <View>
         <View style={styles.containerItem}>
@@ -114,6 +122,7 @@ export default function SelectScreen() {
         isOpen={isOpenSelectCustom}
         onClose={() => setIsOpenSelectCustom(false)}
         data={DATA}
+        multiple
         renderItem={renderItem}
         onSubmit={handleSubmitSelectCustom}
       />

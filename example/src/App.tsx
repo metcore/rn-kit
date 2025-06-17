@@ -41,6 +41,7 @@ import TextAreaScreen from '../screens/TextAreaScreen';
 import DropDownScreen from '../screens/DropdownScreen';
 import LoginScreen from '../screens/example/Auth/LoginScreen';
 import ForgotPasswordScreen from '../screens/example/Auth/ForgotPasswordScreen';
+import ChipScreen from '../screens/ChipScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -79,6 +80,7 @@ const App = () => {
             <Stack.Screen name="Input" component={InputScreen} />
             <Stack.Screen name="Select" component={SelectScreen} />
             <Stack.Screen name="CheckBox" component={CheckBox} />
+            <Stack.Screen name="Chip" component={ChipScreen} />
             <Stack.Screen name="RadioButton" component={RadioButtonScreen} />
             <Stack.Screen name="Typography" component={TypographyScreen} />
             <Stack.Screen name="TextArea" component={TextAreaScreen} />

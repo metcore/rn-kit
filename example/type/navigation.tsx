@@ -6,6 +6,7 @@ type RootStackParamList = {
   Typography: undefined;
   Input: undefined;
   Card: undefined;
+  Chip: undefined;
   Modal: undefined;
   BottomSheet: undefined;
   Checkbox: undefined;

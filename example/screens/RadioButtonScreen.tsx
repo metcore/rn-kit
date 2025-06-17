@@ -1,4 +1,4 @@
-import { Container, RadioButton } from '@herca/ui-kit';
+import { Container, RadioButton, Typography } from '@herca/ui-kit';
 import { useState } from 'react';
 
 const options = [
@@ -20,6 +20,7 @@ export default function RadioButtonScreen() {
         onChange={setSelected}
         direction="vertical"
       />
+      <Typography>The selected value is : {selected}</Typography>
     </Container>
   );
 }

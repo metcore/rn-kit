@@ -88,6 +88,12 @@ const HomeScreen: React.FC = () => {
         />
         <Button
           color="success"
+          title="Chip Select"
+          onPress={() => navigation.navigate('Chip')}
+          block
+        />
+        <Button
+          color="success"
           title="Input"
           onPress={() => navigation.navigate('Input')}
           block

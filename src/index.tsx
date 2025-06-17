@@ -11,6 +11,7 @@ export { default as Center } from './Ui/Center';
 export { default as Gap } from './Ui/Gap';
 export { default as Grid } from './Ui/Grid';
 export { default as Col } from './Ui/Col';
+export { default as Chip } from './Chip/Chip';
 export { default as Footer } from './Ui/Footer';
 export { default as Devider } from './Ui/Devider';
 export { default as Select } from './Select/Select';

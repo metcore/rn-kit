@@ -7,5 +7,6 @@ export interface SelectProps {
   onSubmit?: (val) => void;
   onClose?: (val) => void;
   onSearch: (val) => void;
+  multiple?: boolean;
   required?: boolean;
 }
