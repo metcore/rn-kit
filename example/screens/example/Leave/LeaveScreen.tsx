@@ -1,14 +1,18 @@
 import {
   Avatar,
   Badge,
+  BottomSheet,
   Button,
   Card,
+  Chip,
   Color,
   Container,
   Devider,
   Footer,
   Icon,
+  MonthPicker,
   Typography,
+  YearPicker,
 } from '@herca/ui-kit';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -20,6 +24,7 @@ import {
   type ImageSourcePropType,
 } from 'react-native';
 import type { NavigationProps } from '../../../type/navigation';
+import { useState } from 'react';
 
 const DATA = [
   {
@@ -144,9 +149,18 @@ const Item = ({ navigation, item }: ItemProps) => (
 
 export default function LeaveScreen() {
   const navigation = useNavigation<NavigationProps>();
+  const [selectedStatus, setSelectedStatus] = useState<boolean>();
+  const [selectedFilter, setSelectedFilter] = useState<boolean>();
+  const [isOpenBottomSheetFilter, setIsOpenBottomSheetFilter] =
+    useState<boolean>(false);
+  const [isOpenYearPicker, setIsOpenYearPicker] = useState(false);
+  const [isOpenMonthPicker, setIsOpenMonthPicker] = useState(false);
+  const handleOnCloseBottomSheetFilter = () => {
+    setIsOpenBottomSheetFilter(false);
+  };
   return (
     <Container>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <View style={{ flexDirection: 'row', gap: 8 }}>
         <View
           style={{
             borderRightWidth: 1,
@@ -154,19 +168,41 @@ export default function LeaveScreen() {
             paddingRight: 10,
           }}
         >
-          <Button variant="outline" size="small">
-            <Icon name="Filter" size={20} color={Color.gray[600]} />
-            <Typography variant="t2" weight="semibold" color={Color.gray[800]}>
-              Filter
-            </Typography>
-          </Button>
+          <Chip
+            options={[{ label: 'Option 1', value: '1' }]}
+            selected={selectedFilter}
+            onSelect={setSelectedFilter}
+            onPress={() => setIsOpenBottomSheetFilter(true)}
+            direction="horizontal"
+            color="primary"
+            renderItem={() => (
+              <View style={{ flexDirection: 'row', gap: 8 }}>
+                <Icon name="Filter" size={15} color={Color.gray[600]} />
+                <Typography
+                  variant="t2"
+                  weight="semibold"
+                  color={Color.gray[800]}
+                >
+                  Filter
+                </Typography>
+              </View>
+            )}
+          />
         </View>
-        <View style={{ paddingLeft: 10, flexDirection: 'row', gap: 10 }}>
-          <Button variant="outline" title="Semua" />
-          <Button variant="outline" title="Pengajuan Saya (2)" />
-          <Button variant="outline" title="Persetujuan Saya (2)" />
-        </View>
-      </ScrollView>
+        <Chip
+          options={[
+            { label: 'Semua', value: '1' },
+            { label: 'Pengajuan Saya', value: '2' },
+            { label: 'Option 1', value: '3' },
+            { label: 'Option 1', value: '4' },
+          ]}
+          selected={selectedStatus}
+          onSelect={setSelectedStatus}
+          direction="horizontal"
+          multiple
+          color="primary"
+        />
+      </View>
 
       <FlatList
         data={DATA}
@@ -182,6 +218,198 @@ export default function LeaveScreen() {
           />
         </Container>
       </Footer>
+      <BottomSheet
+        isOpen={isOpenBottomSheetFilter}
+        onClose={handleOnCloseBottomSheetFilter}
+        footer={<Button title="Tampilkan hasil" color="primary" />}
+      >
+        <ScrollView>
+          <View style={{ gap: 12 }}>
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Berdasrakan Peran
+              </Typography>
+              <Card>
+                <Chip
+                  options={[
+                    { label: 'Semua', value: '1' },
+                    { label: 'Pengajuan Saya', value: '2' },
+                    { label: 'Option 1', value: '3' },
+                    { label: 'Option 1', value: '4' },
+                  ]}
+                  selected={selectedStatus}
+                  onSelect={setSelectedStatus}
+                  direction="vertical"
+                  size="small"
+                  multiple
+                  color="primary"
+                />
+              </Card>
+            </View>
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Status
+              </Typography>
+              <Card>
+                <Chip
+                  options={[
+                    { label: 'Terbuka', value: 'tes ' },
+                    { label: 'Disetujui ', value: 'tes2 ' },
+                    { label: 'Disetujui HR ', value: 'tes4 ' },
+                    { label: 'Ditolak ', value: 'tes3 ' },
+                  ]}
+                  scrollable
+                  direction="vertical"
+                  size="small"
+                  color="primary"
+                  multiple
+                />
+              </Card>
+            </View>
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Status
+              </Typography>
+              <Card>
+                <Chip
+                  options={[
+                    { label: 'Terbuka', value: 'tes' },
+                    { label: 'Disetujui', value: 'tes2' },
+                    { label: 'Disetujui HR', value: 'tes4' },
+                    { label: 'Ditolak', value: 'tes3' },
+                  ]}
+                  scrollable
+                  direction="vertical"
+                  size="small"
+                  color="primary"
+                  multiple
+                />
+              </Card>
+            </View>
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Status
+              </Typography>
+              <Card>
+                <Chip
+                  options={[
+                    { label: 'Terbuka', value: 'tes' },
+                    { label: 'Disetujui', value: 'tes2' },
+                    { label: 'Disetujui HR', value: 'tes4' },
+                    { label: 'Ditolak', value: 'tes3' },
+                  ]}
+                  scrollable
+                  direction="vertical"
+                  size="small"
+                  color="primary"
+                  multiple
+                />
+              </Card>
+            </View>
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Status
+              </Typography>
+              <Card>
+                <Chip
+                  options={[
+                    { label: 'Terbuka', value: 'tes' },
+                    { label: 'Disetujui', value: 'tes2' },
+                    { label: 'Disetujui HR', value: 'tes4' },
+                    { label: 'Ditolak', value: 'tes3' },
+                  ]}
+                  scrollable
+                  direction="vertical"
+                  size="small"
+                  color="primary"
+                  multiple
+                />
+              </Card>
+            </View>
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Status
+              </Typography>
+              <Card>
+                <Chip
+                  options={[
+                    { label: 'Terbuka', value: 'tes' },
+                    { label: 'Disetujui', value: 'tes2' },
+                    { label: 'Disetujui HR', value: 'tes4' },
+                    { label: 'Ditolak', value: 'tes3' },
+                  ]}
+                  scrollable
+                  direction="vertical"
+                  size="small"
+                  color="primary"
+                  multiple
+                />
+              </Card>
+            </View>
+
+            <View style={{ gap: 12 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Tanggal
+              </Typography>
+              <View style={{ flexDirection: 'row', gap: 8 }}>
+                <View style={{ flex: 1 }}>
+                  <Button
+                    variant="outline"
+                    onPress={() => setIsOpenYearPicker(true)}
+                    color="primary"
+                    size="small"
+                    block
+                    title="Pilih Tahun"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Button
+                    variant="outline"
+                    onPress={() => setIsOpenMonthPicker(true)}
+                    color="primary"
+                    size="small"
+                    block
+                    title="Pilih Bulan"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </BottomSheet>
+      <YearPicker
+        isOpen={isOpenYearPicker}
+        onClose={() => setIsOpenYearPicker(false)}
+      />
+      <MonthPicker isOpen={isOpenMonthPicker} />
     </Container>
   );
 }

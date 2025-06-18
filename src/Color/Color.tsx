@@ -118,11 +118,11 @@ const Color = {
   },
 
   divider: {
-    25: 'rgba(40, 40, 40, 0.12)', // #282828 12%
+    25: 'rgba(40, 40, 40, 0.12)',
   },
 
   disabled: {
-    25: 'rgba(40, 40, 40, 0.12)', // sama seperti divider
+    25: 'rgba(40, 40, 40, 0.12)',
   },
 
   shadow: {

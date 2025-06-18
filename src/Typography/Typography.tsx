@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, type TextStyle } from 'react-native';
+import { StyleSheet, Text, type TextStyle } from 'react-native';
 import Color from '../Color/Color';
 import {
   fontSizeMap,
@@ -28,10 +28,18 @@ const Typography: React.FC<TypographyProps> = ({
   };
 
   return (
-    <Text style={[textStyle, style]} numberOfLines={numberOfLines}>
+    <Text style={[styles, textStyle, style]} numberOfLines={numberOfLines}>
       {children}
     </Text>
   );
 };
 
 export default Typography;
+
+const styles = StyleSheet.create({
+  text: {
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    color: 'white',
+  },
+});

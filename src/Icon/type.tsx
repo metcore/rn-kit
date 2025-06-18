@@ -8,6 +8,7 @@ export type IconNameProps =
   | 'User'
   | 'Eye'
   | 'ArrowRight'
+  | 'ArrowLeft'
   | 'Document'
   | 'Calendar'
   | 'ExlamationMark'

@@ -9,18 +9,10 @@ import {
 } from 'react-native';
 import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
+import type { ColorVariantType } from '../Color/type';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'default' | 'outline' | 'tertiary';
-type ButtonColor =
-  | 'default'
-  | 'success'
-  | 'danger'
-  | 'primary'
-  | 'warning'
-  | 'info'
-  | 'purple'
-  | 'orange';
 
 interface ButtonProps {
   children?: React.ReactNode;
@@ -28,7 +20,7 @@ interface ButtonProps {
   onPress?: (event: GestureResponderEvent) => void;
   size?: ButtonSize;
   variant?: ButtonVariant;
-  color?: ButtonColor;
+  color?: ColorVariantType;
   disabled?: boolean;
   width?: number | string;
   block?: boolean;
@@ -36,7 +28,7 @@ interface ButtonProps {
 }
 
 const COLOR_MAP: Record<
-  ButtonColor,
+  ColorVariantType,
   {
     bg: string;
     text: string;
@@ -153,7 +145,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const validSizes: ButtonSize[] = ['small', 'medium', 'large'];
   const validVariants: ButtonVariant[] = ['default', 'outline', 'tertiary'];
-  const validColors: ButtonColor[] = [
+  const validColors: ColorVariantType[] = [
     'default',
     'success',
     'danger',

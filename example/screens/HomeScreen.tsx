@@ -42,6 +42,12 @@ const HomeScreen: React.FC = () => {
         />
         <Button
           color="success"
+          title="Label"
+          onPress={() => navigation.navigate('Label')}
+          block
+        />
+        <Button
+          color="success"
           title="Footer"
           onPress={() => navigation.navigate('Footer')}
           block
@@ -144,6 +150,18 @@ const HomeScreen: React.FC = () => {
           color="success"
           title="DatePicker"
           onPress={() => navigation.navigate('DatePicker')}
+          block
+        />
+        <Button
+          color="success"
+          title="Month Picker"
+          onPress={() => navigation.navigate('MonthPicker')}
+          block
+        />
+        <Button
+          color="success"
+          title="Year Picker"
+          onPress={() => navigation.navigate('YearPicker')}
           block
         />
         <Typography variant="h3" weight="bold">

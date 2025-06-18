@@ -32,18 +32,18 @@ export default function Select({
   };
 
   return (
-    <View>
-      <BottomSheet
-        onClose={handleOnCloseBottom}
-        isOpen={isOpenSelect}
-        footer={
-          <Button
-            title="lanjutkan"
-            color="primary"
-            onPress={handleOnPresSubmitSelect}
-          />
-        }
-      >
+    <BottomSheet
+      onClose={handleOnCloseBottom}
+      isOpen={isOpenSelect}
+      footer={
+        <Button
+          title="lanjutkan"
+          color="primary"
+          onPress={handleOnPresSubmitSelect}
+        />
+      }
+    >
+      <View style={styles.container}>
         <View style={styles.containerSearch}>
           <Input
             icon="Search"
@@ -54,7 +54,7 @@ export default function Select({
         <Chip
           options={data}
           direction="vertical"
-          scrollable={false}
+          scrollable={true}
           selected={selected}
           multiple={multiple}
           onSelect={setSelected}
@@ -63,12 +63,15 @@ export default function Select({
           renderItem={renderItem}
           block
         />
-      </BottomSheet>
-    </View>
+      </View>
+    </BottomSheet>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 190,
+  },
   containerSearch: {
     gap: 14,
     padding: 12,

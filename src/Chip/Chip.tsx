@@ -7,6 +7,7 @@ const Chip: React.FC<ChipProps> = ({
   options,
   selected = [],
   onSelect,
+  onPress,
   direction = 'horizontal',
   color = 'default',
   renderItem,
@@ -78,6 +79,11 @@ const Chip: React.FC<ChipProps> = ({
     }
   };
 
+  const handleOnPres = (isDisabled, item) => {
+    !isDisabled && handleSelect(item.value);
+    onPress?.(item.value);
+  };
+
   const renderChip = ({ item }: { item: (typeof options)[number] }) => {
     const selectedState = isSelected(item.value);
     const isDisabled = item.disabled;
@@ -108,7 +114,7 @@ const Chip: React.FC<ChipProps> = ({
           dynamicStyle,
           isBlockMode && styles.blockChip,
         ]}
-        onPress={() => !isDisabled && handleSelect(item.value)}
+        onPress={() => handleOnPres(isDisabled, item)}
         disabled={isDisabled}
       >
         {renderItem ? (

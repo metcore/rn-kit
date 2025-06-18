@@ -38,10 +38,13 @@ import ToastScreen from '../screens/ToastScreen';
 import LeaveApproveScreen from '../screens/example/Leave/LeaveApproveScreen';
 import AccordionScreen from '../screens/AccordionScreen';
 import TextAreaScreen from '../screens/TextAreaScreen';
-import DropDownScreen from '../screens/DropdownScreen';
-import LoginScreen from '../screens/example/Auth/LoginScreen';
+import DropDownScreen from '../screens/DropDownScreen';
 import ForgotPasswordScreen from '../screens/example/Auth/ForgotPasswordScreen';
 import ChipScreen from '../screens/ChipScreen';
+import LoginScreen from '../screens/example/Auth/LoginScreen';
+import LabelScreen from '../screens/LabelScreen';
+import YearPickerScreen from '../screens/YearPickerScreen';
+import MonthPickerScreen from '../screens/MonthPickerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -99,6 +102,8 @@ const App = () => {
             <Stack.Screen name="Calendar" component={CalendarScreen} />
             <Stack.Screen name="Switch" component={SwitchScreen} />
             <Stack.Screen name="DatePicker" component={DatePickerScreen} />
+            <Stack.Screen name="MonthPicker" component={MonthPickerScreen} />
+            <Stack.Screen name="YearPicker" component={YearPickerScreen} />
             <Stack.Screen name="Toast" component={ToastScreen} />
 
             <Stack.Screen name="Sp" component={SpScreen} />
@@ -110,8 +115,8 @@ const App = () => {
             <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />
             <Stack.Screen name="Accordion" component={AccordionScreen} />
             <Stack.Screen name="Dropdown" component={DropDownScreen} />
-
             <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Label" component={LabelScreen} />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}

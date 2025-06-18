@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import Color from '../Color/Color';
 import type {
   CalendarMatrix,
@@ -13,6 +7,8 @@ import type {
   MarkedDate,
   WeekDay,
 } from './CalendarPropsType';
+import Icon from '../Icon';
+import Typography from '../Typography/Typography';
 
 //perlu locale untuk nama hari
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -267,22 +263,27 @@ const Calendar = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={goToPrevMonth}>
-          <Text style={styles.nav}>←</Text>
+        <TouchableOpacity style={styles.buttonNav} onPress={goToPrevMonth}>
+          <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
         </TouchableOpacity>
-        <Text style={styles.month}>
+        <Typography variant="t1" weight="semibold" color={Color.gray[900]}>
           {currentDate.toLocaleString('default', { month: 'long' })} {year}
-        </Text>
-        <TouchableOpacity onPress={goToNextMonth}>
-          <Text style={styles.nav}>→</Text>
+        </Typography>
+        <TouchableOpacity style={styles.buttonNav} onPress={goToNextMonth}>
+          <Icon name="ArrowRight" color={Color.base.white100} size={10} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.weekRow}>
         {DAYS.map((day, index) => (
-          <Text key={index} style={styles.dayName}>
+          <Typography
+            key={index}
+            weight="medium"
+            variant="t2"
+            color={Color.gray[600]}
+          >
             {day}
-          </Text>
+          </Typography>
         ))}
       </View>
 
@@ -308,9 +309,9 @@ const Calendar = ({
                 disabled={disabled}
               >
                 <View style={[styles.dayCell, { backgroundColor }]}>
-                  <Text style={[styles.dateText, { color: textColor }]}>
+                  <Typography variant="t2" weight="medium" color={textColor}>
                     {date ? date : ''}
-                  </Text>
+                  </Typography>
                 </View>
 
                 {mark?.dots && Array.isArray(mark.dots) && (
@@ -373,6 +374,11 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     marginHorizontal: 1,
+  },
+  buttonNav: {
+    backgroundColor: Color.gray[500],
+    borderRadius: 8,
+    padding: 8,
   },
 });
 

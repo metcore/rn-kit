@@ -8,7 +8,7 @@ import {
   Color,
   Container,
   Footer,
-  Icon,
+  Label,
   List,
   ListItem,
   Timeline,
@@ -84,9 +84,7 @@ export default function LeaveDetailScreen() {
             <List>
               <ListItem>
                 <View style={styles.listItemContainer}>
-                  <Badge color="success">
-                    <Icon name="Calendar" color={Color.success[300]} />
-                  </Badge>
+                  <Label icon="Calendar" color="success" />
                   <View>
                     <Typography
                       variant="t2"
@@ -108,9 +106,7 @@ export default function LeaveDetailScreen() {
 
               <ListItem>
                 <View style={styles.listItemContainer}>
-                  <Badge color="warning">
-                    <Icon name="Calendar" color={Color.warning[300]} />
-                  </Badge>
+                  <Label icon="Calendar" color="warning" />
                   <View>
                     <Typography
                       variant="t2"
@@ -223,10 +219,7 @@ export default function LeaveDetailScreen() {
             Catatan
           </Typography>
           <Card style={styles.noteCard}>
-            <Badge
-              color="warning"
-              value={<Icon name="StickyNote" color={Color.warning[300]} />}
-            />
+            <Label icon="StickyNote" color="warning" />
             <Typography variant="t2" color={Color.gray[600]} weight="regular">
               Berdasarkan catatan kehadiran kami, Anda telah beberapa kali
               teerlambat masuk kerja
@@ -338,6 +331,7 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   listItemContainer: {
+    gap: 8,
     flexDirection: 'row',
   },
   highlightedListItem: {

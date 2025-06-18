@@ -1,6 +1,6 @@
-#import "UiKit.h"
+#import "UiKitSpec.h"
 
-@implementation UiKit
+@implementation UiKitSpec : NSObject 
 RCT_EXPORT_MODULE()
 
 - (NSNumber *)multiply:(double)a b:(double)b {

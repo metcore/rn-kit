@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { useFooter } from './Provider';
 import React from 'react';
+import Color from '../Color/Color';
 
 export default function LayoutWithFooter({
   children,
@@ -18,7 +19,7 @@ export default function LayoutWithFooter({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, backgroundColor: Color.base.white100 },
   content: { flex: 1 },
   footer: { marginBottom: 60 },
 });

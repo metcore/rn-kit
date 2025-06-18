@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   contentWithFooter: {
-    marginBottom: 40,
+    marginBottom: 90,
   },
   footer: {
     backgroundColor: Color.base.white100,

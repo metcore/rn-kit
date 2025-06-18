@@ -13,6 +13,7 @@ type RootStackParamList = {
   Radio: undefined;
   Switch: undefined;
   List: undefined;
+  Label: undefined;
   Select: undefined;
   Toast: undefined;
   InputPassword: undefined;
@@ -20,6 +21,8 @@ type RootStackParamList = {
   RadioButton: undefined;
   Drawing: undefined;
   DatePicker: undefined;
+  YeaerPicker: undefined;
+  MonthPicker: undefined;
   Calendar: undefined;
   Example: undefined;
   AvatarGroup: undefined;
