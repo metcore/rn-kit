@@ -4,28 +4,20 @@ import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import { Icon } from '../Icon';
 import type { IconNameProps } from '../Icon/type';
-
-type ColorProps =
-  | 'success'
-  | 'info'
-  | 'warning'
-  | 'danger'
-  | 'primary'
-  | 'orange'
-  | 'purple';
+import type { ColorVariantType } from '../Color/type';
 
 interface AlertProps {
   icon?: IconNameProps;
   title?: string;
   message?: string;
-  color?: ColorProps;
+  color?: ColorVariantType;
   style?: ViewStyle;
   titleStyle?: StyleProp<ViewStyle>;
   messageStyle?: StyleProp<ViewStyle>;
 }
 
 const COLORS: Record<
-  ColorProps,
+  ColorVariantType,
   {
     background: string;
     borderColor: string;
@@ -36,6 +28,11 @@ const COLORS: Record<
     background: Color.success[50],
     fontColor: Color.success[500],
     borderColor: Color.success[500],
+  },
+  default: {
+    background: Color.gray[50],
+    fontColor: Color.gray[500],
+    borderColor: Color.gray[500],
   },
   info: {
     background: Color.info[50],

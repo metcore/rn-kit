@@ -1,20 +1,15 @@
-import React, { useState, type ReactNode } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import List from '../List/List';
 import ListItem from '../List/ListItem';
-interface AccordionProps {
-  children: ReactNode;
-  header?: () => ReactNode;
-  isOpen?: boolean;
-  onCollapse?: (isOpen: boolean) => void;
-}
+import type { AccordionItemProps } from './type';
 
 export default function Accordion({
   children,
   header,
   isOpen,
   onCollapse,
-}: AccordionProps) {
+}: AccordionItemProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const toggle = () => {
     onCollapse?.(isExpanded ? false : true);
@@ -28,9 +23,11 @@ export default function Accordion({
   return (
     <View>
       <List>
-        <TouchableOpacity onPress={toggle}>
-          <ListItem>{header?.()}</ListItem>
-        </TouchableOpacity>
+        {header && (
+          <TouchableOpacity onPress={toggle}>
+            <ListItem>{header?.()}</ListItem>
+          </TouchableOpacity>
+        )}
         {isExpanded &&
           React.Children.map(children, (child, index) =>
             React.isValidElement(child)
