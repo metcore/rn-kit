@@ -346,7 +346,11 @@ const styles = StyleSheet.create({
   },
   nav: { fontSize: 20, paddingHorizontal: 10 },
   month: { fontSize: 18, fontWeight: 'bold' },
-  weekRow: { flexDirection: 'row', justifyContent: 'space-between' },
+  weekRow: {
+    flexDirection: 'row',
+    width: 300,
+    justifyContent: 'space-between',
+  },
   dayName: {
     flex: 1,
     textAlign: 'center',

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import type { ViewStyle } from 'react-native';
 import Color from '../Color/Color';
 import { useFooter } from '../Provider/Provider';
@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = ({ children, style }) => {
 
   useEffect(() => {
     const footerElement = (
-      <View style={[styles.container, style]}>{children}</View>
+      <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
     );
     setFooter(footerElement);
 

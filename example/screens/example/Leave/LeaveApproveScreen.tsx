@@ -11,7 +11,7 @@ import {
   ListItem,
   Modal,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';

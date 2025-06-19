@@ -1,18 +1,24 @@
-import { BottomSheet, Button, Card, Color, Typography } from '@herca/ui-kit';
+import { BottomSheet, Button, Card, Color, Typography } from '@herca/kit';
 import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  type GestureResponderEvent,
+} from 'react-native';
+import type { DateRangeProps } from '../../../src/Calendar/CalendarPropsType';
 
 interface SelectDayLeaveProps {
   isOpen: boolean;
-  onSubmit: () => (value: DateRange) => void;
+  onSubmit: () => (value: DateRangeProps) => void;
 }
 
 export default function SelectDayLeave({
   isOpen,
   onSubmit,
 }: SelectDayLeaveProps) {
-  const [dayType, setDayType] = useState<number>();
-  const handlePressHalfDay = (val) => {
+  const [dayType, setDayType] = useState<number | any>();
+  const handlePressHalfDay = (val: GestureResponderEvent) => {
     setDayType(val);
   };
 

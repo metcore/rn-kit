@@ -1,4 +1,4 @@
-import { AvatarGroup, Container } from '@herca/ui-kit';
+import { AvatarGroup, Container } from '@herca/kit';
 const avatarPng = require('../assets/avatar.png');
 export default function AvatarGroupScreen() {
   const avatars = [

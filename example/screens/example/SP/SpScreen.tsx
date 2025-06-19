@@ -10,7 +10,7 @@ import {
   Footer,
   Icon,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import {
   View,

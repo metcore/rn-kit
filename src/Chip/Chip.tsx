@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList, Pressable, StyleSheet, ViewStyle } from 'react-native';
-import { CHIP_COLOR_MAP, type ChipColor, type ChipProps } from './type';
+import {
+  CHIP_COLOR_MAP,
+  type ChipColor,
+  type ChipProps,
+  type ChipSelectedProps,
+} from './type';
 import Typography from '../Typography/Typography';
 
 const Chip: React.FC<ChipProps> = ({
@@ -31,9 +36,8 @@ const Chip: React.FC<ChipProps> = ({
   const safeColor = validColors.includes(color) ? color : 'default';
   const colors = CHIP_COLOR_MAP[safeColor];
 
-  const normalizeSelected = (
-    val: string | string[] | null | undefined
-  ): string[] => (Array.isArray(val) ? val : val ? [val] : []);
+  const normalizeSelected = (val: ChipSelectedProps): string[] =>
+    Array.isArray(val) ? val : val ? [val] : [];
 
   const [internalSelected, setInternalSelected] = useState<string[]>(
     normalizeSelected(selected)

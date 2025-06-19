@@ -1,4 +1,4 @@
-import { Badge, Container } from '@herca/ui-kit';
+import { Badge, Container } from '@herca/kit';
 
 export default function BadgeScreen() {
   return (

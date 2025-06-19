@@ -1,6 +1,6 @@
-import { Calendar, Card, Color, Container, Typography } from '@herca/ui-kit';
+import { Calendar, Card, Color, Container, Typography } from '@herca/kit';
 import { useState } from 'react';
-import type { DateRange } from '../../src/Calendar/CalendarPropsType';
+import type { DateRangeProps } from '../../src/Calendar/CalendarPropsType';
 
 export default function CalendarScreen() {
   const [endDate, setEndDate] = useState<string | null>();
@@ -13,7 +13,7 @@ export default function CalendarScreen() {
     return `${y}-${m}-${d}`;
   };
 
-  const hanOnChange = (obj: DateRange) => {
+  const hanOnChange = (obj: DateRangeProps) => {
     if (obj?.endDate) {
       setEndDate(formatDate(obj.endDate));
     } else {

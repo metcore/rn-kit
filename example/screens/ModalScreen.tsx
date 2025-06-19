@@ -5,7 +5,7 @@ import {
   Container,
   Modal,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Image, View } from 'react-native';

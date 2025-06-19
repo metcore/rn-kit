@@ -120,10 +120,12 @@ export interface ChipOption {
   value: string;
   disabled?: boolean;
 }
+export type ChipSelectedProps = string | string[] | null | undefined;
+
 export interface ChipProps {
   options: ChipOption[];
-  selected: string | string[] | null | undefined;
-  onSelect: (value: string | string[]) => void;
+  selected: ChipSelectedProps;
+  onSelect: (value: ChipSelectedProps) => void;
   onPress: (value: string) => void;
   direction?: 'horizontal' | 'vertical';
   scrollable?: boolean;

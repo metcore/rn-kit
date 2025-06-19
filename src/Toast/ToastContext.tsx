@@ -1,19 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import Toast from './Toast';
-
-type ToastColor =
-  | 'default'
-  | 'success'
-  | 'danger'
-  | 'primary'
-  | 'warning'
-  | 'info'
-  | 'purple'
-  | 'orange';
+import type { ColorVariantType } from '../Color/type';
+import type { IconNameProps } from '../Icon';
 
 interface ToastOptions {
-  color?: ToastColor;
-  icon?: string;
+  color?: ColorVariantType;
+  icon?: IconNameProps;
   duration?: number;
 }
 
@@ -25,8 +17,10 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState('');
-  const [options, setOptions] = useState<ToastOptions>({});
+  const [message, setMessage] = useState<string>('');
+  const [options, setOptions] = useState<ToastOptions>({
+    icon: 'ExlamationMark',
+  });
 
   const show = (msg: string, opts?: ToastOptions) => {
     setMessage(msg);

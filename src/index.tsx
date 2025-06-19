@@ -1,9 +1,9 @@
-import UiKit from './NativeUiKit';
+import Kit from './NativeKit';
 
 export function multiply(a: number, b: number): number {
-  return UiKit.multiply(a, b);
+  return Kit.multiply(a, b);
 }
-export { default as Theme } from './Theme/Theme';
+
 export { default as Accordion } from './Accordion/Accordion';
 export { default as AccordionItem } from './Accordion/AccordionItem';
 export { default as Button } from './Button/Button';
@@ -17,6 +17,7 @@ export { default as Gap } from './Ui/Gap';
 export { default as Grid } from './Ui/Grid';
 export { default as Col } from './Ui/Col';
 export { default as Chip } from './Chip/Chip';
+export type { ChipSelectedProps } from './Chip/type';
 export { default as Footer } from './Ui/Footer';
 export { default as Devider } from './Ui/Devider';
 export { default as Select } from './Select/Select';
@@ -40,6 +41,7 @@ export { default as Badge } from './Badge/Badge';
 export { default as Alert } from './Alert/Alert';
 export { default as Timeline } from './Timeline/Timeline';
 export { default as TimelineItem } from './Timeline/TimelineItem';
+export { default as Theme } from './Theme/Theme';
 export { default as Provider } from './Provider/Provider';
 export { default as useFooter } from './Provider/Provider';
 export { default as Drawing } from './Drawing/Drawing';

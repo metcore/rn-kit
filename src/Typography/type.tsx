@@ -1,4 +1,4 @@
-import type { ColorValue, TextStyle, ViewStyle } from 'react-native';
+import type { ColorValue, TextStyle } from 'react-native';
 import React from 'react';
 export type TypographyVariantProps =
   | 'h1'
@@ -35,8 +35,8 @@ export const lineHeightMap: Record<TypographyVariantProps, number> = {
   p1: 30,
   p2: 28,
   p3: 26,
-  t1: 24,
-  t2: 20,
+  t1: 14,
+  t2: 14,
   t3: 14,
 };
 
@@ -52,7 +52,7 @@ export interface TypographyProps {
   variant?: TypographyVariantProps;
   weight?: Weight;
   color?: ColorValue;
-  style?: ViewStyle;
+  style?: TextStyle;
   numberOfLines?: number;
   center?: boolean;
   right?: boolean;

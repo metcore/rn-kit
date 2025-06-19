@@ -1,4 +1,4 @@
-import { Container, Switch, Typography } from '@herca/ui-kit';
+import { Container, Switch, Typography } from '@herca/kit';
 import { useState } from 'react';
 
 export default function SwitchScreen() {

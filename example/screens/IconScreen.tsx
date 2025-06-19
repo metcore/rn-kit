@@ -1,4 +1,4 @@
-import { Container, Icon } from '@herca/ui-kit';
+import { Container, Icon } from '@herca/kit';
 
 export default function IconScreen() {
   return (

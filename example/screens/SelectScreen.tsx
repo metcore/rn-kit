@@ -6,7 +6,7 @@ import {
   Container,
   Select,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useState } from 'react';
 
 const DATA = [

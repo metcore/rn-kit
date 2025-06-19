@@ -14,7 +14,7 @@ import {
   Timeline,
   TimelineItem,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useState } from 'react';
 import {
   Image,

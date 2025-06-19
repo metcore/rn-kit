@@ -1,11 +1,11 @@
-package com.herca.uikit
+package com.herca.kit
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.annotations.ReactModule
 
-@ReactModule(name = UiKitModule.NAME)
-class UiKitModule(reactContext: ReactApplicationContext) :
-  NativeUiKitSpec(reactContext) {
+@ReactModule(name = KitModule.NAME)
+class KitModule(reactContext: ReactApplicationContext) :
+  NativeKitSpec(reactContext) {
 
   override fun getName(): String {
     return NAME
@@ -18,6 +18,6 @@ class UiKitModule(reactContext: ReactApplicationContext) :
   }
 
   companion object {
-    const val NAME = "UiKit"
+    const val NAME = "Kit"
   }
 }

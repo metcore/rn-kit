@@ -11,6 +11,7 @@ import {
   Dimensions,
   SafeAreaView,
   Platform,
+  StatusBar,
 } from 'react-native';
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
@@ -18,9 +19,9 @@ import Color from '../Color/Color';
 
 interface PropsBottomSheet {
   label?: string;
-  isOpen: boolean;
-  onClose: (isOpen: boolean) => void;
-  children: React.ReactNode;
+  isOpen?: boolean;
+  onClose?: (isOpen: boolean) => void;
+  children?: React.ReactNode;
   backdrop?: boolean;
   closable?: boolean;
   onRequestClose?: (e: any) => void;
@@ -29,6 +30,9 @@ interface PropsBottomSheet {
   pullBar?: React.ReactNode;
   footer?: React.ReactNode;
 }
+
+const statusBarHeight =
+  Platform.OS === 'android' ? StatusBar.currentHeight : 65;
 
 export default function BottomSheet({
   isOpen,
@@ -182,7 +186,11 @@ export default function BottomSheet({
             >
               <Container>{children}</Container>
             </SafeAreaView>
-            {footer && <View style={styles.footer}>{footer}</View>}
+            {footer && (
+              <SafeAreaView style={styles.footer}>
+                <Container>{footer}</Container>
+              </SafeAreaView>
+            )}
           </Animated.View>
         </KeyboardAvoidingView>
       </View>
@@ -206,7 +214,7 @@ const styles = StyleSheet.create({
   },
   bottomSheet: {
     paddingBottom: Platform.OS === 'ios' ? 15 : 5,
-    maxHeight: Dimensions.get('window').height,
+    maxHeight: Dimensions.get('window').height - statusBarHeight,
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
@@ -236,7 +244,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   contentWithFooter: {
-    marginBottom: 90,
+    marginBottom: 110,
   },
   footer: {
     backgroundColor: Color.base.white100,
@@ -245,7 +253,5 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
-    paddingHorizontal: 24,
-    paddingVertical: 8,
   },
 });

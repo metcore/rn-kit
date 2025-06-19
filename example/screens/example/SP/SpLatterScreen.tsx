@@ -5,7 +5,7 @@ import {
   Container,
   Footer,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProps } from '../../../type/navigation';
 

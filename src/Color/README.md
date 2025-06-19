@@ -46,7 +46,7 @@ disabled.25: Warna untuk elemen non-aktif.
 ## Cara menggunakan 
 
 ```tsx
-import Color from '@herca/ui-kit';
+import Color from '@herca/kit';
 
 <View style={{ backgroundColor: Color.primary[500] }} />
 <Text style={{ color: Color.gray[900] }}>Teks</Text>

@@ -1,4 +1,4 @@
-import { Container, Typography } from '@herca/ui-kit';
+import { Container, Typography } from '@herca/kit';
 import { View } from 'react-native';
 
 export default function ContainerScreen() {

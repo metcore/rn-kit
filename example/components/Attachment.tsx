@@ -1,4 +1,4 @@
-import { Color, Icon, List, ListItem, Typography } from '@herca/ui-kit';
+import { Color, Icon, List, ListItem, Typography } from '@herca/kit';
 import {
   Image,
   StyleSheet,

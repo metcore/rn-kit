@@ -1,4 +1,4 @@
-import { Container, TextArea } from '@herca/ui-kit';
+import { Container, TextArea } from '@herca/kit';
 
 export default function TextAreaScreen() {
   return (

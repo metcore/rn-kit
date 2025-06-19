@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Typography } from '@herca/ui-kit';
+import { Typography } from '@herca/kit';
 
 const TypographyScreen = () => {
   const variants = [

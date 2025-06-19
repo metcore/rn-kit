@@ -1,4 +1,4 @@
-import { Alert, Container } from '@herca/ui-kit';
+import { Alert, Container } from '@herca/kit';
 
 export default function AlertScreen() {
   return (

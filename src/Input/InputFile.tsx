@@ -8,11 +8,11 @@ import BottomSheet from '../BottomSheet/BottomSheet';
 import { useState } from 'react';
 import List from '../List/List';
 import ListItem from '../List/ListItem';
-import { Icon } from '../Icon';
 
 import { pick } from '@react-native-documents/picker';
 import { viewDocument } from '@react-native-documents/viewer';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import Icon from '../Icon';
 
 type InputFileProps = {
   title?: string;
@@ -135,7 +135,7 @@ export default function InputFile({
                 <Image
                   source={
                     file.uri?.endsWith('.pdf')
-                      ? require('./assets/input-file.png')
+                      ? require('../Input/assets/input-file.png')
                       : { uri: file.uri }
                   }
                   style={styles.previewImage}

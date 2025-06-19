@@ -18,7 +18,7 @@ import ExampleScreen from '../screens/ExampleScreen';
 import AvatarScreen from '../screens/AvatarScreen';
 import BadgeScreen from '../screens/BadgeScreen';
 import AlertScreen from '../screens/AlertScreen';
-import { Provider } from '@herca/ui-kit';
+import { Provider } from '@herca/kit';
 import DrawingScreen from '../screens/DrawingScreen';
 import SwitchScreen from '../screens/SwitchScreen';
 import AvatarGroupScreen from '../screens/AvatarGroupScreen';
@@ -45,6 +45,7 @@ import LoginScreen from '../screens/example/Auth/LoginScreen';
 import LabelScreen from '../screens/LabelScreen';
 import YearPickerScreen from '../screens/YearPickerScreen';
 import MonthPickerScreen from '../screens/MonthPickerScreen';
+import HeaderNavigation from '../components/Header/HeaderNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -109,7 +110,18 @@ const App = () => {
             <Stack.Screen name="Sp" component={SpScreen} />
             <Stack.Screen name="SpDetail" component={SpDetailScreen} />
 
-            <Stack.Screen name="Leave" component={LeaveScreen} />
+            <Stack.Screen
+              name="Leave"
+              component={LeaveScreen}
+              options={{
+                header: () => (
+                  <HeaderNavigation
+                    title="Pengajuan Cuti"
+                    showBackButton={true}
+                  />
+                ),
+              }}
+            />
             <Stack.Screen name="LeaveForm" component={LeaveFormScreen} />
             <Stack.Screen name="LeaveDetail" component={LeaveDetailScreen} />
             <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />

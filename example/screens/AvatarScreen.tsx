@@ -1,4 +1,4 @@
-import { Avatar, Container, Typography } from '@herca/ui-kit';
+import { Avatar, Container, Typography } from '@herca/kit';
 
 export default function AvatarScreen() {
   return (

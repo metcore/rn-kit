@@ -8,9 +8,9 @@ export interface InputProps extends TextInputProps {
   clearButton?: boolean;
   hasError?: boolean;
   hint?: string;
-  onPressIconLeft?: () => void;
-  onPressIconRight?: () => void;
-  onChangeText?: () => void;
+  onPressIconLeft?: (val: boolean) => void;
+  onPressIconRight?: (val: boolean) => void;
+  onChangeText?: (val: string) => void;
   secureTextEntry?: boolean;
 }
 

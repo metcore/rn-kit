@@ -1,4 +1,4 @@
-import { Button, Container, DatePicker, Typography } from '@herca/ui-kit';
+import { Button, Container, DatePicker, Typography } from '@herca/kit';
 import { useState } from 'react';
 import { View } from 'react-native';
 import type { DateRange } from '../../src/Calendar/CalendarPropsType';

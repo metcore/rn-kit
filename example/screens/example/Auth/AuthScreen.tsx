@@ -1,4 +1,4 @@
-import { Button, Container } from '@herca/ui-kit';
+import { Button, Container } from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from '../../../type/navigation';
 

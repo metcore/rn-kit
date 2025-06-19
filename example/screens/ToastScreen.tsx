@@ -1,4 +1,4 @@
-import { Button, Container, useToast } from '@herca/ui-kit';
+import { Button, Container, useToast } from '@herca/kit';
 
 export default function ToastScreen() {
   const toast = useToast();

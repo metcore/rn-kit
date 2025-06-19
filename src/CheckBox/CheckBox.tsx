@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Pressable, View, Text, StyleSheet } from 'react-native';
-import { Color, Icon } from '@herca/ui-kit'; // Pastikan Icon sudah tersedia
+import { Color, Icon } from '@herca/kit'; // Pastikan Icon sudah tersedia
 
 interface CheckBoxProps {
   checked?: boolean;

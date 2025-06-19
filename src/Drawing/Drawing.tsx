@@ -1,51 +1,9 @@
-import { StyleSheet, View, Image } from 'react-native';
-import { useRef, useState } from 'react';
-import SignatureCanvas, {
-  type SignatureViewRef,
-} from 'react-native-signature-canvas';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default function Drawing() {
-  const [signature, setSignature] = useState<string>();
-  const ref = useRef<SignatureViewRef>();
-
-  const handleSignature = (signature: string) => {
-    setSignature(signature);
-  };
-
-  const handleEmpty = () => {
-    console.log('Empty');
-  };
-
-  const handleClear = () => {
-    console.log('Clear success!');
-  };
-
-  const handleEnd = () => {
-    ref.current.readSignature(null);
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.preview}>
-        {signature && (
-          <Image
-            resizeMode="contain"
-            style={{ width: 335, height: 114 }}
-            source={{ uri: signature }}
-          />
-        )}
-      </View>
-      <SignatureCanvas
-        ref={ref}
-        onEnd={handleEnd}
-        onOK={handleSignature}
-        onEmpty={handleEmpty}
-        onClear={handleClear}
-        autoClear={true}
-        descriptionText="Sign here"
-        clearText="Clear"
-        confirmText="Save"
-      />
+      <Text>Sedang di bangun</Text>
     </View>
   );
 }

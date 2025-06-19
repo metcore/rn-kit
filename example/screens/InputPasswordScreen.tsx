@@ -1,4 +1,4 @@
-import { Container, InputPassword, Typography } from '@herca/ui-kit';
+import { Container, InputPassword, Typography } from '@herca/kit';
 
 export default function InputPasswordScreen() {
   return (

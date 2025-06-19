@@ -9,7 +9,7 @@ export type DisabledDayStyle = {
 
 export type WeekDay = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export type DateRange = {
+export type DateRangeProps = {
   startDate?: Date | undefined | null;
   endDate?: Date | undefined | null;
   date?: Date | undefined | null;
@@ -36,7 +36,7 @@ export interface CalendarTypes {
   minDate?: Date | null;
   maxDate?: Date | null;
   onPress?: (event: GestureResponderEvent) => void;
-  onChange?: (value: DateRange) => void;
+  onChange?: (value: DateRangeProps) => void;
   selectedBackgroundColor?: string;
   selectedTextColor?: string;
   disabledBackgroundColor?: string;

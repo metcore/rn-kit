@@ -1,4 +1,4 @@
-import { Container, Icon, Label } from '@herca/ui-kit';
+import { Container, Icon, Label } from '@herca/kit';
 
 export default function LabelScreen() {
   return (

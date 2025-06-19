@@ -1,4 +1,11 @@
-import { Chip, Color, Container, Icon, Typography } from '@herca/ui-kit';
+import {
+  Chip,
+  Color,
+  Container,
+  Icon,
+  Typography,
+  type ChipSelectedProps,
+} from '@herca/kit';
 import { useState } from 'react';
 
 const options = [
@@ -16,7 +23,7 @@ const options = [
 const ChipScreen = () => {
   const [selectedDefault, setSelectedDefault] = useState();
   const [selectedCustom, setSelectedCustom] = useState();
-  const handleOnSelectCustom = (val) => {
+  const handleOnSelectCustom = (val: ChipSelectedProps) => {
     setSelectedCustom(val);
   };
   return (

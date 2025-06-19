@@ -10,10 +10,10 @@ export default function TextArea({
   hasError,
   style,
   hint,
-  onChange,
+  onChangeText,
 }: TextAreaProps) {
-  const handleOnChange = (value) => {
-    onChange?.(value);
+  const handleOnChangeText = (value) => {
+    onChangeText?.(value);
   };
 
   return (
@@ -30,7 +30,7 @@ export default function TextArea({
         ]}
       >
         <TextInput
-          onChange={handleOnChange}
+          onChangeText={handleOnChangeText}
           editable
           multiline
           numberOfLines={14}

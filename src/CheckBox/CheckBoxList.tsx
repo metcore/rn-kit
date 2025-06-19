@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Typography, Color, CheckBox } from '@herca/ui-kit';
+import { Typography, Color, CheckBox } from '@herca/kit';
 
 interface CheckBoxListItem {
   label: string;

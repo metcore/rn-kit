@@ -1,7 +1,7 @@
 {
-  "name": "@herca/ui-kit",
+  "name": "@herca/kit",
   "version": "0.1.0",
-  "description": "UI kit for herca development",
+  "description": "UI Kit for herca development react native",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -32,7 +32,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace @herca/ui-kit-example",
+    "example": "yarn workspace @herca/kit-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -47,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/metcore/herca-ui-kit.git"
+    "url": "git+https://github.com/metcore/herca-kit.git"
   },
   "author": "metcore <metcore2@gmail.com> (https://github.com/metcore)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/metcore/herca-ui-kit/issues"
+    "url": "https://github.com/metcore/herca-kit/issues"
   },
-  "homepage": "https://github.com/metcore/herca-ui-kit#readme",
+  "homepage": "https://github.com/metcore/herca-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -65,8 +65,6 @@
     "@eslint/js": "^9.22.0",
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-documents/picker": "^10.1.3",
-    "@react-native-documents/viewer": "^1.0.1",
     "@react-native/babel-preset": "0.79.2",
     "@react-native/eslint-config": "^0.78.0",
     "@release-it/conventional-changelog": "^9.0.2",
@@ -81,28 +79,14 @@
     "prettier": "^3.0.3",
     "react": "19.0.0",
     "react-native": "0.79.2",
-    "react-native-blob-util": "^0.22.2",
-    "react-native-builder-bob": "^0.40.11",
-    "react-native-image-picker": "^8.2.1",
-    "react-native-pdf": "^6.7.7",
-    "react-native-signature-canvas": "^4.7.4",
-    "react-native-svg": "^15.12.0",
-    "react-native-webview": "13.6.4",
+    "react-native-builder-bob": "^0.40.12",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "@react-native-documents/picker": "^10.1.3",
-    "@react-native-documents/viewer": "^1.0.1",
     "react": "*",
-    "react-native": "*",
-    "react-native-blob-util": "^0.22.2",
-    "react-native-image-picker": "^8.2.1",
-    "react-native-pdf": "^6.7.7",
-    "react-native-signature-canvas": "^4.7.4",
-    "react-native-svg": "^15.12.0",
-    "react-native-webview": "13.6.4"
+    "react-native": "*"
   },
   "workspaces": [
     "example"
@@ -165,19 +149,22 @@
     ]
   },
   "codegenConfig": {
-    "name": "UiKitSpec",
+    "name": "KitSpec",
     "type": "modules",
     "jsSrcsDir": "src",
     "android": {
-      "javaPackageName": "com.herca.uikit"
+      "javaPackageName": "com.herca.kit"
     }
   },
   "create-react-native-library": {
     "languages": "kotlin-objc",
     "type": "turbo-module",
-    "version": "0.50.3"
+    "version": "0.51.0"
   },
   "dependencies": {
-    "@react-navigation/native": "^7.1.10"
+    "@react-native-documents/picker": "^10.1.3",
+    "@react-native-documents/viewer": "^1.0.1",
+    "react-native-image-picker": "^8.2.1",
+    "react-native-svg": "^15.12.0"
   }
 }

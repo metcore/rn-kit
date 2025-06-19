@@ -1,4 +1,4 @@
-import { Card, Color, Container, Typography } from '@herca/ui-kit';
+import { Card, Color, Container, Typography } from '@herca/kit';
 import { View } from 'react-native';
 
 export default function CardScreen() {

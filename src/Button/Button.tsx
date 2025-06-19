@@ -17,7 +17,7 @@ type ButtonVariant = 'default' | 'outline' | 'tertiary';
 interface ButtonProps {
   children?: React.ReactNode;
   title?: string | React.ReactNode;
-  onPress?: (event: GestureResponderEvent) => void;
+  onPress?: (event?: GestureResponderEvent) => void;
   size?: ButtonSize;
   variant?: ButtonVariant;
   color?: ColorVariantType;

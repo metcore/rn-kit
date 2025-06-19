@@ -6,6 +6,7 @@ import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import Chip from '../Chip/Chip';
+import { type ChipSelectedProps } from '../Chip/type';
 export default function Select({
   isOpen,
   data,
@@ -15,14 +16,14 @@ export default function Select({
   multiple,
   onSearch,
 }: SelectProps) {
-  const [isOpenSelect, setIsOpenSelect] = useState<string | null>(false);
-  const [selected, setSelected] = useState(null);
+  const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
+  const [selected, setSelected] = useState<ChipSelectedProps>(null);
 
   useEffect(() => {
     setIsOpenSelect(isOpen);
   }, [isOpen]);
 
-  const handleOnCloseBottom = (val) => {
+  const handleOnCloseBottom = (val: boolean) => {
     onClose?.(val);
   };
 

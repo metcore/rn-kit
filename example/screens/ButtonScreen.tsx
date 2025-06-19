@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Button, Container, Typography } from '@herca/ui-kit';
+import { Button, Container, Typography } from '@herca/kit';
 
 const ButtonScreen = () => {
   const sizeButton = ['small', 'medium', 'large'] as const;

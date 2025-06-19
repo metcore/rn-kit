@@ -1,4 +1,4 @@
-import { Button, Container, YearPicker } from '@herca/ui-kit';
+import { Button, Container, YearPicker } from '@herca/kit';
 import { useState } from 'react';
 
 export default function YearPickerScreen() {

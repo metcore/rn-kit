@@ -1,4 +1,4 @@
-import { Container, Input } from '@herca/ui-kit';
+import { Container, Input } from '@herca/kit';
 import { KeyboardAvoidingView, ScrollView } from 'react-native';
 
 export default function InputScreen() {

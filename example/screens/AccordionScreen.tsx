@@ -6,7 +6,7 @@ import {
   Container,
   Icon,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -25,7 +25,7 @@ export default function AccordionScreen() {
     </View>
   );
 
-  const handleCollapseAccordion = (collapse) => {
+  const handleCollapseAccordion = (collapse: boolean) => {
     setIsOpen(collapse);
   };
   return (

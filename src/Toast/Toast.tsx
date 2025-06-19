@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
-import Icon from '../Icon';
+import Icon, { type IconNameProps } from '../Icon';
 import Button from '../Button/Button';
 import Container from '../Ui/Container';
 
@@ -22,12 +22,6 @@ const COLOR_MAP: Record<
     bg: string;
     text: string;
     border: string;
-    borderFocus: string;
-    press: string;
-    focus: string;
-    disabledBg: string;
-    disabledText: string;
-    disabledBorder: string;
   }
 > = {
   primary: {
@@ -76,7 +70,10 @@ interface ToastProps {
   visible?: boolean;
   duration?: number;
   color?: ToastColor;
+  message?: string;
+  icon?: IconNameProps;
   onClear?: (val: boolean) => void;
+  onHide?: (val: boolean) => void;
 }
 const Toast = ({
   visible,
@@ -124,7 +121,7 @@ const Toast = ({
           useNativeDriver: true,
         }),
       ]).start(() => {
-        if (onHide) onHide();
+        if (onHide) onHide(true);
       });
     }
   }, [visible, duration, onHide, fadeAnim]);
@@ -139,11 +136,7 @@ const Toast = ({
         <View style={styles.container}>
           <View style={styles.content}>
             <Icon name={icon} size={20} color={COLOR_MAP[safeColor].text} />
-            <Typography
-              variant="t2"
-              style={[styles.text]}
-              color={COLOR_MAP[safeColor].text}
-            >
+            <Typography variant="t2" color={COLOR_MAP[safeColor].text}>
               {message}
             </Typography>
           </View>
@@ -181,7 +174,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
-  text: {},
 });
 
 export default Toast;

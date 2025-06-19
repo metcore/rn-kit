@@ -5,11 +5,12 @@ import {
   Input,
   InputPassword,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import { Image, KeyboardAvoidingView, ScrollView, View } from 'react-native';
-import { NavigationProps } from '../../../type/navigation';
+import { type NavigationProps } from '../../../type/navigation';
 import { useState } from 'react';
+import type { InputProps } from '../../../../src/Input/type';
 
 interface DataProps {
   email: string;
@@ -19,7 +20,7 @@ export default function LoginScreen() {
   const [data, setData] = useState<DataProps>();
   const [erroData, setErrorData] = useState();
 
-  const handleOnChange = (name, val) => {
+  const handleOnChange = ({ name, val }: { name: string; val: InputProps }) => {
     setData((prev) => ({
       ...prev,
       [name]: val,

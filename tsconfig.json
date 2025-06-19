@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@herca/ui-kit": ["./src/index"]
+      "@herca/kit": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

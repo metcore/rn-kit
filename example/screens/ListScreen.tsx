@@ -1,4 +1,4 @@
-import { Color, Container, List, Typography } from '@herca/ui-kit';
+import { Color, Container, List, Typography } from '@herca/kit';
 import { TouchableOpacity, View } from 'react-native';
 import ListItem from '../../src/List/ListItem';
 import ArrowRight from '../../src/Icon/icons/ArrowRight';

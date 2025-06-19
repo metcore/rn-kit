@@ -13,7 +13,7 @@ import {
   MonthPicker,
   Typography,
   YearPicker,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
 import {
   FlatList,
@@ -25,6 +25,7 @@ import {
 } from 'react-native';
 import type { NavigationProps } from '../../../type/navigation';
 import { useState } from 'react';
+import type { ChipSelectedProps } from '../../../../src/Chip/type';
 
 const DATA = [
   {
@@ -149,8 +150,8 @@ const Item = ({ navigation, item }: ItemProps) => (
 
 export default function LeaveScreen() {
   const navigation = useNavigation<NavigationProps>();
-  const [selectedStatus, setSelectedStatus] = useState<boolean>();
-  const [selectedFilter, setSelectedFilter] = useState<boolean>();
+  const [selectedStatus, setSelectedStatus] = useState<ChipSelectedProps>();
+  const [selectedFilter, setSelectedFilter] = useState<ChipSelectedProps>();
   const [isOpenBottomSheetFilter, setIsOpenBottomSheetFilter] =
     useState<boolean>(false);
   const [isOpenYearPicker, setIsOpenYearPicker] = useState(false);
@@ -383,7 +384,10 @@ export default function LeaveScreen() {
                 <View style={{ flex: 1 }}>
                   <Button
                     variant="outline"
-                    onPress={() => setIsOpenYearPicker(true)}
+                    onPress={() => {
+                      setIsOpenBottomSheetFilter(false);
+                      setIsOpenYearPicker(true);
+                    }}
                     color="primary"
                     size="small"
                     block

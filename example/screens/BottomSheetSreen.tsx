@@ -5,9 +5,10 @@ import {
   Color,
   Container,
   Typography,
-} from '@herca/ui-kit';
+} from '@herca/kit';
 import { useState } from 'react';
 import { View, Image, StyleSheet, ScrollView } from 'react-native';
+import summaryData from '../assets/loremipsum.json';
 
 export default function BottomSheetScreen() {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
@@ -104,55 +105,25 @@ export default function BottomSheetScreen() {
           />
         }
       >
-        <ScrollView style={styles.containerBottomSheet}>
-          <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-            Judul Modal
-          </Typography>
+        <ScrollView>
+          <View style={styles.containerBottomSheet}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
+              Judul Modal
+            </Typography>
 
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </Typography>
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </Typography>
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </Typography>
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </Typography>
+            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
+              {summaryData.summary}
+            </Typography>
+            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
+              {summaryData.summary}
+            </Typography>
+            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
+              {summaryData.summary}
+            </Typography>
+            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
+              {summaryData.summary}
+            </Typography>
+          </View>
         </ScrollView>
       </BottomSheet>
 

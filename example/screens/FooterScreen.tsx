@@ -1,4 +1,4 @@
-import { Button, Container, Footer } from '@herca/ui-kit';
+import { Button, Container, Footer } from '@herca/kit';
 
 export default function FooterScreen() {
   return (
