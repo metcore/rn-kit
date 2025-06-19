@@ -1,4 +1,4 @@
-import type { TextInputProps } from 'react-native';
+import type { GestureResponderEvent, TextInputProps } from 'react-native';
 import type { IconNameProps } from '../Icon';
 
 export interface InputProps extends TextInputProps {
@@ -8,8 +8,8 @@ export interface InputProps extends TextInputProps {
   clearButton?: boolean;
   hasError?: boolean;
   hint?: string;
-  onPressIconLeft?: (val: boolean) => void;
-  onPressIconRight?: (val: boolean) => void;
+  onPressIconLeft?: (val?: GestureResponderEvent) => void;
+  onPressIconRight?: (val?: GestureResponderEvent) => void;
   onChangeText?: (val: string) => void;
   secureTextEntry?: boolean;
 }

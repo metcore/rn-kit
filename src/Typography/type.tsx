@@ -1,4 +1,4 @@
-import type { ColorValue, TextStyle } from 'react-native';
+import type { ColorValue, StyleProp, TextStyle } from 'react-native';
 import React from 'react';
 export type TypographyVariantProps =
   | 'h1'
@@ -52,7 +52,7 @@ export interface TypographyProps {
   variant?: TypographyVariantProps;
   weight?: Weight;
   color?: ColorValue;
-  style?: TextStyle;
+  style?: StyleProp<TextStyle>;
   numberOfLines?: number;
   center?: boolean;
   right?: boolean;

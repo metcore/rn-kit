@@ -7,13 +7,11 @@ export interface AccordionContextType {
 
 export interface AccordionProps {
   children: ReactNode;
-  header?: () => ReactNode;
+  renderHeader: ReactNode | null;
   isOpen?: boolean;
   onCollapse?: (isOpen: boolean) => void;
 }
 export interface AccordionItemProps {
   children: ReactNode;
-  renderHeader: ReactNode;
-  isOpen: boolean;
-  onCollapse: boolean;
+  index?: number;
 }

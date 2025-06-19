@@ -121,25 +121,28 @@ export interface ChipOption {
   disabled?: boolean;
 }
 export type ChipSelectedProps = string | string[] | null | undefined;
+export interface ChipRenderItemData {
+  label: string;
+  value: string;
+  disabled?: boolean;
+}
+
+export type ChipRenderItemFn = (
+  item: ChipRenderItemData,
+  selected: boolean,
+  disabled: boolean
+) => React.ReactNode;
 
 export interface ChipProps {
   options: ChipOption[];
   selected: ChipSelectedProps;
-  onSelect: (value: ChipSelectedProps) => void;
-  onPress: (value: string) => void;
+  onSelect: (value: string | string[]) => void;
+  onPress?: (value: string) => void;
   direction?: 'horizontal' | 'vertical';
   scrollable?: boolean;
   block?: boolean;
   multiple?: boolean;
   color?: ChipColor;
   size?: 'small' | 'medium' | 'large';
-  renderItem?: (
-    item: {
-      label: string;
-      value: string;
-      disabled?: boolean;
-    },
-    selected: boolean,
-    disabled: boolean
-  ) => React.ReactNode;
+  renderItem?: RenderItemFn;
 }

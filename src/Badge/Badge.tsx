@@ -45,14 +45,14 @@ interface SizeStyle {
 
 const SIZE_MAP: Record<Size, SizeStyle> = {
   small: {
-    // height: 18,
+    height: 18,
     fontSize: 't3',
     paddingHorizontal: 4,
     paddingVertical: 2,
     borderRadius: 4,
   },
   medium: {
-    // height: 24,
+    height: 24,
     fontSize: 't1',
     paddingHorizontal: 10,
     paddingVertical: 4,

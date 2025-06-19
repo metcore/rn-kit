@@ -1,38 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import List from '../List/List';
 import ListItem from '../List/ListItem';
-import type { AccordionItemProps } from './type';
+import type { AccordionProps } from './type';
 
 export default function Accordion({
   children,
-  header,
+  renderHeader,
   isOpen,
   onCollapse,
-}: AccordionItemProps) {
+}: AccordionProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const toggle = () => {
     onCollapse?.(isExpanded ? false : true);
     setIsExpanded(isExpanded ? false : true);
   };
 
-  useState(() => {
-    setIsExpanded(isOpen);
+  useEffect(() => {
+    setIsExpanded(isOpen ?? false);
   }, [isOpen]);
 
   return (
     <View>
       <List>
-        {header && (
+        {renderHeader && (
           <TouchableOpacity onPress={toggle}>
-            <ListItem>{header?.()}</ListItem>
+            <ListItem>{renderHeader}</ListItem>
           </TouchableOpacity>
         )}
         {isExpanded &&
-          React.Children.map(children, (child, index) =>
-            React.isValidElement(child)
-              ? React.cloneElement(child, { index })
-              : child
+          React.Children.map(children, (child) =>
+            React.isValidElement(child) ? React.cloneElement(child) : child
           )}
       </List>
     </View>

@@ -1,13 +1,8 @@
-import React, { type ReactElement } from 'react';
-import { StyleSheet, View, type ViewStyle } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import Color from '../Color/Color';
 import Theme from '../Theme/Theme';
-import type { ListItemProps } from './type';
-
-interface ListProps {
-  children: ReactElement<ListItemProps> | ReactElement<ListItemProps>[];
-  style?: ViewStyle;
-}
+import type { ListItemProps, ListProps } from './type';
 
 export default function List({ children, style }: ListProps) {
   const validChildren = React.Children.toArray(children).filter((child) =>

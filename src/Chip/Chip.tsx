@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FlatList, Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { FlatList, Pressable, StyleSheet, type ViewStyle } from 'react-native';
 import {
   CHIP_COLOR_MAP,
   type ChipColor,
+  type ChipOption,
   type ChipProps,
   type ChipSelectedProps,
 } from './type';
@@ -63,7 +64,14 @@ const Chip: React.FC<ChipProps> = ({
     }
 
     setInternalSelected(newSelected);
-    onSelect?.(multiple ? newSelected : newSelected[0]);
+
+    if (onSelect) {
+      if (multiple) {
+        onSelect(newSelected);
+      } else if (newSelected[0]) {
+        onSelect(newSelected[0]);
+      }
+    }
   };
 
   const numColumns = useMemo(() => {
@@ -83,14 +91,14 @@ const Chip: React.FC<ChipProps> = ({
     }
   };
 
-  const handleOnPres = (isDisabled, item) => {
+  const handleOnPres = (isDisabled: boolean, item: ChipOption) => {
     !isDisabled && handleSelect(item.value);
     onPress?.(item.value);
   };
 
   const renderChip = ({ item }: { item: (typeof options)[number] }) => {
     const selectedState = isSelected(item.value);
-    const isDisabled = item.disabled;
+    const isDisabled = item.disabled ?? false;
 
     const dynamicStyle: ViewStyle = {
       borderColor: colors.borderColor,

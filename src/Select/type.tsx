@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ChipSelectedProps } from '../Chip/type';
+import type { ChipOption, ChipSelectedProps } from '../Chip/type';
 
 export interface SelectDataProps {
   value: string | number;
@@ -8,7 +8,7 @@ export interface SelectDataProps {
 export interface SelectProps {
   isOpen?: boolean;
   multiple?: boolean;
-  data: SelectDataProps;
+  data: ChipOption[];
   renderItem?: React.ReactNode;
   onSubmit?: (val: ChipSelectedProps) => void;
   onClose?: (val: boolean) => void;

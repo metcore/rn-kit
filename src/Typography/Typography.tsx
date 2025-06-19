@@ -28,7 +28,7 @@ const Typography: React.FC<TypographyProps> = ({
   };
 
   return (
-    <Text style={[styles, textStyle, style]} numberOfLines={numberOfLines}>
+    <Text style={[styles.text, textStyle, style]} numberOfLines={numberOfLines}>
       {children}
     </Text>
   );
@@ -40,6 +40,5 @@ const styles = StyleSheet.create({
   text: {
     flexWrap: 'wrap',
     flexShrink: 1,
-    color: 'white',
   },
 });

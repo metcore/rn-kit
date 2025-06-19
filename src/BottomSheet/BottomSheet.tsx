@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,23 +16,10 @@ import {
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
-
-interface PropsBottomSheet {
-  label?: string;
-  isOpen?: boolean;
-  onClose?: (isOpen: boolean) => void;
-  children?: React.ReactNode;
-  backdrop?: boolean;
-  closable?: boolean;
-  onRequestClose?: (e: any) => void;
-  buttonClose?: boolean;
-  height?: number | string;
-  pullBar?: React.ReactNode;
-  footer?: React.ReactNode;
-}
+import type { BottomSheetHeighProps, BottomSheetProops } from './type';
 
 const statusBarHeight =
-  Platform.OS === 'android' ? StatusBar.currentHeight : 65;
+  Platform.OS === 'android' ? (StatusBar.currentHeight ?? 24) : 65;
 
 export default function BottomSheet({
   isOpen,
@@ -45,12 +32,11 @@ export default function BottomSheet({
   height,
   pullBar,
   footer,
-}: PropsBottomSheet) {
+}: BottomSheetProops) {
   const [isVisible, setIsVisible] = useState(false);
-  const [heighContent, setHeighContent] = useState<
-    number | `${number}%` | 'auto'
-  >('auto');
-  const [maxHeight, setMaxHeight] = useState<`${number}%` | 'auto'>('95%');
+  const [heighContent, setHeighContent] =
+    useState<BottomSheetHeighProps>('auto');
+  const [maxHeight, setMaxHeight] = useState<BottomSheetHeighProps>('95%');
   const translateY = useRef(new Animated.Value(600)).current;
 
   const panResponder = useRef(
@@ -114,7 +100,9 @@ export default function BottomSheet({
   }, [isOpen, showModal, hideModal]);
 
   useEffect(() => {
-    setHeighContent(height);
+    if (height) {
+      setHeighContent(height);
+    }
   }, [height]);
 
   useEffect(() => {
@@ -181,7 +169,7 @@ export default function BottomSheet({
               style={[
                 styles.contentContainer,
                 { maxHeight },
-                footer && styles.contentWithFooter,
+                ...(footer ? [styles.contentWithFooter] : []),
               ]}
             >
               <Container>{children}</Container>

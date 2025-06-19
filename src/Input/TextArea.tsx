@@ -12,7 +12,7 @@ export default function TextArea({
   hint,
   onChangeText,
 }: TextAreaProps) {
-  const handleOnChangeText = (value) => {
+  const handleOnChangeText = (value: string) => {
     onChangeText?.(value);
   };
 

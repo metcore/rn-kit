@@ -5,4 +5,10 @@ export interface ListItemProps {
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   isLast?: boolean;
+  index?: number;
+}
+
+export interface ListProps {
+  children: React.ReactNode;
+  style?: ViewStyle;
 }

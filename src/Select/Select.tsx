@@ -1,7 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
-
-import { SelectProps } from './type';
+import { type SelectProps } from './type';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
 import Input from '../Input/Input';

@@ -17,7 +17,7 @@ import Icon from '../Icon';
 type InputFileProps = {
   title?: string;
   description?: string;
-  maxFileSize?: number; // in MB
+  maxFileSize?: number;
   accept?: string[];
   multiple?: boolean;
   onChange?: (files: any[]) => void;
