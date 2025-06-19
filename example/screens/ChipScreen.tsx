@@ -4,6 +4,8 @@ import {
   Container,
   Icon,
   Typography,
+  type ChipOnSelectProps,
+  type ChipOption,
   type ChipSelectedProps,
 } from '@herca/kit';
 import { useState } from 'react';
@@ -21,7 +23,10 @@ const options = [
 ];
 
 const ChipScreen = () => {
-  const [selectedDefault, setSelectedDefault] = useState();
+  const [selectedDefault, setSelectedDefault]: [
+    ChipSelectedProps,
+    ChipOnSelectProps,
+  ] = useState();
   const [selectedCustom, setSelectedCustom] = useState();
   const handleOnSelectCustom = (val: ChipSelectedProps) => {
     setSelectedCustom(val);
@@ -61,7 +66,11 @@ const ChipScreen = () => {
         size="large"
         color="primary"
         multiple
-        renderItem={(item, isSelected, isDisabled) => (
+        renderItem={(
+          item: ChipOption,
+          isSelected: boolean,
+          isDisabled: boolean
+        ) => (
           <Typography
             variant="t2"
             color={

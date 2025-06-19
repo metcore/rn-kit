@@ -1,7 +1,12 @@
-import { Button, Container, DatePicker, Typography } from '@herca/kit';
+import {
+  Button,
+  Container,
+  DatePicker,
+  Typography,
+  type DateRangeProps,
+} from '@herca/kit';
 import { useState } from 'react';
 import { View } from 'react-native';
-import type { DateRange } from '../../src/Calendar/CalendarPropsType';
 const formatDate = (date: Date | undefined | null) => {
   if (!date) return null;
   const y = date.getFullYear();
@@ -39,7 +44,7 @@ export default function DatePickerScreen() {
       <DatePicker
         mode={'single'}
         isOpen={isOpenDatePickerSingle}
-        onChange={(value: DateRange) => {
+        onChange={(value: DateRangeProps) => {
           setValueSingle(formatDate(value.date));
         }}
         onClose={() => setIsOpenDatePickerSingle(false)}
@@ -49,7 +54,7 @@ export default function DatePickerScreen() {
       <DatePicker
         mode="range"
         isOpen={isOpenDatePickerRange}
-        onChange={(value: DateRange) => {
+        onChange={(value: DateRangeProps) => {
           setValueRange({
             startDate: formatDate(value.startDate),
             endDate: formatDate(value.endDate),

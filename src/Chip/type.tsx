@@ -133,10 +133,11 @@ export type ChipRenderItemFn = (
   disabled: boolean
 ) => React.ReactNode;
 
+export type ChipOnSelectProps = (value: string | string[] | null) => void;
 export interface ChipProps {
   options: ChipOption[];
   selected: ChipSelectedProps;
-  onSelect: (value: string | string[]) => void;
+  onSelect?: ChipOnSelectProps;
   onPress?: (value: string) => void;
   direction?: 'horizontal' | 'vertical';
   scrollable?: boolean;

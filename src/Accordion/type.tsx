@@ -5,9 +5,11 @@ export interface AccordionContextType {
   setExpandedIndex: (index: number | null) => void;
 }
 
+export type AccordionRenderHeaderProps = ReactNode | null;
+
 export interface AccordionProps {
   children: ReactNode;
-  renderHeader: ReactNode | null;
+  renderHeader?: AccordionRenderHeaderProps;
   isOpen?: boolean;
   onCollapse?: (isOpen: boolean) => void;
 }

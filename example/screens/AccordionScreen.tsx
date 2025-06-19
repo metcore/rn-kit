@@ -32,7 +32,7 @@ export default function AccordionScreen() {
     <Container>
       <Accordion
         isOpen={true}
-        renderHeader={renderHeader}
+        renderHeader={renderHeader()}
         onCollapse={handleCollapseAccordion}
       >
         <AccordionItem>

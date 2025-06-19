@@ -6,6 +6,7 @@ export function multiply(a: number, b: number): number {
 
 export { default as Accordion } from './Accordion/Accordion';
 export { default as AccordionItem } from './Accordion/AccordionItem';
+export type { AccordionRenderHeaderProps } from './Accordion/type';
 export { default as Button } from './Button/Button';
 export { default as Color } from './Color/Color';
 export { default as Typography } from './Typography/Typography';
@@ -17,7 +18,11 @@ export { default as Gap } from './Ui/Gap';
 export { default as Grid } from './Ui/Grid';
 export { default as Col } from './Ui/Col';
 export { default as Chip } from './Chip/Chip';
-export type { ChipSelectedProps } from './Chip/type';
+export type {
+  ChipSelectedProps,
+  ChipOnSelectProps,
+  ChipOption,
+} from './Chip/type';
 export { default as Footer } from './Ui/Footer';
 export { default as Devider } from './Ui/Devider';
 export { default as Select } from './Select/Select';
@@ -46,6 +51,7 @@ export { default as Provider } from './Provider/Provider';
 export { default as useFooter } from './Provider/Provider';
 export { default as Drawing } from './Drawing/Drawing';
 export { default as Calendar } from './Calendar/Calendar';
+export type { DateRangeProps } from './Calendar/CalendarPropsType';
 export { default as DatePicker } from './DatePicker/DatePicker';
 export { default as YearPicker } from './DatePicker/YearPicker';
 export { default as MonthPicker } from './DatePicker/MonthPicker';

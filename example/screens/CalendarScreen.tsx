@@ -1,6 +1,12 @@
-import { Calendar, Card, Color, Container, Typography } from '@herca/kit';
+import {
+  Calendar,
+  Card,
+  Color,
+  Container,
+  Typography,
+  type DateRangeProps,
+} from '@herca/kit';
 import { useState } from 'react';
-import type { DateRangeProps } from '../../src/Calendar/CalendarPropsType';
 
 export default function CalendarScreen() {
   const [endDate, setEndDate] = useState<string | null>();
@@ -67,7 +73,7 @@ export default function CalendarScreen() {
           selectedTextColor={Color.success[300]}
           disabledBackgroundColor={Color.base.white100}
           disabledTextColor={Color.gray[400]}
-          onChange={(obj: DateRange) => {
+          onChange={(obj: DateRangeProps) => {
             console.log(obj);
             hanOnChange(obj);
           }}
