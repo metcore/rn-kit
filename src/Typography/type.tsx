@@ -35,8 +35,8 @@ export const lineHeightMap: Record<TypographyVariantProps, number> = {
   p1: 30,
   p2: 28,
   p3: 26,
-  t1: 14,
-  t2: 14,
+  t1: 24,
+  t2: 20,
   t3: 14,
 };
 

@@ -1,5 +1,4 @@
-#import <UiKitSpec/UiKitSpec.h>
+#import <React/RCTBridgeModule.h>
 
-@interface UiKit : NSObject <NativeUiKitSpec>
-
+@interface UiKitSpec : NSObject <RCTBridgeModule>
 @end
