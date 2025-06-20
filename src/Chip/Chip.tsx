@@ -2,12 +2,13 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList, Pressable, StyleSheet, type ViewStyle } from 'react-native';
 import {
   CHIP_COLOR_MAP,
-  type ChipColor,
-  type ChipOption,
+  type ChipOptionProps,
   type ChipProps,
   type ChipSelectedProps,
+  type ChipValue,
 } from './type';
 import Typography from '../Typography/Typography';
+import type { ColorVariantType } from '../Color/type';
 
 const Chip: React.FC<ChipProps> = ({
   options,
@@ -24,7 +25,7 @@ const Chip: React.FC<ChipProps> = ({
 }) => {
   const isHorizontal = direction === 'horizontal';
 
-  const validColors: ChipColor[] = [
+  const validColors: ColorVariantType[] = [
     'default',
     'success',
     'danger',
@@ -37,10 +38,10 @@ const Chip: React.FC<ChipProps> = ({
   const safeColor = validColors.includes(color) ? color : 'default';
   const colors = CHIP_COLOR_MAP[safeColor];
 
-  const normalizeSelected = (val: ChipSelectedProps): string[] =>
+  const normalizeSelected = (val: ChipSelectedProps) =>
     Array.isArray(val) ? val : val ? [val] : [];
 
-  const [internalSelected, setInternalSelected] = useState<string[]>(
+  const [internalSelected, setInternalSelected] = useState<ChipSelectedProps>(
     normalizeSelected(selected)
   );
 
@@ -51,26 +52,23 @@ const Chip: React.FC<ChipProps> = ({
     }
   }, [selected, internalSelected]);
 
-  const isSelected = (value: string) => internalSelected.includes(value);
+  const isSelected = (value: ChipValue) => internalSelected.includes(value);
 
-  const handleSelect = (value: string) => {
-    let newSelected: string[];
-    if (!multiple) {
-      newSelected = [value];
-    } else {
+  const handleSelect = (value: string | number) => {
+    let newSelected: ChipSelectedProps;
+
+    if (multiple || (!multiple && internalSelected.length === 0)) {
       newSelected = isSelected(value)
         ? internalSelected.filter((v) => v !== value)
         : [...internalSelected, value];
+    } else {
+      newSelected = [value];
     }
 
     setInternalSelected(newSelected);
 
     if (onSelect) {
-      if (multiple) {
-        onSelect(newSelected);
-      } else if (newSelected[0]) {
-        onSelect(newSelected[0]);
-      }
+      onSelect(newSelected);
     }
   };
 
@@ -91,12 +89,12 @@ const Chip: React.FC<ChipProps> = ({
     }
   };
 
-  const handleOnPres = (isDisabled: boolean, item: ChipOption) => {
+  const handleOnPres = (isDisabled: boolean, item: ChipOptionProps) => {
     !isDisabled && handleSelect(item.value);
     onPress?.(item.value);
   };
 
-  const renderChip = ({ item }: { item: (typeof options)[number] }) => {
+  const renderChip = ({ item }: { item: ChipOptionProps }) => {
     const selectedState = isSelected(item.value);
     const isDisabled = item.disabled ?? false;
 
@@ -154,7 +152,7 @@ const Chip: React.FC<ChipProps> = ({
     <FlatList
       data={options}
       renderItem={renderChip}
-      keyExtractor={(item) => item.value}
+      keyExtractor={(item) => String(item.value)}
       horizontal={isHorizontal}
       scrollEnabled={scrollable}
       numColumns={numColumns}

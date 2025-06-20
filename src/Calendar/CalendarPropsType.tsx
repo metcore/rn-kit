@@ -1,6 +1,6 @@
 import type { GestureResponderEvent } from 'react-native';
 
-export type CalendarMatrix = (number | string)[][];
+export type CalendarMatrix = number[][];
 
 export type DisabledDayStyle = {
   backgroundColor?: string | undefined;
@@ -28,6 +28,16 @@ export type MarkedDate = {
   dots?: string[];
 };
 
+export type DayNameTuple = [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+];
+
 export interface CalendarTypes {
   mode?: 'single' | 'range';
   markedDates?: {
@@ -44,4 +54,5 @@ export interface CalendarTypes {
   disabledDays?: {
     [day in WeekDay]?: boolean | DisabledDayStyle;
   };
+  dayName?: DayNameTuple;
 }

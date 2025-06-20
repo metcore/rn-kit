@@ -1,10 +1,13 @@
 import { View } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 
-export default function MonthPicker() {
+interface MonthPickerProps {
+  isOpen: boolean;
+}
+export default function MonthPicker({ isOpen }: MonthPickerProps) {
   return (
     <View>
-      <BottomSheet></BottomSheet>
+      <BottomSheet isOpen={isOpen}></BottomSheet>
     </View>
   );
 }

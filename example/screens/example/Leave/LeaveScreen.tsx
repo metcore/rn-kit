@@ -225,8 +225,20 @@ export default function LeaveScreen() {
         footer={<Button title="Tampilkan hasil" color="primary" />}
       >
         <ScrollView>
-          <View style={{ gap: 12 }}>
-            <View style={{ gap: 12 }}>
+          <View style={styles.headerFilter}>
+            <Typography variant="p3" weight="semibold" color={Color.gray[900]}>
+              Filter
+            </Typography>
+            <Typography
+              variant="t2"
+              weight="semibold"
+              color={Color.danger[600]}
+            >
+              Reset Filter
+            </Typography>
+          </View>
+          <View style={styles.gap12}>
+            <View style={styles.gap12}>
               <Typography
                 variant="t2"
                 weight="semibold"
@@ -251,31 +263,7 @@ export default function LeaveScreen() {
                 />
               </Card>
             </View>
-            <View style={{ gap: 12 }}>
-              <Typography
-                variant="t2"
-                weight="semibold"
-                color={Color.gray[900]}
-              >
-                Status
-              </Typography>
-              <Card>
-                <Chip
-                  options={[
-                    { label: 'Terbuka', value: 'tes ' },
-                    { label: 'Disetujui ', value: 'tes2 ' },
-                    { label: 'Disetujui HR ', value: 'tes4 ' },
-                    { label: 'Ditolak ', value: 'tes3 ' },
-                  ]}
-                  scrollable
-                  direction="vertical"
-                  size="small"
-                  color="primary"
-                  multiple
-                />
-              </Card>
-            </View>
-            <View style={{ gap: 12 }}>
+            <View style={styles.gap12}>
               <Typography
                 variant="t2"
                 weight="semibold"
@@ -299,7 +287,7 @@ export default function LeaveScreen() {
                 />
               </Card>
             </View>
-            <View style={{ gap: 12 }}>
+            <View style={styles.gap12}>
               <Typography
                 variant="t2"
                 weight="semibold"
@@ -323,31 +311,7 @@ export default function LeaveScreen() {
                 />
               </Card>
             </View>
-            <View style={{ gap: 12 }}>
-              <Typography
-                variant="t2"
-                weight="semibold"
-                color={Color.gray[900]}
-              >
-                Status
-              </Typography>
-              <Card>
-                <Chip
-                  options={[
-                    { label: 'Terbuka', value: 'tes' },
-                    { label: 'Disetujui', value: 'tes2' },
-                    { label: 'Disetujui HR', value: 'tes4' },
-                    { label: 'Ditolak', value: 'tes3' },
-                  ]}
-                  scrollable
-                  direction="vertical"
-                  size="small"
-                  color="primary"
-                  multiple
-                />
-              </Card>
-            </View>
-            <View style={{ gap: 12 }}>
+            <View style={styles.gap12}>
               <Typography
                 variant="t2"
                 weight="semibold"
@@ -372,7 +336,7 @@ export default function LeaveScreen() {
               </Card>
             </View>
 
-            <View style={{ gap: 12 }}>
+            <View style={styles.gap12}>
               <Typography
                 variant="t2"
                 weight="semibold"
@@ -428,5 +392,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     gap: 8,
     flex: 1,
+  },
+  headerFilter: {
+    height: 50,
+    gap: 'auto',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  gap12: {
+    gap: 12,
   },
 });

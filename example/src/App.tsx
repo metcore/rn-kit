@@ -122,7 +122,18 @@ const App = () => {
                 ),
               }}
             />
-            <Stack.Screen name="LeaveForm" component={LeaveFormScreen} />
+            <Stack.Screen
+              name="LeaveForm"
+              component={LeaveFormScreen}
+              options={{
+                header: () => (
+                  <HeaderNavigation
+                    title="Pengajuan Cuti"
+                    showBackButton={true}
+                  />
+                ),
+              }}
+            />
             <Stack.Screen name="LeaveDetail" component={LeaveDetailScreen} />
             <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />
             <Stack.Screen name="Accordion" component={AccordionScreen} />

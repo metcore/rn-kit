@@ -15,6 +15,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { type NavigationProps } from '../../../type/navigation';
 
 const DATA_LEAVE = [
   { date: '2025-01-12' },
@@ -24,7 +25,7 @@ const DATA_LEAVE = [
 ];
 
 export default function LeaveApproveScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const [isOpenBottomSheetConfirmSubmit, setIsOpenBottomSheetConfirmSubmit] =
     useState<boolean>(false);
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false);

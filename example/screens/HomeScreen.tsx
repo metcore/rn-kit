@@ -200,8 +200,8 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
-            title="Dropdown"
-            onPress={() => navigation.navigate('Dropdown')}
+            title="DropDown"
+            onPress={() => navigation.navigate('DropDown')}
             block
           />
           <Typography variant="h3" weight="bold" style={styles.title}>

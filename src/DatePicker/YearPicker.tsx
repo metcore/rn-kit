@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Typography from '../Typography/Typography';
@@ -106,8 +106,8 @@ export default function YearPicker({
       isOpen={isOpen}
       onClose={onClose}
       footer={
-        <View style={{ flexDirection: 'row', flex: 1, gap: 12 }}>
-          <View style={{ flex: 1 }}>
+        <View style={styles.containerBottomSheetFooter}>
+          <View style={styles.flex1}>
             <Button
               title="Batal"
               variant="tertiary"
@@ -116,7 +116,7 @@ export default function YearPicker({
               onPress={onClose}
             />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={styles.flex1}>
             <Button
               title="Pilih"
               color="primary"
@@ -212,5 +212,13 @@ const styles = StyleSheet.create({
     backgroundColor: Color.gray[500],
     borderRadius: 8,
     padding: 8,
+  },
+  containerBottomSheetFooter: {
+    flexDirection: 'row',
+    flex: 1,
+    gap: 12,
+  },
+  flex1: {
+    flex: 1,
   },
 });

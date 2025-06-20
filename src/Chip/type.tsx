@@ -1,18 +1,9 @@
 import type { ColorValue } from 'react-native';
 import Color from '../Color/Color';
-
-export type ChipColor =
-  | 'default'
-  | 'success'
-  | 'danger'
-  | 'primary'
-  | 'warning'
-  | 'info'
-  | 'purple'
-  | 'orange';
+import type { ColorVariantType } from '../Color/type';
 
 export const CHIP_COLOR_MAP: Record<
-  ChipColor,
+  ColorVariantType,
   {
     backgroundColor: ColorValue;
     textColor: ColorValue;
@@ -115,35 +106,33 @@ export const CHIP_COLOR_MAP: Record<
   },
 };
 
-export interface ChipOption {
-  label: string;
-  value: string;
+export interface ChipOptionProps {
+  label: string | number;
+  value: string | number;
   disabled?: boolean;
+  [key: string]: string | number | boolean | undefined;
 }
-export type ChipSelectedProps = string | string[] | null | undefined;
-export interface ChipRenderItemData {
-  label: string;
-  value: string;
-  disabled?: boolean;
-}
+export type ChipValue = number | string | null | undefined | boolean;
+
+export type ChipSelectedProps = ChipValue[];
 
 export type ChipRenderItemFn = (
-  item: ChipRenderItemData,
+  item: ChipOptionProps,
   selected: boolean,
   disabled: boolean
 ) => React.ReactNode;
 
-export type ChipOnSelectProps = (value: string | string[] | null) => void;
+export type ChipOnSelectProps = (value: ChipSelectedProps) => void;
 export interface ChipProps {
-  options: ChipOption[];
-  selected: ChipSelectedProps;
+  options: ChipOptionProps[];
+  selected?: ChipSelectedProps;
   onSelect?: ChipOnSelectProps;
-  onPress?: (value: string) => void;
+  onPress?: (value: string | number | undefined | null) => void;
   direction?: 'horizontal' | 'vertical';
   scrollable?: boolean;
   block?: boolean;
   multiple?: boolean;
-  color?: ChipColor;
+  color?: ColorVariantType;
   size?: 'small' | 'medium' | 'large';
-  renderItem?: RenderItemFn;
+  renderItem?: ChipRenderItemFn;
 }

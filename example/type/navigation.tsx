@@ -21,7 +21,7 @@ type RootStackParamList = {
   RadioButton: undefined;
   Drawing: undefined;
   DatePicker: undefined;
-  YeaerPicker: undefined;
+  YearPicker: undefined;
   MonthPicker: undefined;
   Calendar: undefined;
   Example: undefined;
@@ -41,6 +41,7 @@ type RootStackParamList = {
   DropDown: undefined;
   Login: undefined;
   ForgotPassword: undefined;
+  LeaveApprove: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

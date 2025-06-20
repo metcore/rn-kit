@@ -1,17 +1,24 @@
 import React from 'react';
-import type { ChipOption, ChipSelectedProps } from '../Chip/type';
+import type { ChipOnSelectProps, ChipOptionProps } from '../Chip/type';
 
 export interface SelectDataProps {
   value: string | number;
   label: string | number;
 }
+
+export type SelectRenderItemProps = (
+  item: ChipOptionProps,
+  selected: boolean,
+  disabled: boolean
+) => React.ReactNode;
+
 export interface SelectProps {
   isOpen?: boolean;
   multiple?: boolean;
-  data: ChipOption[];
-  renderItem?: React.ReactNode;
-  onSubmit?: (val: ChipSelectedProps) => void;
+  data: ChipOptionProps[];
+  renderItem?: SelectRenderItemProps;
+  onSubmit?: ChipOnSelectProps;
   onClose?: (val: boolean) => void;
-  onSearch: (val: string) => void;
+  onSearch?: (val: string) => void;
   required?: boolean;
 }

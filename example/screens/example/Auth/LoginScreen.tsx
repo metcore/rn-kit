@@ -7,22 +7,32 @@ import {
   Typography,
 } from '@herca/kit';
 import { useNavigation } from '@react-navigation/native';
-import { Image, KeyboardAvoidingView, ScrollView, View } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from 'react-native';
 import { type NavigationProps } from '../../../type/navigation';
 import { useState } from 'react';
-import type { InputProps } from '../../../../src/Input/type';
 
 interface DataProps {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
+}
+
+interface ErrorProps {
+  email?: boolean;
+  password?: boolean;
 }
 export default function LoginScreen() {
   const [data, setData] = useState<DataProps>();
-  const [erroData, setErrorData] = useState();
+  const [erroData, setErrorData] = useState<ErrorProps>();
 
-  const handleOnChange = ({ name, val }: { name: string; val: InputProps }) => {
+  const handleOnChange = (name: string, val: string) => {
     setData((prev) => ({
-      ...prev,
+      ...(prev ?? {}),
       [name]: val,
     }));
   };
@@ -32,7 +42,7 @@ export default function LoginScreen() {
       ...prev,
       email: true,
     }));
-    if (!data && !data?.password) {
+    if (!data?.password) {
       setErrorData((prev) => ({
         ...prev,
         password: true,

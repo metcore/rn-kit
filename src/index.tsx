@@ -21,11 +21,12 @@ export { default as Chip } from './Chip/Chip';
 export type {
   ChipSelectedProps,
   ChipOnSelectProps,
-  ChipOption,
+  ChipOptionProps,
 } from './Chip/type';
 export { default as Footer } from './Ui/Footer';
 export { default as Devider } from './Ui/Devider';
 export { default as Select } from './Select/Select';
+export type { SelectRenderItemProps } from './Select/type';
 export { default as LabelForm } from './LabelForm/LabelForm';
 export { default as Input } from './Input/Input';
 export { default as InputPassword } from './Input/InputPassword';

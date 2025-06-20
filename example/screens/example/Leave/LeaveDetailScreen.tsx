@@ -25,9 +25,10 @@ import {
 } from 'react-native';
 import Attachment from '../../../components/Attachment';
 import { useNavigation } from '@react-navigation/native';
+import { type NavigationProps } from '../../../type/navigation';
 
 export default function LeaveDetailScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const [isOpenModalStatus, setIosOpenModalStatus] = useState(false);
 
   return (

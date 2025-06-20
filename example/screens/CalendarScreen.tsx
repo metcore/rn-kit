@@ -42,6 +42,7 @@ export default function CalendarScreen() {
           }}
           minDate={new Date(2025, 5, 5)}
           maxDate={new Date(2025, 6, 20)}
+          dayName={['sen', 'sel', 'rab', 'kam', 'jum', 'sab', 'ming']}
           markedDates={{
             '2025-06-10': {
               selected: true,
@@ -82,31 +83,25 @@ export default function CalendarScreen() {
       {!endDate && <Typography>Please select end date</Typography>}
       <Typography>Mode : Single</Typography>
 
-      <Card>
-        <Calendar
-          mode="single"
-          minDate={new Date(2025, 5, 5)}
-          maxDate={new Date(2025, 5, 20)}
-          selectedBackgroundColor={Color.primary[200]}
-          markedDates={{
-            '2025-06-10': {
-              dots: [
-                Color.success[600],
-                Color.primary[1000],
-                Color.danger[600],
-              ],
-              selected: true,
-              backgroundColor: 'red',
-              textColor: 'white',
-            },
-            '2025-06-11': {
-              dots: [Color.base.black100, Color.success[600]],
-              disabled: true,
-            },
-          }}
-          disabledBackgroundColor={Color.danger[500]}
-        />
-      </Card>
+      <Calendar
+        mode="single"
+        minDate={new Date(2025, 5, 5)}
+        maxDate={new Date(2025, 5, 20)}
+        selectedBackgroundColor={Color.primary[200]}
+        markedDates={{
+          '2025-06-10': {
+            dots: [Color.success[600], Color.primary[1000], Color.danger[600]],
+            selected: true,
+            backgroundColor: 'red',
+            textColor: 'white',
+          },
+          '2025-06-11': {
+            dots: [Color.base.black100, Color.success[600]],
+            disabled: true,
+          },
+        }}
+        disabledBackgroundColor={Color.danger[500]}
+      />
     </Container>
   );
 }

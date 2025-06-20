@@ -4,8 +4,7 @@ import {
   Container,
   Icon,
   Typography,
-  type ChipOnSelectProps,
-  type ChipOption,
+  type ChipOptionProps,
   type ChipSelectedProps,
 } from '@herca/kit';
 import { useState } from 'react';
@@ -23,14 +22,16 @@ const options = [
 ];
 
 const ChipScreen = () => {
-  const [selectedDefault, setSelectedDefault]: [
-    ChipSelectedProps,
-    ChipOnSelectProps,
-  ] = useState();
-  const [selectedCustom, setSelectedCustom] = useState();
+  const [selectedDefault, setSelectedDefault] = useState<ChipSelectedProps>();
+  const [selectedCustom, setSelectedCustom] = useState<ChipSelectedProps>();
   const handleOnSelectCustom = (val: ChipSelectedProps) => {
     setSelectedCustom(val);
   };
+
+  const handleOnSelectDefault = (value: ChipSelectedProps) => {
+    setSelectedDefault(value);
+  };
+
   return (
     <Container>
       <Typography variant="p2" weight="semibold">
@@ -39,7 +40,7 @@ const ChipScreen = () => {
       <Chip
         options={options}
         selected={selectedDefault}
-        onSelect={setSelectedDefault}
+        onSelect={handleOnSelectDefault}
         direction="horizontal"
         color="primary"
       />
@@ -49,7 +50,7 @@ const ChipScreen = () => {
       <Chip
         options={options}
         selected={selectedDefault}
-        onSelect={setSelectedDefault}
+        onSelect={handleOnSelectDefault}
         direction="vertical"
         scrollable={false}
         color="danger"
@@ -67,7 +68,7 @@ const ChipScreen = () => {
         color="primary"
         multiple
         renderItem={(
-          item: ChipOption,
+          item: ChipOptionProps,
           isSelected: boolean,
           isDisabled: boolean
         ) => (

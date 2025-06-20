@@ -7,10 +7,10 @@ import {
   FlatList,
   Image,
   ScrollView,
+  StyleSheet,
 } from 'react-native';
 import {
   Alert,
-  Badge,
   BottomSheet,
   Button,
   Calendar,
@@ -20,6 +20,7 @@ import {
   Container,
   Footer,
   InputFile,
+  Label,
   List,
   ListItem,
   Modal,
@@ -96,18 +97,18 @@ const DATA = [
 ];
 
 interface DataCutiProps {
-  id: string;
+  id: string | number;
   leave_name: string;
   max_day: number;
 }
 
 interface LeaveData {
-  leave_id: number;
-  date: string;
+  leave_id?: string | number;
+  date?: string;
   remark?: string;
-  employee_id: number;
-  status: 'pending' | 'approved' | 'rejected';
-  day_type: number;
+  employee_id?: number;
+  status?: 'pending' | 'approved' | 'rejected';
+  day_type?: number;
 }
 
 export default function LeaveForm() {
@@ -155,7 +156,7 @@ export default function LeaveForm() {
     }
   };
 
-  const handleSetData = (name, val) => {
+  const handleSetData = (name: string, val: string | number) => {
     setData((prev) => ({
       ...prev,
       [name]: val,
@@ -187,20 +188,25 @@ export default function LeaveForm() {
             flexDirection: 'row',
             alignItems: 'center',
           },
-          data?.leave_id == item.id && {
+          data?.leave_id === item.id && {
             backgroundColor: Color.primary[50],
             borderColor: Color.primary[300],
           },
         ]}
       >
-        <Badge color="info">
-          <Typography variant="t2" weight="medium" color={Color.info[500]}>
+        <Label color="info">
+          <Typography
+            variant="t2"
+            weight="medium"
+            center
+            color={Color.info[500]}
+          >
             {item.max_day}
           </Typography>
           <Typography variant="t3" weight="medium" color={Color.info[400]}>
             Hari
           </Typography>
-        </Badge>
+        </Label>
         <Typography weight="semibold" variant="t2" color={Color.gray[800]}>
           {item.leave_name}
         </Typography>
@@ -209,10 +215,10 @@ export default function LeaveForm() {
   );
 
   const renderFooter = () => {
-    if (current == 3) {
+    if (current === 3) {
       return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <View style={{ justifyContent: 'center' }}>
+        <View style={styles.containerFooter}>
+          <View>
             <Typography variant="t2" weight="medium" color={Color.gray[500]}>
               Pengajuan Cuti
             </Typography>
@@ -234,18 +240,24 @@ export default function LeaveForm() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.containerSafeAreaView}>
       <Step current={current} onChangeStep={handleChangeStep}>
         <StepItem title="Step 1">
-          <Container>
-            <Typography variant="t2" weight="semibold" color={Color.gray[800]}>
-              Tipe Cuti
-            </Typography>
-            <FlatList
-              data={DATA}
-              renderItem={({ item }) => <Item item={item} />}
-              keyExtractor={(item) => item.id}
-            />
+          <Container style={{ gap: 14 }}>
+            <View style={{ gap: 4 }}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                Tipe Cuti
+              </Typography>
+              <FlatList
+                data={DATA}
+                renderItem={({ item }) => <Item item={item} />}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
           </Container>
         </StepItem>
         <StepItem title="Step 2">
@@ -276,7 +288,7 @@ export default function LeaveForm() {
         </StepItem>
         <StepItem title="Step 4">
           <ScrollView>
-            <Container style={{ gap: 12 }}>
+            <Container style={styles.containerStep1}>
               <Alert
                 color="info"
                 message="Pastikan data yang kamu masukan sudah benar sebelum melanjutkan pengajuan."
@@ -336,10 +348,10 @@ export default function LeaveForm() {
               </Typography>
               <List>
                 <ListItem>
-                  <View style={{ flexDirection: 'row', gap: 8 }}>
+                  <View style={styles.containerImage}>
                     <Image
                       source={require('../../../assets/leave/type_cuti1.png')}
-                      style={{ width: 44, height: 44, borderRadius: 8 }}
+                      style={styles.imageAttachment}
                     />
                     <View style={{ justifyContent: 'center' }}>
                       <Typography
@@ -360,10 +372,10 @@ export default function LeaveForm() {
                   </View>
                 </ListItem>
                 <ListItem>
-                  <View style={{ flexDirection: 'row', gap: 8 }}>
+                  <View style={styles.containerImage}>
                     <Image
                       source={require('../../../assets/leave/type_cuti1.png')}
-                      style={{ width: 44, height: 44, borderRadius: 8 }}
+                      style={styles.imageAttachment}
                     />
                     <View style={{ justifyContent: 'center' }}>
                       <Typography
@@ -384,10 +396,10 @@ export default function LeaveForm() {
                   </View>
                 </ListItem>
                 <ListItem>
-                  <View style={{ flexDirection: 'row', gap: 8 }}>
+                  <View style={styles.containerImage}>
                     <Image
                       source={require('../../../assets/leave/type_cuti1.png')}
-                      style={{ width: 44, height: 44, borderRadius: 8 }}
+                      style={styles.imageAttachment}
                     />
                     <View style={{ justifyContent: 'center' }}>
                       <Typography
@@ -470,7 +482,7 @@ export default function LeaveForm() {
         isOpen={isOpenSuccessModal}
       >
         <Container>
-          <View style={{ gap: 32, alignItems: 'center' }}>
+          <View style={styles.containerModalSuccess}>
             <Image source={require('../../../assets/positive-vote-1.png')} />
             <View>
               <Center style={{ gap: 4 }}>
@@ -503,3 +515,29 @@ export default function LeaveForm() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  containerSafeAreaView: {
+    flex: 1,
+  },
+  containerStep1: {
+    gap: 12,
+  },
+  containerImage: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  imageAttachment: {
+    width: 44,
+    height: 44,
+    borderRadius: 8,
+  },
+  containerModalSuccess: {
+    gap: 32,
+    alignItems: 'center',
+  },
+  containerFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});

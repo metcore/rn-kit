@@ -55,13 +55,14 @@ const Step = ({ children, current = 0, onChangeStep }: StepProps) => {
 
       {/* Content */}
       <View style={styles.content}>
-        {React.cloneElement(childrenArray[current], {
-          index: current,
-          isActive: true,
-          isCompleted: false,
-          isLast: current === totalSteps - 1,
-          isHeader: false,
-        })}
+        {childrenArray[current] &&
+          React.cloneElement(childrenArray[current], {
+            index: current,
+            isActive: true,
+            isCompleted: false,
+            isLast: current === totalSteps - 1,
+            isHeader: false,
+          })}
       </View>
     </View>
   );

@@ -6,7 +6,8 @@ import {
   Container,
   Select,
   Typography,
-  type ChipOnSelectProps,
+  type ChipOptionProps,
+  type ChipSelectedProps,
 } from '@herca/kit';
 import { useState } from 'react';
 
@@ -76,13 +77,13 @@ export default function SelectScreen() {
   const [isOpenSelectDefault, setIsOpenSelectDefault] =
     useState<boolean>(false);
   const [isOpenSelectCustom, setIsOpenSelectCustom] = useState<boolean>(false);
-  const [submitValue, setSubmitValue] = useState<string | number | null>(null);
+  const [submitValue, setSubmitValue] = useState<ChipSelectedProps>();
 
-  const handleSubmitSelectCustom = (val) => {
+  const handleSubmitSelectCustom = (val: ChipSelectedProps) => {
     setSubmitValue(val);
     setIsOpenSelectCustom(false);
   };
-  const renderItem = (item: ChipOnSelectProps) => {
+  const renderItem = (item: ChipOptionProps) => {
     return (
       <View>
         <View style={styles.containerItem}>

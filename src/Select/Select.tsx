@@ -16,8 +16,7 @@ export default function Select({
   onSearch,
 }: SelectProps) {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
-  const [selected, setSelected] = useState<ChipSelectedProps>(null);
-
+  const [selected, setSelected] = useState<ChipSelectedProps>();
   useEffect(() => {
     setIsOpenSelect(isOpen);
   }, [isOpen]);
@@ -28,7 +27,7 @@ export default function Select({
 
   const handleOnPresSubmitSelect = () => {
     setIsOpenSelect(false);
-    onSubmit?.(selected);
+    onSubmit?.(selected ? selected : []);
   };
 
   return (

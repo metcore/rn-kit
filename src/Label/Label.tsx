@@ -7,7 +7,7 @@ import Icon from '../Icon'; // pastikan ada komponen ini
 import type { IconNameProps } from '../Icon';
 
 interface LabelProps {
-  label: string;
+  label?: string;
   children?: React.ReactNode;
   color?: string;
   icon?: IconNameProps;

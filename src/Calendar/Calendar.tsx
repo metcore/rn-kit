@@ -4,6 +4,7 @@ import Color from '../Color/Color';
 import type {
   CalendarMatrix,
   CalendarTypes,
+  DayNameTuple,
   MarkedDate,
   WeekDay,
 } from './CalendarPropsType';
@@ -11,7 +12,7 @@ import Icon from '../Icon';
 import Typography from '../Typography/Typography';
 
 //perlu locale untuk nama hari
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DAYS: DayNameTuple = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 // const DEFAULT_BACKGROUND_COLOR = Color.base.white100;
 // const DEFAULT_TEXT_COLOR = Color.gray[600];
 const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
@@ -30,6 +31,7 @@ const Calendar = ({
   selectedTextColor = DEFAULT_SELECTED_TEXT_COLOR,
   disabledBackgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR,
   disabledTextColor = DEFAULT_DISABLED_TEXT_COLOR,
+  dayName = DAYS,
 }: CalendarTypes) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -54,7 +56,7 @@ const Calendar = ({
 
     let row = [];
     for (let i = 0; i < firstDay; i++) {
-      row.push('');
+      row.push(0);
     }
 
     for (let day = 1; day <= maxDays; day++) {
@@ -67,11 +69,10 @@ const Calendar = ({
 
     if (row.length > 0) {
       while (row.length < 7) {
-        row.push('');
+        row.push(0);
       }
       matrix.push(row);
     }
-
     return matrix;
   };
 
@@ -259,9 +260,11 @@ const Calendar = ({
   const calendarMatrix = generateCalendarMatrix();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
-
+  const handleLayout = () => {
+    // const { width } = event.nativeEvent.layout;
+  };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={handleLayout}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.buttonNav} onPress={goToPrevMonth}>
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
@@ -275,87 +278,83 @@ const Calendar = ({
       </View>
 
       <View style={styles.weekRow}>
-        {DAYS.map((day, index) => (
-          <Typography
-            key={index}
-            weight="medium"
-            variant="t2"
-            color={Color.gray[600]}
-          >
-            {day}
-          </Typography>
+        {dayName.map((day, index) => (
+          <View>
+            <Typography
+              key={index}
+              weight="medium"
+              variant="t2"
+              center
+              color={Color.gray[600]}
+            >
+              {day}
+            </Typography>
+            {calendarMatrix.map((week, rowIndex) => {
+              const day = index as WeekDay;
+              if (typeof week[index] !== 'number') return null;
+              const date = week[index];
+              const dateKey = formatDateKey(year, month, date);
+              const mark = markedDates[dateKey];
+              const disabled =
+                isMarkDisableDate(mark) || isDisabledDate(year, month, date);
+              const backgroundColor = setBackgroundDay(year, month, date, day);
+              const textColor = setTextColor(year, month, date, day);
+
+              return (
+                <Pressable
+                  key={day - rowIndex}
+                  onPress={() => handlePressDay(date)}
+                  disabled={disabled}
+                >
+                  <View style={[styles.dayCell, { backgroundColor }]}>
+                    <Typography variant="t2" weight="medium" color={textColor}>
+                      {date ? date : ''}
+                    </Typography>
+                  </View>
+                  <View style={{ height: 10, marginBottom: 5 }}>
+                    {mark?.dots && Array.isArray(mark.dots) && (
+                      <View style={styles.dotsContainer}>
+                        {mark.dots.map((dot: string, index: number) => {
+                          const dotColor =
+                            (mark.selected && dot) || dot || 'red';
+                          return (
+                            <View
+                              key={index}
+                              style={[
+                                styles.dot,
+                                { backgroundColor: dotColor },
+                              ]}
+                            />
+                          );
+                        })}
+                      </View>
+                    )}
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
         ))}
       </View>
-
-      {calendarMatrix.map((week, rowIndex) => (
-        <View key={rowIndex} style={styles.weekRow}>
-          {week.map((date: number, colIndex: WeekDay) => {
-            const dateKey = formatDateKey(year, month, date);
-            const mark = markedDates[dateKey];
-            const disabled =
-              isMarkDisableDate(mark) || isDisabledDate(year, month, date);
-            const backgroundColor = setBackgroundDay(
-              year,
-              month,
-              date,
-              colIndex
-            );
-            const textColor = setTextColor(year, month, date, colIndex);
-
-            return (
-              <Pressable
-                key={colIndex}
-                onPress={() => handlePressDay(date)}
-                disabled={disabled}
-              >
-                <View style={[styles.dayCell, { backgroundColor }]}>
-                  <Typography variant="t2" weight="medium" color={textColor}>
-                    {date ? date : ''}
-                  </Typography>
-                </View>
-
-                {mark?.dots && Array.isArray(mark.dots) && (
-                  <View style={styles.dotsContainer}>
-                    {mark.dots.map((dot: string, index: number) => {
-                      const dotColor = (mark.selected && dot) || dot || 'red';
-                      return (
-                        <View
-                          key={index}
-                          style={[styles.dot, { backgroundColor: dotColor }]}
-                        />
-                      );
-                    })}
-                  </View>
-                )}
-              </Pressable>
-            );
-          })}
-        </View>
-      ))}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: '#fff', padding: 10 },
+  container: {},
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
+    height: 56,
+    gap: 8,
   },
   nav: { fontSize: 20, paddingHorizontal: 10 },
   month: { fontSize: 18, fontWeight: 'bold' },
   weekRow: {
     flexDirection: 'row',
-    width: 300,
     justifyContent: 'space-between',
-  },
-  dayName: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    paddingVertical: 4,
   },
   dayCell: {
     alignItems: 'center',

@@ -4,7 +4,7 @@ import { Color, Icon } from '@herca/kit'; // Pastikan Icon sudah tersedia
 
 interface CheckBoxProps {
   checked?: boolean;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
   label?: string | React.ReactNode;
   disabled?: boolean;
   renderLabel?: () => React.ReactNode;
