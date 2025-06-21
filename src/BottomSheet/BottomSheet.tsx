@@ -12,6 +12,7 @@ import {
   SafeAreaView,
   Platform,
   StatusBar,
+  type KeyboardEvent,
 } from 'react-native';
 import Container from '../Ui/Container';
 import Typography from '../Typography/Typography';
@@ -20,7 +21,9 @@ import type { BottomSheetHeighProps, BottomSheetProops } from './type';
 
 const statusBarHeight =
   Platform.OS === 'android' ? (StatusBar.currentHeight ?? 24) : 65;
-
+const screenHeight = Dimensions.get('window').height;
+const actualScreenHeight = screenHeight - statusBarHeight;
+const DEFAULT_PADDING_BOTTOM = 40;
 export default function BottomSheet({
   isOpen,
   onClose,
@@ -34,9 +37,11 @@ export default function BottomSheet({
   footer,
 }: BottomSheetProops) {
   const [isVisible, setIsVisible] = useState(false);
+  const [heightFooter, setHeightFooter] = useState(0);
   const [heighContent, setHeighContent] =
     useState<BottomSheetHeighProps>('auto');
-  const [maxHeight, setMaxHeight] = useState<BottomSheetHeighProps>('95%');
+  const [maxHeight, setMaxHeight] =
+    useState<BottomSheetHeighProps>(actualScreenHeight);
   const translateY = useRef(new Animated.Value(600)).current;
 
   const panResponder = useRef(
@@ -108,16 +113,19 @@ export default function BottomSheet({
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      () => {
-        setMaxHeight('90%');
+      (e: KeyboardEvent) => {
+        const keyboardHeight = e.endCoordinates?.height || 300;
+        setMaxHeight(screenHeight - statusBarHeight - keyboardHeight);
       }
     );
+
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        setMaxHeight('95%');
+        setMaxHeight(screenHeight - statusBarHeight);
       }
     );
+
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
@@ -146,7 +154,12 @@ export default function BottomSheet({
           <Animated.View
             style={[
               styles.bottomSheet,
-              { transform: [{ translateY }], height: heighContent },
+              {
+                transform: [{ translateY }],
+                height: heighContent,
+                maxHeight: maxHeight,
+                paddingBottom: DEFAULT_PADDING_BOTTOM + heightFooter,
+              },
             ]}
           >
             {buttonClose && (
@@ -168,14 +181,19 @@ export default function BottomSheet({
             <SafeAreaView
               style={[
                 styles.contentContainer,
-                { maxHeight },
                 ...(footer ? [styles.contentWithFooter] : []),
               ]}
             >
               <Container>{children}</Container>
             </SafeAreaView>
             {footer && (
-              <SafeAreaView style={styles.footer}>
+              <SafeAreaView
+                onLayout={(event) => {
+                  const { height } = event.nativeEvent.layout;
+                  setHeightFooter(height);
+                }}
+                style={styles.footer}
+              >
                 <Container>{footer}</Container>
               </SafeAreaView>
             )}
@@ -201,8 +219,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   bottomSheet: {
-    paddingBottom: Platform.OS === 'ios' ? 15 : 5,
-    maxHeight: Dimensions.get('window').height - statusBarHeight,
     backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
@@ -231,9 +247,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
   },
-  contentWithFooter: {
-    marginBottom: 110,
-  },
+  contentWithFooter: {},
   footer: {
     backgroundColor: Color.base.white100,
     position: 'absolute',

@@ -3,7 +3,7 @@ import React from 'react';
 import Color from '../Color/Color';
 import type { ColorVariantType } from '../Color/type';
 import Typography from '../Typography/Typography';
-import Icon from '../Icon'; // pastikan ada komponen ini
+import Icon from '../Icon';
 import type { IconNameProps } from '../Icon';
 
 interface LabelProps {
@@ -34,8 +34,8 @@ const LABEL_COLOR_MAP: Record<
   }
 > = {
   default: {
-    backgroundColor: Color.gray[600],
-    textColor: Color.base.white100,
+    backgroundColor: Color.gray[50],
+    textColor: Color.gray[900],
   },
   success: {
     backgroundColor: Color.success[50],
@@ -86,8 +86,16 @@ export default function Label({
         children
       ) : (
         <View style={styles.content}>
-          {icon && <Icon name={icon} color={colors.textColor} />}
-          <Typography style={{ color: colors.textColor }}>{label}</Typography>
+          {icon && (
+            <Icon name={icon} color={colors.textColor} style={styles.icon} />
+          )}
+          <Typography
+            variant="t2"
+            color={colors.textColor}
+            style={{ color: colors.textColor }}
+          >
+            {label}
+          </Typography>
         </View>
       )}
     </View>
@@ -96,8 +104,7 @@ export default function Label({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 4,
-    paddingLeft: 8,
+    paddingVertical: 4,
     borderRadius: 4,
     alignSelf: 'flex-start',
   },
@@ -106,6 +113,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    marginRight: 4,
+    marginLeft: 4,
   },
 });

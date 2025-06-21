@@ -107,7 +107,18 @@ const App = () => {
             <Stack.Screen name="YearPicker" component={YearPickerScreen} />
             <Stack.Screen name="Toast" component={ToastScreen} />
 
-            <Stack.Screen name="Sp" component={SpScreen} />
+            <Stack.Screen
+              name="Sp"
+              component={SpScreen}
+              options={{
+                header: () => (
+                  <HeaderNavigation
+                    title="Surat Peringatan"
+                    showBackButton={true}
+                  />
+                ),
+              }}
+            />
             <Stack.Screen name="SpDetail" component={SpDetailScreen} />
 
             <Stack.Screen

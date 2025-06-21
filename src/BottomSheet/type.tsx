@@ -1,4 +1,4 @@
-export type BottomSheetHeighProps = `${number}%` | 'auto';
+export type BottomSheetHeighProps = `${number}%` | 'auto' | number;
 
 export interface BottomSheetProops {
   label?: string;

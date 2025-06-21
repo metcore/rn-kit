@@ -83,7 +83,7 @@ interface ChipOption {
 - Jika `multiple = false`, maka `onSelect` mengembalikan satu string.
 - Jika `multiple = true`, maka `onSelect` mengembalikan array string.
 - `block` hanya berfungsi bila arah `vertical`.
-
+- gunakan scrollable = false jika ingin membungkus di ScrollView
 ---
 
 © 2025 – Komponen Chip by YourTeam
