@@ -67,7 +67,7 @@ const variantStyles: Record<
     }),
   },
   outline: {
-    container: (colors, disabled, pressed) => ({
+    container: (colors, disabled, pressed = false) => ({
       backgroundColor: colors.outlineBackgroundColor,
       borderWidth: 1,
       borderColor: disabled
@@ -85,7 +85,7 @@ const variantStyles: Record<
     }),
   },
   tertiary: {
-    container: (colors, disabled, pressed) => ({
+    container: (colors, disabled, pressed = false) => ({
       backgroundColor: colors.tertiaryBackgroundColor,
       borderWidth: 1,
       borderColor: disabled
@@ -123,7 +123,7 @@ const Button: React.FC<ButtonProps> = ({
   const baseContainerStyle = [
     styles.base,
     sizeStyles.container,
-    variantStyles[variant].container(colors, disabled),
+    variantStyles[variant].container(colors, disabled, false),
     disabled && styles.disabled,
     block && { width: '100%' },
     width !== undefined && { width },
