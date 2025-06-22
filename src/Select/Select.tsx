@@ -28,7 +28,7 @@ export default function Select({
     onClose?.(val);
   };
 
-  const handleOnPresSubmitSelect = () => {
+  const handleOnPresSubmitSelect = (): boolean => {
     if (required && (!selected || selected.length == 0)) {
       show('Please fill a item');
       return false;
