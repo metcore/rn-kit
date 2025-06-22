@@ -35,6 +35,7 @@ export default function Select({
     }
     setIsOpenSelect(false);
     onSubmit?.(selected ? selected : []);
+    return true;
   };
 
   return (
