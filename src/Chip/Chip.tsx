@@ -155,6 +155,7 @@ const Chip: React.FC<ChipProps> = ({
       keyExtractor={(item) => String(item.value)}
       horizontal={isHorizontal}
       scrollEnabled={scrollable}
+      keyboardShouldPersistTaps="always"
       numColumns={numColumns}
       contentContainerStyle={[
         styles.container,

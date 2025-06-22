@@ -52,7 +52,7 @@ const SIZE_MAP: Record<Size, SizeStyle> = {
     borderRadius: 4,
   },
   medium: {
-    height: 24,
+    height: 32,
     fontSize: 't1',
     paddingHorizontal: 10,
     paddingVertical: 4,

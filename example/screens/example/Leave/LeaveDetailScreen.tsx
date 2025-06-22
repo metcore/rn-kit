@@ -8,6 +8,7 @@ import {
   Color,
   Container,
   Footer,
+  Icon,
   Label,
   List,
   ListItem,
@@ -16,13 +17,7 @@ import {
   Typography,
 } from '@herca/kit';
 import { useState } from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Attachment from '../../../components/Attachment';
 import { useNavigation } from '@react-navigation/native';
 import { type NavigationProps } from '../../../type/navigation';
@@ -63,23 +58,29 @@ export default function LeaveDetailScreen() {
                 source={require('../../../assets/leave/type_cuti1.png')}
               />
               <View style={styles.headerText}>
-                <Badge value="PT. Herca Cipta Dermal Perdana" color="info" />
-                <Typography
-                  variant="t1"
-                  weight="semibold"
-                  color={Color.gray[900]}
-                >
-                  Mama Alkatiri User
-                </Typography>
-                <Typography
-                  variant="t3"
-                  weight="medium"
-                  color={Color.gray[900]}
-                >
-                  Finance
-                </Typography>
+                <View>
+                  <Badge
+                    value="PT. Herca Cipta Dermal Perdana"
+                    size="small"
+                    color="info"
+                  />
+                  <Typography
+                    variant="t1"
+                    weight="semibold"
+                    color={Color.gray[900]}
+                  >
+                    Mama Alkatiri User
+                  </Typography>
+                  <Typography
+                    variant="t3"
+                    weight="medium"
+                    color={Color.gray[900]}
+                  >
+                    Finance
+                  </Typography>
+                </View>
+                <Icon name="AirPlane" size={29} color={Color.warning[300]} />
               </View>
-              <Image source={require('../../../assets/leave/briefcase.png')} />
             </View>
 
             <List>
@@ -148,84 +149,160 @@ export default function LeaveDetailScreen() {
             </List>
           </Card>
 
-          <Typography variant="t2" weight="medium" color={Color.gray[600]}>
-            Informasi Pengajuan
-          </Typography>
-
-          <List>
-            {[
-              ['Tipe Cuti', 'Cuti Melahirkan'],
-              ['Permintaa Cuti', 'Cuti Setengah hari'],
-              ['Maksimal Jumlah Cuti', '2 hari'],
-            ].map(([label, value], i) => (
-              <ListItem key={i}>
-                <View>
+          <View>
+            <Typography variant="t2" weight="medium" color={Color.gray[600]}>
+              Informasi Pengajuan
+            </Typography>
+            <List>
+              {[
+                ['Tipe Cuti', 'Cuti Melahirkan'],
+                ['Permintaa Cuti', 'Cuti Setengah hari'],
+                ['Maksimal Jumlah Cuti', '2 hari'],
+              ].map(([label, value], i) => (
+                <ListItem key={i}>
+                  <View>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[600]}
+                    >
+                      {label}
+                    </Typography>
+                    <Typography
+                      variant="t2"
+                      weight="semibold"
+                      color={Color.gray[800]}
+                    >
+                      {value}
+                    </Typography>
+                  </View>
+                </ListItem>
+              ))}
+            </List>
+          </View>
+          <View>
+            <Typography variant="t2" weight="medium" color={Color.gray[600]}>
+              Informasi Pengajuan
+            </Typography>
+            <Card>
+              <TouchableOpacity
+                onPress={() => setIosOpenModalStatus(!isOpenModalStatus)}
+                style={styles.statusRow}
+              >
+                <View style={styles.statusText}>
                   <Typography
                     variant="t2"
-                    weight="regular"
-                    color={Color.gray[600]}
+                    color={Color.gray[800]}
+                    weight="semibold"
                   >
-                    {label}
+                    Status Terakhir
                   </Typography>
                   <Typography
-                    variant="t2"
-                    weight="semibold"
-                    color={Color.gray[800]}
+                    variant="t3"
+                    color={Color.gray[600]}
+                    weight="regular"
                   >
-                    {value}
+                    Jumat, 14 Februari 2025
                   </Typography>
                 </View>
-              </ListItem>
-            ))}
-          </List>
-
-          <Card>
-            <TouchableOpacity
-              onPress={() => setIosOpenModalStatus(!isOpenModalStatus)}
-              style={styles.statusRow}
-            >
-              <View style={styles.statusText}>
-                <Typography
-                  variant="t2"
-                  color={Color.gray[800]}
-                  weight="semibold"
-                >
-                  Status Terakhir
-                </Typography>
-                <Typography
-                  variant="t3"
-                  color={Color.gray[600]}
-                  weight="regular"
-                >
-                  Jumat, 14 Februari 2025
-                </Typography>
-              </View>
-              <Badge value="Terbuka" color="warning" />
-            </TouchableOpacity>
-          </Card>
-
-          <Typography variant="t2" weight="medium" color={Color.gray[600]}>
-            Dokumen
-          </Typography>
-
-          <Attachment
-            data={[
-              require('../../../assets/sp2.png'),
-              require('../../../assets/sp2.png'),
-              require('../../../assets/sp_banner.png'),
-            ]}
-          />
-
-          <Typography variant="t2" color={Color.gray[600]} weight="medium">
-            Catatan
-          </Typography>
-          <Card style={styles.noteCard}>
-            <Label icon="StickyNote" color="warning" />
-            <Typography variant="t2" color={Color.gray[600]} weight="regular">
-              Berdasarkan catatan kehadiran kami, Anda telah beberapa kali
-              teerlambat masuk kerja
+                <Badge value="Terbuka" color="warning" />
+              </TouchableOpacity>
+            </Card>
+          </View>
+          <View>
+            <Typography variant="t2" weight="medium" color={Color.gray[600]}>
+              Dokumen
             </Typography>
-          </Card>
+            <Attachment
+              data={[
+                require('../../../assets/sp2.png'),
+                require('../../../assets/input-file.png'),
+                require('../../../assets/avatar.png'),
+              ]}
+            />
+          </View>
+          <View>
+            <Typography variant="t2" color={Color.gray[600]} weight="medium">
+              Catatan
+            </Typography>
+            <Card style={styles.noteCard}>
+              <Label icon="StickyNote" color="warning" />
+              <Typography variant="t2" color={Color.gray[600]} weight="regular">
+                Berdasarkan catatan kehadiran kami, Anda telah beberapa kali
+                teerlambat masuk kerja
+              </Typography>
+            </Card>
+          </View>
+          <View>
+            <Typography variant="t2" color={Color.gray[600]} weight="medium">
+              Persetujuan
+            </Typography>
+            <List>
+              <ListItem>
+                <View style={{ flexDirection: 'row', gap: 12 }}>
+                  <Label icon="Check" color="success" />
+                  <View>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[700]}
+                    >
+                      Disetujui Oleh
+                    </Typography>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[900]}
+                    >
+                      Metcore
+                    </Typography>
+                  </View>
+                </View>
+              </ListItem>
+              <ListItem>
+                <View style={{ flexDirection: 'row', gap: 12 }}>
+                  <Label icon="Check" color="success" />
+                  <View>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[700]}
+                    >
+                      Disetujui Oleh
+                    </Typography>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[900]}
+                    >
+                      Metcore
+                    </Typography>
+                  </View>
+                </View>
+              </ListItem>
+              <ListItem>
+                <View style={{ flexDirection: 'row', gap: 12 }}>
+                  <Label icon="Check" color="success" size="medium" />
+                  <View>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[700]}
+                    >
+                      Disetujui Oleh
+                    </Typography>
+                    <Typography
+                      variant="t2"
+                      weight="regular"
+                      color={Color.gray[900]}
+                    >
+                      Metcore
+                    </Typography>
+                  </View>
+                </View>
+              </ListItem>
+            </List>
+          </View>
         </Container>
       </ScrollView>
 
@@ -329,6 +406,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   headerText: {
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     gap: 2,
   },
   listItemContainer: {

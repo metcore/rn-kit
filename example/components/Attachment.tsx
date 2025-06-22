@@ -17,7 +17,7 @@ export default function Attachment({ data }: AttachmentProps) {
           <View style={styles.containerListItem}>
             <Image source={image} style={styles.image} />
             <View style={styles.containerAttachmentLabel}>
-              <View style={{ gap: 8 }}>
+              <View>
                 <Typography
                   variant="t1"
                   weight="semibold"

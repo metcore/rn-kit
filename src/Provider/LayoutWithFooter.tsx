@@ -1,4 +1,4 @@
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { useFooter } from './Provider';
 import React from 'react';
 import Color from '../Color/Color';
@@ -12,7 +12,9 @@ export default function LayoutWithFooter({
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.content, footer && styles.footer]}>{children}</View>
+      <SafeAreaView style={[styles.content, footer && styles.footer]}>
+        {children}
+      </SafeAreaView>
       {footer}
     </SafeAreaView>
   );

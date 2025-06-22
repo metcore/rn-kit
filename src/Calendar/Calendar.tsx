@@ -279,7 +279,7 @@ const Calendar = ({
 
       <View style={styles.weekRow}>
         {dayName.map((day, index) => (
-          <View>
+          <View key={day}>
             <Typography
               key={index}
               weight="medium"

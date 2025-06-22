@@ -127,6 +127,7 @@ export default function SelectScreen() {
         multiple
         renderItem={renderItem}
         onSubmit={handleSubmitSelectCustom}
+        required={true}
       />
     </View>
   );

@@ -146,8 +146,10 @@ export default function LeaveApproveScreen() {
               color="primary"
               title="Yaa, Setujui Pengajuan"
               onPress={() => {
-                setIsOpenSuccessModal(true);
                 setIsOpenBottomSheetConfirmSubmit(false);
+                setTimeout(() => {
+                  setIsOpenSuccessModal(true);
+                }, 3000);
               }}
             />
             <Button

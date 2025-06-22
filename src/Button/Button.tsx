@@ -13,6 +13,7 @@ import {
   type ButtonSize,
   type ButtonVariant,
 } from './type';
+import type { TypographyVariantProps } from '../Typography/type';
 
 const sizeStyleMap: Record<ButtonSize, { container: ViewStyle }> = {
   small: {
@@ -25,6 +26,13 @@ const sizeStyleMap: Record<ButtonSize, { container: ViewStyle }> = {
     container: { paddingVertical: 14, paddingHorizontal: 20 },
   },
 };
+
+const fontVariantMap: Record<ButtonSize, TypographyVariantProps> = {
+  small: 't2',
+  medium: 't1',
+  large: 't1',
+};
+
 const variantStyles: Record<
   ButtonVariant,
   {
@@ -37,7 +45,7 @@ const variantStyles: Record<
   }
 > = {
   default: {
-    container: (colors, disabled, pressed) => ({
+    container: (colors, disabled, pressed = false) => ({
       backgroundColor: disabled
         ? colors.disabledBackgroundColor
         : pressed
@@ -109,6 +117,7 @@ const Button: React.FC<ButtonProps> = ({
   loading = false,
 }) => {
   const sizeStyles = sizeStyleMap[size];
+  const fontVariant = fontVariantMap[size];
   const colors = COLOR_MAP[color];
 
   const baseContainerStyle = [
@@ -155,7 +164,7 @@ const Button: React.FC<ButtonProps> = ({
               children
             ) : (
               <Typography
-                variant="t1"
+                variant={fontVariant}
                 weight="semibold"
                 color={textStyle.color}
               >

@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import Chip from '../Chip/Chip';
 import { type ChipSelectedProps } from '../Chip/type';
+import { useToast } from '../Toast/ToastContext';
 export default function Select({
   isOpen,
   data,
@@ -14,9 +15,11 @@ export default function Select({
   onSubmit,
   multiple,
   onSearch,
+  required = false,
 }: SelectProps) {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
+  const { show } = useToast();
   useEffect(() => {
     setIsOpenSelect(isOpen);
   }, [isOpen]);
@@ -26,6 +29,10 @@ export default function Select({
   };
 
   const handleOnPresSubmitSelect = () => {
+    if (required && (!selected || selected.length == 0)) {
+      show('Please fill a item');
+      return false;
+    }
     setIsOpenSelect(false);
     onSubmit?.(selected ? selected : []);
   };

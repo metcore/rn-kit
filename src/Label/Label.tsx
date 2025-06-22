@@ -11,6 +11,7 @@ interface LabelProps {
   children?: React.ReactNode;
   color?: string;
   icon?: IconNameProps;
+  size?: 'medium' | 'small';
 }
 
 type LabelColor = ColorVariantType;
