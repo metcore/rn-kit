@@ -13,6 +13,7 @@ export { default as Typography } from './Typography/Typography';
 export { default as BottomSheet } from './BottomSheet/BottomSheet';
 export { default as Container } from './Ui/Container';
 export { default as Card } from './Ui/Card';
+export { default as DropDown } from './DropDown/DropDown';
 export { default as Center } from './Ui/Center';
 export { default as Gap } from './Ui/Gap';
 export { default as Grid } from './Ui/Grid';

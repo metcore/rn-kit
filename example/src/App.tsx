@@ -159,7 +159,7 @@ const App = () => {
             />
             <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />
             <Stack.Screen name="Accordion" component={AccordionScreen} />
-            <Stack.Screen name="Dropdown" component={DropDownScreen} />
+            <Stack.Screen name="DropDown" component={DropDownScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Label" component={LabelScreen} />
             <Stack.Screen

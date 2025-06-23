@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FlatList, Pressable, StyleSheet, type ViewStyle } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import {
-  CHIP_COLOR_MAP,
   type ChipOptionProps,
   type ChipProps,
   type ChipSelectedProps,
   type ChipValue,
 } from './type';
-import Typography from '../Typography/Typography';
-import type { ColorVariantType } from '../Color/type';
+import ChipItem from './ChipItem';
 
 const Chip: React.FC<ChipProps> = ({
   options,
@@ -24,19 +22,6 @@ const Chip: React.FC<ChipProps> = ({
   size = 'medium',
 }) => {
   const isHorizontal = direction === 'horizontal';
-
-  const validColors: ColorVariantType[] = [
-    'default',
-    'success',
-    'danger',
-    'primary',
-    'warning',
-    'info',
-    'purple',
-    'orange',
-  ];
-  const safeColor = validColors.includes(color) ? color : 'default';
-  const colors = CHIP_COLOR_MAP[safeColor];
 
   const normalizeSelected = (val: ChipSelectedProps) =>
     Array.isArray(val) ? val : val ? [val] : [];
@@ -77,81 +62,25 @@ const Chip: React.FC<ChipProps> = ({
     return 2;
   }, [block, isHorizontal]);
 
-  const getSizeStyle = () => {
-    switch (size) {
-      case 'small':
-        return styles.chipSmall;
-      case 'large':
-        return styles.chipLarge;
-      case 'medium':
-      default:
-        return styles.chipMedium;
-    }
-  };
-
-  const handleOnPres = (isDisabled: boolean, item: ChipOptionProps) => {
+  const handleOnPresChipItem = (isDisabled: boolean, item: ChipOptionProps) => {
     !isDisabled && handleSelect(item.value);
     onPress?.(item.value);
-  };
-
-  const renderChip = ({ item }: { item: ChipOptionProps }) => {
-    const selectedState = isSelected(item.value);
-    const isDisabled = item.disabled ?? false;
-
-    const dynamicStyle: ViewStyle = {
-      borderColor: colors.borderColor,
-      backgroundColor: colors.backgroundColor,
-    };
-
-    if (selectedState) {
-      dynamicStyle.borderColor = colors.selectedBorderColor;
-      dynamicStyle.backgroundColor = colors.selectedBackgroundColor;
-    }
-
-    if (isDisabled) {
-      dynamicStyle.borderColor = colors.disabledBorderColor;
-      dynamicStyle.backgroundColor = colors.disabledBackgroundColor;
-    }
-
-    const isBlockMode = block && !isHorizontal;
-
-    return (
-      <Pressable
-        key={item.value}
-        style={[
-          styles.chip,
-          getSizeStyle(),
-          dynamicStyle,
-          isBlockMode && styles.blockChip,
-        ]}
-        onPress={() => handleOnPres(isDisabled, item)}
-        disabled={isDisabled}
-      >
-        {renderItem ? (
-          renderItem(item, selectedState, isDisabled)
-        ) : (
-          <Typography
-            variant="t2"
-            style={{
-              fontSize: size === 'small' ? 12 : size === 'large' ? 16 : 14,
-              color: isDisabled
-                ? colors.disabledTextColor
-                : selectedState
-                  ? colors.selectedTextColor
-                  : colors.textColor,
-            }}
-          >
-            {item.label}
-          </Typography>
-        )}
-      </Pressable>
-    );
   };
 
   return (
     <FlatList
       data={options}
-      renderItem={renderChip}
+      renderItem={({ item }) => (
+        <ChipItem
+          item={item}
+          isSelected={() => isSelected(item.value)}
+          color={color}
+          block={block}
+          onPress={handleOnPresChipItem}
+          size={size}
+          renderItem={renderItem}
+        />
+      )}
       keyExtractor={(item) => String(item.value)}
       horizontal={isHorizontal}
       scrollEnabled={scrollable}

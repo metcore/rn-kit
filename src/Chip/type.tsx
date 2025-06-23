@@ -116,6 +116,7 @@ export type ChipValue = number | string | null | undefined | boolean;
 
 export type ChipSelectedProps = ChipValue[];
 
+export type ChipSizeProps = 'small' | 'medium' | 'large';
 export type ChipRenderItemFn = (
   item: ChipOptionProps,
   selected: boolean,
@@ -123,6 +124,17 @@ export type ChipRenderItemFn = (
 ) => React.ReactNode;
 
 export type ChipOnSelectProps = (value: ChipSelectedProps) => void;
+
+export interface ChipItem {
+  item: ChipOptionProps;
+  color?: ColorVariantType;
+  block?: boolean;
+  isSelected: (value: boolean) => void;
+  size?: ChipSizeProps;
+  renderItem?: ChipRenderItemFn;
+  isHorizontal: boolean;
+  onPress?: (value: string | number | undefined | null) => void;
+}
 export interface ChipProps {
   options: ChipOptionProps[];
   selected?: ChipSelectedProps;
@@ -133,6 +145,6 @@ export interface ChipProps {
   block?: boolean;
   multiple?: boolean;
   color?: ColorVariantType;
-  size?: 'small' | 'medium' | 'large';
+  size?: ChipSizeProps;
   renderItem?: ChipRenderItemFn;
 }

@@ -9,6 +9,7 @@ import type {
 } from './CalendarPropsType';
 import Icon from '../Icon';
 import Typography from '../Typography/Typography';
+import Dropdown from '../DropDown/DropDown';
 
 const DAYS: DayNameTuple = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -211,9 +212,45 @@ const Calendar = ({
         <TouchableOpacity style={styles.buttonNav} onPress={goToPrevMonth}>
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
         </TouchableOpacity>
-        <Typography variant="t1" weight="semibold" color={Color.gray[900]}>
-          {currentDate.toLocaleString('default', { month: 'long' })} {year}
-        </Typography>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Dropdown
+            options={['Januari', 'Februrari', 'Maret', 'April', 'Mei', 'Juni']}
+            renderButton={
+              <View
+                style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
+              >
+                <Icon name="ArrowDown" size={10} />
+                <Typography
+                  variant="t1"
+                  weight="semibold"
+                  color={Color.gray[900]}
+                >
+                  {currentDate.toLocaleString('default', { month: 'long' })}
+                </Typography>
+              </View>
+            }
+            maxHeight={300}
+          />
+
+          <Dropdown
+            options={['2025', '2026', '2027', '2028', '2029', '2030', '2031']}
+            renderButton={
+              <View
+                style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
+              >
+                <Typography
+                  variant="t1"
+                  weight="semibold"
+                  color={Color.gray[900]}
+                >
+                  {year}
+                </Typography>
+                <Icon name="ArrowDown" size={10} />
+              </View>
+            }
+            maxHeight={200}
+          />
+        </View>
         <TouchableOpacity style={styles.buttonNav} onPress={goToNextMonth}>
           <Icon name="ArrowRight" color={Color.base.white100} size={10} />
         </TouchableOpacity>
