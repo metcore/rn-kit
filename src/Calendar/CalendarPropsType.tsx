@@ -24,7 +24,7 @@ export type MarkedDate = {
   selected?: boolean;
   backgroundColor?: string;
   textColor?: string;
-  disabled?: boolean | CalendarDisabledProp;
+  disabled?: CalendarDisabledProp | boolean;
   dots?: string[];
 };
 

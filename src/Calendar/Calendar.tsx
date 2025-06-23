@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import Color from '../Color/Color';
 import type {
-  CalendarMatrix,
   CalendarTypes,
   DayNameTuple,
   MarkedDate,
@@ -11,10 +10,8 @@ import type {
 import Icon from '../Icon';
 import Typography from '../Typography/Typography';
 
-//perlu locale untuk nama hari
 const DAYS: DayNameTuple = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-// const DEFAULT_BACKGROUND_COLOR = Color.base.white100;
-// const DEFAULT_TEXT_COLOR = Color.gray[600];
+
 const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
 const DEFAULT_SELECTED_TEXT_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_BACKGROUND_COLOR = Color.base.white100;
@@ -37,50 +34,71 @@ const Calendar = ({
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const getDaysInMonth = (month: number, year: number) => {
-    return new Date(year, month + 1, 0).getDate();
+  const getDaysInMonth = (month: number, year: number) =>
+    new Date(year, month + 1, 0).getDate();
+
+  const formatDateKey = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
-  const formatDateKey = (year: number, month: number, day: number) => {
-    const mm = (month + 1).toString().padStart(2, '0');
-    const dd = day.toString().padStart(2, '0');
-    return `${year}-${mm}-${dd}`;
-  };
-
-  const generateCalendarMatrix = (): CalendarMatrix => {
+  const generateCalendarMatrix = () => {
     const matrix = [];
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
     const maxDays = getDaysInMonth(month, year);
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevYear = month === 0 ? year - 1 : year;
+    const prevMonthDays = getDaysInMonth(prevMonth, prevYear);
 
     let row = [];
+
+    // prev month
     for (let i = 0; i < firstDay; i++) {
-      row.push(0);
+      const day = prevMonthDays - firstDay + i + 1;
+      row.push({
+        date: new Date(prevYear, prevMonth, day),
+        from: 'prev',
+      });
     }
 
+    // current month
     for (let day = 1; day <= maxDays; day++) {
-      row.push(day);
+      row.push({
+        date: new Date(year, month, day),
+        from: 'current',
+      });
       if (row.length === 7) {
         matrix.push(row);
         row = [];
       }
     }
 
+    // next month
+    let nextDay = 1;
+    const nextMonth = month === 11 ? 0 : month + 1;
+    const nextYear = month === 11 ? year + 1 : year;
     if (row.length > 0) {
       while (row.length < 7) {
-        row.push(0);
+        row.push({
+          date: new Date(nextYear, nextMonth, nextDay),
+          from: 'next',
+        });
+        nextDay++;
       }
       matrix.push(row);
     }
+
     return matrix;
   };
 
   const normalizeDate = (date: Date) => {
-    if (!date) return null;
-    const newDate = new Date(date);
-    newDate.setHours(0, 0, 0, 0);
-    return newDate;
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
   };
 
   const goToNextMonth = () => {
@@ -95,176 +113,100 @@ const Calendar = ({
     setCurrentDate(newDate);
   };
 
-  const isDateInRange = (date: number) => {
-    if (!startDate || !endDate || !date) return false;
-    const target = normalizeDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth(), date)
-    );
-    if (!target) return false;
-    return target >= startDate && target <= endDate;
-  };
+  const isWeekDay = (day: number): day is WeekDay => day >= 0 && day <= 6;
 
-  const isSameDate = (dateObj: Date | null, day: string | number) => {
-    if (!dateObj) return false;
-    return (
-      dateObj.getDate() === day &&
-      dateObj.getMonth() === currentDate.getMonth() &&
-      dateObj.getFullYear() === currentDate.getFullYear()
-    );
-  };
-
-  function isWeekDay(day: number): day is WeekDay {
-    return day >= 0 && day <= 6;
-  }
-  const isDisabledDate = (year: number, month: number, day: number) => {
-    if (!day) return false;
-
-    const dateObj = new Date(year, month, day);
-    const dayOfWeek = dateObj.getDay();
-
-    if (isWeekDay(dayOfWeek) && disabledDays?.[dayOfWeek]) {
-      return true;
-    }
-    if (minDate && dateObj < minDate) return true;
-    if (maxDate && dateObj > maxDate) return true;
-
+  const isDisabledDate = (date: Date) => {
+    const dayOfWeek = date.getDay();
+    if (isWeekDay(dayOfWeek) && disabledDays?.[dayOfWeek]) return true;
+    if (minDate && date < minDate) return true;
+    if (maxDate && date > maxDate) return true;
     return false;
   };
 
-  const setBackgroundDay = (
-    year: number,
-    month: number,
-    date: number,
-    keyWeek: WeekDay
-  ) => {
+  const isSameDate = (a: Date | null, b: Date) =>
+    !!a && a.getTime() === b.getTime();
+
+  const isDateInRange = (date: Date) =>
+    startDate && endDate && date >= startDate && date <= endDate;
+
+  const isMarkDisableDate = (mark: MarkedDate | undefined) => !!mark?.disabled;
+
+  const setBackgroundDay = (date: Date, keyWeek: WeekDay) => {
+    const key = formatDateKey(date);
+    const mark = markedDates[key];
     const inRange = isDateInRange(date);
     const isStart = isSameDate(startDate, date);
     const isEnd = isSameDate(endDate, date);
-    const dateKey = formatDateKey(year, month, date);
-    const mark = markedDates[dateKey];
-    let backgroundColor = 'white';
+    if (disabledDays && disabledDays[keyWeek]) {
+      return typeof disabledDays[keyWeek] === 'object' &&
+        disabledDays[keyWeek].hasOwnProperty('backgroundColor')
+        ? disabledDays[keyWeek].backgroundColor!
+        : disabledBackgroundColor;
+    }
+
+    if (isDisabledDate(date)) return disabledBackgroundColor;
     if (
       (mode === 'single' && isStart) ||
       (mode === 'range' && (isStart || isEnd))
     ) {
-      backgroundColor = selectedBackgroundColor;
-    } else if (mark?.selected) {
-      backgroundColor = mark.backgroundColor || selectedBackgroundColor;
-    } else if (inRange) {
-      backgroundColor = Color.primary[50];
+      return selectedBackgroundColor;
     }
-
-    if (isDisabledDate(year, month, date)) {
-      backgroundColor = disabledBackgroundColor;
-    }
-
-    if (disabledDays && disabledDays[keyWeek]) {
-      backgroundColor =
-        typeof disabledDays[keyWeek] === 'object' &&
-        disabledDays[keyWeek].hasOwnProperty('backgroundColor')
-          ? disabledDays[keyWeek].backgroundColor!
-          : DEFAULT_DISABLED_BACKGROUND_COLOR;
-    }
-
-    if (isMarkDisableDate(mark)) {
-      if (mark && typeof mark.disabled === 'object') {
-        backgroundColor =
-          mark?.disabled?.backgroundColor ?? DEFAULT_DISABLED_BACKGROUND_COLOR;
-      } else if (mark && mark.disabled === true) {
-        backgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR;
-      }
-    }
-    return backgroundColor;
+    if (mark?.selected) return mark.backgroundColor || selectedBackgroundColor;
+    if (inRange) return Color.primary[50];
+    return 'white';
   };
 
-  const setTextColor = (
-    year: number,
-    month: number,
-    date: number,
-    keyWeek: WeekDay
-  ) => {
+  const setTextColor = (date: Date, keyWeek: WeekDay) => {
+    const key = formatDateKey(date);
+    const mark = markedDates[key];
     const isStart = isSameDate(startDate, date);
     const isEnd = isSameDate(endDate, date);
-    const dateKey = formatDateKey(year, month, date);
 
-    const mark = markedDates[dateKey];
-    let textColor = Color.gray[600];
+    if (disabledDays && disabledDays[keyWeek]) {
+      return typeof disabledDays[keyWeek] === 'object' &&
+        disabledDays[keyWeek].hasOwnProperty('textColor')
+        ? disabledDays[keyWeek].textColor!
+        : disabledTextColor;
+    }
 
+    if (isDisabledDate(date)) return disabledTextColor;
     if (
       (mode === 'single' && isStart) ||
       (mode === 'range' && (isStart || isEnd))
     ) {
-      textColor = 'white';
-    } else if (mark?.selected) {
-      textColor = mark?.textColor || selectedTextColor;
+      return selectedTextColor;
     }
-
-    if (isMarkDisableDate(mark)) {
-      if (mark && typeof mark.disabled === 'object') {
-        textColor = mark?.disabled?.textColor ?? DEFAULT_DISABLED_TEXT_COLOR;
-      } else if (mark && mark.disabled === true) {
-        textColor = DEFAULT_DISABLED_TEXT_COLOR;
-      }
-    }
-
-    if (isDisabledDate(year, month, date)) {
-      textColor = disabledTextColor;
-    }
-
-    if (disabledDays && disabledDays[keyWeek]) {
-      textColor =
-        typeof disabledDays[keyWeek] === 'object' &&
-        disabledDays[keyWeek].hasOwnProperty('textColor')
-          ? disabledDays[keyWeek].textColor!
-          : DEFAULT_DISABLED_TEXT_COLOR;
-    }
-
-    return textColor;
+    if (mark?.selected) return mark?.textColor || selectedTextColor;
+    return Color.gray[600];
   };
 
-  const isMarkDisableDate = (mark: MarkedDate | undefined) => {
-    let isDisable = false;
-    if (mark?.disabled) {
-      isDisable = true;
-    }
-    return isDisable;
-  };
-
-  const handlePressDay = (date: number) => {
-    if (!date) return;
-
-    const selected = normalizeDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth(), date)
-    );
-
+  const handlePressDay = (date: Date) => {
+    const selected = normalizeDate(date);
     if (mode === 'single') {
       setStartDate(selected);
       setEndDate(null);
-      if (onChange) onChange({ date: selected });
+      onChange?.({ date: selected });
     } else {
       if (!startDate || (startDate && endDate)) {
         setStartDate(selected);
         setEndDate(null);
-        if (onChange) onChange({ startDate: selected, endDate: null });
-      } else if (selected && selected >= startDate) {
+        onChange?.({ startDate: selected, endDate: null });
+      } else if (selected >= startDate) {
         setEndDate(selected);
-        if (onChange) onChange({ startDate, endDate: selected });
+        onChange?.({ startDate, endDate: selected });
       } else {
         setStartDate(selected);
         setEndDate(null);
-        if (onChange) onChange({ startDate: selected, endDate: null });
+        onChange?.({ startDate: selected, endDate: null });
       }
     }
   };
 
   const calendarMatrix = generateCalendarMatrix();
   const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const handleLayout = () => {
-    // const { width } = event.nativeEvent.layout;
-  };
+
   return (
-    <View style={styles.container} onLayout={handleLayout}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.buttonNav} onPress={goToPrevMonth}>
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
@@ -279,63 +221,61 @@ const Calendar = ({
 
       <View style={styles.weekRow}>
         {dayName.map((day, index) => (
-          <View key={day}>
-            <Typography
-              key={index}
-              weight="medium"
-              variant="t2"
-              center
-              color={Color.gray[600]}
-            >
-              {day}
-            </Typography>
-            {calendarMatrix.map((week, rowIndex) => {
-              const day = index as WeekDay;
-              if (typeof week[index] !== 'number') return null;
-              const date = week[index];
-              const dateKey = formatDateKey(year, month, date);
-              const mark = markedDates[dateKey];
-              const disabled =
-                isMarkDisableDate(mark) || isDisabledDate(year, month, date);
-              const backgroundColor = setBackgroundDay(year, month, date, day);
-              const textColor = setTextColor(year, month, date, day);
-
-              return (
-                <Pressable
-                  key={day - rowIndex}
-                  onPress={() => handlePressDay(date)}
-                  disabled={disabled}
-                >
-                  <View style={[styles.dayCell, { backgroundColor }]}>
-                    <Typography variant="t2" weight="medium" color={textColor}>
-                      {date ? date : ''}
-                    </Typography>
-                  </View>
-                  <View style={{ height: 10, marginBottom: 5 }}>
-                    {mark?.dots && Array.isArray(mark.dots) && (
-                      <View style={styles.dotsContainer}>
-                        {mark.dots.map((dot: string, index: number) => {
-                          const dotColor =
-                            (mark.selected && dot) || dot || 'red';
-                          return (
-                            <View
-                              key={index}
-                              style={[
-                                styles.dot,
-                                { backgroundColor: dotColor },
-                              ]}
-                            />
-                          );
-                        })}
-                      </View>
-                    )}
-                  </View>
-                </Pressable>
-              );
-            })}
-          </View>
+          <Typography
+            key={index}
+            weight="medium"
+            variant="t2"
+            center
+            color={Color.gray[600]}
+            style={{ width: 32, textAlign: 'center' }}
+          >
+            {day}
+          </Typography>
         ))}
       </View>
+
+      {calendarMatrix.map((week, rowIndex) => (
+        <View key={rowIndex} style={styles.weekRow}>
+          {week.map((cell, colIndex) => {
+            const date = cell.date;
+            const day = date.getDate();
+            const key = formatDateKey(date);
+            const mark = markedDates[key];
+
+            const disabled = isMarkDisableDate(mark) || isDisabledDate(date);
+            const backgroundColor = setBackgroundDay(date, colIndex);
+            const textColor = setTextColor(date, colIndex as WeekDay);
+            return (
+              <Pressable
+                disabled={disabled}
+                key={key}
+                onPress={() => handlePressDay(date)}
+              >
+                <View style={[styles.dayCell, { backgroundColor }]}>
+                  <Typography variant="t2" weight="medium" color={textColor}>
+                    {day}
+                  </Typography>
+                </View>
+                <View style={{ height: 10, marginBottom: 5 }}>
+                  {mark?.dots && Array.isArray(mark.dots) && (
+                    <View style={styles.dotsContainer}>
+                      {mark.dots.map((dot: string, index: number) => {
+                        const dotColor = (mark.selected && dot) || dot || 'red';
+                        return (
+                          <View
+                            key={index}
+                            style={[styles.dot, { backgroundColor: dotColor }]}
+                          />
+                        );
+                      })}
+                    </View>
+                  )}
+                </View>
+              </Pressable>
+            );
+          })}
+        </View>
+      ))}
     </View>
   );
 };
@@ -350,11 +290,10 @@ const styles = StyleSheet.create({
     height: 56,
     gap: 8,
   },
-  nav: { fontSize: 20, paddingHorizontal: 10 },
-  month: { fontSize: 18, fontWeight: 'bold' },
   weekRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 4,
   },
   dayCell: {
     alignItems: 'center',
@@ -364,8 +303,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: 1,
   },
-  dateText: {
-    fontSize: 14,
+  buttonNav: {
+    backgroundColor: Color.gray[500],
+    borderRadius: 8,
+    padding: 8,
   },
   dotsContainer: {
     flexDirection: 'row',
@@ -377,11 +318,6 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     marginHorizontal: 1,
-  },
-  buttonNav: {
-    backgroundColor: Color.gray[500],
-    borderRadius: 8,
-    padding: 8,
   },
 });
 
