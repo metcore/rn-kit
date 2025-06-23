@@ -10,6 +10,10 @@ import type {
 import Icon from '../Icon';
 import Typography from '../Typography/Typography';
 import Dropdown from '../DropDown/DropDown';
+import {
+  generateMonthOptions,
+  generateYearOptions,
+} from '../DatePicker/helpers';
 
 const DAYS: DayNameTuple = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -114,6 +118,16 @@ const Calendar = ({
     setCurrentDate(newDate);
   };
 
+  const handleOnSelectYearDropdown = (value: string | number) => {
+    const newDate = new Date(currentDate);
+    newDate.setFullYear(Number(value));
+    setCurrentDate(newDate);
+  };
+  const handleOnSelectMonthDropdown = (value: number) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(value);
+    setCurrentDate(newDate);
+  };
   const isWeekDay = (day: number): day is WeekDay => day >= 0 && day <= 6;
 
   const isDisabledDate = (date: Date) => {
@@ -214,7 +228,8 @@ const Calendar = ({
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
           <Dropdown
-            options={['Januari', 'Februrari', 'Maret', 'April', 'Mei', 'Juni']}
+            options={generateMonthOptions()}
+            onSelect={handleOnSelectMonthDropdown}
             renderButton={
               <View
                 style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
@@ -233,7 +248,8 @@ const Calendar = ({
           />
 
           <Dropdown
-            options={['2025', '2026', '2027', '2028', '2029', '2030', '2031']}
+            options={generateYearOptions(2010, 2050, 0, 50)}
+            onSelect={handleOnSelectYearDropdown}
             renderButton={
               <View
                 style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}

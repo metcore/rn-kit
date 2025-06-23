@@ -1,6 +1,19 @@
 import { DropDown } from '@herca/kit';
 import { View } from 'react-native';
-const options = ['Januari', 'Februrari', 'Maret', 'April', 'Mei', 'Juni'];
+const options = [
+  {
+    label: 'Januari',
+    value: 'Jauary',
+  },
+  {
+    label: 'Februari',
+    value: 'Febriari',
+  },
+  {
+    label: 'Maret',
+    value: 'Maret',
+  },
+];
 
 export default function DropDownScreen() {
   return (

@@ -10,8 +10,14 @@ import {
   UIManager,
 } from 'react-native';
 import Color from '../Color/Color';
+import type { DropDownProps } from './type';
 
-const Dropdown = ({ options, maxHeight = 200, onSelect, renderButton }) => {
+const Dropdown = ({
+  options,
+  maxHeight = 200,
+  onSelect,
+  renderButton,
+}: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [dropdownPosition, setDropdownPosition] = useState<'left' | 'right'>(
@@ -25,7 +31,7 @@ const Dropdown = ({ options, maxHeight = 200, onSelect, renderButton }) => {
     if (!isOpen) {
       const handle = findNodeHandle(buttonRef.current);
       if (handle) {
-        UIManager.measureInWindow(handle, (x, width) => {
+        UIManager.measureInWindow(handle, (x, _y, width, _height) => {
           const middle = windowWidth / 2;
           setDropdownPosition(x + width / 2 > middle ? 'right' : 'left');
           setIsOpen(true);
@@ -37,9 +43,9 @@ const Dropdown = ({ options, maxHeight = 200, onSelect, renderButton }) => {
   };
 
   const handlePressOption = (value: string) => {
-    setSelected(value);
+    setSelected(value.value);
     setIsOpen(false);
-    onSelect?.(value);
+    onSelect?.(value.value);
   };
 
   return (
@@ -64,16 +70,16 @@ const Dropdown = ({ options, maxHeight = 200, onSelect, renderButton }) => {
           ]}
         >
           <ScrollView nestedScrollEnabled style={{ maxHeight }}>
-            {options.map((item) => (
+            {options.map((item, index) => (
               <TouchableOpacity
-                key={item}
+                key={index}
                 onPress={() => handlePressOption(item)}
                 style={[
                   styles.option,
-                  selected === item ? styles.optionSelected : null,
+                  selected === item.value ? styles.optionSelected : null,
                 ]}
               >
-                <Text>{item}</Text>
+                <Text>{item.label}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
     borderColor: Color.gray[50],
     borderRadius: 8,
     backgroundColor: Color.base.white100,
-    width: 200,
+    width: 100,
   },
   option: {
     gap: 8,

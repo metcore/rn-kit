@@ -161,20 +161,22 @@ export default function YearPicker({
             const selected = isSelected(item);
             return (
               <View style={styles.yearItem}>
-                <Button
+                <TouchableOpacity
                   onPress={() => handleSelectYear(item)}
-                  variant={selected ? 'outline' : 'tertiary'}
-                  size="small"
-                  color="primary"
+                  style={[
+                    styles.option,
+                    selected ? styles.optionSelected : null,
+                  ]}
                 >
                   <Typography
                     variant="p2"
+                    center
                     weight="semibold"
-                    color={selected ? Color.primary[500] : Color.gray[700]}
+                    color={selected ? Color.gray[900] : Color.gray[700]}
                   >
                     {item}
                   </Typography>
-                </Button>
+                </TouchableOpacity>
               </View>
             );
           }}
@@ -220,5 +222,17 @@ const styles = StyleSheet.create({
   },
   flex1: {
     flex: 1,
+  },
+  option: {
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: Color.base.white100,
+  },
+  optionSelected: {
+    backgroundColor: Color.primary[50],
+    borderColor: Color.primary[300],
   },
 });
