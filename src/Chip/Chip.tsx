@@ -20,6 +20,8 @@ const Chip: React.FC<ChipProps> = ({
   scrollable = true,
   block = false,
   size = 'medium',
+  onRefresh,
+  refreshing = false,
 }) => {
   const isHorizontal = direction === 'horizontal';
 
@@ -83,6 +85,8 @@ const Chip: React.FC<ChipProps> = ({
       )}
       keyExtractor={(item) => String(item.value)}
       horizontal={isHorizontal}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
       scrollEnabled={scrollable}
       keyboardShouldPersistTaps="always"
       numColumns={numColumns}

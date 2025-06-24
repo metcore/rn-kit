@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ChipOnSelectProps, ChipOptionProps } from '../Chip/type';
+import type { BottomSheetHeighProps } from '../BottomSheet/type';
 
 export interface SelectDataProps {
   value: string | number;
@@ -21,4 +22,8 @@ export interface SelectProps {
   onClose?: (val: boolean) => void;
   onSearch?: (val: string) => void;
   required?: boolean;
+  loading?: boolean;
+  delaySearch?: number;
+  height?: BottomSheetHeighProps;
+  onRefresh: () => void;
 }

@@ -25,6 +25,7 @@ import ArrowUp from './icons/ArrowUp';
 import Search from './icons/Search';
 import Home from './icons/Home';
 import ArrowLeft from './icons/ArrowLeft';
+import EyeOpen from './icons/EyeOpen';
 
 const icons: Record<
   IconNameProps,
@@ -34,6 +35,7 @@ const icons: Record<
   'Search': Search,
   'User': User,
   'Eye': Eye,
+  'EyeOpen': EyeOpen,
   'ArrowRight': ArrowRight,
   'ArrowLeft': ArrowLeft,
   'Document': Document,

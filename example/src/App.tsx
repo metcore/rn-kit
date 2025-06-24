@@ -46,6 +46,8 @@ import LabelScreen from '../screens/LabelScreen';
 import YearPickerScreen from '../screens/YearPickerScreen';
 import MonthPickerScreen from '../screens/MonthPickerScreen';
 import HeaderNavigation from '../components/Header/HeaderNavigation';
+import TimePickerScreen from '../screens/TimePickerScreen';
+import InputOtpScreen from '../screens/InputOtpScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +84,7 @@ const App = () => {
               component={InputPasswordScreen}
             />
             <Stack.Screen name="Input" component={InputScreen} />
+            <Stack.Screen name="InputOtp" component={InputOtpScreen} />
             <Stack.Screen name="Select" component={SelectScreen} />
             <Stack.Screen name="CheckBox" component={CheckBox} />
             <Stack.Screen name="Chip" component={ChipScreen} />
@@ -162,6 +165,7 @@ const App = () => {
             <Stack.Screen name="DropDown" component={DropDownScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Label" component={LabelScreen} />
+            <Stack.Screen name="TimePicker" component={TimePickerScreen} />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}

@@ -22,7 +22,7 @@ export default function InputPassword(props: InputPasswordProps) {
     <View>
       <Input
         {...props}
-        iconRight={secureText ? 'Eye' : 'User'}
+        iconRight={secureText ? 'Eye' : 'EyeOpen'}
         secureTextEntry={secureText}
         onPressIconRight={() => setSecureText(!secureText)}
       />

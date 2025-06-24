@@ -7,6 +7,7 @@ export type IconNameProps =
   | 'Search'
   | 'User'
   | 'Eye'
+  | 'EyeOpen'
   | 'ArrowRight'
   | 'ArrowLeft'
   | 'Document'

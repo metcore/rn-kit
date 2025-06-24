@@ -1,4 +1,9 @@
-import { View, StyleSheet } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { useState, useEffect } from 'react';
 import { type SelectProps } from './type';
 import BottomSheet from '../BottomSheet/BottomSheet';
@@ -7,6 +12,7 @@ import Input from '../Input/Input';
 import Chip from '../Chip/Chip';
 import { type ChipSelectedProps } from '../Chip/type';
 import { useToast } from '../Toast/ToastContext';
+import Loading from '../Loading/Loading';
 export default function Select({
   isOpen,
   data,
@@ -16,6 +22,10 @@ export default function Select({
   multiple,
   onSearch,
   required = false,
+  loading = false,
+  delaySearch = 300,
+  height,
+  onRefresh,
 }: SelectProps) {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
@@ -38,10 +48,16 @@ export default function Select({
     return true;
   };
 
+  const handleOnSearch = (val) => {
+    setTimeout(() => {
+      onSearch?.(val);
+    }, delaySearch);
+  };
   return (
     <BottomSheet
       onClose={handleOnCloseBottom}
       isOpen={isOpenSelect}
+      height={height}
       footer={
         <Button
           title="lanjutkan"
@@ -52,24 +68,35 @@ export default function Select({
     >
       <View style={styles.container}>
         <View style={styles.containerSearch}>
-          <Input
-            icon="Search"
-            placeholder="Search"
-            onChangeText={(val) => onSearch?.(val)}
-          />
+          <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+            accessible={false}
+          >
+            <Input
+              submitBehavior="submit"
+              icon="Search"
+              placeholder="Search"
+              onChangeText={(val) => handleOnSearch(val)}
+            />
+          </TouchableWithoutFeedback>
         </View>
-        <Chip
-          options={data}
-          direction="vertical"
-          scrollable={true}
-          selected={selected}
-          multiple={multiple}
-          onSelect={setSelected}
-          color="primary"
-          size="large"
-          renderItem={renderItem}
-          block
-        />
+        {loading ? (
+          <Loading />
+        ) : (
+          <Chip
+            options={data}
+            direction="vertical"
+            scrollable={true}
+            selected={selected}
+            multiple={multiple}
+            onSelect={setSelected}
+            color="primary"
+            size="large"
+            renderItem={renderItem}
+            onRefresh={onRefresh}
+            block
+          />
+        )}
       </View>
     </BottomSheet>
   );

@@ -231,9 +231,7 @@ const Calendar = ({
             options={generateMonthOptions()}
             onSelect={handleOnSelectMonthDropdown}
             renderButton={
-              <View
-                style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
-              >
+              <View style={styles.containerDropDown}>
                 <Icon name="ArrowDown" size={10} />
                 <Typography
                   variant="t1"
@@ -251,9 +249,7 @@ const Calendar = ({
             options={generateYearOptions(2010, 2050, 0, 50)}
             onSelect={handleOnSelectYearDropdown}
             renderButton={
-              <View
-                style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
-              >
+              <View style={styles.containerDropDown}>
                 <Typography
                   variant="t1"
                   weight="semibold"
@@ -371,6 +367,11 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     marginHorizontal: 1,
+  },
+  containerDropDown: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
   },
 });
 

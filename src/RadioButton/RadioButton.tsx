@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { Typography, Color } from '@herca/kit';
 
@@ -11,9 +11,8 @@ interface RadioButtonItem {
 interface RadioButtonProps {
   items: RadioButtonItem[];
   selectedValue: string | null;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
-  value?: string;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -22,6 +21,30 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   onChange,
   direction = 'vertical',
 }) => {
+  const [internalValue, setInternalValue] = useState<string | null>(
+    selectedValue
+  );
+
+  useEffect(() => {
+    // If no value is selected, set the first non-disabled item as selected
+    if (selectedValue === null) {
+      const firstValidItem = items.find((item) => !item.disabled);
+      if (firstValidItem) {
+        setInternalValue(firstValidItem.value);
+        onChange?.(firstValidItem.value);
+      }
+    } else {
+      setInternalValue(selectedValue);
+    }
+  }, [selectedValue, items, onChange]);
+
+  const handleOnPress = (item: RadioButtonItem) => {
+    if (!item.disabled) {
+      setInternalValue(item.value);
+      onChange?.(item.value);
+    }
+  };
+
   return (
     <View
       style={[
@@ -30,11 +53,11 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       ]}
     >
       {items.map((item) => {
-        const isChecked = selectedValue === item.value;
+        const isChecked = internalValue === item.value;
         return (
           <View key={item.value} style={styles.item}>
             <Pressable
-              onPress={() => !item.disabled && onChange(item.value)}
+              onPress={() => handleOnPress(item)}
               style={[styles.radioContainer, item.disabled && styles.disabled]}
             >
               <View
@@ -42,10 +65,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({
               >
                 {isChecked && <View style={styles.innerCircle} />}
               </View>
+              <Typography variant="t2" weight="medium" color={Color.gray[800]}>
+                {item.label}
+              </Typography>
             </Pressable>
-            <Typography variant="t2" weight="medium" color={Color.gray[800]}>
-              {item.label}
-            </Typography>
           </View>
         );
       })}
@@ -55,7 +78,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
+    gap: 8,
   },
   horizontal: {
     flexDirection: 'row',
@@ -64,11 +87,11 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
     marginRight: 16,
   },
   radioContainer: {
-    marginRight: 8,
+    gap: 8,
+    flexDirection: 'row',
   },
   outerCircle: {
     width: 20,

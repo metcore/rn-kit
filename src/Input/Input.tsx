@@ -89,7 +89,6 @@ const Input: React.FC<InputProps> = ({
           </View>
         )}
       </View>
-
       {hint ? (
         <Typography color={hasError ? Color.danger[500] : ''} variant="t2">
           {hint}

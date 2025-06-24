@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
   toast: {
     position: 'absolute',
     bottom: 80,
-    left: 40,
-    right: 40,
+    left: 28,
+    right: 28,
     backgroundColor: '#333',
     borderWidth: 1,
     borderRadius: 8,

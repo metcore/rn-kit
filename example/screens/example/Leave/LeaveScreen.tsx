@@ -177,7 +177,9 @@ export default function LeaveScreen() {
             direction="horizontal"
             color="primary"
             renderItem={() => (
-              <View style={{ flexDirection: 'row', gap: 8 }}>
+              <View
+                style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}
+              >
                 <Icon name="Filter" size={15} color={Color.gray[600]} />
                 <Typography
                   variant="t2"

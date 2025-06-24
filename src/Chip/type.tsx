@@ -147,4 +147,6 @@ export interface ChipProps {
   color?: ColorVariantType;
   size?: ChipSizeProps;
   renderItem?: ChipRenderItemFn;
+  onRefresh?: () => void;
+  refreshing?: boolean;
 }

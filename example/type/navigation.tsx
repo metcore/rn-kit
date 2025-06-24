@@ -5,6 +5,7 @@ type RootStackParamList = {
   Button: undefined;
   Typography: undefined;
   Input: undefined;
+  InputOtp: undefined;
   Card: undefined;
   Chip: undefined;
   Modal: undefined;
@@ -23,6 +24,7 @@ type RootStackParamList = {
   DatePicker: undefined;
   YearPicker: undefined;
   MonthPicker: undefined;
+  TimePicker: undefined;
   Calendar: undefined;
   Example: undefined;
   AvatarGroup: undefined;

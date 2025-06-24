@@ -77,12 +77,14 @@ export default function SelectScreen() {
   const [isOpenSelectDefault, setIsOpenSelectDefault] =
     useState<boolean>(false);
   const [isOpenSelectCustom, setIsOpenSelectCustom] = useState<boolean>(false);
+  const [loadingSelect, setLoadingSelect] = useState<boolean>(true);
   const [submitValue, setSubmitValue] = useState<ChipSelectedProps>();
 
   const handleSubmitSelectCustom = (val: ChipSelectedProps) => {
     setSubmitValue(val);
     setIsOpenSelectCustom(false);
   };
+
   const renderItem = (item: ChipOptionProps) => {
     return (
       <View>
@@ -98,12 +100,27 @@ export default function SelectScreen() {
       </View>
     );
   };
+
+  const handleOnPressSelectDefault = () => {
+    setLoadingSelect(true);
+    setIsOpenSelectDefault(true);
+    setTimeout(() => {
+      setLoadingSelect(false);
+    }, 1500);
+  };
+
+  const handleOnRefresh = () => {
+    setLoadingSelect(true);
+    setTimeout(() => {
+      setLoadingSelect(false);
+    }, 1000);
+  };
   return (
     <View>
       <Container style={styles.containerButton}>
         <Button
           color="primary"
-          onPress={() => setIsOpenSelectDefault(true)}
+          onPress={() => handleOnPressSelectDefault()}
           title="Select Default"
         />
         <Button
@@ -115,10 +132,15 @@ export default function SelectScreen() {
       </Container>
       <Select
         isOpen={isOpenSelectDefault}
+        height="100%"
         onClose={() => setIsOpenSelectDefault(false)}
         data={DATA}
-        onSearch={(val) => console.log(val)}
+        loading={loadingSelect}
+        onSearch={(_val) => handleOnPressSelectDefault()}
         onSubmit={handleSubmitSelectCustom}
+        delaySearch={500}
+        onRefresh={handleOnRefresh}
+        refreshing={loadingSelect}
       />
       <Select
         isOpen={isOpenSelectCustom}
