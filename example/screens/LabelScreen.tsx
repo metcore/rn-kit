@@ -1,4 +1,4 @@
-import { Container, Icon, Label } from '@herca/kit';
+import { Container, Icon, Label } from '@herca/rn-kit';
 
 export default function LabelScreen() {
   return (

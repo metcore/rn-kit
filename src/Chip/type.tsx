@@ -129,11 +129,11 @@ export interface ChipItem {
   item: ChipOptionProps;
   color?: ColorVariantType;
   block?: boolean;
-  isSelected: (value: boolean) => void;
+  isSelected: (value: boolean) => boolean;
   size?: ChipSizeProps;
   renderItem?: ChipRenderItemFn;
-  isHorizontal: boolean;
-  onPress?: (value: string | number | undefined | null) => void;
+  isHorizontal?: boolean;
+  onPress?: (isDisabled: boolean, value: ChipOptionProps) => void;
 }
 export interface ChipProps {
   options: ChipOptionProps[];

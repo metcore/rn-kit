@@ -123,9 +123,9 @@ const Calendar = ({
     newDate.setFullYear(Number(value));
     setCurrentDate(newDate);
   };
-  const handleOnSelectMonthDropdown = (value: number) => {
+  const handleOnSelectMonthDropdown = (value: string | number) => {
     const newDate = new Date(currentDate);
-    newDate.setMonth(value);
+    newDate.setMonth(value as number);
     setCurrentDate(newDate);
   };
   const isWeekDay = (day: number): day is WeekDay => day >= 0 && day <= 6;
@@ -292,7 +292,7 @@ const Calendar = ({
             const mark = markedDates[key];
 
             const disabled = isMarkDisableDate(mark) || isDisabledDate(date);
-            const backgroundColor = setBackgroundDay(date, colIndex);
+            const backgroundColor = setBackgroundDay(date, colIndex as WeekDay);
             const textColor = setTextColor(date, colIndex as WeekDay);
             return (
               <Pressable
@@ -305,7 +305,7 @@ const Calendar = ({
                     {day}
                   </Typography>
                 </View>
-                <View style={{ height: 10, marginBottom: 5 }}>
+                <View style={styles.baseDot}>
                   {mark?.dots && Array.isArray(mark.dots) && (
                     <View style={styles.dotsContainer}>
                       {mark.dots.map((dot: string, index: number) => {
@@ -356,6 +356,10 @@ const styles = StyleSheet.create({
     backgroundColor: Color.gray[500],
     borderRadius: 8,
     padding: 8,
+  },
+  baseDot: {
+    height: 10,
+    marginBottom: 5,
   },
   dotsContainer: {
     flexDirection: 'row',

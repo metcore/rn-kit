@@ -1,4 +1,4 @@
-import { Button, Container, Footer } from '@herca/kit';
+import { Button, Container, Footer } from '@herca/rn-kit';
 
 export default function FooterScreen() {
   return (

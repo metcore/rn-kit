@@ -8,8 +8,8 @@ Komponen **Accordion** digunakan untuk menyembunyikan atau menampilkan konten se
 ```tsx
 import React from 'react';
 import { Text } from 'react-native';
-import Accordion from '@herca/kit/Accordion';
-import AccordionItem from '@herca/kit/Accordion/AccordionItem';
+import Accordion from '@herca/rn-kit/Accordion';
+import AccordionItem from '@herca/rn-kit/Accordion/AccordionItem';
 
 export default function FAQSection() {
   return (

@@ -14,7 +14,7 @@ import {
   BottomSheet,
   Timeline,
   TimelineItem,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import {
   Image,
   ScrollView,

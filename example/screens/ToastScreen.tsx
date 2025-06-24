@@ -1,8 +1,10 @@
-import { Button, Container, RadioButton, useToast } from '@herca/kit';
+import { Button, Container, RadioButton, useToast } from '@herca/rn-kit';
 import { useState } from 'react';
+import type { ColorVariantType } from '../../src/Color/type';
 
 export default function ToastScreen() {
-  const [selectedColor, setSelectedColor] = useState<string>('default');
+  const [selectedColor, setSelectedColor] =
+    useState<ColorVariantType>('default');
   const toast = useToast();
 
   const showToast = () => {
@@ -11,8 +13,8 @@ export default function ToastScreen() {
     });
   };
 
-  const handleChangeSelectColor = (val) => {
-    setSelectedColor(val);
+  const handleChangeSelectColor = (val: string) => {
+    setSelectedColor(val as ColorVariantType);
   };
   return (
     <Container>

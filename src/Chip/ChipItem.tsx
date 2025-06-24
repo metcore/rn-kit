@@ -1,12 +1,12 @@
 import { Pressable, StyleSheet, type ViewStyle } from 'react-native';
 import Typography from '../Typography/Typography';
-import { CHIP_COLOR_MAP, type ChipItem } from './type';
+import { CHIP_COLOR_MAP, type ChipItem, type ChipOptionProps } from './type';
 import type { ColorVariantType } from '../Color/type';
 
 export default function ChipItem({
   item,
   isSelected,
-  color,
+  color = 'default',
   block,
   size,
   renderItem,
@@ -27,7 +27,7 @@ export default function ChipItem({
   const safeColor = validColors.includes(color) ? color : 'default';
   const colors = CHIP_COLOR_MAP[safeColor];
 
-  const selectedState = isSelected(item.value);
+  const selectedState = isSelected(item.value ? true : false);
   const isDisabled = item.disabled ?? false;
 
   const dynamicStyle: ViewStyle = {
@@ -59,8 +59,8 @@ export default function ChipItem({
     }
   };
 
-  const handleOnPres = () => {
-    onPress?.(isDisabled, item);
+  const handleOnPres = (disabled: boolean, val: ChipOptionProps) => {
+    onPress?.(disabled, val);
   };
 
   return (

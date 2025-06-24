@@ -18,7 +18,7 @@ import ExampleScreen from '../screens/ExampleScreen';
 import AvatarScreen from '../screens/AvatarScreen';
 import BadgeScreen from '../screens/BadgeScreen';
 import AlertScreen from '../screens/AlertScreen';
-import { Provider } from '@herca/kit';
+import { Provider } from '@herca/rn-kit';
 import DrawingScreen from '../screens/DrawingScreen';
 import SwitchScreen from '../screens/SwitchScreen';
 import AvatarGroupScreen from '../screens/AvatarGroupScreen';

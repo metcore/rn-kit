@@ -1,4 +1,4 @@
-import { Container, InputPassword, Typography } from '@herca/kit';
+import { Container, InputPassword, Typography } from '@herca/rn-kit';
 
 export default function InputPasswordScreen() {
   return (

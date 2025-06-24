@@ -1,4 +1,4 @@
-import { Container, InputOtp } from '@herca/kit';
+import { Container, InputOtp } from '@herca/rn-kit';
 
 export default function InputOtpScreen() {
   return (

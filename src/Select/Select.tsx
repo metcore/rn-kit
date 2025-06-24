@@ -26,6 +26,7 @@ export default function Select({
   delaySearch = 300,
   height,
   onRefresh,
+  refreshing,
 }: SelectProps) {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
@@ -39,7 +40,7 @@ export default function Select({
   };
 
   const handleOnPresSubmitSelect = (): boolean => {
-    if (required && (!selected || selected.length == 0)) {
+    if (required && (!selected || selected.length === 0)) {
       show('Please fill a item');
       return false;
     }
@@ -48,7 +49,7 @@ export default function Select({
     return true;
   };
 
-  const handleOnSearch = (val) => {
+  const handleOnSearch = (val: string) => {
     setTimeout(() => {
       onSearch?.(val);
     }, delaySearch);
@@ -95,6 +96,7 @@ export default function Select({
             renderItem={renderItem}
             onRefresh={onRefresh}
             block
+            refreshing={refreshing}
           />
         )}
       </View>

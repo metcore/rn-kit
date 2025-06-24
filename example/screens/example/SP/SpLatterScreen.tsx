@@ -5,9 +5,10 @@ import {
   Container,
   Footer,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProps } from '../../../type/navigation';
+import { StyleSheet } from 'react-native';
 
 export default function SpLatterScreen() {
   const navigation = useNavigation<NavigationProps>();
@@ -15,7 +16,7 @@ export default function SpLatterScreen() {
   return (
     <Container>
       <Footer>
-        <Container style={{ gap: 12 }}>
+        <Container style={styles.container}>
           <Alert
             color="info"
             message="Ini adalah surat peringatan yang akan di Tandatangani"
@@ -37,3 +38,9 @@ export default function SpLatterScreen() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 12,
+  },
+});

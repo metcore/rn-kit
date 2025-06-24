@@ -1,4 +1,4 @@
-import { Badge, Container } from '@herca/kit';
+import { Badge, Container } from '@herca/rn-kit';
 
 export default function BadgeScreen() {
   return (

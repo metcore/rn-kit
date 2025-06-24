@@ -5,7 +5,7 @@ import {
   Color,
   Container,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 import { View, Image, StyleSheet, ScrollView } from 'react-native';
 import summaryData from '../assets/loremipsum.json';

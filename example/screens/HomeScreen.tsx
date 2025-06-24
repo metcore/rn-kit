@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
-import { Typography, Button, Container } from '@herca/kit';
+import { Typography, Button, Container } from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProps } from '../type/navigation';
 

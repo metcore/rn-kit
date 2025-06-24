@@ -6,7 +6,7 @@ import {
   Typography,
   type ChipOptionProps,
   type ChipSelectedProps,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
 

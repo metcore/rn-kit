@@ -27,8 +27,8 @@ import {
   Step,
   Typography,
   useToast,
-} from '@herca/kit';
-import { StepItem } from '@herca/kit';
+} from '@herca/rn-kit';
+import { StepItem } from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProps } from '../../../type/navigation';
 import SelectDayLeave from '../../../components/Select/SelectDayLeave';

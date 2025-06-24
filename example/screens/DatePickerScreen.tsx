@@ -4,7 +4,7 @@ import {
   DatePicker,
   Typography,
   type DateRangeProps,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 import { View } from 'react-native';
 const formatDate = (date: Date | undefined | null) => {

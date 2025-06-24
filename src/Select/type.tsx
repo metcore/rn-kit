@@ -25,5 +25,6 @@ export interface SelectProps {
   loading?: boolean;
   delaySearch?: number;
   height?: BottomSheetHeighProps;
-  onRefresh: () => void;
+  onRefresh?: () => void;
+  refreshing?: boolean;
 }

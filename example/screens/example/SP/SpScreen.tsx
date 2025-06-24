@@ -10,7 +10,7 @@ import {
   Footer,
   Icon,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import {
   View,
@@ -107,7 +107,7 @@ const Item = ({ navigation, item }: ItemProps) => (
           </View>
           <Badge
             value={item.status}
-            color={item.status == 'disetujui' ? 'success' : 'warning'}
+            color={item.status === 'disetujui' ? 'success' : 'warning'}
           />
         </View>
       </View>

@@ -1,4 +1,4 @@
-package herca.kit.example
+package herca.rnkit.example
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -1,7 +1,7 @@
 {
   "name": "@herca/rn-kit",
   "version": "0.1.0",
-  "description": "UI Kit for herca development react native",
+  "description": "React Native UI Kit",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -32,14 +32,13 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace @herca/kit-example",
+    "example": "yarn workspace @herca/rn-kit-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it --only-version",
-    "build": "bob build"
+    "release": "release-it --only-version"
   },
   "keywords": [
     "react-native",
@@ -48,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/metcore/herca-kit.git"
+    "url": "git+https://github.com/metcore/herca-rn-kit.git"
   },
   "author": "metcore <metcore2@gmail.com> (https://github.com/metcore)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/metcore/herca-kit/issues"
+    "url": "https://github.com/metcore/herca-rn-kit/issues"
   },
-  "homepage": "https://github.com/metcore/herca-kit#readme",
+  "homepage": "https://github.com/metcore/herca-rn-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -80,7 +79,7 @@
     "prettier": "^3.0.3",
     "react": "19.0.0",
     "react-native": "0.79.2",
-    "react-native-builder-bob": "^0.40.12",
+    "react-native-builder-bob": "^0.40.8",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
     "typescript": "^5.8.3"
@@ -150,17 +149,17 @@
     ]
   },
   "codegenConfig": {
-    "name": "KitSpec",
+    "name": "RnKitSpec",
     "type": "modules",
     "jsSrcsDir": "src",
     "android": {
-      "javaPackageName": "com.herca.kit"
+      "javaPackageName": "com.herca.rnkit"
     }
   },
   "create-react-native-library": {
     "languages": "kotlin-objc",
     "type": "turbo-module",
-    "version": "0.51.0"
+    "version": "0.51.1"
   },
   "dependencies": {
     "@react-native-documents/picker": "^10.1.3",

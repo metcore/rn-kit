@@ -1,11 +1,11 @@
-package com.herca.kit
+package com.herca.rnkit
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.annotations.ReactModule
 
-@ReactModule(name = KitModule.NAME)
-class KitModule(reactContext: ReactApplicationContext) :
-  NativeKitSpec(reactContext) {
+@ReactModule(name = RnKitModule.NAME)
+class RnKitModule(reactContext: ReactApplicationContext) :
+  NativeRnKitSpec(reactContext) {
 
   override fun getName(): String {
     return NAME
@@ -18,6 +18,6 @@ class KitModule(reactContext: ReactApplicationContext) :
   }
 
   companion object {
-    const val NAME = "Kit"
+    const val NAME = "RnKit"
   }
 }

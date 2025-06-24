@@ -9,7 +9,7 @@ import {
   Icon,
   Modal,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
@@ -42,11 +42,11 @@ export default function SpSignatureScreen() {
 
   return (
     <View>
-      <Container style={{ gap: 16 }}>
+      <Container style={styles.gap16}>
         <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
           Tanda Tangan Persetujuan Peringatan.
         </Typography>
-        <View style={{ gap: 16 }}>
+        <View style={styles.gap16}>
           <Typography variant="t2" weight="medium" color={Color.gray[800]}>
             Tanda Tangan Persetujuan Peringatan.
           </Typography>
@@ -238,5 +238,8 @@ const styles = StyleSheet.create({
     gap: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  gap16: {
+    gap: 16,
   },
 });

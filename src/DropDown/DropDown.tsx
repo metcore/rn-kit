@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Color from '../Color/Color';
 import type { DropDownProps } from './type';
+import type { ChipOptionProps } from '../Chip/type';
 
 const Dropdown = ({
   options,
@@ -19,12 +20,12 @@ const Dropdown = ({
   renderButton,
 }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | number>();
   const [dropdownPosition, setDropdownPosition] = useState<'left' | 'right'>(
     'left'
   );
 
-  const buttonRef = useRef<TouchableOpacity>(null);
+  const buttonRef = useRef<View>(null);
   const windowWidth = useWindowDimensions().width;
 
   const handleToggle = () => {
@@ -42,7 +43,7 @@ const Dropdown = ({
     }
   };
 
-  const handlePressOption = (value: string) => {
+  const handlePressOption = (value: ChipOptionProps) => {
     setSelected(value.value);
     setIsOpen(false);
     onSelect?.(value.value);
@@ -66,7 +67,7 @@ const Dropdown = ({
         <View
           style={[
             styles.dropdownList,
-            dropdownPosition === 'left' ? { left: 0 } : { right: 0 },
+            dropdownPosition === 'left' ? styles.left : styles.right,
           ]}
         >
           <ScrollView nestedScrollEnabled style={{ maxHeight }}>
@@ -125,5 +126,11 @@ const styles = StyleSheet.create({
   optionSelected: {
     backgroundColor: Color.primary[50],
     borderColor: Color.primary[300],
+  },
+  left: {
+    left: 0,
+  },
+  right: {
+    right: 0,
   },
 });

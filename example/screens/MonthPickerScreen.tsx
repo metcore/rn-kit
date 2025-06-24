@@ -1,4 +1,4 @@
-import { Button, Container, MonthPicker } from '@herca/kit';
+import { Button, Container, MonthPicker } from '@herca/rn-kit';
 import { useState } from 'react';
 
 export default function MonthPickerScreen() {

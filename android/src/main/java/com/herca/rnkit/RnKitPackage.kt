@@ -1,4 +1,4 @@
-package com.herca.kit
+package com.herca.rnkit
 
 import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
@@ -7,10 +7,10 @@ import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 import java.util.HashMap
 
-class KitPackage : BaseReactPackage() {
+class RnKitPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == KitModule.NAME) {
-      KitModule(reactContext)
+    return if (name == RnKitModule.NAME) {
+      RnKitModule(reactContext)
     } else {
       null
     }
@@ -19,9 +19,9 @@ class KitPackage : BaseReactPackage() {
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-      moduleInfos[KitModule.NAME] = ReactModuleInfo(
-        KitModule.NAME,
-        KitModule.NAME,
+      moduleInfos[RnKitModule.NAME] = ReactModuleInfo(
+        RnKitModule.NAME,
+        RnKitModule.NAME,
         false,  // canOverrideExistingModule
         false,  // needsEagerInit
         false,  // isCxxModule

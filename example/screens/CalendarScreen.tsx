@@ -5,15 +5,16 @@ import {
   Container,
   Typography,
   type DateRangeProps,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 import { ScrollView } from 'react-native';
+import type { DateProps } from '../../src/Calendar/CalendarPropsType';
 
 export default function CalendarScreen() {
   const [startDate, setStartDate] = useState<string | null | undefined>();
   const [endDate, setEndDate] = useState<string | null | undefined>();
 
-  const formatDate = (date) => {
+  const formatDate = (date: DateProps) => {
     if (!date) return null;
     const y = date.getFullYear();
     const m = `${date.getMonth() + 1}`.padStart(2, '0');

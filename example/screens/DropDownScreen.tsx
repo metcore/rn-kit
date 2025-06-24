@@ -1,4 +1,4 @@
-import { DropDown } from '@herca/kit';
+import { DropDown } from '@herca/rn-kit';
 import { View } from 'react-native';
 const options = [
   {

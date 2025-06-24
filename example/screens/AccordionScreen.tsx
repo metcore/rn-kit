@@ -6,7 +6,7 @@ import {
   Container,
   Icon,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 

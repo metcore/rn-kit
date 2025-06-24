@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
-import { Typography, Color } from '@herca/kit';
+import { Typography, Color } from '@herca/rn-kit';
 
 interface RadioButtonItem {
   label: string;

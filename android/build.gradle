@@ -1,6 +1,6 @@
 buildscript {
   ext.getExtOrDefault = {name ->
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['Kit_' + name]
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['RnKit_' + name]
   }
 
   repositories {
@@ -22,11 +22,11 @@ apply plugin: "kotlin-android"
 apply plugin: "com.facebook.react"
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["Kit_" + name]).toInteger()
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["RnKit_" + name]).toInteger()
 }
 
 android {
-  namespace "com.herca.kit"
+  namespace "com.herca.rnkit"
 
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
@@ -78,6 +78,6 @@ dependencies {
 
 react {
   jsRootDir = file("../src/")
-  libraryName = "Kit"
-  codegenJavaPackageName = "com.herca.kit"
+  libraryName = "RnKit"
+  codegenJavaPackageName = "com.herca.rnkit"
 }

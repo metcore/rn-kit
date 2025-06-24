@@ -58,7 +58,7 @@ const InputOtp: React.FC<InputOtpProps> = ({
               maxLength={1}
               onChangeText={(text) => handleChange(text, i)}
               onKeyPress={(e) => handleKeyPress(e, i)}
-              ref={(ref) => (inputs.current[i] = ref)}
+              ref={(ref) => void (inputs.current[i] = ref)}
             />
           ))}
       </View>

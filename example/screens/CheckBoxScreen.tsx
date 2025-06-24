@@ -4,7 +4,7 @@ import {
   Color,
   Container,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 const items = [
   { label: 'Syarat', value: 'syarat' },

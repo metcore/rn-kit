@@ -1,7 +1,7 @@
-import Kit from './NativeKit';
+import RnKit from './NativeRnKit';
 
 export function multiply(a: number, b: number): number {
-  return Kit.multiply(a, b);
+  return RnKit.multiply(a, b);
 }
 
 export { default as Accordion } from './Accordion/Accordion';

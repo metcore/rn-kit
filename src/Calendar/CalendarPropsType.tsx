@@ -9,10 +9,12 @@ export type DisabledDayStyle = {
 
 export type WeekDay = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
+export type DateProps = Date | undefined | null;
+
 export type DateRangeProps = {
-  startDate?: Date | undefined | null;
-  endDate?: Date | undefined | null;
-  date?: Date | undefined | null;
+  startDate?: DateProps;
+  endDate?: DateProps;
+  date?: DateProps;
 };
 
 export type CalendarDisabledProp = {

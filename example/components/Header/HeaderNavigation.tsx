@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Color, Container, Icon, Typography } from '@herca/kit';
+import { Color, Container, Icon, Typography } from '@herca/rn-kit';
 
 interface HeaderNavigationProps {
   title: string;

@@ -5,7 +5,7 @@ import {
   Input,
   InputPassword,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import {
   Image,

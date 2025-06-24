@@ -1,4 +1,4 @@
-import { Container, RadioButton, Typography } from '@herca/kit';
+import { Container, RadioButton, Typography } from '@herca/rn-kit';
 import { useState } from 'react';
 
 const options = [

@@ -15,7 +15,7 @@ import {
   Timeline,
   TimelineItem,
   Typography,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Attachment from '../../../components/Attachment';
@@ -239,7 +239,7 @@ export default function LeaveDetailScreen() {
             </Typography>
             <List>
               <ListItem>
-                <View style={{ flexDirection: 'row', gap: 12 }}>
+                <View style={styles.listApprover}>
                   <Label icon="Check" color="success" />
                   <View>
                     <Typography
@@ -260,7 +260,7 @@ export default function LeaveDetailScreen() {
                 </View>
               </ListItem>
               <ListItem>
-                <View style={{ flexDirection: 'row', gap: 12 }}>
+                <View style={styles.listApprover}>
                   <Label icon="Check" color="success" />
                   <View>
                     <Typography
@@ -281,7 +281,7 @@ export default function LeaveDetailScreen() {
                 </View>
               </ListItem>
               <ListItem>
-                <View style={{ flexDirection: 'row', gap: 12 }}>
+                <View style={styles.listApprover}>
                   <Label icon="Check" color="success" size="medium" />
                   <View>
                     <Typography
@@ -448,5 +448,9 @@ const styles = StyleSheet.create({
   },
   containerButton: {
     flex: 1,
+  },
+  listApprover: {
+    flexDirection: 'row',
+    gap: 12,
   },
 });

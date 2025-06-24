@@ -1,4 +1,4 @@
-import { Button, Container, TimePicker } from '@herca/kit';
+import { Button, Container, TimePicker } from '@herca/rn-kit';
 import { useState } from 'react';
 
 export default function TimePickerScreen() {
@@ -12,7 +12,6 @@ export default function TimePickerScreen() {
       <TimePicker
         onClose={() => setIsOpenTimePicker(false)}
         isOpen={isOpenTimePicker}
-        mode="single"
       />
     </Container>
   );

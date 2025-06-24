@@ -13,7 +13,7 @@ import {
   MonthPicker,
   Typography,
   YearPicker,
-} from '@herca/kit';
+} from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import {
   FlatList,

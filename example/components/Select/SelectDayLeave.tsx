@@ -1,4 +1,4 @@
-import { BottomSheet, Button, Card, Color, Typography } from '@herca/kit';
+import { BottomSheet, Button, Card, Color, Typography } from '@herca/rn-kit';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -53,13 +53,7 @@ export default function SelectDayLeave({
         >
           <Card
             backgroundImage={require('../../assets/leave/type_cuti1.png')}
-            style={[
-              styles.card,
-              dayType === 2 && {
-                borderColor: Color.warning[500],
-                borderWidth: 1,
-              },
-            ]}
+            style={[styles.card, dayType === 2 && styles.selectedFullDay]}
           >
             <Typography variant="p3" weight="semibold" color={Color.gray[600]}>
               Setengah Hari
@@ -83,5 +77,9 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
+  },
+  selectedFullDay: {
+    borderColor: Color.warning[500],
+    borderWidth: 1,
   },
 });
