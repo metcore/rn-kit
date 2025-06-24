@@ -1,5 +1,5 @@
 {
-  "name": "@herca/kit",
+  "name": "@herca/rn-kit",
   "version": "0.1.0",
   "description": "UI Kit for herca development react native",
   "main": "./lib/module/index.js",
