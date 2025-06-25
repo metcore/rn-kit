@@ -37,7 +37,6 @@ export { default as Switch } from './Input/Switch';
 export { default as CheckBox } from './CheckBox/CheckBox';
 export { default as CheckBoxList } from './CheckBox/CheckBoxList';
 export { default as RadioButton } from './RadioButton/RadioButton';
-export { default as SwitchButton } from './SwitchButton/SwitchButton';
 export { default as Icon } from './Icon/Icon';
 export { default as Modal } from './Modal/Modal';
 export { default as Label } from './Label/Label';
