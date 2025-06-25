@@ -54,8 +54,20 @@ return (
 
 ## 📦 Instalasi
 
+Dengan npm
 ```bash
 npm install @herca/rn-kit
+```
+Atau dengan yarn
+
+```bash
+npm install @herca/rn-kit
+```
+Pod install
+
+```bash
+cd ios
+pod install
 ```
 
 ---
