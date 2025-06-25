@@ -1,6 +1,6 @@
 {
   "name": "@herca/rn-kit",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "React Native UI Kit",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -47,7 +47,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/metcore/herca-rn-kit.git"
+    "url": "git+https://github.com/metcore/rn-kit"
   },
   "author": "metcore <metcore2@gmail.com> (https://github.com/metcore)",
   "license": "MIT",
