@@ -16,7 +16,7 @@ export default function RequiredUpdateAppsProvider({
     <View>
       <Modal height={300} isOpen={true} closable={false}>
         <Image
-          source={require('../../example/assets/updateapps.png')}
+          source={require('../_assets/updateapps.png')}
           style={styles.image}
         />
         <Container style={styles.container}>
