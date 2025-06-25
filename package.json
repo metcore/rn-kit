@@ -52,9 +52,9 @@
   "author": "metcore <metcore2@gmail.com> (https://github.com/metcore)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/metcore/herca-rn-kit/issues"
+    "url": "https://github.com/metcore/rn-kit/issues"
   },
-  "homepage": "https://github.com/metcore/herca-rn-kit#readme",
+  "homepage": "https://github.com/metcore/rn-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
