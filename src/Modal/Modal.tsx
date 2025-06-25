@@ -20,7 +20,7 @@ interface ModalPopUpProps {
   onRequestClose?: () => void;
   bgColor?: string;
   width?: DimensionValue;
-  height?: DimensionValue; // tetap ada, tapi tidak akan digunakan kalau ingin auto height
+  height?: DimensionValue;
   containerStyle?: ViewStyle;
   modalStyle?: ViewStyle;
 }
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   contentContainer: {
-    padding: 16, // bisa diubah sesuai kebutuhan
+    padding: 16,
   },
 });
 

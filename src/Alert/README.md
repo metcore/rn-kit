@@ -1,8 +1,8 @@
 # 📢 Alert Component
 
 Komponen `Alert` digunakan untuk menampilkan pesan notifikasi dengan ikon, judul, dan pesan yang dapat dikustomisasi warnanya sesuai konteks (seperti *success*, *info*, *warning*, dll).
+<img src="../../assets/doc/Alert/Alert.png" alt="Deskripsi Alt" width="200" />
 
-![Deskripsi Alt](../../assets/doc/Alert/Alert.png)
 ## ✨ Fitur
 
 - Menampilkan ikon notifikasi

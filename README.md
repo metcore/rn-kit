@@ -88,7 +88,8 @@ import { Button } from '@herca/rn-kit';
 
 Komponen untuk mengumpulkan input dari pengguna.
 
-- [Checkbox](./src/Checkbox/README.md)
+- [Checkbox](./src/Checkbox/README_CHECKBOX.md)
+- [Checkbox](./src/Checkbox/README_CHECKBOXLIST.md)
 - [Chip-(Select)](./src/Chip/README.md)
 - [DatePicker](./src/DatePicker/README.md)
 - [DropDown](./src/DropDown/README.md)
@@ -115,6 +116,7 @@ Komponen yang muncul di atas konten utama untuk interaksi sementara.
 Komponen untuk menyembunyikan atau menampilkan konten.
 
 - [Accordion](./src/Accordion/README.md)
+- [Step](./src/Step/README.md)
 
 ---
 
@@ -136,9 +138,10 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [AvatarGroup](./src/Alert/README_AVATARGROUP.md)
 - [Calendar](./src/Calendar/README.md)
 - [Color](./src/Color/README.md)
-- [Card](./src/Card/README.md)
+- [Card](./src/Ui/README_CARD.md)
 - [Drawing](./src/Drawing/README.md)
 - [List](./src/List/README.md)
+- [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)
 
 ---

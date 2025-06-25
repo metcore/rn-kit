@@ -1,7 +1,7 @@
 # 📂 Accordion
 
 Komponen **Accordion** digunakan untuk menyembunyikan atau menampilkan konten secara dinamis. Biasanya digunakan untuk struktur seperti FAQ atau daftar konten bertingkat.
-![Deskripsi Alt](../../assets/doc/Accordion/Accordion.gif)
+<img src="../../assets/doc/Accordion/Accordion.gif" alt="Deskripsi Alt" width="200" />
 
 ## 📦 USAGE
 
@@ -32,12 +32,20 @@ export default function FAQSection() {
 
 
 ## Props
+### Accordion
+| Props          | Tipe                        | Wajib | Default | Deskripsi                                                                       |
+| -------------- | --------------------------- | ----- | ------- | ------------------------------------------------------------------------------- |
+| `children`     | `ReactNode`                 | ✅     | -       | Isi Accordion, harus terdiri dari satu atau beberapa `AccordionItem`.           |
+| `renderHeader` | `ReactNode \| null`         | ❌     | `null`  | Komponen untuk menampilkan header. Biasanya berupa `Text` atau komponen kustom. |
+| `isOpen`       | `boolean`                   | ❌     | `true`  | Menentukan apakah Accordion terbuka saat pertama kali dirender.                 |
+| `onCollapse`   | `(isOpen: boolean) => void` | ❌     | -       | Callback saat status terbuka/tutup berubah.                                     |
 
-| props name           | mandatory | types   | default                                                  |
-| -------------------- | --------- | ------- | -------------------------------------------------------- |
-| header             |          | ReactNode | false                                            |
-| isOpen              |         | boolean    |  true                                             |
-| onCollapse              |         | (isOpen: boolean) => void	    |  true                                             |                         |
+### AccordionItem
+| Props      | Tipe        | Wajib | Default | Deskripsi                                                       |
+| ---------- | ----------- | ----- | ------- | --------------------------------------------------------------- |
+| `children` | `ReactNode` | ✅     | -       | Konten yang akan ditampilkan saat Accordion dibuka.             |
+| `index`    | `number`    | ❌     | -       | Untuk pengendalian item tertentu jika diperlukan secara manual. |
+
 
 ## Note
 
