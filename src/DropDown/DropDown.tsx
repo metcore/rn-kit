@@ -1,13 +1,15 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
+  Pressable,
   StyleSheet,
   ScrollView,
   useWindowDimensions,
   findNodeHandle,
   UIManager,
+  Modal,
 } from 'react-native';
 import Color from '../Color/Color';
 import type { DropDownProps } from './type';
@@ -21,9 +23,13 @@ const Dropdown = ({
 }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | number>();
-  const [dropdownPosition, setDropdownPosition] = useState<'left' | 'right'>(
-    'left'
-  );
+  const [align, setAlign] = useState<'left' | 'right'>('left');
+  const [buttonLayout, setButtonLayout] = useState({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  });
 
   const buttonRef = useRef<View>(null);
   const windowWidth = useWindowDimensions().width;
@@ -32,9 +38,10 @@ const Dropdown = ({
     if (!isOpen) {
       const handle = findNodeHandle(buttonRef.current);
       if (handle) {
-        UIManager.measureInWindow(handle, (x, _y, width, _height) => {
+        UIManager.measureInWindow(handle, (x, y, width, height) => {
           const middle = windowWidth / 2;
-          setDropdownPosition(x + width / 2 > middle ? 'right' : 'left');
+          setAlign(x + width / 2 > middle ? 'right' : 'left');
+          setButtonLayout({ x, y, width, height });
           setIsOpen(true);
         });
       }
@@ -50,70 +57,65 @@ const Dropdown = ({
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        ref={buttonRef}
-        style={styles.dropdownButton}
-        onPress={handleToggle}
-      >
-        {renderButton ? (
-          renderButton
-        ) : (
-          <Text>{selected || 'Select an option'}</Text>
-        )}
+    <>
+      <TouchableOpacity ref={buttonRef} onPress={handleToggle}>
+        {renderButton}
       </TouchableOpacity>
-
       {isOpen && (
-        <View
-          style={[
-            styles.dropdownList,
-            dropdownPosition === 'left' ? styles.left : styles.right,
-          ]}
-        >
-          <ScrollView nestedScrollEnabled style={{ maxHeight }}>
-            {options.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handlePressOption(item)}
-                style={[
-                  styles.option,
-                  selected === item.value ? styles.optionSelected : null,
-                ]}
-              >
-                <Text>{item.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
+        <Modal transparent animationType="none" visible>
+          <Pressable
+            style={StyleSheet.absoluteFillObject}
+            onPress={() => setIsOpen(false)}
+          />
+
+          <View
+            style={[
+              styles.dropdownList,
+              {
+                top: buttonLayout.y + buttonLayout.height,
+                left: align === 'left' ? buttonLayout.x : undefined,
+                right:
+                  align === 'right'
+                    ? windowWidth - (buttonLayout.x + buttonLayout.width)
+                    : undefined,
+              },
+            ]}
+          >
+            <ScrollView nestedScrollEnabled style={{ maxHeight }}>
+              {options.map((item, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  onPress={() => handlePressOption(item)}
+                  style={[
+                    styles.option,
+                    selected === item.value && styles.optionSelected,
+                  ]}
+                >
+                  <Text>{item.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </Modal>
       )}
-    </View>
+    </>
   );
 };
 
 export default Dropdown;
 
 const styles = StyleSheet.create({
-  container: {
-    // width: 200, // or flexible
-  },
-  dropdownButton: {
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-    // padding: 12,
-    // borderRadius: 6,
-    // backgroundColor: '#fff',
-  },
+  button: {},
   dropdownList: {
     position: 'absolute',
-    marginTop: 18,
     padding: 8,
-    zIndex: 9999,
+    zIndex: 10,
     gap: 4,
     borderWidth: 1,
     borderColor: Color.gray[50],
     borderRadius: 8,
     backgroundColor: Color.base.white100,
-    width: 100,
+    width: 120,
   },
   option: {
     gap: 8,
@@ -126,11 +128,5 @@ const styles = StyleSheet.create({
   optionSelected: {
     backgroundColor: Color.primary[50],
     borderColor: Color.primary[300],
-  },
-  left: {
-    left: 0,
-  },
-  right: {
-    right: 0,
   },
 });

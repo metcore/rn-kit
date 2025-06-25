@@ -14,7 +14,7 @@ type ColorKey = keyof typeof COLOR_MAP;
 
 interface TimelineItemProps {
   children: React.ReactNode;
-  color: ColorKey;
+  color?: ColorKey;
 }
 
 export default function TimelineItem({
@@ -22,12 +22,25 @@ export default function TimelineItem({
   color = 'primary',
 }: TimelineItemProps) {
   const [contentHeight, setContentHeight] = useState(0);
+  const renderDashes = (count: number) => {
+    return Array.from({ length: count }).map((_, index) => (
+      <View
+        key={index}
+        style={{
+          width: 1,
+          height: 4,
+          backgroundColor: Color.gray[400],
+          marginVertical: 2,
+        }}
+      />
+    ));
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.contentLeft}>
         <Icon name="RadioButton" color={COLOR_MAP[color]} />
-        <View style={[styles.border, { height: contentHeight - 20 }]} />
+        <View>{renderDashes(Math.floor((contentHeight - 20) / 6))}</View>
       </View>
       <View
         style={styles.flex}
@@ -52,10 +65,10 @@ const styles = StyleSheet.create({
   },
   border: {
     width: 1,
+    borderWidth: 1,
     borderLeftWidth: 1,
     borderLeftColor: Color.gray[400],
     borderStyle: 'dashed',
-    marginTop: 4,
   },
   flex: {
     flex: 1,

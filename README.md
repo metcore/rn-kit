@@ -88,13 +88,17 @@ import { Button } from '@herca/rn-kit';
 
 Komponen untuk mengumpulkan input dari pengguna.
 
+- [Button](./src/Button/README.md)
 - [Checkbox](./src/Checkbox/README_CHECKBOX.md)
 - [Checkbox](./src/Checkbox/README_CHECKBOXLIST.md)
 - [Chip-(Select)](./src/Chip/README.md)
 - [DatePicker](./src/DatePicker/README.md)
 - [DropDown](./src/DropDown/README.md)
 - [Input](./src/Input/README.md)
+- [Input Month](./src/InputMonth/README.md)
 - [Input Password](./src/InputPassword/README.md)
+- [Input Time](./src/InputTime/README.md)
+- [Input Year](./src/InputYear/README.md)
 - [Radio Button](./src/RadioButton/README.md)
 - [Select](./src/Select/README.md)
 - [Switch](./src/Switch/README.md)
