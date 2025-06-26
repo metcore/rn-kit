@@ -1,7 +1,8 @@
 # 📦 Komponen `Chip` – React Native
 
 Komponen `Chip` digunakan untuk menampilkan daftar pilihan seperti tag, filter, atau kategori dalam bentuk tombol kecil (chip). Komponen ini mendukung pilihan tunggal maupun jamak, arah horizontal/vertikal, dan gaya warna yang dapat disesuaikan.
-![Deskripsi Alt](../../assets/doc/Chip/Chip.png)
+
+<img src="../../assets/doc/Chip/Chip.png" width=200>
 
 ---
 

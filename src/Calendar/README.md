@@ -1,6 +1,7 @@
 # 📆 Komponen Kalender Kustom (React Native)
 
 Komponen kalender ini dibuat menggunakan React Native dan memungkinkan pengguna untuk memilih tanggal tunggal maupun rentang tanggal, serta mendukung fitur penandaan dan pembatasan tanggal.
+<img src="../../assets/doc/Calendar/Calendar.png" width=200>
 
 ---
 

@@ -2,7 +2,9 @@
 # AvatarGroup Component (React Native)
 
 The `AvatarGroup` component displays a group of user avatars. It supports image avatars, initials-based avatars, and a fallback icon. If there are more avatars than the maximum visible count, it displays a "+X" bubble.
-![Deskripsi Alt](../../assets/doc/Avatar/AvatarGroup.png)
+
+<img src="../../assets/doc/Avatar/AvatarGroup.png" width=200>
+
 ---
 
 ## 📦 Props

@@ -1,8 +1,8 @@
 # ⬆️ BottomSheet Component
 
 Komponen `BottomSheet` adalah modal bawah (slide-up) untuk menampilkan konten dinamis, form, konfirmasi, dll, dengan berbagai fitur interaktif seperti gesture drag, keyboard-aware, dan customizable height.
-![Deskripsi Alt](../../assets/doc/BottomSheet/BottomSheet.gif)
 
+<img src="../../assets/doc/BottomSheet/BottomSheet.gif" width=200>
 ---
 
 ## 📦 Props

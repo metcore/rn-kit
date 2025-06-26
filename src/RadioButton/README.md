@@ -1,7 +1,8 @@
 # 📦 RadioButton – Komponen React Native
 
 Komponen `RadioButton` ini digunakan untuk menampilkan daftar pilihan dalam bentuk radio button di aplikasi React Native.
-![Deskripsi Alt](../../assets/doc/RadioButton/RadioButton.png)
+<img src="../../assets/doc/RadioButton/RadioButton.png" width=200>
+
 
 ## 📄 Import
 

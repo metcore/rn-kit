@@ -4,6 +4,7 @@ Komponen `DatePicker` adalah antarmuka pemilih tanggal yang dibungkus dalam sebu
 
 Komponen ini extend dari Calendar, jadi kalian bisa menggunakan semua props yang ada di Calendar [Calendar](../Calendar/README.md)
 
+<img src="../../assets/doc/Datepicker/Datepicker.gif" width=200>
 ---
 
 ## ✨ Fitur

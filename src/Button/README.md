@@ -2,7 +2,9 @@
 # 🔘 Komponen Button (React Native)
 
 Komponen `Button` ini adalah tombol serbaguna untuk aplikasi React Native. Mendukung berbagai ukuran, varian, warna, dan status seperti `disabled` dan `loading`.
-![Deskripsi Alt](../../assets/doc/Button/Button.png)
+
+
+<img src="../../assets/doc/Button/Button.png" width=200>
 
 ---
 

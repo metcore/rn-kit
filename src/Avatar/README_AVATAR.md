@@ -1,7 +1,7 @@
 # 🧑‍🎨 Avatar Component
 
 Komponen `Avatar` digunakan untuk menampilkan foto pengguna atau inisial nama jika foto tidak tersedia.
-![Deskripsi Alt](../../assets/doc/Avatar/Avatar.png)
+<img src="../../assets/doc/Avatar/Avatar.png" width=200>
 
 ## ✨ Fitur
 
