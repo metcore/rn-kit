@@ -1,5 +1,4 @@
-import { DropDown } from '@herca/rn-kit';
-import { View } from 'react-native';
+import { Container, DropDown, Icon } from '@herca/rn-kit';
 const options = [
   {
     label: 'Januari',
@@ -17,8 +16,12 @@ const options = [
 
 export default function DropDownScreen() {
   return (
-    <View style={{ height: 100, borderColor: 'black', borderWidth: 1 }}>
-      <DropDown options={options} maxHeight={200} />
-    </View>
+    <Container>
+      <DropDown
+        options={options}
+        maxHeight={200}
+        renderButton={<Icon name="Eye" />}
+      />
+    </Container>
   );
 }

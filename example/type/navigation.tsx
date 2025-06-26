@@ -44,6 +44,7 @@ type RootStackParamList = {
   Login: undefined;
   ForgotPassword: undefined;
   LeaveApprove: undefined;
+  TimeLine: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

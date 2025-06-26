@@ -5,6 +5,7 @@ import LayoutWithFooter from './LayoutWithFooter';
 import RequiredUpdateAppsProvider from './RequiredUpdateAppsProvider';
 import { type ReactNode } from 'react';
 import type { RequiredUpdateAppsProviderProps } from './type';
+import Color from '../Color/Color';
 
 interface FooterContextType {
   footer: any | null;
@@ -13,8 +14,8 @@ interface FooterContextType {
 
 interface ProviderProps {
   children: ReactNode;
-  requiredUpdated: boolean;
-  updateConfig: RequiredUpdateAppsProviderProps;
+  requiredUpdated?: boolean;
+  updateConfig?: RequiredUpdateAppsProviderProps;
 }
 
 const FooterContext = createContext<FooterContextType | undefined>(undefined);
@@ -48,6 +49,7 @@ export const useFooter = () => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Color.base.white100,
     flex: 1,
   },
 });
