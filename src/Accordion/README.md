@@ -1,6 +1,7 @@
 # 📂 Accordion
 
 Komponen **Accordion** digunakan untuk menyembunyikan atau menampilkan konten secara dinamis. Biasanya digunakan untuk struktur seperti FAQ atau daftar konten bertingkat.
+
 <img src="../../assets/doc/Accordion/Accordion.gif" alt="Deskripsi Alt" width="200" />
 
 ## 📦 USAGE

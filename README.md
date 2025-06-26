@@ -82,6 +82,8 @@ const App = () => {
     <Provider>
       <YoyrCode>
     </Provider>
+  )
+}
 ```
 ---
 
@@ -102,16 +104,16 @@ import { Button } from '@herca/rn-kit';
 Komponen untuk mengumpulkan input dari pengguna.
 
 - [Button](./src/Button/README.md)
-- [Checkbox](./src/Checkbox/README_CHECKBOX.md)
-- [Checkbox](./src/Checkbox/README_CHECKBOXLIST.md)
+- [Checkbox](./src/CheckBox/README_CHECKBOX.md)
+- [Checkbox List](./src/CheckBox/README_CHECKBOXLIST.md)
 - [Chip-(Select)](./src/Chip/README.md)
-- [DatePicker](./src/DatePicker/README.md)
+- [DatePicker](./src/DatePicker/README_DATEPICKER.md)
 - [DropDown](./src/DropDown/README.md)
 - [Input](./src/Input/README.md)
-- [Input Month](./src/InputMonth/README.md)
+- [Input Month](./src/Datepicker/README_MONTHPICKER.md)
 - [Input Password](./src/InputPassword/README.md)
-- [Input Time](./src/InputTime/README.md)
-- [Input Year](./src/InputYear/README.md)
+- [Input Time](./src/Datepicker/README_TIMEPICKER.md)
+- [Input Year](./src/Datepicker/README_YEARPICKER.md)
 - [Radio Button](./src/RadioButton/README.md)
 - [Select](./src/Select/README.md)
 - [Switch](./src/Switch/README.md)
@@ -155,9 +157,11 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [AvatarGroup](./src/Alert/README_AVATARGROUP.md)
 - [Calendar](./src/Calendar/README.md)
 - [Color](./src/Color/README.md)
+- [Container](./src/Ui/README_CONTAINER.md)
 - [Card](./src/Ui/README_CARD.md)
+- [Devider](./src/Ui/README_DEVIDER.md)
 - [Drawing](./src/Drawing/README.md)
-- [Footer](./src/Footer/README.md)
+- [Footer](./src/Ui/README_FOOTER.md)
 - [List](./src/List/README.md)
 - [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)

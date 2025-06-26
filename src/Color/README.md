@@ -1,54 +1,105 @@
-# 📦 Konstanta: Color
-Konstanta Color berisi daftar token warna yang digunakan untuk styling antarmuka aplikasi menggunakan React Native. Warna-warna ini disusun berdasarkan tema dan gradasi, cocok digunakan bersama desain sistem seperti Design Token.
+# Color Palette
 
-## 🎨 Struktur Warna
-✅ Base
-Warna dasar utama:
+Berikut adalah definisi warna yang digunakan di design system React Native Anda. Palette mencakup warna dasar (*base*), skala abu‐abu (*gray*), kategori semantik (*primary*, *success*, *danger*, *warning*, *info*, *orange*, *purple*), serta utilitas lain seperti `divider` dan `disabled`.
 
-white100: putih solid
+Warna tersimpan dalam objek `Color` dengan struktur hierarkis seperti contoh berikut:
 
-white60: putih transparan 60%
+```ts
+Color.primary[500] // -> "#4D46FF"
+Color.gray[200]   // -> "#EBEBEB"
+```
 
-black100: hitam solid
+---
 
-black60: hitam transparan 60%
+## Struktur Objek Color
 
-### ⚪ Gray (abu-abu)
-Gradasi abu-abu dari terang (gray.50) hingga gelap (gray.950), cocok untuk teks, latar, border, dsb.
+```ts
+const Color = {
+  base: { ... },
+  gray: { ... },
+  primary: { ... },
+  warning: { ... },
+  danger: { ... },
+  success: { ... },
+  info: { ... },
+  orange: { ... },
+  purple: { ... },
+  divider: { ... },
+  disabled: { ... },
+  shadow: { ... },
+};
+```
 
-### 🔵 Primary
-Gradasi warna utama (biru), digunakan untuk tombol, highlight, atau elemen penting lainnya.
+### Skema Skala Warna
 
-### 🟠 Warning
-Warna peringatan, digunakan untuk menandai hal-hal seperti alert, notifikasi kuning, dll.
+* **0–1000** (atau 0–950) – Semakin besar angka, semakin gelap warna.
+* **50** – Latar paling terang (sering dipakai untuk *background* highlight).
+* **500** – Warna utama (brand color dan teks link normal).
+* **700/800/900** – Warna paling gelap untuk teks di atas latar berkait.
 
-### 🔴 Danger
-Warna untuk kondisi berbahaya atau error (merah).
+---
 
-### 🟢 Success
-Digunakan untuk kondisi berhasil atau sukses (hijau).
+## Tabel Ringkasan
 
-### 🔷 Info
-Warna tambahan untuk informasi, notifikasi, atau status sekunder.
+| Kategori   | Contoh Penggunaan     | Keterangan                                  |
+| ---------- | --------------------- | ------------------------------------------- |
+| `base`     | `Color.base.white100` | Warna putih/ hitam utama UI dasar.          |
+| `gray`     | `Color.gray[700]`     | Teks, ikon sekunder, border netral.         |
+| `primary`  | `Color.primary[500]`  | Aksi utama, tombol brand, ikon utama.       |
+| `success`  | `Color.success[500]`  | Status berhasil: label “Success”, badge OK. |
+| `danger`   | `Color.danger[500]`   | Error, status gagal.                        |
+| `warning`  | `Color.warning[500]`  | Peringatan.                                 |
+| `info`     | `Color.info[500]`     | Informasi tambahan.                         |
+| `orange`   | `Color.orange[500]`   | Aksen/ badge khusus.                        |
+| `purple`   | `Color.purple[500]`   | Aksen sekunder/ grafik.                     |
+| `divider`  | `Color.divider[25]`   | Garis pemisah tipis.                        |
+| `disabled` | `Color.disabled[25]`  | Kontrol non‐aktif.                          |
 
-### 🟧 Orange
-Warna oranye, alternatif dari primary/warning.
+> Anda bisa menambahkan `shadow` palette jika diperlukan gradasi drop shadow.
 
-### 🟣 Purple
-Warna ungu, bisa digunakan untuk status spesial atau branding.
+---
 
-🧱 Divider
-divider.25: Warna pembatas antar elemen UI.
+## TypeScript Helper
 
-📴 Disabled
-disabled.25: Warna untuk elemen non-aktif.
+```ts
+export type ColorVariantType =
+  | 'default'
+  | 'success'
+  | 'danger'
+  | 'primary'
+  | 'warning'
+  | 'info'
+  | 'purple'
+  | 'orange';
+```
 
-## Cara menggunakan 
+Tipe ini dipakai di komponen lain (mis. `Label`) untuk membatasi nama variant.
+
+---
+
+## Contoh Implementasi
 
 ```tsx
-import Color from '@herca/rn-kit';
+import Color from '@/components/Color/Color';
 
-<View style={{ backgroundColor: Color.primary[500] }} />
-<Text style={{ color: Color.gray[900] }}>Teks</Text>
-
+const MyButton = () => (
+  <View style={{ backgroundColor: Color.primary[500], padding: 12 }}>
+    <Text style={{ color: Color.base.white100 }}>Click Me</Text>
+  </View>
+);
 ```
+
+---
+
+## Tips Penggunaan
+
+* Gunakan warna **50** untuk latar lembut (highlight, badge background).
+* Gunakan warna **500** untuk elemen interaktif utama.
+* Gunakan warna **700+** untuk teks di atas warna **50–300**.
+* Gunakan `rgba(..., 0.x)` jika memerlukan translusi.
+
+---
+
+## Lisensi
+
+Bagian dari library internal Anda; ikuti lisensi proyek.
