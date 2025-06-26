@@ -70,6 +70,19 @@ cd ios
 pod install
 ```
 
+Wrap content utama dengan Provider
+
+```tsx
+
+import {Provider} from '@herca/rn-kit';
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+  return (
+    <Provider>
+      <YoyrCode>
+    </Provider>
+```
 ---
 
 ## 🚀 Penggunaan
@@ -144,11 +157,16 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [Color](./src/Color/README.md)
 - [Card](./src/Ui/README_CARD.md)
 - [Drawing](./src/Drawing/README.md)
+- [Footer](./src/Footer/README.md)
 - [List](./src/List/README.md)
 - [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)
 
 ---
+
+### Contex
+
+- [Provider](./src/Provider/README.md)
 
 ## 🤝 Kontribusi
 
