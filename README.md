@@ -61,7 +61,7 @@ npm install @herca/rn-kit
 Atau dengan yarn
 
 ```bash
-npm install @herca/rn-kit
+yarn add @herca/rn-kit
 ```
 Pod install
 
