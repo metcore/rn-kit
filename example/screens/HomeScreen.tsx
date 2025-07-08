@@ -9,7 +9,7 @@ const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Container style={{ gap: 2 }}>
+        <Container style={styles.container}>
           <Button
             color="success"
             title="Example"
@@ -249,6 +249,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 12,
+  },
+  container: {
+    gap: 2,
   },
 });
 
