@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 export default function AccordionScreen() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const renderHeader = () => (
     <View style={styles.containerHeaderAccordion}>
       <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
@@ -31,7 +31,7 @@ export default function AccordionScreen() {
   return (
     <Container>
       <Accordion
-        isOpen={true}
+        isOpen={isOpen}
         renderHeader={renderHeader()}
         onCollapse={handleCollapseAccordion}
       >

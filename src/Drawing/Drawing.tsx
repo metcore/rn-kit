@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import SignatureCanvas from 'react-native-signature-canvas';
+import SignatureCanvas, {
+  type SignatureViewRef,
+} from 'react-native-signature-canvas';
 import Icon from '../Icon';
 import Button from '../Button/Button';
 import Color from '../Color/Color';
@@ -10,9 +12,9 @@ interface DrawingProps {
 }
 
 const Drawing = ({ onDraw }: DrawingProps) => {
-  const ref = useRef();
+  const ref = useRef<SignatureViewRef | null>(null);
 
-  const handleSignature = (signature) => {
+  const handleSignature = (signature: string) => {
     if (signature && onDraw) {
       onDraw(signature);
     }
@@ -26,7 +28,7 @@ const Drawing = ({ onDraw }: DrawingProps) => {
     console.log('Signature cleared');
   };
 
-  const handleError = (error) => {
+  const handleError = (error: Error) => {
     console.error('Signature pad error:', error);
   };
 
