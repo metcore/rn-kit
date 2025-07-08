@@ -1866,7 +1866,7 @@ __metadata:
     "@react-native/babel-preset": 0.79.2
     "@react-native/metro-config": 0.79.2
     "@react-native/typescript-config": 0.79.2
-    "@react-navigation/native": ^7.1.11
+    "@react-navigation/native": ^7.1.14
     "@react-navigation/native-stack": ^7.3.16
     "@types/react": ^19.0.0
     react: 19.0.0
@@ -1874,9 +1874,11 @@ __metadata:
     react-native-blob-util: ^0.22.2
     react-native-builder-bob: ^0.40.12
     react-native-monorepo-config: ^0.1.9
+    react-native-pager-view: ^6.8.1
     react-native-pdf: ^6.7.7
-    react-native-safe-area-context: ^5.4.1
+    react-native-safe-area-context: ^5.5.1
     react-native-screens: ^4.11.1
+    react-native-signature-canvas: ^5.0.1
     react-native-svg: ^15.12.0
   languageName: unknown
   linkType: soft
@@ -1895,6 +1897,7 @@ __metadata:
     "@react-native-documents/viewer": ^1.0.1
     "@react-native/babel-preset": 0.79.2
     "@react-native/eslint-config": ^0.78.0
+    "@react-navigation/native": ^7.1.14
     "@release-it/conventional-changelog": ^9.0.2
     "@types/jest": ^29.5.5
     "@types/react": ^19.0.0
@@ -1910,8 +1913,13 @@ __metadata:
     react-native-blob-util: ^0.22.2
     react-native-builder-bob: ^0.40.8
     react-native-image-picker: ^8.2.1
+    react-native-pager-view: ^6.8.1
     react-native-pdf: ^6.7.7
+    react-native-safe-area-context: ^5.5.1
+    react-native-screens: ^4.11.1
+    react-native-signature-canvas: ^5.0.1
     react-native-svg: ^15.12.0
+    react-native-webview: ^13.15.0
     release-it: ^17.10.0
     turbo: ^1.10.7
     typescript: ^5.8.3
@@ -3217,7 +3225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/native@npm:^7.1.11":
+"@react-navigation/native@npm:^7.1.14":
   version: 7.1.14
   resolution: "@react-navigation/native@npm:7.1.14"
   dependencies:
@@ -7386,7 +7394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invariant@npm:*, invariant@npm:^2.2.4":
+"invariant@npm:*, invariant@npm:2.2.4, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -10680,6 +10688,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-pager-view@npm:^6.8.1":
+  version: 6.8.1
+  resolution: "react-native-pager-view@npm:6.8.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 83c26f2d6953b36eb9b318e2c2c9be610a88df10051decfe52aadbe6baf121a51c9eed215da7abf43965b9165b5ab4ad98927bb22b80b6186e1cdc6723efab65
+  languageName: node
+  linkType: hard
+
 "react-native-pdf@npm:^6.7.7":
   version: 6.7.7
   resolution: "react-native-pdf@npm:6.7.7"
@@ -10694,13 +10712,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^5.4.1":
-  version: 5.5.0
-  resolution: "react-native-safe-area-context@npm:5.5.0"
+"react-native-safe-area-context@npm:^5.5.1":
+  version: 5.5.1
+  resolution: "react-native-safe-area-context@npm:5.5.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: e04fd9e9f52cbc73f495c4ef7ad527ec48398b17032cbbba412bd72d8b2c9a7b184b57e8e8a72edc3e6c41832442596dafbfee7d29ca9d1dd85081991dd834f5
+  checksum: 57d27eac29288a906e97055512cde656369fe3bdc2bc9f26ca078bd0b340e5535d7619d6bcc0f10b68630fe7e721099fcd64d15eb8101b146ddb660ae36e1d64
   languageName: node
   linkType: hard
 
@@ -10718,6 +10736,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-signature-canvas@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "react-native-signature-canvas@npm:5.0.1"
+  peerDependencies:
+    react-native-webview: ">=13"
+  checksum: 011059af6465476e6f75914cef43d8e415d857121a59bddb0f355000a95821b5c4168b0317628d4fda244608553e2592479d86c62544d627b6628dc19e8db855
+  languageName: node
+  linkType: hard
+
 "react-native-svg@npm:^15.12.0":
   version: 15.12.0
   resolution: "react-native-svg@npm:15.12.0"
@@ -10729,6 +10756,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 0a78333ab4fb1aae38f190a22a1afcbfa2ae9192ccd2ac7a989f3108bd32afe1b84800b4dce0f92c68ad4eca6809046b5f997fbfcb072b872dd34ea04c8f44aa
+  languageName: node
+  linkType: hard
+
+"react-native-webview@npm:^13.15.0":
+  version: 13.15.0
+  resolution: "react-native-webview@npm:13.15.0"
+  dependencies:
+    escape-string-regexp: ^4.0.0
+    invariant: 2.2.4
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 1c843206108358faef5cd8e25834de729a90319c3fa3f765923536fdd99b86b07a3e850b89ebe6503725a022dd9dddd5de76ef6e102d290cc5935dcf9c60198d
   languageName: node
   linkType: hard
 

@@ -49,6 +49,8 @@ import HeaderNavigation from '../components/Header/HeaderNavigation';
 import TimePickerScreen from '../screens/TimePickerScreen';
 import InputOtpScreen from '../screens/InputOtpScreen';
 import TimeLineScreen from '../screens/TimeLineScreen';
+import TabScreen from '../screens/TabScreen';
+import StepScreen from '../screens/StepScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -111,7 +113,8 @@ const App = () => {
             <Stack.Screen name="YearPicker" component={YearPickerScreen} />
             <Stack.Screen name="Toast" component={ToastScreen} />
             <Stack.Screen name="TimeLine" component={TimeLineScreen} />
-
+            <Stack.Screen name="Tab" component={TabScreen} />
+            <Stack.Screen name="Step" component={StepScreen} />
             <Stack.Screen
               name="Sp"
               component={SpScreen}

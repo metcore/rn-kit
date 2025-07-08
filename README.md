@@ -136,6 +136,7 @@ Komponen untuk menyembunyikan atau menampilkan konten.
 
 - [Accordion](./src/Accordion/README.md)
 - [Step](./src/Step/README.md)
+- [Tab](./src/Tab/README.md)
 
 ---
 

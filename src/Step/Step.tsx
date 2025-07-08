@@ -26,7 +26,6 @@ const Step = ({ children, current = 0, onChangeStep }: StepProps) => {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={[styles.headerContainer]}>
         <ScrollView
           ref={scrollRef}

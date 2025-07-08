@@ -9,7 +9,7 @@ const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Container style={{ gap: 2 }}>
+        <Container style={styles.container}>
           <Button
             color="success"
             title="Example"
@@ -194,8 +194,14 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
-            title="Calendar"
-            onPress={() => navigation.navigate('Calendar')}
+            title="Tab"
+            onPress={() => navigation.navigate('Tab')}
+            block
+          />
+          <Button
+            color="success"
+            title="Step"
+            onPress={() => navigation.navigate('Step')}
             block
           />
           <Button
@@ -243,6 +249,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 12,
+  },
+  container: {
+    gap: 2,
   },
 });
 
