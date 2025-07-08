@@ -194,8 +194,14 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
-            title="Calendar"
-            onPress={() => navigation.navigate('Calendar')}
+            title="Tab"
+            onPress={() => navigation.navigate('Tab')}
+            block
+          />
+          <Button
+            color="success"
+            title="Step"
+            onPress={() => navigation.navigate('Step')}
             block
           />
           <Button

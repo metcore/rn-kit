@@ -10,6 +10,12 @@ export type { AccordionRenderHeaderProps } from './Accordion/type';
 export { default as Button } from './Button/Button';
 export { default as Color } from './Color/Color';
 export { default as Typography } from './Typography/Typography';
+export type {
+  fontSizeMap,
+  fontWeightMap,
+  lineHeightMap,
+  TypographyVariantProps,
+} from './Typography/type';
 export { default as BottomSheet } from './BottomSheet/BottomSheet';
 export { default as Container } from './Ui/Container';
 export { default as Card } from './Ui/Card';
@@ -61,6 +67,8 @@ export { default as MonthPicker } from './DatePicker/MonthPicker';
 export { default as TimePicker } from './DatePicker/TimePicker';
 export { default as Step } from './Step/Step';
 export { default as StepItem } from './Step/StepItem';
+export { default as Tab } from './Tab/Tab';
+export { default as TabItem } from './Tab/TabItem';
 export { default as Toast } from './Toast/Toast';
 export { default as TextArea } from './Input/TextArea';
 // export { default as PdfView } from './FileView/PdfView';
