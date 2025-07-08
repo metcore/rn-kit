@@ -154,7 +154,7 @@ const HomeScreen: React.FC = () => {
             block
           />
           <Button
-            color="primary"
+            color="success"
             title="Drawing"
             onPress={() => navigation.navigate('Drawing')}
             block

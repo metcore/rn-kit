@@ -10,6 +10,8 @@ import {
   Platform,
   type ViewStyle,
 } from 'react-native';
+import Icon from '../Icon';
+import Color from '../Color/Color';
 
 interface ModalPopUpProps {
   isOpen: boolean;
@@ -45,8 +47,8 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     Animated.spring(scaleAnim, {
       toValue: 1,
       useNativeDriver: true,
-      damping: 15,
-      stiffness: 100,
+      damping: 20,
+      stiffness: 200,
     }).start();
   }, [scaleAnim]);
 
@@ -107,11 +109,11 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
         <Animated.View style={[styles.modalContent, modalContentStyle]}>
           {closable && (
             <View style={styles.closeButtonContainer}>
-              <TouchableOpacity
-                onPress={hideModal}
-                style={styles.closeButton}
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              />
+              <TouchableOpacity onPress={hideModal} style={styles.closeButton}>
+                <View style={styles.iconButtonClose}>
+                  <Icon name="Times" size={13} color={Color.gray[900]} />
+                </View>
+              </TouchableOpacity>
             </View>
           )}
           <SafeAreaView style={styles.contentContainer}>
@@ -164,6 +166,13 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
     zIndex: 1,
+  },
+  iconButtonClose: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    top: 'auto',
+    flex: 1,
   },
   closeButton: {
     width: 24,

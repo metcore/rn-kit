@@ -1880,6 +1880,7 @@ __metadata:
     react-native-screens: ^4.11.1
     react-native-signature-canvas: ^5.0.1
     react-native-svg: ^15.12.0
+    react-native-webview: ^13.15.0
   languageName: unknown
   linkType: soft
 
