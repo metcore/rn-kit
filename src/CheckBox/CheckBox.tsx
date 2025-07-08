@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Pressable, View, Text, StyleSheet } from 'react-native';
-import { Color, Icon } from '@herca/rn-kit'; // Pastikan Icon sudah tersedia
+import { Color, Icon } from '@herca/rn-kit';
+// import type { ColorVariantType } from '../Color/type';
 
 interface CheckBoxProps {
   checked?: boolean;
@@ -8,16 +9,35 @@ interface CheckBoxProps {
   label?: string | React.ReactNode;
   disabled?: boolean;
   renderLabel?: () => React.ReactNode;
+  // color?: ColorVariantType;
 }
 
+// const COLOR_MAP: Record<
+//   ColorVariantType,
+//   {
+//     backgroundColor: ColorValue;
+//     backgroundColorDisabled: ColorValue;
+//   }
+// > = {
+//   primary : {
+//     backgroundColor : Color.primary[1000],
+//     backgroundColorDisabled : Color.primary[100],
+//   },
+//   danger: {
+//     backgroundColor : Color.danger[500],
+//     backgroundColorDisabled : Color.danger[100],
+//   },
+// }
 const CheckBox: React.FC<CheckBoxProps> = ({
   checked = false,
   onChange,
   label,
   disabled = false,
   renderLabel,
+  // color= 'primary'
 }) => {
   const [value, setValue] = useState<boolean>(false);
+  // const _selectedColor = COLOR_MAP[color];
 
   const handlePress = () => {
     const newValue = !value;
