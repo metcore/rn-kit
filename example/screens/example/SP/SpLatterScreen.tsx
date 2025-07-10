@@ -16,7 +16,7 @@ export default function SpLatterScreen() {
 
   return (
     <Container>
-      <PdfView source={require('../../../assets/sample2.pdf')} />
+      <PdfView source={require('../../../assets/sample.pdf')} />
       <Footer>
         <Container style={styles.container}>
           <Alert
