@@ -22,6 +22,8 @@ const Chip: React.FC<ChipProps> = ({
   size = 'medium',
   onRefresh,
   refreshing = false,
+  onEndReached,
+  footer,
 }) => {
   const isHorizontal = direction === 'horizontal';
 
@@ -85,6 +87,7 @@ const Chip: React.FC<ChipProps> = ({
       )}
       keyExtractor={(item) => String(item.value)}
       horizontal={isHorizontal}
+      onEndReached={onEndReached}
       onRefresh={onRefresh}
       refreshing={refreshing}
       scrollEnabled={scrollable}
@@ -97,9 +100,8 @@ const Chip: React.FC<ChipProps> = ({
           alignItems: block ? 'stretch' : 'flex-start',
         },
       ]}
-      columnWrapperStyle={
-        numColumns > 1 ? { gap: 8, flexWrap: 'wrap' } : undefined
-      }
+      columnWrapperStyle={numColumns > 1 ? styles.wrapperStyle : undefined}
+      ListFooterComponent={footer}
     />
   );
 };
@@ -107,6 +109,10 @@ const Chip: React.FC<ChipProps> = ({
 const styles = StyleSheet.create({
   container: {
     gap: 8,
+  },
+  wrapperStyle: {
+    gap: 8,
+    flexWrap: 'wrap',
   },
   chip: {
     borderRadius: 8,

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
+import LayoutWithFooter from './LayoutWithFooter';
 
 interface FooterContextType {
   footer: ReactNode | null;
@@ -12,7 +13,7 @@ export const FooterProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <FooterContext.Provider value={{ footer, setFooter }}>
-      {children}
+      <LayoutWithFooter>{children}</LayoutWithFooter>
     </FooterContext.Provider>
   );
 };

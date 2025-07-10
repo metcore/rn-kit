@@ -26,5 +26,7 @@ export interface SelectProps {
   delaySearch?: number;
   height?: BottomSheetHeighProps;
   onRefresh?: () => void;
+  onEndReached?: () => void;
   refreshing?: boolean;
+  footer?: React.ReactElement;
 }

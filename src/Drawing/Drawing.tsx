@@ -8,7 +8,7 @@ import Button from '../Button/Button';
 import Color from '../Color/Color';
 
 interface DrawingProps {
-  onChange?: (value?: string | undefined) => void;
+  onChange?: (value?: string | undefined | null) => void;
   onStart?: () => void;
   onEnd?: () => void;
 }
@@ -36,6 +36,7 @@ const Drawing = ({ onChange, onEnd, onStart }: DrawingProps) => {
   };
 
   const handleEnd = () => {
+    refreshSignature();
     if (onEnd) {
       onEnd();
     }

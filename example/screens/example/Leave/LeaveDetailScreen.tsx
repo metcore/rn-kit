@@ -17,7 +17,13 @@ import {
   Typography,
 } from '@herca/rn-kit';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Attachment from '../../../components/Attachment';
 import { useNavigation } from '@react-navigation/native';
 import { type NavigationProps } from '../../../type/navigation';
@@ -27,7 +33,7 @@ export default function LeaveDetailScreen() {
   const [isOpenModalStatus, setIosOpenModalStatus] = useState(false);
 
   return (
-    <View>
+    <SafeAreaView>
       <ScrollView>
         <Container style={styles.containerGap}>
           <Card
@@ -389,7 +395,7 @@ export default function LeaveDetailScreen() {
           </View>
         </Container>
       </Footer>
-    </View>
+    </SafeAreaView>
   );
 }
 

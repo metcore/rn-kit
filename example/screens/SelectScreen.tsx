@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import {
   Badge,
   Button,
@@ -79,7 +79,7 @@ export default function SelectScreen() {
   const [isOpenSelectCustom, setIsOpenSelectCustom] = useState<boolean>(false);
   const [loadingSelect, setLoadingSelect] = useState<boolean>(true);
   const [submitValue, setSubmitValue] = useState<ChipSelectedProps>();
-
+  const [onEndReached, setOnEndReach] = useState<boolean>(false);
   const handleSubmitSelectCustom = (val: ChipSelectedProps) => {
     setSubmitValue(val);
     setIsOpenSelectCustom(false);
@@ -115,6 +115,14 @@ export default function SelectScreen() {
       setLoadingSelect(false);
     }, 1000);
   };
+
+  const handleOnEndReach = () => {
+    setOnEndReach(true);
+    setTimeout(() => {
+      setOnEndReach(false);
+    }, 1500);
+  };
+
   return (
     <View>
       <Container style={styles.containerButton}>
@@ -138,9 +146,11 @@ export default function SelectScreen() {
         loading={loadingSelect}
         onSearch={(_val) => handleOnPressSelectDefault()}
         onSubmit={handleSubmitSelectCustom}
+        onEndReached={handleOnEndReach}
         delaySearch={500}
         onRefresh={handleOnRefresh}
         refreshing={loadingSelect}
+        footer={onEndReached ? <ActivityIndicator /> : <></>}
       />
       <Select
         isOpen={isOpenSelectCustom}
