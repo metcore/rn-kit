@@ -1,37 +1,48 @@
 import React from 'react';
 import { type ViewStyle } from 'react-native';
-import User from './icons/User';
-import Eye from './icons/Eye';
-import XCircle from './icons/XCircle';
-import ArrowRight from './icons/ArrowRight';
-import Document from './icons/Document';
-import Calendar from './icons/Calendar';
-import ExlamationMark from './icons/ExlmationMark';
-import Downnload from './icons/Download';
-import StickyNote from './icons/StickyNote';
-import Pdf from './icons/Pdf';
-import RadioButton from './icons/RadioButton';
-import ArrowBackAlt from './icons/ArrowBackAlt';
-import ArrowForwardAlt from './icons/ArrowForwardAlt';
-import Check from './icons/Check';
-import Filter from './icons/Filter';
 import AirPlane from './icons/AirPlane';
-import Camera from './icons/Camera';
-import Image from './icons/Image';
-import type { IconNameProps, IconProps } from './type';
-import Times from './icons/Times';
+import ArrowBackAlt from './icons/ArrowBackAlt';
 import ArrowDown from './icons/ArrowDown';
-import ArrowUp from './icons/ArrowUp';
-import Search from './icons/Search';
-import Home from './icons/Home';
+import ArrowForwardAlt from './icons/ArrowForwardAlt';
 import ArrowLeft from './icons/ArrowLeft';
+import ArrowRight from './icons/ArrowRight';
+import ArrowUp from './icons/ArrowUp';
+import Bell from './icons/Bell';
+import BookmarkUser from './icons/BookmarkUser';
+import Calendar from './icons/Calendar';
+import Camera from './icons/Camera';
+import Check from './icons/Check';
+import Document from './icons/Document';
+import Downnload from './icons/Download';
+import ExlamationMark from './icons/ExlmationMark';
+import Eye from './icons/Eye';
 import EyeOpen from './icons/EyeOpen';
+import FileListCheck from './icons/FileListCheck';
+import FileText from './icons/FileText';
+import Filter from './icons/Filter';
+import FolderClock from './icons/FolderClock';
+import HomeFill from './icons/HomeFill';
+import HomeOutline from './icons/HomeOutline';
+import Image from './icons/Image';
+import Pdf from './icons/Pdf';
+import Plus from './icons/Plus';
+import RadioButton from './icons/RadioButton';
+import Search from './icons/Search';
+import StickyNote from './icons/StickyNote';
+import Times from './icons/Times';
+import User from './icons/User';
+import UserCircleFill from './icons/UserCircleFill';
+import UserCircleOutline from './icons/UserCircleOutline';
+import XCircle from './icons/XCircle';
+import type { IconNameProps, IconProps } from './type';
+import ClipBoardListCheck from './icons/ClipBoardListCheck';
+import ClipBoardList from './icons/ClipBoardList';
+import Megaphone from './icons/Megaphone';
 
 const icons: Record<
   IconNameProps,
   React.FC<{ size: number; color: string; style?: ViewStyle }>
 > = {
-  'Home': Home,
   'Search': Search,
   'User': User,
   'Eye': Eye,
@@ -56,6 +67,19 @@ const icons: Record<
   'Times': Times,
   'ArrowDown': ArrowDown,
   'ArrowUp': ArrowUp,
+  'Plus': Plus,
+  'Bell': Bell,
+  'file-list-check': FileListCheck,
+  'file-text': FileText,
+  'bookmark-user': BookmarkUser,
+  'folder-clock': FolderClock,
+  'home-fill': HomeFill,
+  'home-outline': HomeOutline,
+  'user-circle-outline': UserCircleOutline,
+  'user-circle-fill': UserCircleFill,
+  'clipboard-list-check': ClipBoardListCheck,
+  'clipboard-list': ClipBoardList,
+  'Megaphone': Megaphone,
 };
 
 const Icon: React.FC<IconProps> = ({

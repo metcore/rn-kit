@@ -3,7 +3,6 @@
 import { type ViewStyle } from 'react-native';
 
 export type IconNameProps =
-  | 'Home'
   | 'Search'
   | 'User'
   | 'Eye'
@@ -27,7 +26,20 @@ export type IconNameProps =
   | 'AirPlane'
   | 'Camera'
   | 'Image'
-  | 'Times';
+  | 'Times'
+  | 'Plus'
+  | 'Bell'
+  | 'file-list-check'
+  | 'file-text'
+  | 'bookmark-user'
+  | 'folder-clock'
+  | 'home-fill'
+  | 'home-outline'
+  | 'user-circle-outline'
+  | 'user-circle-fill'
+  | 'clipboard-list-check'
+  | 'clipboard-list'
+  | 'Megaphone';
 
 export interface IconProps {
   name: IconNameProps;
