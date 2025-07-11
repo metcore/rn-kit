@@ -7,7 +7,7 @@ interface Props {
   style?: object;
 }
 
-const ExlamationMark: React.FC<Props> = ({
+const ExclamationMark: React.FC<Props> = ({
   size = 24,
   color = '#909090',
   style,
@@ -20,4 +20,4 @@ const ExlamationMark: React.FC<Props> = ({
   </Svg>
 );
 
-export default ExlamationMark;
+export default ExclamationMark;

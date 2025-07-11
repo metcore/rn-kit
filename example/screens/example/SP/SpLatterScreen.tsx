@@ -9,12 +9,14 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NavigationProps } from '../../../type/navigation';
 import { StyleSheet } from 'react-native';
+import PdfView from '../../../../src/FileView/PdfView';
 
 export default function SpLatterScreen() {
   const navigation = useNavigation<NavigationProps>();
 
   return (
     <Container>
+      <PdfView source={require('../../../assets/sample.pdf')} />
       <Footer>
         <Container style={styles.container}>
           <Alert

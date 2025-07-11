@@ -81,7 +81,7 @@ const Toast = ({
   duration = 3000,
   onHide,
   color = 'default',
-  icon = 'ExlamationMark',
+  icon = 'ExclamationMark',
   onClear,
 }: ToastProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;

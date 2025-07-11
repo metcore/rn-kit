@@ -4,7 +4,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { type SelectProps } from './type';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
@@ -27,24 +27,31 @@ export default function Select({
   height,
   onRefresh,
   refreshing,
+  footer,
+  onEndReached,
 }: SelectProps) {
-  const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
+  // const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
   const { show } = useToast();
-  useEffect(() => {
-    setIsOpenSelect(isOpen);
-  }, [isOpen]);
+  // useEffect(() => {
+  //   setIsOpenSelect(isOpen);
+  // }, [isOpen]);
 
-  const handleOnCloseBottom = (val: boolean) => {
-    onClose?.(val);
-  };
+  const handleOnCloseBottom = useCallback(
+    (val: boolean) => {
+      if (onClose) {
+        onClose?.(val);
+      }
+    },
+    [onClose]
+  );
 
   const handleOnPresSubmitSelect = (): boolean => {
     if (required && (!selected || selected.length === 0)) {
       show('Please fill a item');
       return false;
     }
-    setIsOpenSelect(false);
+    // setIsOpenSelect(false);
     onSubmit?.(selected ? selected : []);
     return true;
   };
@@ -56,8 +63,8 @@ export default function Select({
   };
   return (
     <BottomSheet
-      onClose={handleOnCloseBottom}
-      isOpen={isOpenSelect}
+      onClose={(val: boolean) => handleOnCloseBottom(val)}
+      isOpen={isOpen}
       height={height}
       footer={
         <Button
@@ -91,12 +98,14 @@ export default function Select({
             selected={selected}
             multiple={multiple}
             onSelect={setSelected}
+            onEndReached={onEndReached}
             color="primary"
             size="large"
             renderItem={renderItem}
             onRefresh={onRefresh}
             block
             refreshing={refreshing}
+            footer={footer}
           />
         )}
       </View>

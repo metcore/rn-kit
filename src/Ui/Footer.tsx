@@ -1,24 +1,29 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import type { ViewStyle } from 'react-native';
-import Color from '../Color/Color';
+// Footer.tsx
+import React, { useMemo } from 'react';
+import { SafeAreaView, StyleSheet, type ViewStyle } from 'react-native';
 import { useFooter } from '../Provider/Provider';
+import Color from '../Color/Color';
+import { useOptionalFocusEffect } from '../hooks/useOptionalFocusEffect';
 
 interface FooterProps {
   children: React.ReactNode;
   style?: ViewStyle;
 }
+
 const Footer: React.FC<FooterProps> = ({ children, style }) => {
   const { setFooter } = useFooter();
 
-  useEffect(() => {
-    const footerElement = (
+  const footerElement = useMemo(
+    () => (
       <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
-    );
-    setFooter(footerElement);
+    ),
+    [children, style]
+  );
 
+  useOptionalFocusEffect(() => {
+    setFooter(footerElement);
     return () => setFooter(null);
-  }, [children, style, setFooter]);
+  });
 
   return null;
 };

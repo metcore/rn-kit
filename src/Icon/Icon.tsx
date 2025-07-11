@@ -1,6 +1,16 @@
 import React from 'react';
 import { type ViewStyle } from 'react-native';
 import AirPlane from './icons/AirPlane';
+import User from './icons/User';
+import Eye from './icons/Eye';
+import XCircle from './icons/XCircle';
+import ArrowRight from './icons/ArrowRight';
+import Document from './icons/Document';
+import Calendar from './icons/Calendar';
+import Download from './icons/Download';
+import StickyNote from './icons/StickyNote';
+import Pdf from './icons/Pdf';
+import RadioButton from './icons/RadioButton';
 import ArrowBackAlt from './icons/ArrowBackAlt';
 import ArrowDown from './icons/ArrowDown';
 import ArrowForwardAlt from './icons/ArrowForwardAlt';
@@ -38,6 +48,9 @@ import type { IconNameProps, IconProps } from './type';
 import ClipBoardListCheck from './icons/ClipBoardListCheck';
 import ClipBoardList from './icons/ClipBoardList';
 import Megaphone from './icons/Megaphone';
+import ArrowLeft from './icons/ArrowLeft';
+import EyeOpen from './icons/EyeOpen';
+import ExclamationMark from './icons/ExclamationMark';
 
 const icons: Record<
   IconNameProps,
@@ -51,8 +64,8 @@ const icons: Record<
   'ArrowLeft': ArrowLeft,
   'Document': Document,
   'Calendar': Calendar,
-  'ExlamationMark': ExlamationMark,
-  'Download': Downnload,
+  'ExclamationMark': ExclamationMark,
+  'Download': Download,
   'x-circle': XCircle,
   'StickyNote': StickyNote,
   'RadioButton': RadioButton,
