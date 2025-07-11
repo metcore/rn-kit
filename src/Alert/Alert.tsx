@@ -67,7 +67,7 @@ const COLORS: Record<
 };
 
 const Alert: React.FC<AlertProps> = ({
-  icon = 'ExlamationMark',
+  icon = 'ExclamationMark',
   title,
   message,
   color = 'primary',
@@ -84,7 +84,7 @@ const Alert: React.FC<AlertProps> = ({
       ]}
     >
       <View style={{ marginRight: 10 }}>
-        <Icon name={icon || 'ExlamationMark'} color={fontColor} />
+        <Icon name={icon || 'ExclamationMark'} color={fontColor} />
       </View>
       <View style={styles.textContainer}>
         {title && (

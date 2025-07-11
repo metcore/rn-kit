@@ -76,7 +76,7 @@ export default function SpDetailScreen() {
             </View>
 
             <Alert
-              icon="ExlamationMark"
+              icon="ExclamationMark"
               message="Karyawan tidak dapat melakukan absensi dan membuat surat pengajuan, sebelum menyelesaikan surat peringatan ini"
               color="warning"
             />
@@ -127,7 +127,7 @@ export default function SpDetailScreen() {
               </View>
             </Card>
             <Alert
-              icon="ExlamationMark"
+              icon="ExclamationMark"
               message="Sp ini dapat didiskusikan dengna pembuat SP"
               color="info"
             />

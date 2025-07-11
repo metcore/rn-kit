@@ -60,7 +60,7 @@ Menyediakan context global toast. Harus membungkus komponen root Anda.
 | Option     | Type               | Default            | Description                        |
 | ---------- | ------------------ | ------------------ | ---------------------------------- |
 | `color`    | `ColorVariantType` | `'default'`        | Warna latar belakang dan teks.     |
-| `icon`     | `IconNameProps`    | `'ExlamationMark'` | Ikon di samping pesan.             |
+| `icon`     | `IconNameProps`    | `'ExclamationMark'` | Ikon di samping pesan.             |
 | `duration` | `number` (ms)      | `3000`             | Waktu tampil Toast sebelum hilang. |
 
 ## ❗ Error Handling
