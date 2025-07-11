@@ -163,6 +163,7 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [Devider](./src/Ui/README_DEVIDER.md)
 - [Drawing](./src/Drawing/README.md)
 - [Footer](./src/Ui/README_FOOTER.md)
+- [Icon](./src/Icon/README.md)
 - [List](./src/List/README.md)
 - [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)
