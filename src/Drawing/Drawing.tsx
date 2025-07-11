@@ -8,24 +8,27 @@ import Button from '../Button/Button';
 import Color from '../Color/Color';
 
 interface DrawingProps {
-  onDraw?: (value?: string | undefined) => void;
+  onChange?: (value?: string | undefined | null) => void;
+  onStart?: () => void;
+  onEnd?: () => void;
 }
 
-const Drawing = ({ onDraw }: DrawingProps) => {
+const Drawing = ({ onChange, onEnd, onStart }: DrawingProps) => {
   const ref = useRef<SignatureViewRef | null>(null);
 
   const handleSignature = (signature: string) => {
-    if (signature && onDraw) {
-      onDraw(signature);
+    if (signature && onChange) {
+      onChange(signature);
     }
   };
 
-  const handleEmpty = () => {
-    console.log('Signature is empty');
-  };
+  const refreshSignature = () =>
+    requestAnimationFrame(() => ref.current?.readSignature());
 
-  const handleClear = () => {
-    console.log('Signature cleared');
+  const handleEmpty = () => {
+    if (onChange) {
+      onChange(null);
+    }
   };
 
   const handleError = (error: Error) => {
@@ -33,21 +36,43 @@ const Drawing = ({ onDraw }: DrawingProps) => {
   };
 
   const handleEnd = () => {
-    ref.current?.readSignature();
+    refreshSignature();
+    if (onEnd) {
+      onEnd();
+    }
   };
 
-  const undo = () => ref.current?.undo();
-  const redo = () => ref.current?.redo();
-  const clear = () => ref.current?.clearSignature();
+  const handleBegin = () => {
+    if (onStart) {
+      onStart();
+    }
+  };
+
+  const undo = () => {
+    ref.current?.undo();
+    refreshSignature();
+  };
+
+  const redo = () => {
+    ref.current?.redo();
+    refreshSignature();
+  };
+
+  const clear = () => {
+    ref.current?.clearSignature();
+    if (onChange) {
+      onChange(null);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <SignatureCanvas
         ref={ref}
         onEnd={handleEnd}
+        onBegin={handleBegin}
         onOK={handleSignature}
         onEmpty={handleEmpty}
-        onClear={handleClear}
         onError={handleError}
         descriptionText=" "
         webStyle={`

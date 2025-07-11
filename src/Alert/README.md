@@ -15,7 +15,7 @@ Komponen `Alert` digunakan untuk menampilkan pesan notifikasi dengan ikon, judul
 
 | Prop           | Tipe                                                                 | Default            | Deskripsi                                                                 |
 |----------------|----------------------------------------------------------------------|---------------------|---------------------------------------------------------------------------|
-| `icon`         | `IconNameProps`                                                      | `'ExlamationMark'`  | Nama ikon dari komponen `Icon`                                           |
+| `icon`         | `IconNameProps`                                                      | `'ExclamationMark'`  | Nama ikon dari komponen `Icon`                                           |
 | `title`        | `string`                                                             | `undefined`         | Judul alert                                                               |
 | `message`      | `string`                                                             | `undefined`         | Pesan tambahan                                                            |
 | `color`        | `'success' \| 'info' \| 'warning' \| 'danger' \| 'primary' \| 'orange' \| 'purple'` | `'primary'` | Warna tema alert                                                         |

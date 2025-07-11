@@ -12,7 +12,7 @@ export type IconNameProps =
   | 'ArrowLeft'
   | 'Document'
   | 'Calendar'
-  | 'ExlamationMark'
+  | 'ExclamationMark'
   | 'Download'
   | 'x-circle'
   | 'StickyNote'

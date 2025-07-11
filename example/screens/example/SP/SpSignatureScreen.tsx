@@ -25,7 +25,9 @@ export default function SpSignatureScreen() {
   const handleConfirm = () => {
     setHasSuccess(true);
     setIsOpenConfirmSubmit(false);
-    setIsOpenModalSuccess(true);
+    setTimeout(() => {
+      setIsOpenModalSuccess(true);
+    }, 500);
   };
   useEffect(() => {
     if (!hasSuccess) {

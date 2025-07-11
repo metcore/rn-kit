@@ -6,8 +6,7 @@ import XCircle from './icons/XCircle';
 import ArrowRight from './icons/ArrowRight';
 import Document from './icons/Document';
 import Calendar from './icons/Calendar';
-import ExlamationMark from './icons/ExlmationMark';
-import Downnload from './icons/Download';
+import Download from './icons/Download';
 import StickyNote from './icons/StickyNote';
 import Pdf from './icons/Pdf';
 import RadioButton from './icons/RadioButton';
@@ -26,6 +25,7 @@ import Search from './icons/Search';
 import Home from './icons/Home';
 import ArrowLeft from './icons/ArrowLeft';
 import EyeOpen from './icons/EyeOpen';
+import ExclamationMark from './icons/ExclamationMark';
 
 const icons: Record<
   IconNameProps,
@@ -40,8 +40,8 @@ const icons: Record<
   'ArrowLeft': ArrowLeft,
   'Document': Document,
   'Calendar': Calendar,
-  'ExlamationMark': ExlamationMark,
-  'Download': Downnload,
+  'ExclamationMark': ExclamationMark,
+  'Download': Download,
   'x-circle': XCircle,
   'StickyNote': StickyNote,
   'RadioButton': RadioButton,

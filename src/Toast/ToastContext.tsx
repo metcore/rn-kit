@@ -19,7 +19,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState<string>('');
   const [options, setOptions] = useState<ToastOptions>({
-    icon: 'ExlamationMark',
+    icon: 'ExclamationMark',
   });
 
   const show = (msg: string, opts?: ToastOptions) => {

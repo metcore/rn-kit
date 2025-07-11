@@ -148,5 +148,7 @@ export interface ChipProps {
   size?: ChipSizeProps;
   renderItem?: ChipRenderItemFn;
   onRefresh?: () => void;
+  onEndReached?: () => void;
   refreshing?: boolean;
+  footer?: React.ReactElement;
 }
