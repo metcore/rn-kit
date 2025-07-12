@@ -47,6 +47,7 @@ type RootStackParamList = {
   TimeLine: undefined;
   Tab: undefined;
   Step: undefined;
+  Icons: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
