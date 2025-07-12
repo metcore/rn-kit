@@ -28,6 +28,8 @@ Komponen `Select` adalah komponen pemilihan data berbasis bottom sheet dengan du
 | `delaySearch`| `number`                                        | `300`         | Delay pencarian dalam milidetik |
 | `height`     | `BottomSheetHeighProps`                         | -             | Ukuran tinggi BottomSheet |
 | `onRefresh`  | `() => void`                                    | -             | Callback saat pull-to-refresh dilakukan |
+| `header`     | ReactElement| –              | Jika ingin chip mempunyai header.                          |
+| `footer`     | ReactElement| –              | Jika ingin chip mempunyai footer.                          |
 
 ## 📌 Contoh Penggunaan
 
