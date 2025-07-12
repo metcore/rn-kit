@@ -19,6 +19,8 @@ Komponen `Chip` digunakan untuk menampilkan daftar pilihan seperti tag, filter, 
 | `block`          | `boolean`                                    | `false`        | Jika `true` dan `direction='vertical'`, maka chip akan memenuhi lebar kontainer (full width). |
 | `color`          | `'default' \| 'success' \| 'danger' \| 'primary' \| 'warning' \| 'info' \| 'orange' \| 'purple'` | `'default'` | Warna tema chip.                                                         |
 | `renderItem`     | `(item, isSelected, isDisabled) => ReactNode`| –              | Jika ingin custom tampilan chip secara manual.                          |
+| `header`     | ReactElement| –              | Jika ingin chip mempunyai header.                          |
+| `footer`     | ReactElement| –              | Jika ingin chip mempunyai footer.                          |
 
 ---
 

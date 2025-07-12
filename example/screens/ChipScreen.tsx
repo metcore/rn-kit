@@ -69,6 +69,8 @@ const ChipScreen = () => {
           direction="vertical"
           size="large"
           color="primary"
+          header={<Typography>Ini Header Chip</Typography>}
+          footer={<Typography>Ini Footer Chip</Typography>}
           multiple
           renderItem={(
             item: ChipOptionProps,
