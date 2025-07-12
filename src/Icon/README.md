@@ -71,3 +71,16 @@ export default function App() {
 - Times  
 - User  
 - x-circle  
+- Plus
+- Bell
+- file-list-check
+- file-text
+- bookmark-user
+- folder-clock
+- home-fill
+- home-outline
+- user-circle-outline
+- user-circle-fill
+- clipboard-list-check
+- clipboard-list
+- Megaphone
