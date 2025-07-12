@@ -52,6 +52,27 @@ export default function CardScreen() {
             ever since the 1500s,
           </Typography>
         </Card>
+        <Typography variant="h4" weight="semibold">
+          Border color
+        </Typography>
+        <Card
+          backgroundColor={Color.purple[50]}
+          borderColor={Color.purple[200]}
+          style={{ width: '48%' }}
+        >
+          <Icon
+            name="bookmark-user"
+            size={30}
+            color={Color.purple[500]}
+            style={{ marginBottom: 8 }}
+          />
+          <Typography color={Color.gray[900]} weight="semibold" variant="p3">
+            200 Juta Tiket
+          </Typography>
+          <Typography color={Color.gray[600]} variant="t3">
+            Selesai Dikerjakan
+          </Typography>
+        </Card>
       </Container>
     </View>
   );
@@ -67,6 +88,7 @@ export default function CardScreen() {
 | `style`           | `StyleProp<ViewStyle>`        | ❌     | -       | Gaya tambahan untuk Card (padding, margin, dsb).     |
 | `backgroundImage` | `ImageSourcePropType` (`any`) | ❌     | -       | Gambar latar belakang menggunakan `ImageBackground`. |
 | `backgroundColor` | `string`                      | ❌     | `#fff`  | Warna latar belakang Card.                           |
+| `borderColor`     | `string`                      | ❌     | `#F2F2F2`  | Warna border.                           |
 
 ## Catatan 
 - Saat backgroundImage digunakan, ImageBackground akan membungkus children dan otomatis mengikuti styling dari Card.

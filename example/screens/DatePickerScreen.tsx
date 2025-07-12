@@ -1,5 +1,6 @@
 import {
   Button,
+  Color,
   Container,
   DatePicker,
   Typography,
@@ -7,17 +8,12 @@ import {
 } from '@herca/rn-kit';
 import { useState } from 'react';
 import { View } from 'react-native';
-const formatDate = (date: Date | undefined | null) => {
-  if (!date) return null;
-  const y = date.getFullYear();
-  const m = `${date.getMonth() + 1}`.padStart(2, '0');
-  const d = `${date.getDate()}`.padStart(2, '0');
-  return `${y}-${m}-${d}`;
-};
+import { formatDate } from '../../src/Calendar/Calendar';
 
 export default function DatePickerScreen() {
   const [isOpenDatePickerSingle, setIsOpenDatePickerSingle] = useState(false);
   const [isOpenDatePickerRange, setIsOpenDatePickerRange] = useState(false);
+  const [hintMessage, setHintMessage] = useState<string>('Error');
   const [valueSingle, setValueSingle] = useState<string | null>();
   const [valueRange, setValueRange] = useState<{
     startDate: string | null;
@@ -49,6 +45,14 @@ export default function DatePickerScreen() {
         }}
         onClose={() => setIsOpenDatePickerSingle(false)}
         placholder={'Pilih tanggal'}
+        disabledDays={{
+          0: {
+            backgroundColor: Color.danger[50],
+            textColor: Color.danger[400],
+          },
+          6: true,
+          5: false,
+        }}
       />
 
       <DatePicker
@@ -60,8 +64,23 @@ export default function DatePickerScreen() {
             endDate: formatDate(value.endDate),
           });
         }}
+        disabledDays={{
+          0: {
+            backgroundColor: Color.danger[50],
+            textColor: Color.danger[400],
+          },
+          6: true,
+          5: false,
+        }}
+        onHasError={(_val: boolean) => {
+          setHintMessage(
+            'Tanggal belum dipilih. Harap tentukan periode tanggal sebelum melanjutkan.'
+          );
+        }}
+        hint={hintMessage}
         onClose={() => setIsOpenDatePickerRange(false)}
         placholder={'Pilih tanggal'}
+        required={true}
       />
     </Container>
   );

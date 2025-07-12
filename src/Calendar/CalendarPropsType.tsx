@@ -40,8 +40,10 @@ export type DayNameTuple = [
   string,
 ];
 
+export type CalendarModeType = 'single' | 'range';
+
 export interface CalendarTypes {
-  mode?: 'single' | 'range';
+  mode?: CalendarModeType;
   markedDates?: {
     [date: string]: MarkedDate;
   };
