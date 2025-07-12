@@ -89,6 +89,12 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('Toast')}
             block
           />
+          <Button
+            color="success"
+            title="Icons"
+            onPress={() => navigation.navigate('Icons')}
+            block
+          />
 
           <Typography variant="h3" weight="bold">
             Form Requirment

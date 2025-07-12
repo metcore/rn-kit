@@ -22,16 +22,27 @@ import Times from './icons/Times';
 import ArrowDown from './icons/ArrowDown';
 import ArrowUp from './icons/ArrowUp';
 import Search from './icons/Search';
-import Home from './icons/Home';
 import ArrowLeft from './icons/ArrowLeft';
 import EyeOpen from './icons/EyeOpen';
 import ExclamationMark from './icons/ExclamationMark';
+import FileListCheck from './icons/FileListCheck';
+import FileText from './icons/FileText';
+import FolderClock from './icons/FolderClock';
+import HomeFill from './icons/HomeFill';
+import HomeOutline from './icons/HomeOutline';
+import Plus from './icons/Plus';
+import UserCircleFill from './icons/UserCircleFill';
+import UserCircleOutline from './icons/UserCircleOutline';
+import ClipBoardListCheck from './icons/ClipBoardListCheck';
+import ClipBoardList from './icons/ClipBoardList';
+import Megaphone from './icons/Megaphone';
+import Bell from './icons/Bell';
+import BookmarkUser from './icons/BookmarkUser';
 
 const icons: Record<
   IconNameProps,
   React.FC<{ size: number; color: string; style?: ViewStyle }>
 > = {
-  'Home': Home,
   'Search': Search,
   'User': User,
   'Eye': Eye,
@@ -56,6 +67,19 @@ const icons: Record<
   'Times': Times,
   'ArrowDown': ArrowDown,
   'ArrowUp': ArrowUp,
+  'Plus': Plus,
+  'Bell': Bell,
+  'file-list-check': FileListCheck,
+  'file-text': FileText,
+  'bookmark-user': BookmarkUser,
+  'folder-clock': FolderClock,
+  'home-fill': HomeFill,
+  'home-outline': HomeOutline,
+  'user-circle-outline': UserCircleOutline,
+  'user-circle-fill': UserCircleFill,
+  'clipboard-list-check': ClipBoardListCheck,
+  'clipboard-list': ClipBoardList,
+  'Megaphone': Megaphone,
 };
 
 const Icon: React.FC<IconProps> = ({

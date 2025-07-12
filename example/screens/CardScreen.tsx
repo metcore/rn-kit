@@ -1,9 +1,9 @@
-import { Card, Color, Container, Typography } from '@herca/rn-kit';
-import { View } from 'react-native';
+import { Card, Color, Container, Icon, Typography } from '@herca/rn-kit';
+import { ScrollView } from 'react-native';
 
 export default function CardScreen() {
   return (
-    <View>
+    <ScrollView>
       <Container>
         <Typography variant="h4" weight="semibold">
           Default
@@ -45,7 +45,28 @@ export default function CardScreen() {
             ever since the 1500s,
           </Typography>
         </Card>
+        <Typography variant="h4" weight="semibold">
+          Border color
+        </Typography>
+        <Card
+          backgroundColor={Color.purple[50]}
+          borderColor={Color.purple[200]}
+          style={{ width: '48%' }}
+        >
+          <Icon
+            name="bookmark-user"
+            size={30}
+            color={Color.purple[500]}
+            style={{ marginBottom: 8 }}
+          />
+          <Typography color={Color.gray[900]} weight="semibold" variant="p3">
+            200 Juta Tiket
+          </Typography>
+          <Typography color={Color.gray[600]} variant="t3">
+            Selesai Dikerjakan
+          </Typography>
+        </Card>
       </Container>
-    </View>
+    </ScrollView>
   );
 }

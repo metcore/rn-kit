@@ -13,6 +13,7 @@ interface CardProps {
   style?: StyleProp<ViewStyle>;
   backgroundImage?: any;
   backgroundColor?: string;
+  borderColor?: string;
 }
 
 export default function Card({
@@ -20,6 +21,7 @@ export default function Card({
   style,
   backgroundImage,
   backgroundColor,
+  borderColor = Color.gray['100'],
 }: CardProps) {
   if (backgroundImage) {
     return (
@@ -37,6 +39,7 @@ export default function Card({
       style={[
         styles.container,
         style,
+        typeof borderColor === 'string' && { borderColor },
         typeof backgroundColor === 'string' && { backgroundColor },
       ]}
     >
@@ -48,7 +51,7 @@ export default function Card({
 const sharedCardStyle = {
   borderWidth: 1,
   borderRadius: 8,
-  borderColor: Color.gray['100'],
+  // borderColor: Color.gray['100'],
   padding: 10,
 };
 
