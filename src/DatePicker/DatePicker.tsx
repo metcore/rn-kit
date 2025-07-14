@@ -84,7 +84,7 @@ export default function DatePicker({
 
     if (mode === 'single' && value?.date) {
       updatedMarkDates = {
-        [formatDate(value.date)]: { selected: true },
+        [formatDate(value.date) as string]: { selected: true },
       };
     }
 
@@ -103,11 +103,13 @@ export default function DatePicker({
           textColor = Color.base.white100;
         }
 
-        dates[dateStr] = {
-          selected: true,
-          backgroundColor: backgroundColor,
-          textColor: textColor,
-        };
+        if (dateStr) {
+          dates[dateStr] = {
+            selected: true,
+            backgroundColor: backgroundColor,
+            textColor: textColor,
+          };
+        }
       }
 
       updatedMarkDates = dates;
