@@ -42,11 +42,12 @@ export type DayNameTuple = [
 
 export type CalendarModeType = 'single' | 'range';
 
+export type CalendarMarkDatesType = {
+  [date: string]: MarkedDate;
+};
 export interface CalendarTypes {
   mode?: CalendarModeType;
-  markedDates?: {
-    [date: string]: MarkedDate;
-  };
+  markedDates?: CalendarMarkDatesType;
   minDate?: Date | null;
   maxDate?: Date | null;
   onPress?: (event: GestureResponderEvent) => void;

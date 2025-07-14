@@ -1,13 +1,15 @@
 import { useCallback, useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
-import Calendar from '../Calendar/Calendar';
+import Calendar, { formatDate } from '../Calendar/Calendar';
 import Button from '../Button/Button';
 import Alert from '../Alert/Alert';
 import {
+  type CalendarMarkDatesType,
   type CalendarModeType,
   type DateRangeProps,
 } from '../Calendar/CalendarPropsType';
+import Color from '../Color/Color';
 
 interface DatePickerProps {
   onChange: (selectedDate: DateRangeProps) => void;
@@ -31,53 +33,30 @@ export default function DatePicker({
   onHasError,
   hint,
   mode,
-  // value,
+  value,
   ...calendarProps
 }: DatePickerProps) {
   const [errorValidate, setErrorValidate] = useState<boolean>(false);
-  const [markDates, setMarkDates] = useState();
-  const [valueOnChange, setValueOnChange] = useState<DateRangeProps>({
+  const [markDates, setMarkDates] = useState<CalendarMarkDatesType>();
+  const [valueDatepicker, setValueDatepicker] = useState<DateRangeProps>({
     startDate: null,
     endDate: null,
     date: null,
   });
-  // const [valueSelected, setValueSelected] = useState<DateRangeProps>({
-  //   startDate: null,
-  //   endDate: null,
-  //   date: null,
-  // });
 
   const handleOnChangeCalendar = useCallback((value: DateRangeProps) => {
     setMarkDates({});
-    setValueOnChange(value);
+    setValueDatepicker(value);
     setErrorValidate(false);
   }, []);
 
-  // const setDefaultValue = () => {
-  //   if (mode === 'single' && valueOnChange.date) {
-  //     setMarkDates({
-  //       [formatDate(valueOnChange.date)]: { selected: true },
-  //     });
-  //   } else if (
-  //     (mode === 'range' || mode === 'multiple') &&
-  //     valueOnChange.startDate &&
-  //     valueOnChange.endDate
-  //   ) {
-  //     const start = new Date(valueOnChange.startDate);
-  //     const end = new Date(valueOnChange.endDate);
-  //     const marks: Record<string, any> = {};
-  //     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-  //       const key = formatDate(new Date(d));
-  //       marks[key] = { selected: true };
-  //     }
-  //     setMarkDates(marks);
-  //   }
-  // };
-
   const handleOnPressSubmitButton = useCallback(() => {
-    const { startDate, endDate, date } = valueOnChange;
+    const { startDate, endDate, date } = valueDatepicker;
+
     const isEmpty = !startDate && !endDate && !date;
+
     const isRangeMode = mode === 'range';
+
     const isInvalidRange = isRangeMode && (!startDate || !endDate);
 
     if ((required && isEmpty) || isInvalidRange) {
@@ -86,11 +65,9 @@ export default function DatePicker({
       return;
     }
 
-    onChange?.(valueOnChange);
+    onChange?.(valueDatepicker);
     onClose?.();
-    // setDefaultValue();
-    // setValueSelected(valueOnChange);
-  }, [required, mode, valueOnChange, onChange, onClose, onHasError]);
+  }, [required, mode, valueDatepicker, onChange, onClose, onHasError]);
 
   const handleOnPressCancelButton = useCallback(() => {
     onClose?.();
@@ -100,9 +77,51 @@ export default function DatePicker({
     setErrorValidate(hasError);
   }, [hasError]);
 
-  // useEffect(() => {
-  //   setDefaultValue();
-  // }, [isOpen, setDefaultValue, valueSelected]);
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let updatedMarkDates: CalendarMarkDatesType = {};
+
+    if (mode === 'single' && value?.date) {
+      updatedMarkDates = {
+        [formatDate(value.date)]: { selected: true },
+      };
+    }
+
+    if (mode === 'range' && value?.startDate && value?.endDate) {
+      const start = new Date(value.startDate);
+      const end = new Date(value.endDate);
+      const dates: CalendarMarkDatesType = {};
+
+      for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+        const dateStr = formatDate(dt);
+        let backgroundColor = Color.primary[50];
+        let textColor = Color.gray[600];
+
+        if (dateStr === formatDate(start) || dateStr === formatDate(end)) {
+          backgroundColor = Color.primary[1000];
+          textColor = Color.base.white100;
+        }
+
+        dates[dateStr] = {
+          selected: true,
+          backgroundColor: backgroundColor,
+          textColor: textColor,
+        };
+      }
+
+      updatedMarkDates = dates;
+    }
+
+    setMarkDates(updatedMarkDates);
+    setValueDatepicker(
+      value || {
+        startDate: null,
+        endDate: null,
+        date: null,
+      }
+    );
+  }, [isOpen, value, mode]);
 
   return (
     <View>

@@ -150,6 +150,6 @@ export interface ChipProps {
   onRefresh?: () => void;
   onEndReached?: () => void;
   refreshing?: boolean;
-  footer?: React.ReactNode | (() => React.ReactNode);
-  header?: React.ReactNode | (() => React.ReactNode);
+  footer?: React.ComponentType<any> | React.ReactElement | null | undefined;
+  header?: React.ComponentType<any> | React.ReactElement | null | undefined;
 }

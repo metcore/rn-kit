@@ -8,16 +8,16 @@ import {
 } from '@herca/rn-kit';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { formatDate } from '../../src/Calendar/Calendar';
+import type { DateProps } from '../../src/Calendar/CalendarPropsType';
 
 export default function DatePickerScreen() {
   const [isOpenDatePickerSingle, setIsOpenDatePickerSingle] = useState(false);
   const [isOpenDatePickerRange, setIsOpenDatePickerRange] = useState(false);
   const [hintMessage, setHintMessage] = useState<string>('Error');
-  const [valueSingle, setValueSingle] = useState<string | null>();
+  const [valueSingle, setValueSingle] = useState<DateProps>();
   const [valueRange, setValueRange] = useState<{
-    startDate: string | null;
-    endDate: string | null;
+    startDate: DateProps;
+    endDate: DateProps;
   }>();
   return (
     <Container>
@@ -27,24 +27,26 @@ export default function DatePickerScreen() {
           color="primary"
           onPress={() => setIsOpenDatePickerSingle(true)}
         />
-        <Typography>Value selected :{valueSingle}</Typography>
+        <Typography>Value selected :{valueSingle?.toString()}</Typography>
         <Button
           title="Open Date Picker Range"
           color="primary"
           onPress={() => setIsOpenDatePickerRange(true)}
         />
         <Typography>
-          Value selected : {valueRange?.startDate} - {valueRange?.endDate}
+          Value selected : {valueRange?.startDate?.toString()}-
+          {valueRange?.endDate?.toString()}
         </Typography>
       </View>
       <DatePicker
         mode={'single'}
         isOpen={isOpenDatePickerSingle}
         onChange={(value: DateRangeProps) => {
-          setValueSingle(formatDate(value.date));
+          setValueSingle(value.date);
         }}
         onClose={() => setIsOpenDatePickerSingle(false)}
         placholder={'Pilih tanggal'}
+        value={{ date: valueSingle }}
         disabledDays={{
           0: {
             backgroundColor: Color.danger[50],
@@ -60,8 +62,8 @@ export default function DatePickerScreen() {
         isOpen={isOpenDatePickerRange}
         onChange={(value: DateRangeProps) => {
           setValueRange({
-            startDate: formatDate(value.startDate),
-            endDate: formatDate(value.endDate),
+            startDate: value.startDate,
+            endDate: value.endDate,
           });
         }}
         disabledDays={{
@@ -78,6 +80,10 @@ export default function DatePickerScreen() {
           );
         }}
         hint={hintMessage}
+        value={{
+          startDate: valueRange?.startDate,
+          endDate: valueRange?.endDate,
+        }}
         onClose={() => setIsOpenDatePickerRange(false)}
         placholder={'Pilih tanggal'}
         required={true}
