@@ -113,6 +113,12 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
+            title="Counter Button"
+            onPress={() => navigation.navigate('CounterButton')}
+            block
+          />
+          <Button
+            color="success"
             title="Input"
             onPress={() => navigation.navigate('Input')}
             block

@@ -153,6 +153,7 @@ export default function BottomSheetScreen() {
             label="Email Customer"
             placeholder="Masukan email"
             hint={hasError ? 'Masukan email' : ''}
+            autoFocus={true}
             onChangeText={(val) => {
               setValue(val);
               setHasError(false);

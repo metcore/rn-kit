@@ -40,6 +40,7 @@ const icons = [
   'clipboard-list-check',
   'clipboard-list',
   'Megaphone',
+  'Minus',
 ];
 
 export default function IconScreen() {
