@@ -4,6 +4,7 @@ import {
   Center,
   Color,
   Container,
+  Input,
   Typography,
 } from '@herca/rn-kit';
 import { useState } from 'react';
@@ -16,6 +17,9 @@ export default function BottomSheetScreen() {
     useState(false);
   const [isOpenBottomSheetFull, setIsOpenBottomSheetFull] = useState(false);
   const [isOpenBottomSheetFooter, setIsOpenBottomSheetFooter] = useState(false);
+  const [isOpenBottomSheetInput, setIsOpenBottomSheetInput] = useState(false);
+  const [value, setValue] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
 
   return (
     <Container>
@@ -127,6 +131,37 @@ export default function BottomSheetScreen() {
         </ScrollView>
       </BottomSheet>
 
+      <BottomSheet
+        isOpen={isOpenBottomSheetInput}
+        onClose={() => setIsOpenBottomSheetInput(false)}
+        footer={
+          <Button
+            title="click here"
+            color="primary"
+            onPress={() => {
+              if (!value) {
+                setHasError(true);
+              } else {
+                setIsOpenBottomSheetInput(false);
+              }
+            }}
+          />
+        }
+      >
+        <View>
+          <Input
+            label="Email Customer"
+            placeholder="Masukan email"
+            hint={hasError ? 'Masukan email' : ''}
+            onChangeText={(val) => {
+              setValue(val);
+              setHasError(false);
+            }}
+            hasError={hasError}
+          />
+        </View>
+      </BottomSheet>
+
       {/* Tombol Aksi */}
       <View style={{ gap: 10, marginTop: 20 }}>
         <Button
@@ -148,6 +183,11 @@ export default function BottomSheetScreen() {
           title="Open Bottom With Footer"
           color="primary"
           onPress={() => setIsOpenBottomSheetFooter(true)}
+        />
+        <Button
+          title="Open Bottom Input"
+          color="primary"
+          onPress={() => setIsOpenBottomSheetInput(true)}
         />
       </View>
     </Container>
