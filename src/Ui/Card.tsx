@@ -67,7 +67,4 @@ const styles = StyleSheet.create({
   imageStyle: {
     borderRadius: 8,
   },
-  inner: {
-    padding: 10, // tetap kasih padding isi
-  },
 });
