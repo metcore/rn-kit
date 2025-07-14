@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, TextInput } from 'react-native';
 import Color from '../Color/Color';
 import Icon from '../Icon';
-import Typography from '../Typography/Typography';
 import type { CounterButtonType } from './type';
+import { fontSizeMap } from '../Typography/type';
 
 export default function CounterButton({
   variant = 'default',
@@ -11,35 +11,60 @@ export default function CounterButton({
   value = 0,
   min,
   max,
+  disabledDecrease = false,
+  disabledIncrease = false,
 }: CounterButtonType) {
   const [count, setCount] = useState<number>(value);
+  const [inputValue, setInputValue] = useState<string>(String(value));
 
   const handlePressButton = (type: 'decrease' | 'increase') => {
     let tempValue = count;
 
     if (type === 'decrease') {
-      if (min === undefined || tempValue > min) {
+      if ((min === undefined || tempValue > min) && !disabledDecrease) {
         tempValue = count - 1;
       }
     }
 
     if (type === 'increase') {
-      if (max === undefined || tempValue < max) {
+      if ((max === undefined || tempValue < max) && !disabledIncrease) {
         tempValue = count + 1;
       }
     }
 
     if (tempValue !== count) {
       setCount(tempValue);
+      setInputValue(String(tempValue));
       onChange?.(tempValue);
     }
   };
 
+  const handleInputChange = (text: string) => {
+    const numeric = text.replace(/[^0-9]/g, '');
+    setInputValue(numeric);
+    const parsed = parseInt(numeric, 10);
+    if (!isNaN(parsed)) {
+      let newValue = parsed;
+      if (min !== undefined && newValue < min) newValue = min;
+      if (max !== undefined && newValue > max) newValue = max;
+      setCount(newValue);
+      onChange?.(newValue);
+    }
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (value !== count) {
       setCount(value);
+      setInputValue(String(value));
     }
-  }, [value, count]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const isDecreaseDisabled =
+    disabledDecrease || (min !== undefined && count <= min);
+  const isIncreaseDisabled =
+    disabledIncrease || (max !== undefined && count >= max);
 
   return (
     <View
@@ -51,28 +76,58 @@ export default function CounterButton({
       <Pressable
         style={[
           variant === 'default' ? styles.buttonDefault : styles.buttonColor,
+          isDecreaseDisabled && variant === 'color'
+            ? styles.buttonColorDisabled
+            : {},
         ]}
+        disabled={isDecreaseDisabled}
         onPress={() => handlePressButton('decrease')}
       >
         <Icon
           name="Minus"
           color={
-            variant == 'default' ? Color.primary[1000] : Color.base.white100
+            isDecreaseDisabled
+              ? variant === 'color'
+                ? Color.gray[200]
+                : Color.gray[500]
+              : variant === 'default'
+                ? Color.primary[1000]
+                : Color.base.white100
           }
           size={10}
         />
       </Pressable>
-      <Typography variant="t3">{count}</Typography>
+
+      <TextInput
+        style={[
+          styles.input,
+          { fontSize: fontSizeMap['t3'], color: Color.gray[900] },
+        ]}
+        keyboardType="numeric"
+        value={inputValue}
+        onChangeText={handleInputChange}
+      />
+
       <Pressable
         style={[
           variant === 'default' ? styles.buttonDefault : styles.buttonColor,
+          isIncreaseDisabled && variant === 'color'
+            ? styles.buttonColorDisabled
+            : {},
         ]}
+        disabled={isIncreaseDisabled}
         onPress={() => handlePressButton('increase')}
       >
         <Icon
           name="Plus"
           color={
-            variant === 'default' ? Color.primary[1000] : Color.base.white100
+            isIncreaseDisabled
+              ? variant === 'color'
+                ? Color.gray[200]
+                : Color.gray[500]
+              : variant === 'default'
+                ? Color.primary[1000]
+                : Color.base.white100
           }
           size={10}
         />
@@ -103,10 +158,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Color.primary[1000],
   },
+  buttonColorDisabled: {
+    backgroundColor: Color.gray[400],
+  },
   buttonDefault: {
     width: 20,
     height: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  input: {
+    width: 24,
+    height: 20,
+    textAlign: 'center',
+    padding: 0,
   },
 });

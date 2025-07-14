@@ -11,12 +11,28 @@ export default function CounterButtonScreen() {
         onChange={(val) => setValue(val)}
         variant="color"
       />
+      <CounterButton
+        max={10}
+        min={0}
+        onChange={(val) => setValue(val)}
+        variant="color"
+        disabledIncrease={true}
+        disabledDecrease={true}
+      />
       <Devider />
+      <CounterButton
+        max={44}
+        min={0}
+        onChange={(val) => setValue(val)}
+        variant="default"
+      />
       <CounterButton
         max={10}
         min={0}
         onChange={(val) => setValue(val)}
         variant="default"
+        disabledIncrease={true}
+        disabledDecrease={true}
       />
       <Typography> The Value is : {value}</Typography>
     </Container>

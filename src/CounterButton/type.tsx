@@ -4,4 +4,6 @@ export interface CounterButtonType {
   value?: number;
   min?: number;
   max?: number;
+  disabledDecrease?: boolean;
+  disabledIncrease?: boolean;
 }
