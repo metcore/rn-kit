@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { Icon } from '../Icon';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
@@ -114,6 +120,7 @@ const styles = StyleSheet.create({
   input: {
     height: 37,
     paddingHorizontal: 12,
+    marginTop: Platform.select({ ios: 0, android: 5 }),
     fontSize: 16,
     color: '#333',
   },
