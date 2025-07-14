@@ -25,7 +25,7 @@ Komponen ini extend dari Calendar, jadi kalian bisa menggunakan semua props yang
 | `onClose`   | `() => void`                    | Callback saat BottomSheet ditutup |
 | `isOpen`    | `boolean`                       | Menentukan apakah BottomSheet sedang terbuka |
 | `hasError`  | `boolean`                       | (Opsional) Menandai jika terjadi kesalahan validasi |
-| `value`  | DateRangeProps                       | (Opsional) set default value |
+| `value`     | DateRangeProps                  | (Opsional) set default value |
 
 ---
 

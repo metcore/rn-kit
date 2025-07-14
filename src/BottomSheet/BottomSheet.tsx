@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: Color.base.white100,
     position: 'absolute',
+    marginBottom: 20,
     bottom: 0,
     left: 0,
     right: 0,

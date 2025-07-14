@@ -38,6 +38,7 @@ import ClipBoardList from './icons/ClipBoardList';
 import Megaphone from './icons/Megaphone';
 import Bell from './icons/Bell';
 import BookmarkUser from './icons/BookmarkUser';
+import Minus from './icons/Minus';
 
 const icons: Record<
   IconNameProps,
@@ -68,6 +69,7 @@ const icons: Record<
   'ArrowDown': ArrowDown,
   'ArrowUp': ArrowUp,
   'Plus': Plus,
+  'Minus': Minus,
   'Bell': Bell,
   'file-list-check': FileListCheck,
   'file-text': FileText,

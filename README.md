@@ -107,6 +107,7 @@ Komponen untuk mengumpulkan input dari pengguna.
 - [Checkbox](./src/CheckBox/README_CHECKBOX.md)
 - [Checkbox List](./src/CheckBox/README_CHECKBOXLIST.md)
 - [Chip-(Select)](./src/Chip/README.md)
+- [CounterButton](./src/CounterButton/README.md)
 - [DatePicker](./src/DatePicker/README_DATEPICKER.md)
 - [DropDown](./src/DropDown/README.md)
 - [Input](./src/Input/README.md)
