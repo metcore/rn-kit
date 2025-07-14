@@ -8,10 +8,11 @@ import {
   Typography,
 } from '@herca/rn-kit';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function AccordionScreen() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpenSub, setIsOpenSub] = useState<boolean>(true);
   const renderHeader = () => (
     <View style={styles.containerHeaderAccordion}>
       <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
@@ -81,7 +82,17 @@ export default function AccordionScreen() {
           </View>
         </AccordionItem>
         <AccordionItem>
-          <Typography>Te123`12s</Typography>
+          <TouchableOpacity onPress={() => setIsOpenSub(!isOpenSub)}>
+            <Typography variant="t1">Show more</Typography>
+          </TouchableOpacity>
+          <Accordion isOpen={isOpenSub}>
+            <AccordionItem>
+              <Typography variant="t2">Item</Typography>
+            </AccordionItem>
+            <AccordionItem>
+              <Typography variant="t2">Quantity</Typography>
+            </AccordionItem>
+          </Accordion>
         </AccordionItem>
       </Accordion>
     </Container>
