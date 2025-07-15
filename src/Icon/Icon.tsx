@@ -45,6 +45,7 @@ import BoxOutline from './icons/BoxOutline';
 import ClipBoardListCheckOutline from './icons/ClipBoardListCheckOutline';
 import Box from './icons/Box';
 import Minus from './icons/Minus';
+import PlusSquare from './icons/PlusSquare';
 
 const icons: Record<
   IconNameProps,
@@ -94,6 +95,7 @@ const icons: Record<
   'box-outline': BoxOutline,
   'clipboard-list-check-outline': ClipBoardListCheckOutline,
   'Box': Box,
+  'plus-square': PlusSquare,
 };
 
 const Icon: React.FC<IconProps> = ({

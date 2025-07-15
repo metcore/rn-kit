@@ -46,7 +46,8 @@ export type IconNameProps =
   | 'clock-outline'
   | 'clipboard-list-check-outline'
   | 'box-outline'
-  | 'Box';
+  | 'Box'
+  | 'plus-square';
 
 export interface IconProps {
   name: IconNameProps;
