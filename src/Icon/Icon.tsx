@@ -38,6 +38,12 @@ import ClipBoardList from './icons/ClipBoardList';
 import Megaphone from './icons/Megaphone';
 import Bell from './icons/Bell';
 import BookmarkUser from './icons/BookmarkUser';
+import Scanner from './icons/Scanner';
+import ClockOutline from './icons/ClockOutline';
+import Clock from './icons/Clock';
+import BoxOutline from './icons/BoxOutline';
+import ClipBoardListCheckOutline from './icons/ClipBoardListCheckOutline';
+import Box from './icons/Box';
 
 const icons: Record<
   IconNameProps,
@@ -80,6 +86,12 @@ const icons: Record<
   'clipboard-list-check': ClipBoardListCheck,
   'clipboard-list': ClipBoardList,
   'Megaphone': Megaphone,
+  'Scanner': Scanner,
+  'clock-outline': ClockOutline,
+  'Clock': Clock,
+  'box-outline': BoxOutline,
+  'clipboard-list-check-outline': ClipBoardListCheckOutline,
+  'Box': Box,
 };
 
 const Icon: React.FC<IconProps> = ({

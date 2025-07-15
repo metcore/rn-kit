@@ -84,3 +84,9 @@ export default function App() {
 - clipboard-list-check
 - clipboard-list
 - Megaphone
+- clipboard-list-check-outline
+- Scanner
+- Clock
+- clock-outline
+- box-outline
+- Box

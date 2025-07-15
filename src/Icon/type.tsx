@@ -39,7 +39,13 @@ export type IconNameProps =
   | 'user-circle-fill'
   | 'clipboard-list-check'
   | 'clipboard-list'
-  | 'Megaphone';
+  | 'Megaphone'
+  | 'Scanner'
+  | 'Clock'
+  | 'clock-outline'
+  | 'clipboard-list-check-outline'
+  | 'box-outline'
+  | 'Box';
 
 export interface IconProps {
   name: IconNameProps;
