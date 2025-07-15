@@ -44,6 +44,7 @@ import Clock from './icons/Clock';
 import BoxOutline from './icons/BoxOutline';
 import ClipBoardListCheckOutline from './icons/ClipBoardListCheckOutline';
 import Box from './icons/Box';
+import Minus from './icons/Minus';
 
 const icons: Record<
   IconNameProps,
@@ -74,6 +75,7 @@ const icons: Record<
   'ArrowDown': ArrowDown,
   'ArrowUp': ArrowUp,
   'Plus': Plus,
+  'Minus': Minus,
   'Bell': Bell,
   'file-list-check': FileListCheck,
   'file-text': FileText,

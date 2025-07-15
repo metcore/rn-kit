@@ -24,6 +24,7 @@ const Chip: React.FC<ChipProps> = ({
   refreshing = false,
   onEndReached,
   footer,
+  header,
 }) => {
   const isHorizontal = direction === 'horizontal';
 
@@ -102,6 +103,7 @@ const Chip: React.FC<ChipProps> = ({
       ]}
       columnWrapperStyle={numColumns > 1 ? styles.wrapperStyle : undefined}
       ListFooterComponent={footer}
+      ListHeaderComponent={header}
     />
   );
 };

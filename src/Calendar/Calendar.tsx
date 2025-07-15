@@ -21,7 +21,13 @@ const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
 const DEFAULT_SELECTED_TEXT_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_BACKGROUND_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_TEXT_COLOR = Color.gray[400];
-
+export const formatDate = (date: Date | undefined | null) => {
+  if (!date) return null;
+  const y = date.getFullYear();
+  const m = `${date.getMonth() + 1}`.padStart(2, '0');
+  const d = `${date.getDate()}`.padStart(2, '0');
+  return `${y}-${m}-${d}`;
+};
 const Calendar = ({
   markedDates = {},
   disabledDays,

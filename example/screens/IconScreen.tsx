@@ -46,6 +46,7 @@ const icons = [
   'clock-outline',
   'box-outline',
   'Box',
+  'Minus',
 ];
 
 export default function IconScreen() {

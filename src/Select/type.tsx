@@ -28,5 +28,6 @@ export interface SelectProps {
   onRefresh?: () => void;
   onEndReached?: () => void;
   refreshing?: boolean;
-  footer?: React.ReactElement;
+  footer?: React.ComponentType<any> | React.ReactElement | null | undefined;
+  header?: React.ComponentType<any> | React.ReactElement | null | undefined;
 }

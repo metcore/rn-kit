@@ -28,6 +28,7 @@ export type IconNameProps =
   | 'Image'
   | 'Times'
   | 'Plus'
+  | 'Minus'
   | 'Bell'
   | 'file-list-check'
   | 'file-text'

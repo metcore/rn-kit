@@ -8,6 +8,7 @@ type RootStackParamList = {
   InputOtp: undefined;
   Card: undefined;
   Chip: undefined;
+  CounterButton: undefined;
   Modal: undefined;
   BottomSheet: undefined;
   Checkbox: undefined;

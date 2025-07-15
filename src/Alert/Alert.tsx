@@ -14,6 +14,7 @@ interface AlertProps {
   style?: ViewStyle;
   titleStyle?: StyleProp<ViewStyle>;
   messageStyle?: StyleProp<ViewStyle>;
+  hide?: boolean;
 }
 
 const COLORS: Record<
@@ -73,6 +74,7 @@ const Alert: React.FC<AlertProps> = ({
   color = 'primary',
   titleStyle,
   messageStyle,
+  hide = false,
 }) => {
   const { background, fontColor, borderColor } = COLORS[color];
 
@@ -80,7 +82,11 @@ const Alert: React.FC<AlertProps> = ({
     <View
       style={[
         styles.container,
-        { backgroundColor: background, borderColor: borderColor },
+        {
+          backgroundColor: background,
+          borderColor: borderColor,
+        },
+        hide ? { display: 'none' } : null,
       ]}
     >
       <View style={{ marginRight: 10 }}>

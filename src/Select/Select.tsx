@@ -28,6 +28,7 @@ export default function Select({
   onRefresh,
   refreshing,
   footer,
+  header,
   onEndReached,
 }: SelectProps) {
   // const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
@@ -106,6 +107,7 @@ export default function Select({
             block
             refreshing={refreshing}
             footer={footer}
+            header={header}
           />
         )}
       </View>

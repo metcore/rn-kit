@@ -77,6 +77,8 @@ export default function SelectScreen() {
   const [isOpenSelectDefault, setIsOpenSelectDefault] =
     useState<boolean>(false);
   const [isOpenSelectCustom, setIsOpenSelectCustom] = useState<boolean>(false);
+  const [isOpenSelectHeaderFooter, setIsOpenSelectHeaderFooter] =
+    useState<boolean>(false);
   const [loadingSelect, setLoadingSelect] = useState<boolean>(true);
   const [submitValue, setSubmitValue] = useState<ChipSelectedProps>();
   const [onEndReached, setOnEndReach] = useState<boolean>(false);
@@ -123,6 +125,24 @@ export default function SelectScreen() {
     }, 1500);
   };
 
+  const handleSubmitSelectHeaderFooter = (val: ChipSelectedProps) => {
+    setSubmitValue(val);
+    setIsOpenSelectHeaderFooter(true);
+  };
+
+  const renderHeader = () => {
+    return (
+      <View>
+        <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
+          Pilih Serial Number / Barcode
+        </Typography>
+        <Typography variant="t3" weight="medium" color={Color.gray[600]}>
+          Pilih Serial Number / Barcode
+        </Typography>
+      </View>
+    );
+  };
+
   return (
     <View>
       <Container style={styles.containerButton}>
@@ -135,6 +155,11 @@ export default function SelectScreen() {
           color="primary"
           onPress={() => setIsOpenSelectCustom(true)}
           title="Custom Item"
+        />
+        <Button
+          color="primary"
+          onPress={() => handleSubmitSelectHeaderFooter(true)}
+          title="Header & Footer"
         />
         <Typography>submitValue: {submitValue}</Typography>
       </Container>
@@ -159,6 +184,16 @@ export default function SelectScreen() {
         multiple
         renderItem={renderItem}
         onSubmit={handleSubmitSelectCustom}
+        required={true}
+      />
+      <Select
+        isOpen={isOpenSelectHeaderFooter}
+        onClose={() => setIsOpenSelectHeaderFooter(false)}
+        data={DATA}
+        multiple
+        header={renderHeader}
+        renderItem={renderItem}
+        onSubmit={handleSubmitSelectHeaderFooter}
         required={true}
       />
     </View>
