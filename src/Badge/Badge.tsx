@@ -3,21 +3,12 @@ import { View, StyleSheet } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import type { TypographyVariantProps } from '../Typography/type';
+import { hexToRGBA } from '../helpers/hexToRgba';
+import type { HexColor, Size, Variant } from './type';
 
-type Variant =
-  | 'default'
-  | 'primary'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'orange'
-  | 'purple';
-
-type Size = 'small' | 'medium';
 interface BadgeProps {
   value?: string | number | React.ReactNode;
-  color: Variant;
+  color: Variant | HexColor;
   size?: Size;
   variant?: Variant;
   dot?: boolean;
@@ -67,9 +58,22 @@ const Badge: React.FC<BadgeProps> = ({
   children,
 }) => {
   const safeSize: Size = ['small', 'medium'].includes(size) ? size : 'medium';
-  const { background, fontColor } = COLORS[color];
+
+  const isVariant = Object.prototype.hasOwnProperty.call(COLORS, color);
+
+  const { background, fontColor } = isVariant
+    ? COLORS[color as Variant]
+    : { background: color, fontColor: '#fff' };
+
   const { height, paddingHorizontal, paddingVertical, borderRadius } =
     SIZE_MAP[safeSize];
+
+  const bgRgba = hexToRGBA(
+    typeof color === 'string' && color.startsWith('#') ? color : background,
+    0.1
+  );
+
+  const isHex = typeof color === 'string' && color.startsWith('#');
 
   if (dot) {
     return (
@@ -94,8 +98,8 @@ const Badge: React.FC<BadgeProps> = ({
         styles.badge,
         {
           height: height,
-          borderRadius: 8,
-          backgroundColor: background,
+          borderRadius: borderRadius,
+          backgroundColor: isHex ? bgRgba : background,
           paddingHorizontal: paddingHorizontal,
           paddingVertical: paddingVertical,
         },
@@ -105,7 +109,7 @@ const Badge: React.FC<BadgeProps> = ({
         children
       ) : (
         <Typography
-          color={fontColor}
+          color={isHex ? color : fontColor}
           variant={SIZE_MAP[safeSize].fontSize}
           weight="medium"
         >
