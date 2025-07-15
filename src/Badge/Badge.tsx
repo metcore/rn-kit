@@ -13,8 +13,6 @@ interface BadgeProps {
   variant?: Variant;
   dot?: boolean;
   children?: React.ReactNode;
-  rounded?: number;
-  gap?: number;
 }
 
 const COLORS: Record<Variant, { background: string; fontColor: string }> = {
@@ -57,8 +55,6 @@ const Badge: React.FC<BadgeProps> = ({
   size = 'medium',
   color = 'default',
   dot = false,
-  rounded = 8,
-  gap = 0,
   children,
 }) => {
   const safeSize: Size = ['small', 'medium'].includes(size) ? size : 'medium';
@@ -102,11 +98,10 @@ const Badge: React.FC<BadgeProps> = ({
         styles.badge,
         {
           height: height,
-          borderRadius: rounded,
+          borderRadius: borderRadius,
           backgroundColor: isHex ? bgRgba : background,
           paddingHorizontal: paddingHorizontal,
           paddingVertical: paddingVertical,
-          gap: gap,
         },
       ]}
     >

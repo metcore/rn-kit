@@ -1,4 +1,4 @@
-import { Badge, Color, Container, Icon, Typography } from '@herca/rn-kit';
+import { Badge, Container } from '@herca/rn-kit';
 import { ScrollView } from 'react-native';
 
 export default function BadgeScreen() {
@@ -22,41 +22,13 @@ export default function BadgeScreen() {
         <Badge color="purple" size="small" value="Badge primary small" />
         <Badge color="purple" size={'medium'} value="Badge purple medium" />
         <Badge
-          color="purple"
-          size={'medium'}
-          rounded={5}
-          value="Badge With Custom Rounded"
-        />
-        <Badge
-          color="purple"
-          size={'small'}
-          rounded={3}
-          value="Badge Small With Custom Rounded"
-        />
-        <Badge color="danger" size="small" gap={3}>
-          <Icon name="Clock" size={10} color={Color.danger[500]} />
-          <Typography variant="t3" color={Color.danger[500]}>
-            Badge With Gap
-          </Typography>
-        </Badge>
-        <Badge color="danger" size="medium" gap={3}>
-          <Icon name="Clock" size={20} color={Color.danger[500]} />
-          <Typography variant="p3" color={Color.danger[500]}>
-            Badge With Gap
-          </Typography>
-        </Badge>
-        <Badge
           color="#219294"
           size="medium"
-          gap={3}
-          rounded={4}
           value="Badge With Custom Color Value"
         />
         <Badge
           color="#219294"
           size="small"
-          gap={3}
-          rounded={4}
           value="Badge With Custom Color Value"
         />
       </Container>

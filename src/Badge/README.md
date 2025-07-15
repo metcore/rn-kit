@@ -20,8 +20,6 @@ Komponen `Badge` digunakan untuk menampilkan label kecil yang memberikan informa
 | `size`     | `'small'` \\| `'medium'`             | `'medium'`  | Ukuran badge                                               |
 | `dot`      | `boolean`                            | `false`     | Jika `true`, hanya menampilkan titik kecil                 |
 | `children` | `React.ReactNode`                    | `undefined` | Jika ada, akan menggantikan `value` sebagai isi badge      |
-| `rounded`  | `number`                             | `8`         | Jika di set, maka akan menambahkan border radius           |
-| `gap`      | `number`                             | `0`         | Jika di set, maka akan menambahkan gap antar elemen        |
 
 ## 🎨 Warna default yang Tersedia
 
@@ -59,22 +57,6 @@ export default function Example() {
       {/* Badge dengan children */}
       <Badge color="warning">
         <CustomComponent />
-      </Badge>
-
-      {/* badge dengan custom border radius */}
-      <Badge 
-        color="primary" 
-        value="Aktif" 
-        size="small" 
-        rounded={5}
-      />
-
-      {/* badge dengan custom gap */}
-      <Badge color="danger" size="small" gap={3}>
-        <Icon name="Clock" size={10} color={Color.danger[500]} />
-        <Typography variant="t3" color={Color.danger[500]}>
-          Badge With Gap
-        </Typography>
       </Badge>
 
       {/* badge dengan custom color */}
