@@ -27,7 +27,7 @@ export default function Card({
     return (
       <ImageBackground
         source={backgroundImage}
-        style={[styles.imageBackground, style]}
+        style={[styles.imageBackground, style, { borderColor: borderColor }]}
         imageStyle={styles.imageStyle}
       >
         {children}
@@ -66,8 +66,5 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     borderRadius: 8,
-  },
-  inner: {
-    padding: 10, // tetap kasih padding isi
   },
 });

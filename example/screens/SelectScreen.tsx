@@ -158,7 +158,7 @@ export default function SelectScreen() {
         />
         <Button
           color="primary"
-          onPress={() => handleSubmitSelectHeaderFooter(true)}
+          onPress={() => setIsOpenSelectHeaderFooter(true)}
           title="Header & Footer"
         />
         <Typography>submitValue: {submitValue}</Typography>
