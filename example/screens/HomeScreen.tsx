@@ -195,6 +195,12 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('TimePicker')}
             block
           />
+          <Button
+            color="success"
+            title="Text Editor"
+            onPress={() => navigation.navigate('TextEditor')}
+            block
+          />
           <Typography variant="h3" weight="bold">
             Tool
           </Typography>

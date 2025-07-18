@@ -2912,12 +2912,12 @@ __metadata:
   linkType: hard
 
 "@react-native-documents/picker@npm:^10.1.3":
-  version: 10.1.3
-  resolution: "@react-native-documents/picker@npm:10.1.3"
+  version: 10.1.5
+  resolution: "@react-native-documents/picker@npm:10.1.5"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 2b1957bf3998a077e3dcf70a2fe8896a2c3c73101d8caef215eafc8525ad12d3380c7d5919752f55a3fa89a9a42f52b98b602e951f4a8a3a96259fba21b19042
+  checksum: d92f97bcfb67328d1b73668e5f1aff8cf572d4b4c3b590258a365131344427d424baceea7549482bc9fb8cadf019386929fca1386f3b515f3af35d5af6e00497
   languageName: node
   linkType: hard
 

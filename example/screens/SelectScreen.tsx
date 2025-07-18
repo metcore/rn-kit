@@ -125,8 +125,7 @@ export default function SelectScreen() {
     }, 1500);
   };
 
-  const handleSubmitSelectHeaderFooter = (val: ChipSelectedProps) => {
-    setSubmitValue(val);
+  const handleSubmitSelectHeaderFooter = () => {
     setIsOpenSelectHeaderFooter(true);
   };
 
@@ -158,7 +157,7 @@ export default function SelectScreen() {
         />
         <Button
           color="primary"
-          onPress={() => handleSubmitSelectHeaderFooter(true)}
+          onPress={() => handleSubmitSelectHeaderFooter}
           title="Header & Footer"
         />
         <Typography>submitValue: {submitValue}</Typography>

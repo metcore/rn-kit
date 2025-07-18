@@ -53,6 +53,7 @@ import TabScreen from '../screens/TabScreen';
 import StepScreen from '../screens/StepScreen';
 import IconScreen from '../screens/IconScreen';
 import CounterButtonScreen from '../screens/CounterButtonScreen';
+import TextEditorScreen from '../screens/TextEditorScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -122,6 +123,7 @@ const App = () => {
             <Stack.Screen name="TimeLine" component={TimeLineScreen} />
             <Stack.Screen name="Tab" component={TabScreen} />
             <Stack.Screen name="Step" component={StepScreen} />
+            <Stack.Screen name="TextEditor" component={TextEditorScreen} />
             <Stack.Screen
               name="Sp"
               component={SpScreen}

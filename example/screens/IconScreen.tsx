@@ -40,7 +40,14 @@ const icons = [
   'clipboard-list-check',
   'clipboard-list',
   'Megaphone',
+  'clipboard-list-check-outline',
+  'Scanner',
+  'Clock',
+  'clock-outline',
+  'box-outline',
+  'Box',
   'Minus',
+  'plus-square',
 ];
 
 export default function IconScreen() {
