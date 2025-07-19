@@ -46,6 +46,16 @@ import ClipBoardListCheckOutline from './icons/ClipBoardListCheckOutline';
 import Box from './icons/Box';
 import Minus from './icons/Minus';
 import PlusSquare from './icons/PlusSquare';
+import AtSign from './icons/AtSign';
+import BriefCaseOutline from './icons/BriefcaseOutline';
+import EditSquareOutline from './icons/Edit';
+import GlobeEarth from './icons/GlobeEarth';
+import LockFill from './icons/LockFill';
+import LogoHercaHris from './icons/LogoHercaHris';
+import QuestionCircleOutline from './icons/QuestionCircleOutline';
+import ShieldFill from './icons/ShieldFill';
+import Users from './icons/Users';
+import WhatsAppFill from './icons/WhatsappFill';
 
 const icons: Record<
   IconNameProps,
@@ -96,6 +106,16 @@ const icons: Record<
   'clipboard-list-check-outline': ClipBoardListCheckOutline,
   'Box': Box,
   'plus-square': PlusSquare,
+  'at-sign': AtSign,
+  'briefcase-outline': BriefCaseOutline,
+  'edit-square-outline': EditSquareOutline,
+  'globe-earth': GlobeEarth,
+  'lock-fill': LockFill,
+  'logo-herca-hris': LogoHercaHris,
+  'question-circle-outline': QuestionCircleOutline,
+  'shield-fill': ShieldFill,
+  'Users': Users,
+  'whatsapp-fill': WhatsAppFill,
 };
 
 const Icon: React.FC<IconProps> = ({

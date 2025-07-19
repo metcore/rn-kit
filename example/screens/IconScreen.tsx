@@ -48,6 +48,16 @@ const icons = [
   'Box',
   'Minus',
   'plus-square',
+  'at-sign',
+  'briefcase-outline',
+  'edit-square-outline',
+  'globe-earth',
+  'lock-fill',
+  'logo-herca-hris',
+  'question-circle-outline',
+  'shield-fill',
+  'Users',
+  'whatsapp-fill',
 ];
 
 export default function IconScreen() {
