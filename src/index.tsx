@@ -42,9 +42,9 @@ export { default as InputOtp } from './Input/InputOtp';
 export { default as Switch } from './Input/Switch';
 export { default as CheckBox } from './CheckBox/CheckBox';
 export { default as CheckBoxList } from './CheckBox/CheckBoxList';
-export { default as CounterButton } from './CounterButton/CounterButton';
 export { default as RadioButton } from './RadioButton/RadioButton';
 export { default as Icon } from './Icon/Icon';
+export type { IconNameProps } from './Icon/type';
 export { default as Modal } from './Modal/Modal';
 export { default as Label } from './Label/Label';
 export { default as List } from './List/List';
@@ -53,6 +53,12 @@ export { default as Loading } from './Loading/Loading';
 export { default as Avatar } from './Avatar/Avatar';
 export { default as AvatarGroup } from './Avatar/AvatarGroup';
 export { default as Badge } from './Badge/Badge';
+export type {
+  Variant as BadgeVariant,
+  Size as BadgeSize,
+  HexColor as BadgeColor,
+  SizeStyle as BadgeSizeStyle,
+} from './Badge/type';
 export { default as Alert } from './Alert/Alert';
 export { default as Timeline } from './Timeline/Timeline';
 export { default as TimelineItem } from './Timeline/TimelineItem';
