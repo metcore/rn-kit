@@ -12,6 +12,7 @@ export interface InputProps extends TextInputProps {
   onPressIconRight?: (val?: GestureResponderEvent) => void;
   onChangeText?: (val: string) => void;
   secureTextEntry?: boolean;
+  iconRightColor?: string;
 }
 
 export interface TextAreaProps extends InputProps {

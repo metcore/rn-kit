@@ -2,9 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
-import type { TypographyVariantProps } from '../Typography/type';
 import { hexToRGBA } from '../helpers/hexToRgba';
-import type { HexColor, Size, Variant } from './type';
+import type { HexColor, Size, SizeStyle, Variant } from './type';
 
 interface BadgeProps {
   value?: string | number | React.ReactNode;
@@ -25,14 +24,6 @@ const COLORS: Record<Variant, { background: string; fontColor: string }> = {
   orange: { background: Color.orange[50], fontColor: Color.orange[500] },
   purple: { background: Color.purple[50], fontColor: Color.purple[500] },
 };
-
-interface SizeStyle {
-  height: number;
-  fontSize: TypographyVariantProps;
-  paddingHorizontal: number;
-  paddingVertical: number;
-  borderRadius: number;
-}
 
 const SIZE_MAP: Record<Size, SizeStyle> = {
   small: {
