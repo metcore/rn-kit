@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
@@ -21,6 +21,11 @@ const InputOtp: React.FC<InputOtpProps> = ({
 }) => {
   const inputs = useRef<Array<TextInput | null>>([]);
   const values = useRef<string[]>(Array(length).fill(''));
+  const [useFlexGrow, setUseFlexGrow] = useState<boolean>(false);
+
+  const containerWidth = useRef(0);
+  const itemWidth = 48;
+  const itemGap = 10;
 
   const handleChange = (text: string, index: number) => {
     values.current[index] = text;
@@ -44,7 +49,15 @@ const InputOtp: React.FC<InputOtpProps> = ({
   return (
     <View style={styles.gap4}>
       {label ? <LabelForm title={label} /> : null}
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        onLayout={(e) => {
+          // cek apakah lebar container itu cukup untuk menampilkan semua input
+          containerWidth.current = e.nativeEvent.layout.width;
+          const totalNeededWidth = length * itemWidth + (length - 1) * itemGap;
+          setUseFlexGrow(totalNeededWidth > containerWidth.current);
+        }}
+      >
         {Array(length)
           .fill(0)
           .map((_, i) => (
@@ -52,19 +65,26 @@ const InputOtp: React.FC<InputOtpProps> = ({
               key={i}
               style={[
                 styles.input,
-                { borderColor: hasError ? Color.danger[500] : Color.gray[200] },
+                // eslint-disable-next-line react-native/no-inline-styles
+                {
+                  borderColor: hasError ? Color.danger[500] : Color.gray[200],
+                  width: useFlexGrow ? undefined : itemWidth, //jika cukup gunakan 48px
+                  flexGrow: useFlexGrow ? 1 : 0, //jika tidak cukup, flexgrow 0
+                },
               ]}
               keyboardType="number-pad"
               maxLength={1}
               onChangeText={(text) => handleChange(text, i)}
               onKeyPress={(e) => handleKeyPress(e, i)}
-              ref={(ref) => void (inputs.current[i] = ref)}
+              ref={(ref) => {
+                inputs.current[i] = ref;
+              }}
             />
           ))}
       </View>
 
       {hint ? (
-        <Typography color={hasError ? Color.danger[500] : ''} variant="t2">
+        <Typography color={hasError ? Color.danger[500] : ''} variant="t3">
           {hint}
         </Typography>
       ) : null}
@@ -81,16 +101,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 10,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   input: {
-    width: 48,
+    flexGrow: 1,
     height: 48,
     borderWidth: 1,
     borderRadius: 8,
     textAlign: 'center',
     color: Color.base.black100,
     fontSize: 12,
-    fontWeight: 'medium',
+    fontWeight: 500,
   },
 });

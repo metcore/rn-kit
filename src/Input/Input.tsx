@@ -19,6 +19,7 @@ const Input: React.FC<InputProps> = ({
   onPressIconLeft,
   onPressIconRight,
   secureTextEntry = false,
+  iconRightColor,
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState(value || '');
@@ -53,7 +54,7 @@ const Input: React.FC<InputProps> = ({
             style={styles.iconLeft}
             hitSlop={10}
           >
-            <Icon name={icon} size={18} color="#888" />
+            <Icon name={icon} size={20} color="#888" />
           </TouchableOpacity>
         )}
 
@@ -62,7 +63,10 @@ const Input: React.FC<InputProps> = ({
           style={[
             styles.input,
             icon && { paddingLeft: 40 },
-            showRightIcons && { paddingRight: 60 },
+            showRightIcons && { paddingRight: 40 },
+            showRightIcons &&
+              clearButton &&
+              inputValue !== '' && { paddingRight: 65 },
             style,
           ]}
           secureTextEntry={secureTextEntry}
@@ -78,19 +82,27 @@ const Input: React.FC<InputProps> = ({
                 onPress={handleClear}
                 style={[{ marginRight: iconRight ? 8 : 0 }]}
               >
-                <Icon name="x-circle" size={18} color="#aaa" />
+                <Icon name="x-circle" size={20} color="#aaa" />
               </TouchableOpacity>
             )}
             {iconRight && (
               <TouchableOpacity onPress={onPressIconRight} hitSlop={10}>
-                <Icon name={iconRight} size={18} color="#888" />
+                <Icon
+                  name={iconRight}
+                  size={20}
+                  color={iconRightColor ?? '#888'}
+                />
               </TouchableOpacity>
             )}
           </View>
         )}
       </View>
       {hint ? (
-        <Typography color={hasError ? Color.danger[500] : ''} variant="t2">
+        <Typography
+          color={hasError ? Color.danger[500] : Color.gray[700]}
+          variant="t3"
+          weight="medium"
+        >
           {hint}
         </Typography>
       ) : null}
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'relative',
-    height: 36,
+    height: 40,
     borderRadius: 8,
     gap: 8,
     borderWidth: 1,
@@ -114,8 +126,11 @@ const styles = StyleSheet.create({
   input: {
     height: 37,
     paddingHorizontal: 12,
+    paddingTop: 0,
+    paddingBottom: 0,
     fontSize: 16,
     color: '#333',
+    flex: 1,
   },
   iconLeft: {
     position: 'absolute',

@@ -9,6 +9,7 @@ export { default as AccordionItem } from './Accordion/AccordionItem';
 export type { AccordionRenderHeaderProps } from './Accordion/type';
 export { default as Button } from './Button/Button';
 export { default as Color } from './Color/Color';
+export type { ColorVariantType } from './Color/type';
 export { default as Typography } from './Typography/Typography';
 export type {
   fontSizeMap,
