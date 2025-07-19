@@ -47,7 +47,17 @@ export type IconNameProps =
   | 'clipboard-list-check-outline'
   | 'box-outline'
   | 'Box'
-  | 'plus-square';
+  | 'plus-square'
+  | 'at-sign'
+  | 'briefcase-outline'
+  | 'edit-square-outline'
+  | 'globe-earth'
+  | 'lock-fill'
+  | 'logo-herca-hris'
+  | 'question-circle-outline'
+  | 'shield-fill'
+  | 'Users'
+  | 'whatsapp-fill';
 
 export interface IconProps {
   name: IconNameProps;
