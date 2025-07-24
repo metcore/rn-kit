@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   Platform,
   KeyboardAvoidingView,
   TouchableOpacity,
@@ -176,13 +175,13 @@ export default function TextEditor({
           onPress={() => formatText('italic')}
           style={styles.toolButton}
         >
-          <Text style={styles.toolText}>I</Text>
+          <Icon name="Italic" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => formatText('underline')}
           style={styles.toolButton}
         >
-          <Text style={styles.toolText}>U</Text>
+          <Icon name="UnderLine" />
         </TouchableOpacity>
       </View>
     </View>

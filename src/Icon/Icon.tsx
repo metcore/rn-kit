@@ -57,6 +57,8 @@ import ShieldFill from './icons/ShieldFill';
 import Users from './icons/Users';
 import WhatsAppFill from './icons/WhatsappFill';
 import Bold from './icons/Bold';
+import Italic from './icons/Italic';
+import UnderLine from './icons/Underline';
 
 const icons: Record<
   IconNameProps,
@@ -118,6 +120,8 @@ const icons: Record<
   'Users': Users,
   'whatsapp-fill': WhatsAppFill,
   'Bold': Bold,
+  'Italic': Italic,
+  'UnderLine': UnderLine,
 };
 
 const Icon: React.FC<IconProps> = ({

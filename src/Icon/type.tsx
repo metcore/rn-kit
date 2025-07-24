@@ -58,6 +58,8 @@ export type IconNameProps =
   | 'shield-fill'
   | 'Users'
   | 'Bold'
+  | 'Italic'
+  | 'UnderLine'
   | 'whatsapp-fill';
 
 export interface IconProps {
