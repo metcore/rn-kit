@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import {
   View,
-  ScrollView,
   StyleSheet,
   Text,
-  type NativeScrollEvent,
-  type NativeSyntheticEvent,
   Dimensions,
+  Animated,
+  type NativeSyntheticEvent,
+  type NativeScrollEvent,
 } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
@@ -17,6 +17,7 @@ const ITEM_HEIGHT = 40;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const VISIBLE_ITEMS = 5;
 const MIDDLE_INDEX = Math.floor(VISIBLE_ITEMS / 2);
+const REPEAT_COUNT = 5;
 
 interface TimePickerProps {
   isOpen: boolean;
@@ -26,42 +27,61 @@ interface TimePickerProps {
 
 const generateItems = (max: number) => Array.from({ length: max }, (_, i) => i);
 
+const repeatItems = (items: number[], repeatCount: number) =>
+  Array.from({ length: repeatCount }).flatMap(() => items);
+
 export default function TimePickerWheel({
   isOpen,
   onClose,
   onChange,
 }: TimePickerProps) {
-  const [selectedHour, setSelectedHour] = useState(0);
-  const [selectedMinute, setSelectedMinute] = useState(0);
+  const [selectedHour, setSelectedHour] = useState<number>(0);
+  const [selectedMinute, setSelectedMinute] = useState<number>(0);
 
-  const hourRef = useRef<ScrollView>(null);
-  const minuteRef = useRef<ScrollView>(null);
+  const hourRef = useRef<Animated.ScrollView>(null);
+  const minuteRef = useRef<Animated.ScrollView>(null);
 
-  const padItems = (items: number[], padCount: number) => {
-    return [
-      ...items.slice(-padCount).map((i) => i - items.length),
-      ...items,
-      ...items.slice(0, padCount).map((i) => i + items.length),
-    ];
-  };
+  const hourScrollY = useRef(new Animated.Value(0)).current;
+  const minuteScrollY = useRef(new Animated.Value(0)).current;
 
-  const hours = padItems(generateItems(24), MIDDLE_INDEX);
-  const minutes = padItems(generateItems(60), MIDDLE_INDEX);
+  const hoursBase = generateItems(24);
+  const minutesBase = generateItems(60);
+
+  const hours = useMemo(
+    () => repeatItems(hoursBase, REPEAT_COUNT),
+    [hoursBase]
+  );
+  const minutes = useMemo(
+    () => repeatItems(minutesBase, REPEAT_COUNT),
+    [minutesBase]
+  );
+
+  const CENTER_INDEX_HOUR =
+    Math.floor(hours.length / 2 / 24) * 24 + selectedHour;
+  const CENTER_INDEX_MINUTE =
+    Math.floor(minutes.length / 2 / 60) * 60 + selectedMinute;
 
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => {
-        scrollToIndex(hourRef, selectedHour + MIDDLE_INDEX);
-        scrollToIndex(minuteRef, selectedMinute + MIDDLE_INDEX);
+        scrollToIndex(hourRef, CENTER_INDEX_HOUR);
+        scrollToIndex(minuteRef, CENTER_INDEX_MINUTE);
       }, 100);
     }
-  }, [isOpen, selectedMinute, selectedHour]);
+  }, [
+    isOpen,
+    selectedMinute,
+    selectedHour,
+    CENTER_INDEX_HOUR,
+    CENTER_INDEX_MINUTE,
+  ]);
 
   const scrollToIndex = (
-    ref: React.RefObject<ScrollView | null>,
-    index: number
+    ref: React.RefObject<Animated.ScrollView | null>,
+    index: number,
+    animated: boolean = true
   ) => {
-    ref.current?.scrollTo({ y: index * ITEM_HEIGHT, animated: true });
+    ref.current?.scrollTo({ y: index * ITEM_HEIGHT, animated });
   };
 
   const handleScrollEnd = (
@@ -70,14 +90,23 @@ export default function TimePickerWheel({
   ) => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const index = Math.round(offsetY / ITEM_HEIGHT);
+
     if (type === 'hour') {
-      const realIndex = (((index - MIDDLE_INDEX) % 24) + 24) % 24;
-      setSelectedHour(realIndex);
-      setTimeout(() => scrollToIndex(hourRef, realIndex + MIDDLE_INDEX), 50);
+      const realValue = hours[index % 24];
+      setSelectedHour(realValue);
+
+      const newCenter = Math.floor(hours.length / 2 / 24) * 24 + realValue;
+      if (Math.abs(index - newCenter) > 12) {
+        scrollToIndex(hourRef, newCenter, false);
+      }
     } else {
-      const realIndex = (((index - MIDDLE_INDEX) % 60) + 60) % 60;
-      setSelectedMinute(realIndex);
-      setTimeout(() => scrollToIndex(minuteRef, realIndex + MIDDLE_INDEX), 50);
+      const realValue = minutes[index % 60];
+      setSelectedMinute(realValue);
+
+      const newCenter = Math.floor(minutes.length / 2 / 60) * 60 + realValue;
+      if (Math.abs(index - newCenter) > 12) {
+        scrollToIndex(minuteRef, newCenter, false);
+      }
     }
   };
 
@@ -86,22 +115,44 @@ export default function TimePickerWheel({
     onClose?.();
   };
 
-  const renderItem = (value: number, type: 'hour' | 'minute') => {
-    const isSelected =
-      type === 'hour'
-        ? ((value % 24) + 24) % 24 === selectedHour
-        : (value % 60) + (60 % 60) === selectedMinute;
-    const displayValue =
-      type === 'hour'
-        ? (((value % 24) + 24) % 24).toString().padStart(2, '0')
-        : (((value % 60) + 60) % 60).toString().padStart(2, '0');
+  const renderAnimatedItem = (
+    value: number,
+    type: 'hour' | 'minute',
+    index: number,
+    scrollY: Animated.Value
+  ) => {
+    const normalizedValue =
+      type === 'hour' ? ((value % 24) + 24) % 24 : ((value % 60) + 60) % 60;
+
+    const inputRange = [
+      (index - 2) * ITEM_HEIGHT,
+      (index - 1) * ITEM_HEIGHT,
+      index * ITEM_HEIGHT,
+      (index + 1) * ITEM_HEIGHT,
+      (index + 2) * ITEM_HEIGHT,
+    ];
+
+    const scale = scrollY.interpolate({
+      inputRange,
+      outputRange: [0.7, 0.85, 1, 0.85, 0.7],
+      extrapolate: 'clamp',
+    });
+
+    const opacity = scrollY.interpolate({
+      inputRange,
+      outputRange: [0.3, 0.6, 1, 0.6, 0.3],
+      extrapolate: 'clamp',
+    });
 
     return (
-      <View key={`${type}-${value}`} style={styles.item}>
-        <Text style={[styles.itemText, isSelected && styles.selectedItemText]}>
-          {displayValue}
+      <Animated.View
+        key={`${type}-${index}`}
+        style={[styles.item, { transform: [{ scale }], opacity }]}
+      >
+        <Text style={styles.itemText}>
+          {normalizedValue.toString().padStart(2, '0')}
         </Text>
-      </View>
+      </Animated.View>
     );
   };
 
@@ -136,7 +187,7 @@ export default function TimePickerWheel({
         weight="semibold"
         color={Color.gray[900]}
         center
-        style={{ marginBottom: 16 }}
+        style={styles.hintTime}
       >
         Pilih Waktu
       </Typography>
@@ -146,31 +197,46 @@ export default function TimePickerWheel({
         <View style={styles.highlightOverlay} pointerEvents="none">
           <View style={styles.highlight} />
         </View>
+
         <View style={styles.scrollContainer}>
           <View style={styles.pickerColumn}>
-            <ScrollView
+            <Animated.ScrollView
               ref={hourRef}
               showsVerticalScrollIndicator={false}
               snapToInterval={ITEM_HEIGHT}
               decelerationRate="fast"
               onMomentumScrollEnd={(e) => handleScrollEnd(e, 'hour')}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: hourScrollY } } }],
+                { useNativeDriver: true }
+              )}
+              scrollEventThrottle={16}
               contentContainerStyle={styles.scrollContent}
             >
-              {hours.map((h) => renderItem(h, 'hour'))}
-            </ScrollView>
+              {hours.map((h, i) =>
+                renderAnimatedItem(h, 'hour', i, hourScrollY)
+              )}
+            </Animated.ScrollView>
           </View>
 
           <View style={styles.pickerColumn}>
-            <ScrollView
+            <Animated.ScrollView
               ref={minuteRef}
               showsVerticalScrollIndicator={false}
               snapToInterval={ITEM_HEIGHT}
               decelerationRate="fast"
               onMomentumScrollEnd={(e) => handleScrollEnd(e, 'minute')}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: minuteScrollY } } }],
+                { useNativeDriver: true }
+              )}
+              scrollEventThrottle={16}
               contentContainerStyle={styles.scrollContent}
             >
-              {minutes.map((m) => renderItem(m, 'minute'))}
-            </ScrollView>
+              {minutes.map((m, i) =>
+                renderAnimatedItem(m, 'minute', i, minuteScrollY)
+              )}
+            </Animated.ScrollView>
           </View>
         </View>
       </View>
@@ -209,13 +275,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemText: {
-    fontSize: 18,
-    color: Color.gray[400],
-  },
-  selectedItemText: {
-    color: Color.gray[900],
-    fontWeight: 'bold',
     fontSize: 22,
+    color: Color.gray[900],
+    fontWeight: '600',
   },
   highlightOverlay: {
     position: 'absolute',
@@ -231,4 +293,5 @@ const styles = StyleSheet.create({
     zIndex: -1,
     backgroundColor: Color.primary[50],
   },
+  hintTime: { marginBottom: 16 },
 });

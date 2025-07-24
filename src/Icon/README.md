@@ -53,6 +53,7 @@ export default function App() {
 - ArrowLeft
 - ArrowRight
 - ArrowUp
+- Bold
 - Camera
 - Calendar
 - Check
@@ -64,12 +65,14 @@ export default function App() {
 - Filter
 - Home
 - Image
+- Italic
 - Pdf
 - RadioButton
 - Search
 - StickyNote
 - Times
 - User
+- UnderLine
 - x-circle
 - Plus
 - Bell
