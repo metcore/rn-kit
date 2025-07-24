@@ -1,13 +1,14 @@
 import { Button, Container, TimePicker } from '@herca/rn-kit';
 import { useState } from 'react';
+import { StyleSheet } from 'react-native';
 
 export default function TimePickerScreen() {
   const [isOpenTimePicker, setIsOpenTimePicker] = useState<boolean>(false);
   return (
-    <Container style={{ gap: 8 }}>
+    <Container style={styles.container}>
       <Button
         onPress={() => setIsOpenTimePicker(true)}
-        title="Open Yer Picker Single"
+        title="Open Time picker"
       />
       <TimePicker
         onClose={() => setIsOpenTimePicker(false)}
@@ -16,3 +17,7 @@ export default function TimePickerScreen() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { gap: 8 },
+});

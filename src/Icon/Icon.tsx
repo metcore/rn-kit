@@ -56,6 +56,7 @@ import QuestionCircleOutline from './icons/QuestionCircleOutline';
 import ShieldFill from './icons/ShieldFill';
 import Users from './icons/Users';
 import WhatsAppFill from './icons/WhatsappFill';
+import Bold from './icons/Bold';
 
 const icons: Record<
   IconNameProps,
@@ -116,6 +117,7 @@ const icons: Record<
   'shield-fill': ShieldFill,
   'Users': Users,
   'whatsapp-fill': WhatsAppFill,
+  'Bold': Bold,
 };
 
 const Icon: React.FC<IconProps> = ({

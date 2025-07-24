@@ -249,9 +249,12 @@ const styles = StyleSheet.create({
   },
   contentWithFooter: {},
   footer: {
+    borderTopWidth: 1,
+    borderTopColor: Color.gray[100],
     backgroundColor: Color.base.white100,
     position: 'absolute',
-    marginBottom: 20,
+    paddingTop: 10,
+    marginBottom: 32,
     bottom: 0,
     left: 0,
     right: 0,

@@ -57,6 +57,7 @@ export type IconNameProps =
   | 'question-circle-outline'
   | 'shield-fill'
   | 'Users'
+  | 'Bold'
   | 'whatsapp-fill';
 
 export interface IconProps {
