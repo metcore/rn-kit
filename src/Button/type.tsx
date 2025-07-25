@@ -255,7 +255,7 @@ export const COLOR_MAP: Record<
     tertiaryFocusBorderColor: Color.info[200],
     tertiaryPressTextColor: Color.info[700],
     tertiaryPressBorderColor: 'transparent',
-    tertiaryDisabledTextColor: Color.info[100],
+    tertiaryDisabledTextColor: Color.info[200],
     tertiaryDisabledBorderColor: Color.base.white100,
   },
   orange: {

@@ -58,7 +58,7 @@ import Users from './icons/Users';
 import WhatsAppFill from './icons/WhatsappFill';
 import Bold from './icons/Bold';
 import Italic from './icons/Italic';
-import UnderLine from './icons/Underline';
+import UnderLine from './icons/UnderLine';
 
 const icons: Record<
   IconNameProps,
