@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
@@ -10,6 +10,7 @@ type InputOtpProps = {
   label?: string;
   hint?: string;
   hasError?: boolean;
+  inputCenter?: boolean;
 };
 
 const InputOtp: React.FC<InputOtpProps> = ({
@@ -18,6 +19,7 @@ const InputOtp: React.FC<InputOtpProps> = ({
   label,
   hint,
   hasError,
+  inputCenter = false,
 }) => {
   const inputs = useRef<Array<TextInput | null>>([]);
   const values = useRef<string[]>(Array(length).fill(''));
@@ -50,7 +52,10 @@ const InputOtp: React.FC<InputOtpProps> = ({
     <View style={styles.gap4}>
       {label ? <LabelForm title={label} /> : null}
       <View
-        style={styles.container}
+        style={[
+          styles.container,
+          { justifyContent: inputCenter ? 'center' : 'flex-start' },
+        ]}
         onLayout={(e) => {
           // cek apakah lebar container itu cukup untuk menampilkan semua input
           containerWidth.current = e.nativeEvent.layout.width;
@@ -101,7 +106,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 10,
-    justifyContent: 'flex-start',
   },
   input: {
     flexGrow: 1,

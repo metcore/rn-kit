@@ -24,13 +24,14 @@ Salin file `InputOtp.tsx` ke proyek React Native Anda dan import sesuai kebutuha
 
 ## Props
 
-| Nama       | Tipe                        | Default | Deskripsi                                                       |
-|------------|-----------------------------|---------|----------------------------------------------------------------|
-| `length`   | `number`                    | 6       | Jumlah kotak input OTP yang ingin ditampilkan                  |
-| `onChange` | `(otp: string) => void`     | -       | Callback saat isi OTP berubah, menerima OTP lengkap sebagai string |
-| `label`    | `string`                    | -       | Label yang tampil di atas kotak input                          |
-| `hint`     | `string`                    | -       | Pesan kecil di bawah input (misal instruksi atau error)       |
-| `hasError` | `boolean`                   | false   | Jika `true`, border input berubah warna merah (indikasi error) |
+| Nama          | Tipe                    | Default | Deskripsi                                                                                |
+| ------------- | ----------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| `length`      | `number`                | 6       | Jumlah kotak input OTP yang ingin ditampilkan                                            |
+| `onChange`    | `(otp: string) => void` | -       | Callback saat isi OTP berubah, menerima OTP lengkap sebagai string                       |
+| `label`       | `string`                | -       | Label yang tampil di atas kotak input                                                    |
+| `hint`        | `string`                | -       | Pesan kecil di bawah input (misal instruksi atau error)                                  |
+| `hasError`    | `boolean`               | false   | Jika `true`, border input berubah warna merah (indikasi error)                           |
+| `inputCenter` | `boolean`               | false   | Jika `true`, maka seluruh input field akan memposisikan diri ke tengah secara horizontal |
 
 ---
 
