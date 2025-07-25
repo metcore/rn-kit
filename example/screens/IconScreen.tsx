@@ -58,6 +58,9 @@ const icons = [
   'shield-fill',
   'Users',
   'whatsapp-fill',
+  'Bold',
+  'UnderLine',
+  'Italic',
 ];
 
 export default function IconScreen() {

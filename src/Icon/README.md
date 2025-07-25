@@ -103,3 +103,6 @@ export default function App() {
 - shield-fill
 - Users
 - whatsapp-fill
+- Bold
+- UnderLine
+- Italic
