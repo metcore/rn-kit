@@ -1,10 +1,9 @@
-import { useRef, useEffect } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import Icon, { type IconNameProps } from '../Icon';
 import Button from '../Button/Button';
-import Container from '../Ui/Container';
 
 type ToastColor =
   | 'default'
@@ -25,9 +24,9 @@ const COLOR_MAP: Record<
   }
 > = {
   primary: {
-    bg: Color.base.white100,
+    bg: Color.primary[1000],
     border: Color.gray[50],
-    text: Color.primary[1000],
+    text: Color.base.white100,
   },
   default: {
     bg: Color.gray[700],
@@ -74,6 +73,8 @@ interface ToastProps {
   icon?: IconNameProps;
   onClear?: (val: boolean) => void;
   onHide?: (val: boolean) => void;
+  action?: () => void;
+  actionLabel?: string;
 }
 const Toast = ({
   visible,
@@ -83,6 +84,8 @@ const Toast = ({
   color = 'default',
   icon = 'ExclamationMark',
   onClear,
+  action = undefined,
+  actionLabel = 'Action',
 }: ToastProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const validColors: ToastColor[] = [
@@ -132,7 +135,7 @@ const Toast = ({
     <Animated.View
       style={[styles.toast, baseContainerStyle, { opacity: fadeAnim }]}
     >
-      <Container>
+      <View style={styles.wrapper}>
         <View style={styles.container}>
           <View style={styles.content}>
             <Icon name={icon} size={20} color={COLOR_MAP[safeColor].text} />
@@ -140,16 +143,25 @@ const Toast = ({
               {message}
             </Typography>
           </View>
-          <Button
-            variant="tertiary"
-            size="small"
-            title="x"
-            onPress={handlePressClearButton}
-          >
-            <Icon name="Times" size={10} color={COLOR_MAP[safeColor].text} />
-          </Button>
+          <View style={styles.actionWrapper}>
+            {action && (
+              <Button
+                color={color}
+                size="small"
+                variant={
+                  color === 'primary' || color === 'default'
+                    ? 'outline'
+                    : 'default'
+                }
+                title={actionLabel}
+              />
+            )}
+            <Pressable onPress={handlePressClearButton}>
+              <Icon name="Times" size={10} color={COLOR_MAP[safeColor].text} />
+            </Pressable>
+          </View>
         </View>
-      </Container>
+      </View>
     </Animated.View>
   );
 };
@@ -168,10 +180,22 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   content: {
     alignItems: 'center',
     flexDirection: 'row',
+    gap: 8,
+  },
+  wrapper: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    minHeight: 48,
+    justifyContent: 'center',
+  },
+  actionWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
 });

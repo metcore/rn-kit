@@ -3,14 +3,23 @@ import { useState } from 'react';
 import type { ColorVariantType } from '../../src/Color/type';
 
 export default function ToastScreen() {
-  const [selectedColor, setSelectedColor] =
-    useState<ColorVariantType>('default');
+  const [selectedColor, setSelectedColor] = useState<
+    ColorVariantType | 'action-primary'
+  >('default');
   const toast = useToast();
 
   const showToast = () => {
-    toast.show('Tes', {
-      color: selectedColor,
-    });
+    if (selectedColor !== 'action-primary') {
+      toast.show('Tes', {
+        color: selectedColor,
+        action: undefined,
+      });
+    } else {
+      toast.show('Tes', {
+        color: 'primary',
+        action: () => {},
+      });
+    }
   };
 
   const handleChangeSelectColor = (val: string) => {
@@ -51,6 +60,10 @@ export default function ToastScreen() {
           {
             label: 'purple',
             value: 'purple',
+          },
+          {
+            label: 'action primary',
+            value: 'action-primary',
           },
         ]}
         selectedValue={selectedColor}

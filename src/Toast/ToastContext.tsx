@@ -7,6 +7,7 @@ interface ToastOptions {
   color?: ColorVariantType;
   icon?: IconNameProps;
   duration?: number;
+  action?: () => void;
 }
 
 interface ToastContextType {
@@ -36,6 +37,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
         message={message}
         onHide={() => setVisible(false)}
         onClear={() => setVisible(false)}
+        action={options.action || undefined}
         color={options.color}
         icon={options.icon}
         duration={options.duration}
