@@ -23,6 +23,7 @@ export default function TextEditor({
   height = 300,
 }: TextEditorType) {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [showToolbar, setShowToolbar] = useState<boolean>(false);
   const webviewRef = useRef<WebView>(null);
   const handleOnChange = (data: string) => {
     onChange?.(data);
@@ -119,10 +120,12 @@ export default function TextEditor({
       (e: KeyboardEvent) => {
         if (Platform.OS === 'ios')
           setKeyboardHeight(e.endCoordinates.height - 35);
+        setShowToolbar(true);
       }
     );
     const hideSub = Keyboard.addListener('keyboardDidHide', () => {
       if (Platform.OS === 'ios') setKeyboardHeight(0);
+      setShowToolbar(false);
     });
 
     return () => {
@@ -135,7 +138,7 @@ export default function TextEditor({
     <View style={styles.container}>
       {label ? <LabelForm title={label} /> : null}
       <KeyboardAvoidingView
-        style={styles.editorWrapper}
+        style={(styles.editorWrapper, [{ minHeight: height }])}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <WebView
@@ -164,35 +167,37 @@ export default function TextEditor({
         </Typography>
       ) : null}
 
-      <View style={[styles.toolbar, { bottom: keyboardHeight }]}>
-        <TouchableOpacity
-          onPress={() => formatText('bold')}
-          style={styles.toolButton}
-        >
-          <Icon name="Bold" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => formatText('italic')}
-          style={styles.toolButton}
-        >
-          <Icon name="Italic" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => formatText('underline')}
-          style={styles.toolButton}
-        >
-          <Icon name="UnderLine" />
-        </TouchableOpacity>
-      </View>
+      {showToolbar ? (
+        <View style={[styles.toolbar, { bottom: keyboardHeight }]}>
+          <TouchableOpacity
+            onPress={() => formatText('bold')}
+            style={styles.toolButton}
+          >
+            <Icon name="Bold" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => formatText('italic')}
+            style={styles.toolButton}
+          >
+            <Icon name="Italic" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => formatText('underline')}
+            style={styles.toolButton}
+          >
+            <Icon name="UnderLine" />
+          </TouchableOpacity>
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     gap: 4,
+    position: 'relative',
   },
   editorWrapper: { flex: 1 },
   toolbar: {

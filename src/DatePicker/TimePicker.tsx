@@ -7,6 +7,7 @@ import {
   Animated,
   type NativeSyntheticEvent,
   type NativeScrollEvent,
+  ScrollView,
 } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
@@ -38,8 +39,8 @@ export default function TimePickerWheel({
   const [selectedHour, setSelectedHour] = useState<number>(0);
   const [selectedMinute, setSelectedMinute] = useState<number>(0);
 
-  const hourRef = useRef<Animated.ScrollView>(null);
-  const minuteRef = useRef<Animated.ScrollView>(null);
+  const hourRef = useRef<ScrollView>(null);
+  const minuteRef = useRef<ScrollView>(null);
 
   const hourScrollY = useRef(new Animated.Value(0)).current;
   const minuteScrollY = useRef(new Animated.Value(0)).current;
@@ -77,7 +78,7 @@ export default function TimePickerWheel({
   ]);
 
   const scrollToIndex = (
-    ref: React.RefObject<Animated.ScrollView | null>,
+    ref: React.RefObject<ScrollView | null>,
     index: number,
     animated: boolean = true
   ) => {
@@ -92,7 +93,7 @@ export default function TimePickerWheel({
     const index = Math.round(offsetY / ITEM_HEIGHT);
 
     if (type === 'hour') {
-      const realValue = hours[index % 24];
+      const realValue = hours[index % 24] as number;
       setSelectedHour(realValue);
 
       const newCenter = Math.floor(hours.length / 2 / 24) * 24 + realValue;
@@ -100,7 +101,7 @@ export default function TimePickerWheel({
         scrollToIndex(hourRef, newCenter, false);
       }
     } else {
-      const realValue = minutes[index % 60];
+      const realValue = minutes[index % 60] as number;
       setSelectedMinute(realValue);
 
       const newCenter = Math.floor(minutes.length / 2 / 60) * 60 + realValue;
