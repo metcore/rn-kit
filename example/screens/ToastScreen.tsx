@@ -1,6 +1,7 @@
 import { Button, Container, RadioButton, useToast } from '@herca/rn-kit';
 import { useState } from 'react';
 import type { ColorVariantType } from '../../src/Color/type';
+import { Alert } from 'react-native';
 
 export default function ToastScreen() {
   const [selectedColor, setSelectedColor] = useState<
@@ -12,12 +13,19 @@ export default function ToastScreen() {
     if (selectedColor !== 'action-primary') {
       toast.show('Tes', {
         color: selectedColor,
-        action: undefined,
       });
     } else {
       toast.show('Tes', {
         color: 'primary',
-        action: () => {},
+        children: (
+          <Button
+            title="Click Me"
+            onPress={() => Alert.alert('Wow! It Works!')}
+            variant="outline"
+            color="primary"
+            size="small"
+          />
+        ),
       });
     }
   };

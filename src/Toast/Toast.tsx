@@ -3,7 +3,6 @@ import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import Icon, { type IconNameProps } from '../Icon';
-import Button from '../Button/Button';
 
 type ToastColor =
   | 'default'
@@ -73,8 +72,7 @@ interface ToastProps {
   icon?: IconNameProps;
   onClear?: (val: boolean) => void;
   onHide?: (val: boolean) => void;
-  action?: () => void;
-  actionLabel?: string;
+  children?: React.ReactNode;
 }
 const Toast = ({
   visible,
@@ -84,8 +82,7 @@ const Toast = ({
   color = 'default',
   icon = 'ExclamationMark',
   onClear,
-  action = undefined,
-  actionLabel = 'Action',
+  children,
 }: ToastProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const validColors: ToastColor[] = [
@@ -144,18 +141,7 @@ const Toast = ({
             </Typography>
           </View>
           <View style={styles.actionWrapper}>
-            {action && (
-              <Button
-                color={color}
-                size="small"
-                variant={
-                  color === 'primary' || color === 'default'
-                    ? 'outline'
-                    : 'default'
-                }
-                title={actionLabel}
-              />
-            )}
+            {children}
             <Pressable onPress={handlePressClearButton}>
               <Icon name="Times" size={10} color={COLOR_MAP[safeColor].text} />
             </Pressable>
@@ -196,7 +182,7 @@ const styles = StyleSheet.create({
   actionWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 10,
   },
 });
 

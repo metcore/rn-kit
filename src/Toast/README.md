@@ -55,13 +55,12 @@ Menyediakan context global toast. Harus membungkus komponen root Anda.
 
 ### ToastOptions
 
-| Option        | Type               | Default             | Description                                       |
-| ------------- | ------------------ | ------------------- | ------------------------------------------------- |
-| `color`       | `ColorVariantType` | `'default'`         | Warna latar belakang dan teks.                    |
-| `icon`        | `IconNameProps`    | `'ExclamationMark'` | Ikon di samping pesan.                            |
-| `duration`    | `number` (ms)      | `3000`              | Waktu tampil Toast sebelum hilang.                |
-| `action`      | `() => void`       | `undefined`         | Fungsi yang dijalankan ketika tombol aksi ditekan |
-| `actionLabel` | `string`           | `Action`            | Label untuk tombol aksi (jika action diberikan).  |
+| Option     | Type               | Default             | Description                                                             |
+| ---------- | ------------------ | ------------------- | ----------------------------------------------------------------------- |
+| `color`    | `ColorVariantType` | `'default'`         | Warna latar belakang dan teks.                                          |
+| `icon`     | `IconNameProps`    | `'ExclamationMark'` | Ikon di samping pesan.                                                  |
+| `duration` | `number` (ms)      | `3000`              | Waktu tampil Toast sebelum hilang.                                      |
+| `children` | `React.ReactNode`  | `-`                 | Konten opsional yang bisa diisi dengan Semua komponen di dalam aplikasi |
 
 ### 🎨 ToastColor (Available Values)
 
