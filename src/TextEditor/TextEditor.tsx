@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Keyboard,
   type KeyboardEvent,
+  Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Color from '../Color/Color';
@@ -118,13 +120,13 @@ export default function TextEditor({
     const showSub = Keyboard.addListener(
       'keyboardDidShow',
       (e: KeyboardEvent) => {
-        if (Platform.OS === 'ios')
-          setKeyboardHeight(e.endCoordinates.height - 35);
+        setKeyboardHeight(e.endCoordinates.height - 35);
+        console.log(e.endCoordinates.height);
         setShowToolbar(true);
       }
     );
     const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-      if (Platform.OS === 'ios') setKeyboardHeight(0);
+      setKeyboardHeight(0);
       setShowToolbar(false);
     });
 
@@ -166,9 +168,13 @@ export default function TextEditor({
           {hint}
         </Typography>
       ) : null}
-
       {showToolbar ? (
-        <View style={[styles.toolbar, { bottom: keyboardHeight }]}>
+        <SafeAreaView
+          style={[
+            styles.toolbar,
+            { top: Dimensions.get('screen').height - keyboardHeight - 200 },
+          ]}
+        >
           <TouchableOpacity
             onPress={() => formatText('bold')}
             style={styles.toolButton}
@@ -187,7 +193,7 @@ export default function TextEditor({
           >
             <Icon name="UnderLine" />
           </TouchableOpacity>
-        </View>
+        </SafeAreaView>
       ) : null}
     </View>
   );
@@ -207,7 +213,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
     position: 'absolute',
-    bottom: 0,
     left: 0,
     width: '100%',
     alignItems: 'center',
