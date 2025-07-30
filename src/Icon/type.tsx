@@ -60,6 +60,7 @@ export type IconNameProps =
   | 'Bold'
   | 'Italic'
   | 'UnderLine'
+  | 'settings-slider'
   | 'whatsapp-fill';
 
 export interface IconProps {

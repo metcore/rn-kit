@@ -1,15 +1,16 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import {
   Badge,
   Button,
   Color,
   Container,
+  Icon,
   Select,
   Typography,
   type ChipOptionProps,
   type ChipSelectedProps,
 } from '@herca/rn-kit';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 const DATA = [
   {
@@ -82,6 +83,11 @@ export default function SelectScreen() {
   const [loadingSelect, setLoadingSelect] = useState<boolean>(true);
   const [submitValue, setSubmitValue] = useState<ChipSelectedProps>();
   const [onEndReached, setOnEndReach] = useState<boolean>(false);
+  const [isRequiredSelectOpen, setIsRequiredSelectOpen] =
+    useState<boolean>(false);
+  const [isProductFetching, setIsProductFetching] = useState<boolean>(false);
+  const [products, setProducts] = useState<any[]>([]);
+
   const handleSubmitSelectCustom = (val: ChipSelectedProps) => {
     setSubmitValue(val);
     setIsOpenSelectCustom(false);
@@ -127,7 +133,7 @@ export default function SelectScreen() {
 
   const handleSubmitSelectHeaderFooter = (val: ChipSelectedProps) => {
     setSubmitValue(val);
-    setIsOpenSelectHeaderFooter(true);
+    setIsOpenSelectHeaderFooter(false);
   };
 
   const renderHeader = () => {
@@ -142,6 +148,45 @@ export default function SelectScreen() {
       </View>
     );
   };
+
+  async function fetchProducts(query: string = '') {
+    setIsProductFetching(true);
+    try {
+      const url = query
+        ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`
+        : `https://dummyjson.com/products`;
+
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+      setProducts(data.products);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsProductFetching(false);
+    }
+  }
+
+  const mappedProducts = products.map((prod) => ({
+    label: prod.title,
+    value: prod.id,
+  }));
+
+  function handleSubmitSelectRequired(val: any) {
+    setIsRequiredSelectOpen(false);
+    setSubmitValue(val);
+  }
+
+  useEffect(() => {
+    if (isRequiredSelectOpen) {
+      fetchProducts();
+    }
+  }, [isRequiredSelectOpen]);
 
   return (
     <View>
@@ -160,6 +205,11 @@ export default function SelectScreen() {
           color="primary"
           onPress={() => setIsOpenSelectHeaderFooter(true)}
           title="Header & Footer"
+        />
+        <Button
+          color="primary"
+          onPress={() => setIsRequiredSelectOpen(true)}
+          title="Required Select"
         />
         <Typography>submitValue: {submitValue}</Typography>
       </Container>
@@ -184,7 +234,21 @@ export default function SelectScreen() {
         multiple
         renderItem={renderItem}
         onSubmit={handleSubmitSelectCustom}
-        required={true}
+      />
+      <Select
+        required
+        data={mappedProducts}
+        loading={isProductFetching}
+        isOpen={isRequiredSelectOpen}
+        onClose={() => setIsRequiredSelectOpen(false)}
+        onSubmit={handleSubmitSelectRequired}
+        onSearch={fetchProducts}
+        renderItem={({ label }) => (
+          <View style={styles.containerItem}>
+            <Icon name="box-outline" />
+            <Typography variant="t1">{label}</Typography>
+          </View>
+        )}
       />
       <Select
         isOpen={isOpenSelectHeaderFooter}

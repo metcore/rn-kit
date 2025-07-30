@@ -61,6 +61,7 @@ const icons = [
   'Bold',
   'UnderLine',
   'Italic',
+  'settings-slider',
 ];
 
 export default function IconScreen() {
