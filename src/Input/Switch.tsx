@@ -3,6 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
+
+interface SwitchProps {
+  label?: string;
+  dotColor?: string;
+  value?: boolean;
+  onChange?: (newValue: boolean) => void;
+  hint?: string;
+  hasError?: true;
+  disabled?: boolean;
+}
 export default function Switch({
   label,
   dotColor,
