@@ -13,36 +13,36 @@ interface SwitchProps {
   hasError?: true;
   disabled?: boolean;
 }
-
 export default function Switch({
   label,
   dotColor,
-  value: defaultValue = false,
+  value,
   onChange,
   hint,
   hasError,
   disabled = false,
 }: SwitchProps) {
-  const [value, setValue] = useState<boolean>(defaultValue);
-  const animValue = useRef(new Animated.Value(defaultValue ? 1 : 0)).current;
+  const isControlled = value !== undefined;
+  const [internalValue, setInternalValue] = useState<boolean>(false);
+  const currentValue = isControlled ? value : internalValue;
+
+  const animValue = useRef(new Animated.Value(currentValue ? 1 : 0)).current;
 
   useEffect(() => {
     Animated.timing(animValue, {
-      toValue: value ? 1 : 0,
+      toValue: currentValue ? 1 : 0,
       duration: 200,
       easing: Easing.out(Easing.circle),
       useNativeDriver: false,
     }).start();
-  }, [value, animValue]);
-
-  useEffect(() => {
-    setValue(defaultValue);
-  }, [defaultValue]);
+  }, [currentValue, animValue]);
 
   const handlePress = () => {
     if (disabled) return;
-    const newValue = !value;
-    setValue(newValue);
+    const newValue = !currentValue;
+    if (!isControlled) {
+      setInternalValue(newValue);
+    }
     onChange?.(newValue);
   };
 
@@ -52,18 +52,17 @@ export default function Switch({
   });
 
   const backgroundColor =
-    disabled && value
+    disabled && currentValue
       ? Color.primary[1000]
-      : disabled && !value
+      : disabled && !currentValue
         ? Color.gray[200]
-        : value
+        : currentValue
           ? Color.primary[1000]
           : Color.gray[300];
 
   return (
     <View style={{ gap: 4, opacity: disabled ? 0.5 : 1 }}>
       {label ? <LabelForm title={label} /> : null}
-
       <Pressable
         style={styles.touchArea}
         onPress={handlePress}
@@ -75,13 +74,12 @@ export default function Switch({
               styles.circle,
               {
                 transform: [{ translateX }],
-                backgroundColor: dotColor ? dotColor : Color.base.white100,
+                backgroundColor: dotColor ?? Color.base.white100,
               },
             ]}
           />
         </View>
       </Pressable>
-
       {hint ? (
         <Typography color={hasError ? Color.danger[500] : ''} variant="t2">
           {hint}
