@@ -42,7 +42,7 @@ export default function BottomSheet({
     useState<BottomSheetHeighProps>('auto');
   const [maxHeight, setMaxHeight] =
     useState<BottomSheetHeighProps>(actualScreenHeight);
-  const translateY = useRef(new Animated.Value(screenHeight)).current;
+  const translateY = useRef(new Animated.Value(600)).current;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -66,9 +66,9 @@ export default function BottomSheet({
   const hideModal = useCallback(() => {
     if (closable) {
       Animated.timing(translateY, {
-        toValue: screenHeight,
+        toValue: 500,
         duration: 300,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }).start(() => {
         setIsVisible(false);
         onClose && onClose(false);
@@ -80,7 +80,7 @@ export default function BottomSheet({
     setIsVisible(true);
     Animated.spring(translateY, {
       toValue: 0,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start();
   }, [translateY]);
 
