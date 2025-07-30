@@ -1,25 +1,26 @@
+import { useCallback, useState } from 'react';
 import {
-  View,
+  Keyboard,
   StyleSheet,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from 'react-native';
-import { useState, useCallback } from 'react';
-import { type SelectProps } from './type';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
-import Input from '../Input/Input';
 import Chip from '../Chip/Chip';
 import { type ChipSelectedProps } from '../Chip/type';
-import { useToast } from '../Toast/ToastContext';
+import Input from '../Input/Input';
 import Loading from '../Loading/Loading';
+import { useToast } from '../Toast/ToastContext';
+import { type SelectProps } from './type';
+import { useRef } from 'react';
 export default function Select({
   isOpen,
   data,
   renderItem,
   onClose,
   onSubmit,
-  multiple,
+  multiple = false,
   onSearch,
   required = false,
   loading = false,
@@ -30,9 +31,11 @@ export default function Select({
   footer,
   header,
   onEndReached,
+  submitBtnLabel,
 }: SelectProps) {
   // const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
+  const [searchQuery, setSearchQuery] = useState<string>();
   const { show } = useToast();
   // useEffect(() => {
   //   setIsOpenSelect(isOpen);
@@ -52,27 +55,40 @@ export default function Select({
       show('Please fill a item');
       return false;
     }
-    // setIsOpenSelect(false);
     onSubmit?.(selected ? selected : []);
     return true;
   };
 
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+
   const handleOnSearch = (val: string) => {
-    setTimeout(() => {
+    setSearchQuery(val);
+
+    // clear timeout sebelumnya
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
+    }
+
+    // set timeout baru
+    searchTimeout.current = setTimeout(() => {
       onSearch?.(val);
     }, delaySearch);
   };
+
   return (
     <BottomSheet
       onClose={(val: boolean) => handleOnCloseBottom(val)}
       isOpen={isOpen}
       height={height}
       footer={
-        <Button
-          title="lanjutkan"
-          color="primary"
-          onPress={handleOnPresSubmitSelect}
-        />
+        multiple ? (
+          <Button
+            title={submitBtnLabel ?? 'Lanjutkan'}
+            color="primary"
+            disabled={(!selected || selected.length === 0) && required}
+            onPress={handleOnPresSubmitSelect}
+          />
+        ) : undefined
       }
     >
       <View style={styles.container}>
@@ -85,6 +101,7 @@ export default function Select({
               submitBehavior="submit"
               icon="Search"
               placeholder="Search"
+              value={searchQuery}
               onChangeText={(val) => handleOnSearch(val)}
             />
           </TouchableWithoutFeedback>
@@ -98,7 +115,6 @@ export default function Select({
             scrollable={true}
             selected={selected}
             multiple={multiple}
-            onSelect={setSelected}
             onEndReached={onEndReached}
             color="primary"
             size="large"
@@ -108,6 +124,25 @@ export default function Select({
             refreshing={refreshing}
             footer={footer}
             header={header}
+            contentContainerStyle={styles.chipContainer}
+            onSelect={(item) => {
+              setSelected(item);
+              if (!multiple && required) {
+                onSubmit?.(item);
+                handleOnCloseBottom(false);
+              } else if (!multiple && !required) {
+                const isSame =
+                  Array.isArray(item) && Array.isArray(selected)
+                    ? item[0] === selected?.[0]
+                    : item === selected;
+
+                const nextValue = !multiple && !required && isSame ? [] : item;
+
+                setSelected(nextValue);
+                onSubmit?.(nextValue);
+                handleOnCloseBottom(false);
+              }
+            }}
           />
         )}
       </View>
@@ -117,10 +152,13 @@ export default function Select({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 190,
+    marginBottom: 140,
   },
   containerSearch: {
     gap: 14,
-    padding: 12,
+    paddingBottom: 12,
+  },
+  chipContainer: {
+    paddingBottom: 14,
   },
 });
