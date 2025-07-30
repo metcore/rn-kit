@@ -124,7 +124,6 @@ export default function Select({
             refreshing={refreshing}
             footer={footer}
             header={header}
-            contentContainerStyle={styles.chipContainer}
             onSelect={(item) => {
               setSelected(item);
               if (!multiple && required) {
@@ -157,8 +156,5 @@ const styles = StyleSheet.create({
   containerSearch: {
     gap: 14,
     paddingBottom: 12,
-  },
-  chipContainer: {
-    paddingBottom: 14,
   },
 });

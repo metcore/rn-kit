@@ -1,4 +1,4 @@
-import type { ColorValue, ViewStyle } from 'react-native';
+import type { ColorValue } from 'react-native';
 import Color from '../Color/Color';
 import type { ColorVariantType } from '../Color/type';
 
@@ -152,5 +152,4 @@ export interface ChipProps {
   refreshing?: boolean;
   footer?: React.ComponentType<any> | React.ReactElement | null | undefined;
   header?: React.ComponentType<any> | React.ReactElement | null | undefined;
-  contentContainerStyle?: ViewStyle | ViewStyle[];
 }

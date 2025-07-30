@@ -25,7 +25,6 @@ const Chip: React.FC<ChipProps> = ({
   onEndReached,
   footer,
   header,
-  contentContainerStyle,
 }) => {
   const isHorizontal = direction === 'horizontal';
 
@@ -100,7 +99,6 @@ const Chip: React.FC<ChipProps> = ({
       numColumns={numColumns}
       contentContainerStyle={[
         styles.container,
-        contentContainerStyle,
         {
           flexDirection: flexDirectionStyle,
           alignItems: alignItemsStyle,
@@ -116,6 +114,7 @@ const Chip: React.FC<ChipProps> = ({
 const styles = StyleSheet.create({
   container: {
     gap: 8,
+    paddingBottom: 14,
   },
   wrapperStyle: {
     gap: 8,
