@@ -15,7 +15,7 @@ const icons = [
   'Check',
   'Document',
   'Download',
-  'ExlamationMark',
+  'ExclamationMark',
   'Eye',
   'EyeOpen',
   'Filter',
