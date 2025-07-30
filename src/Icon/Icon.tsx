@@ -59,7 +59,6 @@ import WhatsAppFill from './icons/WhatsappFill';
 import Bold from './icons/Bold';
 import Italic from './icons/Italic';
 import UnderLine from './icons/UnderLine';
-import SettingsSlider from './icons/SettingsSlider';
 
 const icons: Record<
   IconNameProps,
@@ -123,7 +122,7 @@ const icons: Record<
   'Bold': Bold,
   'Italic': Italic,
   'UnderLine': UnderLine,
-  'settings-slider': SettingsSlider,
+  'settings-slider': UnderLine,
 };
 
 const Icon: React.FC<IconProps> = ({
