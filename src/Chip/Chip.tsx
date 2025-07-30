@@ -25,6 +25,7 @@ const Chip: React.FC<ChipProps> = ({
   onEndReached,
   footer,
   header,
+  contentContainerStyle,
 }) => {
   const isHorizontal = direction === 'horizontal';
 
@@ -72,6 +73,9 @@ const Chip: React.FC<ChipProps> = ({
     onPress?.(item.value);
   };
 
+  const flexDirectionStyle = isHorizontal ? 'row' : 'column';
+  const alignItemsStyle = block ? 'stretch' : 'flex-start';
+
   return (
     <FlatList
       data={options}
@@ -96,9 +100,10 @@ const Chip: React.FC<ChipProps> = ({
       numColumns={numColumns}
       contentContainerStyle={[
         styles.container,
+        contentContainerStyle,
         {
-          flexDirection: isHorizontal ? 'row' : 'column',
-          alignItems: block ? 'stretch' : 'flex-start',
+          flexDirection: flexDirectionStyle,
+          alignItems: alignItemsStyle,
         },
       ]}
       columnWrapperStyle={numColumns > 1 ? styles.wrapperStyle : undefined}
