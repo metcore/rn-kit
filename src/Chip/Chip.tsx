@@ -72,6 +72,9 @@ const Chip: React.FC<ChipProps> = ({
     onPress?.(item.value);
   };
 
+  const flexDirectionStyle = isHorizontal ? 'row' : 'column';
+  const alignItemsStyle = block ? 'stretch' : 'flex-start';
+
   return (
     <FlatList
       data={options}
@@ -97,8 +100,8 @@ const Chip: React.FC<ChipProps> = ({
       contentContainerStyle={[
         styles.container,
         {
-          flexDirection: isHorizontal ? 'row' : 'column',
-          alignItems: block ? 'stretch' : 'flex-start',
+          flexDirection: flexDirectionStyle,
+          alignItems: alignItemsStyle,
         },
       ]}
       columnWrapperStyle={numColumns > 1 ? styles.wrapperStyle : undefined}
@@ -111,6 +114,7 @@ const Chip: React.FC<ChipProps> = ({
 const styles = StyleSheet.create({
   container: {
     gap: 8,
+    paddingBottom: 14,
   },
   wrapperStyle: {
     gap: 8,
