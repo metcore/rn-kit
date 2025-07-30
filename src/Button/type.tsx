@@ -234,9 +234,9 @@ export const COLOR_MAP: Record<
     pressBackgroundColor: Color.info[700],
     pressBorderColor: Color.info[700],
     pressTextColor: Color.gray[200],
-    disabledBackgroundColor: Color.info[100],
+    disabledBackgroundColor: Color.info[300],
     disabledTextColor: Color.base.white100,
-    disabledBorderColor: Color.info[100],
+    disabledBorderColor: Color.info[300],
 
     outlineBackgroundColor: Color.base.white100,
     outlineTextColor: Color.info[500],
@@ -245,8 +245,8 @@ export const COLOR_MAP: Record<
     outlineFocusBorderColor: Color.info[200],
     outlinePressTextColor: Color.info[700],
     outlinePressBorderColor: Color.info[700],
-    outlineDisabledTextColor: Color.info[100],
-    outlineDisabledBorderColor: Color.info[100],
+    outlineDisabledTextColor: Color.info[300],
+    outlineDisabledBorderColor: Color.info[300],
 
     tertiaryBackgroundColor: 'transparent',
     tertiaryTextColor: Color.info[500],
@@ -255,7 +255,7 @@ export const COLOR_MAP: Record<
     tertiaryFocusBorderColor: Color.info[200],
     tertiaryPressTextColor: Color.info[700],
     tertiaryPressBorderColor: 'transparent',
-    tertiaryDisabledTextColor: Color.info[200],
+    tertiaryDisabledTextColor: Color.info[300],
     tertiaryDisabledBorderColor: Color.base.white100,
   },
   orange: {
