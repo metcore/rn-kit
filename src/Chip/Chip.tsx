@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import {
   type ChipOptionProps,
   type ChipProps,
@@ -27,6 +27,11 @@ const Chip: React.FC<ChipProps> = ({
   header,
 }) => {
   const isHorizontal = direction === 'horizontal';
+  const [chipItemWidth, setChipItemWidth] = useState(0);
+  const screenWidth = Dimensions.get('window').width;
+  const contaierHorizontalPadding = 24;
+  const containerHorizontalChipGap = 8;
+  const availableContainerChipWidth = screenWidth - contaierHorizontalPadding;
 
   const normalizeSelected = (val: ChipSelectedProps) =>
     Array.isArray(val) ? val : val ? [val] : [];
@@ -64,8 +69,10 @@ const Chip: React.FC<ChipProps> = ({
 
   const numColumns = useMemo(() => {
     if (isHorizontal || block) return 1;
-    return 2;
-  }, [block, isHorizontal]);
+    return Math.floor(
+      availableContainerChipWidth / (chipItemWidth + containerHorizontalChipGap)
+    );
+  }, [block, isHorizontal, availableContainerChipWidth, chipItemWidth]);
 
   const handleOnPresChipItem = (isDisabled: boolean, item: ChipOptionProps) => {
     !isDisabled && handleSelect(item.value);
@@ -78,6 +85,7 @@ const Chip: React.FC<ChipProps> = ({
   return (
     <FlatList
       data={options}
+      key={`chip-${numColumns}`}
       renderItem={({ item }) => (
         <ChipItem
           item={item}
@@ -87,6 +95,14 @@ const Chip: React.FC<ChipProps> = ({
           onPress={handleOnPresChipItem}
           size={size}
           renderItem={renderItem}
+          onLayout={
+            chipItemWidth
+              ? undefined
+              : (e) => {
+                  const { width } = e.nativeEvent.layout;
+                  setChipItemWidth(width);
+                }
+          }
         />
       )}
       keyExtractor={(item) => String(item.value)}
@@ -114,7 +130,6 @@ const Chip: React.FC<ChipProps> = ({
 const styles = StyleSheet.create({
   container: {
     gap: 8,
-    paddingBottom: 14,
   },
   wrapperStyle: {
     gap: 8,

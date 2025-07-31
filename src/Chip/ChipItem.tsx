@@ -12,6 +12,7 @@ export default function ChipItem({
   renderItem,
   isHorizontal,
   onPress,
+  onLayout,
 }: ChipItem) {
   const validColors: ColorVariantType[] = [
     'default',
@@ -74,6 +75,7 @@ export default function ChipItem({
       ]}
       onPress={() => handleOnPres(isDisabled, item)}
       disabled={isDisabled}
+      onLayout={onLayout}
     >
       {renderItem ? (
         renderItem(item, selectedState, isDisabled)

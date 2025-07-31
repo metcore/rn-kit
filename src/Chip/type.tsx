@@ -1,4 +1,4 @@
-import type { ColorValue } from 'react-native';
+import type { ColorValue, LayoutChangeEvent } from 'react-native';
 import Color from '../Color/Color';
 import type { ColorVariantType } from '../Color/type';
 
@@ -134,6 +134,7 @@ export interface ChipItem {
   renderItem?: ChipRenderItemFn;
   isHorizontal?: boolean;
   onPress?: (isDisabled: boolean, value: ChipOptionProps) => void;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }
 export interface ChipProps {
   options: ChipOptionProps[];

@@ -109,40 +109,43 @@ export default function Select({
         {loading ? (
           <Loading />
         ) : (
-          <Chip
-            options={data}
-            direction="vertical"
-            scrollable={true}
-            selected={selected}
-            multiple={multiple}
-            onEndReached={onEndReached}
-            color="primary"
-            size="large"
-            renderItem={renderItem}
-            onRefresh={onRefresh}
-            block
-            refreshing={refreshing}
-            footer={footer}
-            header={header}
-            onSelect={(item) => {
-              setSelected(item);
-              if (!multiple && required) {
-                onSubmit?.(item);
-                handleOnCloseBottom(false);
-              } else if (!multiple && !required) {
-                const isSame =
-                  Array.isArray(item) && Array.isArray(selected)
-                    ? item[0] === selected?.[0]
-                    : item === selected;
+          <View style={styles.containerChip}>
+            <Chip
+              options={data}
+              direction="vertical"
+              scrollable={true}
+              selected={selected}
+              multiple={multiple}
+              onEndReached={onEndReached}
+              color="primary"
+              size="large"
+              renderItem={renderItem}
+              onRefresh={onRefresh}
+              block
+              refreshing={refreshing}
+              footer={footer}
+              header={header}
+              onSelect={(item) => {
+                setSelected(item);
+                if (!multiple && required) {
+                  onSubmit?.(item);
+                  handleOnCloseBottom(false);
+                } else if (!multiple && !required) {
+                  const isSame =
+                    Array.isArray(item) && Array.isArray(selected)
+                      ? item[0] === selected?.[0]
+                      : item === selected;
 
-                const nextValue = !multiple && !required && isSame ? [] : item;
+                  const nextValue =
+                    !multiple && !required && isSame ? [] : item;
 
-                setSelected(nextValue);
-                onSubmit?.(nextValue);
-                handleOnCloseBottom(false);
-              }
-            }}
-          />
+                  setSelected(nextValue);
+                  onSubmit?.(nextValue);
+                  handleOnCloseBottom(false);
+                }
+              }}
+            />
+          </View>
         )}
       </View>
     </BottomSheet>
@@ -151,10 +154,13 @@ export default function Select({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 140,
+    marginBottom: 195,
   },
   containerSearch: {
     gap: 14,
+    paddingBottom: 12,
+  },
+  containerChip: {
     paddingBottom: 12,
   },
 });
