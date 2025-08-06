@@ -81,7 +81,7 @@ export default function SelectScreen() {
   const [isOpenSelectHeaderFooter, setIsOpenSelectHeaderFooter] =
     useState<boolean>(false);
   const [loadingSelect, setLoadingSelect] = useState<boolean>(true);
-  const [submitValue, setSubmitValue] = useState<ChipSelectedProps>();
+  const [submitValue, setSubmitValue] = useState<ChipSelectedProps>([]);
   const [onEndReached, setOnEndReach] = useState<boolean>(false);
   const [isRequiredSelectOpen, setIsRequiredSelectOpen] =
     useState<boolean>(false);
@@ -193,6 +193,13 @@ export default function SelectScreen() {
       <Container style={styles.containerButton}>
         <Button
           color="primary"
+          onPress={() => setSubmitValue([])}
+          title="Clear Selected Value"
+          variant="outline"
+        />
+
+        <Button
+          color="primary"
           onPress={() => handleOnPressSelectDefault()}
           title="Select Default"
         />
@@ -216,6 +223,7 @@ export default function SelectScreen() {
       <Select
         isOpen={isOpenSelectDefault}
         height="100%"
+        value={submitValue}
         onClose={() => setIsOpenSelectDefault(false)}
         data={DATA}
         loading={loadingSelect}
@@ -228,6 +236,7 @@ export default function SelectScreen() {
         footer={onEndReached ? <ActivityIndicator /> : <></>}
       />
       <Select
+        value={submitValue}
         isOpen={isOpenSelectCustom}
         onClose={() => setIsOpenSelectCustom(false)}
         data={DATA}
@@ -237,6 +246,7 @@ export default function SelectScreen() {
       />
       <Select
         required
+        value={submitValue}
         data={mappedProducts}
         loading={isProductFetching}
         isOpen={isRequiredSelectOpen}
@@ -251,6 +261,7 @@ export default function SelectScreen() {
         )}
       />
       <Select
+        value={submitValue}
         isOpen={isOpenSelectHeaderFooter}
         onClose={() => setIsOpenSelectHeaderFooter(false)}
         data={DATA}

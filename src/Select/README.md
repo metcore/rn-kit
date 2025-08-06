@@ -14,22 +14,23 @@ Komponen `Select` adalah komponen pemilihan data berbasis bottom sheet dengan du
 
 ## 📦 Props
 
-| Prop         | Tipe                                            | Default       | Keterangan |
-|--------------|--------------------------------------------------|---------------|------------|
-| `isOpen`     | `boolean`                                       | `false`       | Menentukan apakah bottom sheet terbuka |
-| `data`       | `ChipOptionProps[]`                             | -             | Data pilihan untuk ditampilkan |
-| `multiple`   | `boolean`                                       | `false`       | Mengizinkan multiple selection |
-| `renderItem` | `(item, selected, disabled) => React.ReactNode` | -             | Kustom tampilan item |
-| `onSubmit`   | `(selected: ChipSelectedProps) => void`         | -             | Callback saat tombol submit ditekan |
-| `onClose`    | `(val: boolean) => void`                        | -             | Callback saat bottom sheet ditutup |
-| `onSearch`   | `(val: string) => void`                         | -             | Callback saat input pencarian berubah |
-| `required`   | `boolean`                                       | `false`       | Jika `true`, validasi input saat submit |
-| `loading`    | `boolean`                                       | `false`       | Menampilkan loading saat data di-fetch |
-| `delaySearch`| `number`                                        | `300`         | Delay pencarian dalam milidetik |
-| `height`     | `BottomSheetHeighProps`                         | -             | Ukuran tinggi BottomSheet |
-| `onRefresh`  | `() => void`                                    | -             | Callback saat pull-to-refresh dilakukan |
-| `header`     | ReactElement| –              | Jika ingin chip mempunyai header.                          |
-| `footer`     | ReactElement| –              | Jika ingin chip mempunyai footer.                          |
+| Prop          | Tipe                                            | Default | Keterangan                                                                                                                                                    |
+| ------------- | ----------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`      | `boolean`                                       | `false` | Menentukan apakah bottom sheet terbuka                                                                                                                        |
+| `data`        | `ChipOptionProps[]`                             | -       | Data pilihan untuk ditampilkan                                                                                                                                |
+| `multiple`    | `boolean`                                       | `false` | Mengizinkan multiple selection                                                                                                                                |
+| `renderItem`  | `(item, selected, disabled) => React.ReactNode` | -       | Kustom tampilan item                                                                                                                                          |
+| `onSubmit`    | `(selected: ChipSelectedProps) => void`         | -       | Callback saat tombol submit ditekan                                                                                                                           |
+| `onClose`     | `(val: boolean) => void`                        | -       | Callback saat bottom sheet ditutup                                                                                                                            |
+| `onSearch`    | `(val: string) => void`                         | -       | Callback saat input pencarian berubah                                                                                                                         |
+| `required`    | `boolean`                                       | `false` | Jika `true`, validasi input saat submit                                                                                                                       |
+| `loading`     | `boolean`                                       | `false` | Menampilkan loading saat data di-fetch                                                                                                                        |
+| `delaySearch` | `number`                                        | `300`   | Delay pencarian dalam milidetik                                                                                                                               |
+| `height`      | `BottomSheetHeighProps`                         | -       | Ukuran tinggi BottomSheet                                                                                                                                     |
+| `onRefresh`   | `() => void`                                    | -       | Callback saat pull-to-refresh dilakukan                                                                                                                       |
+| `header`      | ReactElement                                    | –       | Jika ingin chip mempunyai header.                                                                                                                             |
+| `footer`      | ReactElement                                    | –       | Jika ingin chip mempunyai footer.                                                                                                                             |
+| `value`       | ChipSelectedProps                               | –       | Nilai pilihan yang dikontrol dari luar. Cocok untuk membuat komponen controlled. Akan mensinkronkan state internal selected dengan value setiap kali berubah. |
 
 ## 📌 Contoh Penggunaan
 
@@ -53,6 +54,7 @@ const MyScreen = () => {
       <Button title="Pilih Data" onPress={() => setOpen(true)} />
       <Select
         isOpen={open}
+        value={selected}
         data={data}
         multiple={true}
         onClose={() => setOpen(false)}
@@ -78,3 +80,10 @@ const MyScreen = () => {
   - `Toast` (untuk validasi/error)
 
 - Jika ingin menambahkan animasi shimmer saat loading, bisa modifikasi komponen `Loading`.
+
+## ⚠️ Behavior Penting
+
+- Jika `multiple={false}` dan `required={true}`, maka:
+  - Item yang dipilih akan langsung dikirim ke `onSubmit`.
+  - BottomSheet akan langsung tertutup tanpa menekan tombol submit.
+- Jika `required={false}`, user bisa membatalkan pilihan (deselect), dan mengirim data kosong.

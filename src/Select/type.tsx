@@ -1,6 +1,7 @@
 import React from 'react';
 import type { ChipOnSelectProps, ChipOptionProps } from '../Chip/type';
 import type { BottomSheetHeighProps } from '../BottomSheet/type';
+import type { ChipSelectedProps } from '../../lib/typescript/src';
 
 export interface SelectDataProps {
   value: string | number;
@@ -29,6 +30,7 @@ export interface SelectProps {
   onEndReached?: () => void;
   refreshing?: boolean;
   submitBtnLabel?: string;
+  value?: ChipSelectedProps;
   footer?: React.ComponentType<any> | React.ReactElement | null | undefined;
   header?: React.ComponentType<any> | React.ReactElement | null | undefined;
 }

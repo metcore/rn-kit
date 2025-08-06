@@ -50,6 +50,7 @@ type RootStackParamList = {
   TextEditor: undefined;
   Step: undefined;
   Icons: undefined;
+  Skeleton: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

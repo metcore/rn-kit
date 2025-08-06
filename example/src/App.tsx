@@ -54,6 +54,7 @@ import StepScreen from '../screens/StepScreen';
 import IconScreen from '../screens/IconScreen';
 import CounterButtonScreen from '../screens/CounterButtonScreen';
 import TextEditorScreen from '../screens/TextEditorScreen';
+import SkeletonScreen from '../screens/SkeletonScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -184,6 +185,7 @@ const App = () => {
               name="ForgotPassword"
               component={ForgotPasswordScreen}
             />
+            <Stack.Screen name="Skeleton" component={SkeletonScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ToastProvider>
