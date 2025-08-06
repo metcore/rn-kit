@@ -4,11 +4,12 @@ import {
   Container,
   Icon,
   Typography,
+  ChipItem,
   type ChipOptionProps,
   type ChipSelectedProps,
 } from '@herca/rn-kit';
 import { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 const options = [
   { label: 'Option 1', value: '1' },
@@ -33,9 +34,25 @@ const ChipScreen = () => {
     setSelectedDefault(value);
   };
 
+  const [isChipSatuanSelected, setIsChipSatuanSelected] = useState(false);
+
   return (
     <Container>
       <ScrollView>
+        <Typography variant="p2" weight="semibold">
+          Chip Satuan
+        </Typography>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
+          <ChipItem
+            item={{
+              label: 'Chip Satuan',
+              value: '1',
+            }}
+            onPress={() => setIsChipSatuanSelected(!isChipSatuanSelected)}
+            isSelected={() => isChipSatuanSelected}
+            color="primary"
+          />
+        </View>
         <Typography variant="p2" weight="semibold">
           Chip Default
         </Typography>

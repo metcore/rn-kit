@@ -4,7 +4,7 @@ UI Kit untuk pengembangan aplikasi internal **HerCa**.
 
 Kit ini dirancang untuk mempercepat proses pengembangan antarmuka pengguna dengan pendekatan minimal terhadap penggunaan `style` manual. Beberapa komponen dibuat **fix dan konsisten** agar tampilan aplikasi memiliki nuansa yang seragam.
 
-> **Catatan:** Jika menggunakan UI Kit ini, **tidak disarankan untuk menambahkan style atau melakukan kustomisasi manual**.  
+> **Catatan:** Jika menggunakan UI Kit ini, **tidak disarankan untuk menambahkan style atau melakukan kustomisasi manual**.
 > Untuk kebutuhan kustomisasi, gunakan konfigurasi `Theme` yang telah disediakan.
 
 ---
@@ -107,6 +107,7 @@ Komponen untuk mengumpulkan input dari pengguna.
 - [Checkbox](./src/CheckBox/README_CHECKBOX.md)
 - [Checkbox List](./src/CheckBox/README_CHECKBOXLIST.md)
 - [Chip-(Select)](./src/Chip/README.md)
+- [ChipItem](./src/Chip/README_CHIP_ITEM.md)
 - [CounterButton](./src/CounterButton/README.md)
 - [DatePicker](./src/DatePicker/README_DATEPICKER.md)
 - [DropDown](./src/DropDown/README.md)
@@ -142,7 +143,7 @@ Komponen untuk menyembunyikan atau menampilkan konten.
 
 ---
 
-### 🔹 4. Feedback 
+### 🔹 4. Feedback
 
 Komponen untuk memberikan umpan balik atau informasi kepada pengguna.
 
@@ -169,6 +170,7 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [List](./src/List/README.md)
 - [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)
+- [Skeleton](./src/Skeleton/README.md)
 
 ---
 

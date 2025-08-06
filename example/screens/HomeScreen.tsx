@@ -246,6 +246,12 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('TimeLine')}
             block
           />
+          <Button
+            color="success"
+            title="Skeleton"
+            onPress={() => navigation.navigate('Skeleton')}
+            block
+          />
           <Typography variant="h3" weight="bold" style={styles.title}>
             Example Screen
           </Typography>

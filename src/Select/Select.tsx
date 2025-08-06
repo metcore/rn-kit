@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import {
   Keyboard,
   StyleSheet,
@@ -32,6 +32,7 @@ export default function Select({
   header,
   onEndReached,
   submitBtnLabel,
+  value,
 }: SelectProps) {
   // const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
@@ -74,6 +75,12 @@ export default function Select({
       onSearch?.(val);
     }, delaySearch);
   };
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelected(value);
+    }
+  }, [value]);
 
   return (
     <BottomSheet
