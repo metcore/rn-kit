@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ChipOnSelectProps, ChipOptionProps } from '../Chip/type';
 import type { BottomSheetHeighProps } from '../BottomSheet/type';
-import type { ChipSelectedProps } from '../../lib/typescript/src';
+import type { ChipSelectedProps } from '../Chip/type';
 
 export interface SelectDataProps {
   value: string | number;
