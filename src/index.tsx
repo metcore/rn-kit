@@ -26,6 +26,7 @@ export { default as Gap } from './Ui/Gap';
 export { default as Grid } from './Ui/Grid';
 export { default as Col } from './Ui/Col';
 export { default as Chip } from './Chip/Chip';
+export { default as ChipItem } from './Chip/ChipItem';
 export type {
   ChipSelectedProps,
   ChipOnSelectProps,
@@ -82,3 +83,6 @@ export { default as TextArea } from './Input/TextArea';
 export { default as TextEditor } from './TextEditor/TextEditor';
 // export { default as PdfView } from './FileView/PdfView';
 export { ToastProvider, useToast } from './Toast/ToastContext';
+export { default as Skeleton } from './Skeleton/Skeleton';
+export type { SkeletonProps } from './Skeleton/type';
+export { default as CounterButton } from './CounterButton/CounterButton';

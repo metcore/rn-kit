@@ -8,13 +8,13 @@ export default function CounterButtonScreen() {
       <CounterButton
         max={10}
         min={0}
-        onChange={(val) => setValue(val)}
+        onChange={(val: number) => setValue(val)}
         variant="color"
       />
       <CounterButton
         max={10}
         min={0}
-        onChange={(val) => setValue(val)}
+        onChange={(val: number) => setValue(val)}
         variant="color"
         disabledIncrease={true}
         disabledDecrease={true}
@@ -23,13 +23,13 @@ export default function CounterButtonScreen() {
       <CounterButton
         max={44}
         min={0}
-        onChange={(val) => setValue(val)}
+        onChange={(val: number) => setValue(val)}
         variant="default"
       />
       <CounterButton
         max={10}
         min={0}
-        onChange={(val) => setValue(val)}
+        onChange={(val: number) => setValue(val)}
         variant="default"
         disabledIncrease={true}
         disabledDecrease={true}
