@@ -20,7 +20,9 @@ import Color from '../Color/Color';
 import type { BottomSheetHeighProps, BottomSheetProops } from './type';
 
 const statusBarHeight =
-  Platform.OS === 'android' ? (StatusBar.currentHeight ?? 24) : 65;
+  Platform.OS === 'android' && Platform.Version < 35
+    ? (StatusBar.currentHeight ?? 24)
+    : 65;
 const screenHeight = Dimensions.get('window').height;
 const actualScreenHeight = screenHeight - statusBarHeight;
 const DEFAULT_PADDING_BOTTOM = 40;
