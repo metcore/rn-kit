@@ -55,6 +55,7 @@ import IconScreen from '../screens/IconScreen';
 import CounterButtonScreen from '../screens/CounterButtonScreen';
 import TextEditorScreen from '../screens/TextEditorScreen';
 import SkeletonScreen from '../screens/SkeletonScreen';
+import BadgeIconScreen from '../screens/BadgeIconScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -181,6 +182,7 @@ const App = () => {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Label" component={LabelScreen} />
             <Stack.Screen name="TimePicker" component={TimePickerScreen} />
+            <Stack.Screen name="BadgeIcon" component={BadgeIconScreen} />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}

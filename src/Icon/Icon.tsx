@@ -63,6 +63,8 @@ import SettingsSlider from './icons/SettingsSlider';
 import RotateSquareFill from './icons/RotateSquareFill';
 import LocationPinFill from './icons/LocationPinFill';
 import DiscountFill from './icons/DiscountFill';
+import CopyFill from './icons/CopyFill';
+import CopyTextFill from './icons/CopyTextFill';
 
 const icons: Record<
   IconNameProps,
@@ -130,6 +132,8 @@ const icons: Record<
   'rotate-square-fill': RotateSquareFill,
   'location-pin-fill': LocationPinFill,
   'discount-fill': DiscountFill,
+  'copy-fill': CopyFill,
+  'copy-text-fill': CopyTextFill,
 };
 
 const Icon: React.FC<IconProps> = ({

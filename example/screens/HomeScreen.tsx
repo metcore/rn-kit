@@ -79,6 +79,12 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
+            title="Badge Icon"
+            onPress={() => navigation.navigate('BadgeIcon')}
+            block
+          />
+          <Button
+            color="success"
             title="Alert"
             onPress={() => navigation.navigate('Alert')}
             block
