@@ -61,6 +61,9 @@ export type IconNameProps =
   | 'Italic'
   | 'UnderLine'
   | 'settings-slider'
+  | 'location-pin-fill'
+  | 'discount-fill'
+  | 'rotate-square-fill'
   | 'whatsapp-fill';
 
 export interface IconProps {

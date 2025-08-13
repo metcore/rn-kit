@@ -2,7 +2,7 @@ import { Container, Icon, Typography } from '@herca/rn-kit';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import type { IconNameProps } from '../../src/Icon';
 
-const icons = [
+const icons: IconNameProps[] = [
   'AirPlane',
   'ArrowBackAlt',
   'ArrowDown',
@@ -62,6 +62,9 @@ const icons = [
   'UnderLine',
   'Italic',
   'settings-slider',
+  'rotate-square-fill',
+  'discount-fill',
+  'location-pin-fill',
 ];
 
 export default function IconScreen() {
