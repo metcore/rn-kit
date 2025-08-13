@@ -106,3 +106,7 @@ export default function App() {
 - Bold
 - UnderLine
 - Italic
+- settings-slider
+- rotate-square-fill
+- discount-fill
+- location-pin-fill

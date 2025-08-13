@@ -60,6 +60,9 @@ import Bold from './icons/Bold';
 import Italic from './icons/Italic';
 import UnderLine from './icons/UnderLine';
 import SettingsSlider from './icons/SettingsSlider';
+import RotateSquareFill from './icons/RotateSquareFill';
+import LocationPinFill from './icons/LocationPinFill';
+import DiscountFill from './icons/DiscountFill';
 
 const icons: Record<
   IconNameProps,
@@ -124,6 +127,9 @@ const icons: Record<
   'Italic': Italic,
   'UnderLine': UnderLine,
   'settings-slider': SettingsSlider,
+  'rotate-square-fill': RotateSquareFill,
+  'location-pin-fill': LocationPinFill,
+  'discount-fill': DiscountFill,
 };
 
 const Icon: React.FC<IconProps> = ({
