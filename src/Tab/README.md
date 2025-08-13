@@ -2,12 +2,55 @@
 
 Komponen tab ringan dan fleksibel untuk React Native yang mendukung:
 
-* ✅ Swipe kiri/kanan antar tab
-* ✅ Scroll vertikal di dalam konten tiap tab
-* ✅ Tampilan tab yang bisa disesuaikan
-* ✅ Tanpa dependensi eksternal (tidak butuh react-navigation)
+- ✅ Swipe kiri/kanan antar tab
+- ✅ Scroll vertikal di dalam konten tiap tab
+- ✅ Tampilan tab yang bisa disesuaikan
+- ✅ Tanpa dependensi eksternal (tidak butuh react-navigation)
 
 ---
+
+## ⚙️ Instalasi
+
+Komponen tab ini dibangun menggunakan [react-native-pager-view](https://github.com/callstack/react-native-pager-view) untuk mengatur perpindahan tab secara swipe kiri/kanan.
+Pastikan Anda menginstal dependensi ini sebelum menggunakan komponen.
+
+### 1. Install Dependensi
+
+```sh
+# Menggunakan npm
+npm install react-native-pager-view
+
+# Menggunakan yarn
+yarn add react-native-pager-view
+```
+
+### 2. Konfigurasi Platform
+
+#### iOS
+
+Setelah instalasi, jalankan perintah berikut untuk meng-install pod:
+
+```sh
+cd ios && pod install && cd ..
+```
+
+Tidak ada konfigurasi tambahan untuk iOS, namun pastikan proyek Anda sudah menggunakan **minimum iOS 11** atau sesuai rekomendasi React Native agar kompatibel.
+
+#### Android
+
+`react-native-pager-view` akan otomatis ter-link di Android tanpa perlu langkah tambahan.
+Namun, Anda perlu memastikan bahwa **minimum SDK version** Anda adalah 21 atau lebih tinggi.
+Periksa file `android/app/build.gradle`:
+
+```gradle
+android {
+  defaultConfig {
+    minSdkVersion = 21
+  }
+}
+```
+
+Jika nilai `minSdkVersion` di bawah 21, tingkatkan agar komponen dapat berjalan dengan baik.
 
 ## 💡 Contoh Penggunaan
 
@@ -33,8 +76,8 @@ export default function App() {
 
 ### 1. Navigasi Tab
 
-* Tap pada header tab untuk berpindah
-* Swipe kiri/kanan untuk berpindah antar tab
+- Tap pada header tab untuk berpindah
+- Swipe kiri/kanan untuk berpindah antar tab
 
 ### 2. Konten Scrollable
 
