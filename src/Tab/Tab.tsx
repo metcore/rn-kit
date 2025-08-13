@@ -76,10 +76,9 @@ const Tab: React.FC<TabProps> = ({ children, current = 0, onChangeTab }) => {
         onPageSelected={(e) => updateActive(e.nativeEvent.position)}
       >
         {items.map((item, index) => {
-          const Comp = item.props.component;
           return (
             <View key={index} collapsable={false} style={{ flex: 1 }}>
-              {Comp ? <Comp /> : null}
+              {item.props.children}
             </View>
           );
         })}
@@ -108,5 +107,5 @@ const styles = StyleSheet.create({
   },
   tabActive: { backgroundColor: Color.primary[1000] },
   tabInactive: { backgroundColor: Color.gray[100] },
-  pager: { flex: 1 },
+  pager: { flex: 1, backgroundColor: Color.base.white100 },
 });
