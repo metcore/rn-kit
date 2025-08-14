@@ -112,3 +112,4 @@ export default function App() {
 - location-pin-fill
 - copy-fill
 - copy-text-fill
+- shield-checked-fill

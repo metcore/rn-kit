@@ -65,6 +65,7 @@ import LocationPinFill from './icons/LocationPinFill';
 import DiscountFill from './icons/DiscountFill';
 import CopyFill from './icons/CopyFill';
 import CopyTextFill from './icons/CopyTextFill';
+import ShieldCheckedFill from './icons/ShieldFillChecked';
 
 const icons: Record<
   IconNameProps,
@@ -134,6 +135,7 @@ const icons: Record<
   'discount-fill': DiscountFill,
   'copy-fill': CopyFill,
   'copy-text-fill': CopyTextFill,
+  'shield-checked-fill': ShieldCheckedFill,
 };
 
 const Icon: React.FC<IconProps> = ({

@@ -66,6 +66,7 @@ export type IconNameProps =
   | 'rotate-square-fill'
   | 'copy-fill'
   | 'copy-text-fill'
+  | 'shield-checked-fill'
   | 'whatsapp-fill';
 
 export interface IconProps {
