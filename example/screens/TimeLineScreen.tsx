@@ -31,10 +31,40 @@ export default function TimeLineScreen() {
           <Typography>tes</Typography>
         </TimelineItem>
         <TimelineItem color="warning">
-          <Typography>tes</Typography>
+          <Typography>Timeline warning</Typography>
         </TimelineItem>
         <TimelineItem color="warning">
-          <Typography>tes</Typography>
+          <Typography>Timeline warning</Typography>
+        </TimelineItem>
+        <TimelineItem color="info">
+          <Typography>Timeline info</Typography>
+        </TimelineItem>
+        <TimelineItem color="info">
+          <Typography>Timeline info</Typography>
+        </TimelineItem>
+        <TimelineItem color="danger">
+          <Typography>Timeline danger</Typography>
+        </TimelineItem>
+        <TimelineItem color="danger">
+          <Typography>Timeline danger</Typography>
+        </TimelineItem>
+        <TimelineItem color="purple">
+          <Typography>Timeline purple</Typography>
+        </TimelineItem>
+        <TimelineItem color="purple">
+          <Typography>Timeline purple</Typography>
+        </TimelineItem>
+        <TimelineItem color="orange">
+          <Typography>Timeline orange</Typography>
+        </TimelineItem>
+        <TimelineItem color="orange">
+          <Typography>Timeline orange</Typography>
+        </TimelineItem>
+        <TimelineItem color="default">
+          <Typography>Timeline default</Typography>
+        </TimelineItem>
+        <TimelineItem color="default">
+          <Typography>Timeline default</Typography>
         </TimelineItem>
       </Timeline>
     </Container>

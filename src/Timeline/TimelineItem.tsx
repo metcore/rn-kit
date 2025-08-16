@@ -9,6 +9,9 @@ const COLOR_MAP = {
   success: Color.success[500],
   purple: Color.purple[500],
   danger: Color.danger[500],
+  info: Color.info[500],
+  default: Color.gray[700],
+  orange: Color.orange[500],
 };
 type ColorKey = keyof typeof COLOR_MAP;
 
