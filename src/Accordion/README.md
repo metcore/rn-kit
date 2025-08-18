@@ -15,7 +15,9 @@ import AccordionItem from '@herca/rn-kit/Accordion/AccordionItem';
 export default function FAQSection() {
   return (
     <Accordion
-      header={() => <Text style={{ fontWeight: 'bold' }}>Apa itu produk ini?</Text>}
+      header={() => (
+        <Text style={{ fontWeight: 'bold' }}>Apa itu produk ini?</Text>
+      )}
       isOpen={false}
       onCollapse={(isOpen) => console.log('Status:', isOpen)}
     >
@@ -28,25 +30,26 @@ export default function FAQSection() {
     </Accordion>
   );
 }
-
 ```
 
-
 ## Props
+
 ### Accordion
+
 | Props          | Tipe                        | Wajib | Default | Deskripsi                                                                       |
 | -------------- | --------------------------- | ----- | ------- | ------------------------------------------------------------------------------- |
-| `children`     | `ReactNode`                 | ✅     | -       | Isi Accordion, harus terdiri dari satu atau beberapa `AccordionItem`.           |
-| `renderHeader` | `ReactNode \| null`         | ❌     | `null`  | Komponen untuk menampilkan header. Biasanya berupa `Text` atau komponen kustom. |
-| `isOpen`       | `boolean`                   | ❌     | `true`  | Menentukan apakah Accordion terbuka saat pertama kali dirender.                 |
-| `onCollapse`   | `(isOpen: boolean) => void` | ❌     | -       | Callback saat status terbuka/tutup berubah.                                     |
+| `children`     | `ReactNode`                 | ✅    | -       | Isi Accordion, harus terdiri dari satu atau beberapa `AccordionItem`.           |
+| `renderHeader` | `ReactNode \| null`         | ❌    | `null`  | Komponen untuk menampilkan header. Biasanya berupa `Text` atau komponen kustom. |
+| `isOpen`       | `boolean`                   | ❌    | `true`  | Menentukan apakah Accordion terbuka saat pertama kali dirender.                 |
+| `onCollapse`   | `(isOpen: boolean) => void` | ❌    | -       | Callback saat status terbuka/tutup berubah.                                     |
+| `variant`      | `'default' \| 'borderless'` | ❌    | -       | Opsi untuk menampilkan sebuah border di pembungkus accordion nya atau tidak     |
 
 ### AccordionItem
+
 | Props      | Tipe        | Wajib | Default | Deskripsi                                                       |
 | ---------- | ----------- | ----- | ------- | --------------------------------------------------------------- |
-| `children` | `ReactNode` | ✅     | -       | Konten yang akan ditampilkan saat Accordion dibuka.             |
-| `index`    | `number`    | ❌     | -       | Untuk pengendalian item tertentu jika diperlukan secara manual. |
-
+| `children` | `ReactNode` | ✅    | -       | Konten yang akan ditampilkan saat Accordion dibuka.             |
+| `index`    | `number`    | ❌    | -       | Untuk pengendalian item tertentu jika diperlukan secara manual. |
 
 ## Note
 

@@ -12,6 +12,7 @@ export interface AccordionProps {
   renderHeader?: AccordionRenderHeaderProps;
   isOpen?: boolean;
   onCollapse?: (isOpen: boolean) => void;
+  variant?: 'default' | 'borderless';
 }
 export interface AccordionItemProps {
   children: ReactNode;

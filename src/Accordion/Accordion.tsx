@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import List from '../List/List';
 import ListItem from '../List/ListItem';
 import type { AccordionProps } from './type';
@@ -9,6 +9,7 @@ export default function Accordion({
   renderHeader,
   isOpen,
   onCollapse,
+  variant = 'default',
 }: AccordionProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const toggle = () => {
@@ -22,10 +23,14 @@ export default function Accordion({
 
   return (
     <View>
-      <List>
+      <List style={variant === 'borderless' ? styles.borderless : undefined}>
         {renderHeader && (
           <TouchableOpacity onPress={toggle}>
-            <ListItem>{renderHeader}</ListItem>
+            <ListItem
+              style={variant === 'borderless' ? styles.borderless : undefined}
+            >
+              {renderHeader}
+            </ListItem>
           </TouchableOpacity>
         )}
         {isExpanded &&
@@ -36,3 +41,10 @@ export default function Accordion({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  borderless: {
+    borderWidth: 0,
+    borderBottomWidth: 0,
+  },
+});
