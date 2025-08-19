@@ -110,3 +110,6 @@ export default function App() {
 - rotate-square-fill
 - discount-fill
 - location-pin-fill
+- copy-fill
+- copy-text-fill
+- shield-checked-fill

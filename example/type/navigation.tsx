@@ -51,6 +51,7 @@ type RootStackParamList = {
   Step: undefined;
   Icons: undefined;
   Skeleton: undefined;
+  BadgeIcon: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

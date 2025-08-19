@@ -64,6 +64,9 @@ export type IconNameProps =
   | 'location-pin-fill'
   | 'discount-fill'
   | 'rotate-square-fill'
+  | 'copy-fill'
+  | 'copy-text-fill'
+  | 'shield-checked-fill'
   | 'whatsapp-fill';
 
 export interface IconProps {
