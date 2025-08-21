@@ -5,5 +5,9 @@ export default function AccordionItem({
   children,
   index = 0,
 }: AccordionItemProps) {
-  return <ListItem key={index}>{children}</ListItem>;
+  return (
+    <ListItem key={index} isLast>
+      {children}
+    </ListItem>
+  );
 }

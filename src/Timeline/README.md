@@ -44,11 +44,11 @@ export default function OrderHistory() {
 
 ### TimelineItem
 
-| Prop       | Type                                                          | Wajib | Default     | Deskripsi                                                        |
-| ---------- | ------------------------------------------------------------- | ----- | ----------- | ---------------------------------------------------------------- |
-| `children` | `ReactNode`                                                   | ✅    | —           | Konten untuk node timeline: teks, ikon tambahan, dsb.            |
-| `color`    | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'purple'` | ❌    | `'primary'` | Skema warna titik (`RadioButton`) dan garis vertikal.            |
-| `isLast`   | `boolean`                                                     | ❌    | `false`     | Menentukan apakah garis garis di kiri itu dimunculkan atau tidak |
+| Prop       | Type                                                                              | Wajib | Default     | Deskripsi                                                        |
+| ---------- | --------------------------------------------------------------------------------- | ----- | ----------- | ---------------------------------------------------------------- |
+| `children` | `ReactNode`                                                                       | ✅    | —           | Konten untuk node timeline: teks, ikon tambahan, dsb.            |
+| `color`    | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'purple'\| 'info'\| 'orange'` | ❌    | `'primary'` | Skema warna titik (`RadioButton`) dan garis vertikal.            |
+| `isLast`   | `boolean`                                                                         | ❌    | `false`     | Menentukan apakah garis garis di kiri itu dimunculkan atau tidak |
 
 ## ⚙️ Cara Kerja
 

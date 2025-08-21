@@ -37,10 +37,13 @@ export default function App() {
 
 ##⚙️ Props
 
-| Prop          | Tipe                         | Deskripsi                                                    |                                                                |
-| ------------- | ---------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
-| `checked`     | `boolean`                    | Status awal checkbox (centang atau tidak). Default: `false`. |                                                                |
-| `onChange`    | `(checked: boolean) => void` | Fungsi callback saat status checkbox berubah.                |                                                                |
-| `label`       | \`string \\                  | React.ReactNode\`                                            | Label teks atau komponen yang ditampilkan di samping checkbox. |
-| `disabled`    | `boolean`                    | Jika `true`, checkbox tidak bisa ditekan. Default: `false`.  |                                                                |
-| `renderLabel` | `() => React.ReactNode`      | Alternatif render untuk label kustom selain `label`.         |                                                                |
+| Prop          | Tipe                                                                   | Deskripsi                                                                    |
+| ------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `checked`     | `boolean`                                                              | Status awal checkbox (centang atau tidak). Default: `false`.                 |
+| `onChange`    | `(checked: boolean) => void`                                           | Fungsi callback saat status checkbox berubah.                                |
+| `label`       | `string `                                                              | Label teks atau komponen yang ditampilkan di samping checkbox.               |
+| `hint`        | `string `                                                              | Label teks atau komponen yang ditampilkan di samping checkbox dibawah label. |
+| `color`       | `primary \| danger \| warning \| orange \| info \| success \| purple ` | warna background jika checkbox di centang                                    |
+| `disabled`    | `boolean`                                                              | Jika `true`, checkbox tidak bisa ditekan. Default: `false`.                  |
+| `renderLabel` | `() => React.ReactNode`                                                | Alternatif render untuk label kustom selain `label`.                         |
+| `renderHint`  | `() => React.ReactNode`                                                | Alternatif render untuk hint kustom selain `hint`.                           |

@@ -1,6 +1,4 @@
-import { Button, Container, Tab, TabItem, Typography } from '@herca/rn-kit';
-import LeaveApproveScreen from './example/Leave/LeaveApproveScreen';
-import LeaveDetailScreen from './example/Leave/LeaveDetailScreen';
+import { Button, Container, Typography } from '@herca/rn-kit';
 import { Animated } from 'react-native';
 import { useRef } from 'react';
 
@@ -23,27 +21,6 @@ export default function TabDefaultScreen() {
         </Button>
 
         {/* Tab */}
-        <Tab
-          current={0}
-          scrollY={scrollY}
-          onChangeTab={(number) => console.log('Change tab : ', number)}
-        >
-          <TabItem name="name1">
-            <LeaveDetailScreen />
-          </TabItem>
-          <TabItem name="name2231 12">
-            <LeaveApproveScreen />
-          </TabItem>
-          <TabItem name="children">
-            <LeaveApproveScreen />
-          </TabItem>
-          <TabItem name="name3">
-            <LeaveDetailScreen />
-          </TabItem>
-          <TabItem name="name5">
-            <LeaveDetailScreen />
-          </TabItem>
-        </Tab>
       </Animated.ScrollView>
     </Container>
   );

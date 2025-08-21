@@ -13,6 +13,7 @@ export interface InputProps extends TextInputProps {
   onChangeText?: (val: string) => void;
   secureTextEntry?: boolean;
   iconRightColor?: string;
+  prefix?: React.ReactNode;
 }
 
 export interface TextAreaProps extends InputProps {
