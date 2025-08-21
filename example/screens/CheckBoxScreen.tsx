@@ -6,8 +6,9 @@ import {
   Typography,
 } from '@herca/rn-kit';
 import { useState } from 'react';
+import { View } from 'react-native';
 const items = [
-  { label: 'Syarat', value: 'syarat' },
+  { label: 'Syarat', value: 'syarat', hint: 'Sub Label' },
   { label: 'Promo', value: 'promo' },
   { label: 'Privasi', value: 'privasi' },
 ];
@@ -36,6 +37,40 @@ export default function CheckBoxScreen() {
         selectedValues={selected}
         direction="vertical"
       />
+
+      <View style={{ marginTop: 10, gap: 5 }}>
+        <Typography>Color variant</Typography>
+        <CheckBox
+          color="danger"
+          label="Saya setuju & Ketentuan berlaku"
+          hint="Ini adalah checkbox danger"
+        />
+        <CheckBox
+          color="purple"
+          label="Saya setuju & Ketentuan berlaku"
+          hint="Ini adalah checkbox purple"
+        />
+        <CheckBox
+          color="info"
+          label="Saya setuju & Ketentuan berlaku"
+          hint="Ini adalah checkbox info"
+        />
+        <CheckBox
+          color="success"
+          label="Saya setuju & Ketentuan berlaku"
+          hint="Ini adalah checkbox success"
+        />
+        <CheckBox
+          color="warning"
+          label="Saya setuju & Ketentuan berlaku"
+          hint="Ini adalah checkbox warning"
+        />
+        <CheckBox
+          color="orange"
+          label="Saya setuju & Ketentuan berlaku"
+          hint="Ini adalah checkbox orange"
+        />
+      </View>
     </Container>
   );
 }

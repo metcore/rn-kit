@@ -1,43 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { Pressable, View, Text, StyleSheet } from 'react-native';
-import { Color, Icon } from '@herca/rn-kit';
+import { Color, Icon, Typography } from '@herca/rn-kit';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
+import type { Variant } from './type';
 // import type { ColorVariantType } from '../Color/type';
 
 interface CheckBoxProps {
   checked?: boolean;
   onChange?: (checked: boolean) => void;
   label?: string | React.ReactNode;
+  hint?: string;
   disabled?: boolean;
   renderLabel?: () => React.ReactNode;
-  // color?: ColorVariantType;
+  renderHint?: () => React.ReactNode;
+  color?: Variant;
 }
 
-// const COLOR_MAP: Record<
-//   ColorVariantType,
-//   {
-//     backgroundColor: ColorValue;
-//     backgroundColorDisabled: ColorValue;
-//   }
-// > = {
-//   primary : {
-//     backgroundColor : Color.primary[1000],
-//     backgroundColorDisabled : Color.primary[100],
-//   },
-//   danger: {
-//     backgroundColor : Color.danger[500],
-//     backgroundColorDisabled : Color.danger[100],
-//   },
-// }
+const COLORS: Record<Variant, { background: string; borderColor: string }> = {
+  default: { background: Color.gray[100], borderColor: Color.gray[500] },
+  primary: {
+    background: Color.primary[1000],
+    borderColor: Color.primary[1000],
+  },
+  success: { background: Color.success[500], borderColor: Color.success[500] },
+  info: { background: Color.info[500], borderColor: Color.info[500] },
+  danger: { background: Color.danger[500], borderColor: Color.danger[500] },
+  warning: { background: Color.warning[500], borderColor: Color.warning[500] },
+  orange: { background: Color.orange[500], borderColor: Color.orange[500] },
+  purple: { background: Color.purple[500], borderColor: Color.purple[500] },
+};
+
 const CheckBox: React.FC<CheckBoxProps> = ({
   checked = false,
   onChange,
   label,
+  hint,
   disabled = false,
   renderLabel,
-  // color= 'primary'
+  renderHint,
+  color = 'primary',
 }) => {
   const [value, setValue] = useState<boolean>(false);
-  // const _selectedColor = COLOR_MAP[color];
+  const { background, borderColor } = COLORS[color];
 
   const handlePress = () => {
     const newValue = !value;
@@ -57,14 +60,31 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       <View
         style={[
           styles.checkBox,
-          value && styles.checked,
+          value && {
+            backgroundColor: background,
+            borderColor,
+          },
           disabled && styles.disabled,
         ]}
       >
         {value && <Icon name="Check" size={14} color={Color.base.white100} />}
       </View>
-      {label && <Text style={styles.label}>{label}</Text>}
-      {renderLabel?.()}
+      <View>
+        {label && (
+          <Typography variant="t2" weight="medium" color={Color.gray[900]}>
+            {label}
+          </Typography>
+        )}
+        {hint && (
+          <Typography variant="t3" weight="medium" color={Color.gray[600]}>
+            {hint}
+          </Typography>
+        )}
+      </View>
+      <View>
+        {renderLabel?.()}
+        {renderHint?.()}
+      </View>
     </Pressable>
   );
 };
@@ -90,10 +110,6 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
-  },
-  label: {
-    fontSize: 14,
-    color: '#333',
   },
 });
 
