@@ -55,6 +55,8 @@ import IconScreen from '../screens/IconScreen';
 import CounterButtonScreen from '../screens/CounterButtonScreen';
 import TextEditorScreen from '../screens/TextEditorScreen';
 import SkeletonScreen from '../screens/SkeletonScreen';
+import TabDefaultScreen from '../screens/TabDefaultScreen';
+import TabStickyScreen from '../screens/TabStickyScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -123,6 +125,8 @@ const App = () => {
             <Stack.Screen name="Icons" component={IconScreen} />
             <Stack.Screen name="TimeLine" component={TimeLineScreen} />
             <Stack.Screen name="Tab" component={TabScreen} />
+            <Stack.Screen name="TabDefault" component={TabDefaultScreen} />
+            <Stack.Screen name="TabSticky" component={TabStickyScreen} />
             <Stack.Screen name="Step" component={StepScreen} />
             <Stack.Screen name="TextEditor" component={TextEditorScreen} />
             <Stack.Screen

@@ -1825,7 +1825,7 @@ PODS:
     - React-logger (= 0.79.2)
     - React-perflogger (= 0.79.2)
     - React-utils (= 0.79.2)
-  - RnKit (0.1.32):
+  - RnKit (0.1.34):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2270,9 +2270,9 @@ SPEC CHECKSUMS:
   React-timing: a90f4654cbda9c628614f9bee68967f1768bd6a5
   React-utils: a612d50555b6f0f90c74b7d79954019ad47f5de6
   ReactAppDependencyProvider: 04d5eb15eb46be6720e17a4a7fa92940a776e584
-  ReactCodegen: f2282769a5b621ccf7f6b82508c9dddeadf342b6
+  ReactCodegen: c63eda03ba1d94353fb97b031fc84f75a0d125ba
   ReactCommon: 76d2dc87136d0a667678668b86f0fca0c16fdeb0
-  RnKit: dce15f48d4668b0473d2bc510c8d3fb76a013715
+  RnKit: 4e3dcfe178fa4e6ca1f61b86131f3d6716a7e9e6
   RNScreens: 482e9707f9826230810c92e765751af53826d509
   RNSVG: 8a1054afe490b5d63b9792d7ae3c1fde8c05cdd0
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
