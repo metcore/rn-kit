@@ -14,6 +14,12 @@ import CheckBoxList from './CheckBoxList';
 export default function App() {
   const [selected, setSelected] = useState<string[]>([]);
 
+  interface CheckBoxListItem {
+    label: string;
+    value: string;
+    hint?: string;
+  }
+
   return (
     <View>
       <CheckBoxList
@@ -33,10 +39,10 @@ export default function App() {
 
 ## ⚙️ Props
 
-| Prop             | Tipe                           | Deskripsi                                                                    |                                                 |
-| ---------------- | ------------------------------ | ---------------------------------------------------------------------------- | ----------------------------------------------- |
-| `items`          | `CheckBoxListItem[]`           | Daftar item yang akan ditampilkan. Setiap item memiliki `label` dan `value`. |                                                 |
-| `selectedValues` | `string[]`                     | Nilai-nilai yang saat ini sedang dipilih.                                    |                                                 |
-| `onChange`       | `(selected: string[]) => void` | Callback saat nilai pilihan berubah.                                         |                                                 |
-| `direction`      | \`'vertical'                   | 'horizontal'\` (opsional)                                                    | Arah tampilan checkbox (default: `'vertical'`). |
-
+| Prop             | Tipe                                                                   | Deskripsi                                                                    |                                                 |
+| ---------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------- |
+| `items`          | `CheckBoxListItem[]`                                                   | Daftar item yang akan ditampilkan. Setiap item memiliki `label` dan `value`. |                                                 |
+| `selectedValues` | `string[]`                                                             | Nilai-nilai yang saat ini sedang dipilih.                                    |                                                 |
+| `onChange`       | `(selected: string[]) => void`                                         | Callback saat nilai pilihan berubah.                                         |                                                 |
+| `direction`      | \`'vertical'                                                           | 'horizontal'\` (opsional)                                                    | Arah tampilan checkbox (default: `'vertical'`). |
+| `color`          | `primary \| danger \| warning \| orange \| info \| success \| purple ` | warna background jika checkbox di centang                                    | Arah tampilan checkbox (default: `'vertical'`). |

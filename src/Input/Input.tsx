@@ -20,6 +20,7 @@ const Input: React.FC<InputProps> = ({
   onPressIconRight,
   secureTextEntry = false,
   iconRightColor,
+  prefix,
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState(value || '');
@@ -49,26 +50,16 @@ const Input: React.FC<InputProps> = ({
         ]}
       >
         {icon && (
-          <TouchableOpacity
-            onPress={onPressIconLeft}
-            style={styles.iconLeft}
-            hitSlop={10}
-          >
+          <TouchableOpacity onPress={onPressIconLeft} hitSlop={10}>
             <Icon name={icon} size={20} color="#888" />
           </TouchableOpacity>
         )}
 
+        {prefix && <View style={styles.prefixContainer}>{prefix}</View>}
+
         <TextInput
           {...rest}
-          style={[
-            styles.input,
-            icon && { paddingLeft: 40 },
-            showRightIcons && { paddingRight: 40 },
-            showRightIcons &&
-              clearButton &&
-              inputValue !== '' && { paddingRight: 65 },
-            style,
-          ]}
+          style={[styles.input, style]}
           secureTextEntry={secureTextEntry}
           value={inputValue}
           onChangeText={handleChange}
@@ -80,7 +71,7 @@ const Input: React.FC<InputProps> = ({
             {clearButton && inputValue !== '' && (
               <TouchableOpacity
                 onPress={handleClear}
-                style={[{ marginRight: iconRight ? 8 : 0 }]}
+                style={iconRight && styles.mr8}
               >
                 <Icon name="x-circle" size={20} color="#aaa" />
               </TouchableOpacity>
@@ -118,31 +109,32 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 40,
     borderRadius: 8,
-    gap: 8,
+    gap: 4,
+    paddingHorizontal: 12,
     borderWidth: 1,
     backgroundColor: Color.base.white100,
     justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
     height: 37,
-    paddingHorizontal: 12,
     paddingTop: 0,
     paddingBottom: 0,
     fontSize: 16,
     color: '#333',
     flex: 1,
   },
-  iconLeft: {
-    position: 'absolute',
-    left: 12,
-    zIndex: 1,
-  },
   rightContainer: {
-    position: 'absolute',
-    right: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    zIndex: 1,
+  },
+  prefixContainer: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  mr8: {
+    marginRight: 8,
   },
 });
 
