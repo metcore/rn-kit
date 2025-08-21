@@ -1,5 +1,11 @@
-import { Color, Container, Input } from '@herca/rn-kit';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Color, Container, Input, Typography } from '@herca/rn-kit';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 export default function InputScreen() {
   return (
@@ -7,7 +13,7 @@ export default function InputScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView>
-        <Container style={{ gap: 12 }}>
+        <Container style={styles.container}>
           <Input label="Basic" placeholder="Type here ..." />
           <Input
             icon="User"
@@ -63,8 +69,35 @@ export default function InputScreen() {
             onPressIconRight={() => console.log('Kanan')}
             iconRightColor={Color.primary[950]}
           />
+
+          <Input
+            label="Input With Prefix"
+            prefix={
+              <View style={styles.countryCode}>
+                <Typography variant="t2" weight="semibold">
+                  +62
+                </Typography>
+              </View>
+            }
+            placeholder="Type Here ... "
+            clearButton
+            onPressIconLeft={() => console.log('Kiri')}
+            onPressIconRight={() => console.log('Kanan')}
+          />
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  countryCode: {
+    borderWidth: 1,
+    borderColor: Color.gray[100],
+    borderRadius: 16,
+    paddingHorizontal: 8,
+  },
+  container: {
+    gap: 12,
+  },
+});
