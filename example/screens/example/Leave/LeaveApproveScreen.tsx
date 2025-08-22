@@ -92,7 +92,7 @@ export default function LeaveApproveScreen() {
   ));
 
   return (
-    <Container>
+    <View>
       <View style={styles.containerHeader}>
         <View>
           <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
@@ -208,7 +208,7 @@ export default function LeaveApproveScreen() {
           />
         </Container>
       </Footer>
-    </Container>
+    </View>
   );
 }
 
