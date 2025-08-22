@@ -47,6 +47,8 @@ type RootStackParamList = {
   LeaveApprove: undefined;
   TimeLine: undefined;
   Tab: undefined;
+  TabDefault: undefined;
+  TabSticky: undefined;
   TextEditor: undefined;
   Step: undefined;
   Icons: undefined;

@@ -94,6 +94,7 @@ Setiap tab dibungkus dalam `ScrollView` vertikal, sehingga bisa discroll ke bawa
 | `children`     | `React.ReactNode`         | Daftar elemen `<TabItem />`   |
 | `current?`     | `number`                  | Indeks tab aktif (default: 0) |
 | `onChangeTab?` | `(index: number) => void` | Callback saat tab berpindah   |
+| `renderHeader` | `React.ReactElement` |  tambahan react element di atas tab  |
 
 ### `TabItemProps`
 

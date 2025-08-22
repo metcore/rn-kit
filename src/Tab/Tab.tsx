@@ -6,13 +6,18 @@ import React, {
   Children,
   isValidElement,
 } from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import type { TabItemProps, TabProps } from './type';
 
-const Tab: React.FC<TabProps> = ({ children, current = 0, onChangeTab }) => {
+const Tab: React.FC<TabProps> = ({
+  children,
+  current = 0,
+  onChangeTab,
+  renderHeader,
+}) => {
   const items = Children.toArray(children).filter(
     isValidElement
   ) as React.ReactElement<TabItemProps>[];
@@ -44,45 +49,61 @@ const Tab: React.FC<TabProps> = ({ children, current = 0, onChangeTab }) => {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        {items.map((item, index) => {
-          const isActive = index === activeIndex;
-          return (
-            <Pressable
-              key={index}
-              style={[
-                styles.tabButton,
-                isActive ? styles.tabActive : styles.tabInactive,
-              ]}
-              onPress={() => handleHeaderPress(index)}
-            >
-              <Typography
-                center
-                variant="t2"
-                weight="semibold"
-                color={isActive ? Color.base.white100 : Color.gray[700]}
-              >
-                {item.props.name}
-              </Typography>
-            </Pressable>
-          );
-        })}
-      </View>
-      <PagerView
-        ref={pagerRef}
-        style={styles.pager}
-        initialPage={current}
-        onPageSelected={(e) => updateActive(e.nativeEvent.position)}
+      <ScrollView
+        stickyHeaderIndices={[renderHeader ? 1 : 0]} // bikin tabBar sticky
+        contentContainerStyle={{ flexGrow: 1 }}
       >
-        {items.map((item, index) => {
-          return (
-            <View key={index} collapsable={false} style={{ flex: 1 }}>
-              {item.props.children}
-            </View>
-          );
-        })}
-      </PagerView>
+        {/* Header */}
+        {renderHeader ? renderHeader : null}
+
+        {/* TabBar (sticky + horizontal scroll) */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.tabBarWrapper}
+        >
+          <View style={styles.tabBar}>
+            {items.map((item, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <Pressable
+                  key={index}
+                  style={[
+                    styles.tabButton,
+                    isActive ? styles.tabActive : styles.tabInactive,
+                  ]}
+                  onPress={() => handleHeaderPress(index)}
+                >
+                  <Typography
+                    center
+                    variant="t2"
+                    weight="semibold"
+                    color={isActive ? Color.base.white100 : Color.gray[700]}
+                  >
+                    {item.props.name}
+                  </Typography>
+                </Pressable>
+              );
+            })}
+          </View>
+        </ScrollView>
+
+        {/* Konten */}
+        <View style={{ flex: 1 }}>
+          <PagerView
+            ref={pagerRef}
+            style={styles.pager}
+            initialPage={current}
+            onPageSelected={(e) => updateActive(e.nativeEvent.position)}
+          >
+            {items.map((item, index) => (
+              <View key={index} collapsable={false} style={{ flex: 1 }}>
+                {item?.props?.children}
+              </View>
+            ))}
+          </PagerView>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -91,21 +112,24 @@ export default Tab;
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  headerContainer: {
-    flexDirection: 'row',
+  tabBarWrapper: {
     backgroundColor: Color.gray[100],
+    borderRadius: 8,
+  },
+  tabBar: {
+    flexDirection: 'row', // tetap row
     padding: 4,
     borderRadius: 8,
   },
   tabButton: {
-    flex: 1,
     borderRadius: 8,
     paddingVertical: 6,
     paddingHorizontal: 16,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 8,
   },
   tabActive: { backgroundColor: Color.primary[1000] },
   tabInactive: { backgroundColor: Color.gray[100] },
-  pager: { flex: 1, backgroundColor: Color.base.white100 },
+  pager: { flex: 1, minHeight: 800 },
 });
