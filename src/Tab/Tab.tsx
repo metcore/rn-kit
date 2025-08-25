@@ -24,6 +24,7 @@ const Tab: React.FC<TabProps> = ({
 
   const [activeIndex, setActiveIndex] = useState<number>(current);
   const pagerRef = useRef<PagerView>(null);
+  const currentHeight = items[activeIndex]?.props?.height ?? 0;
 
   useEffect(() => {
     setActiveIndex(current);
@@ -51,7 +52,7 @@ const Tab: React.FC<TabProps> = ({
     <View style={styles.container}>
       <ScrollView
         stickyHeaderIndices={[renderHeader ? 1 : 0]} // bikin tabBar sticky
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={styles.scrollViewContainer}
       >
         {/* Header */}
         {renderHeader ? renderHeader : null}
@@ -89,20 +90,18 @@ const Tab: React.FC<TabProps> = ({
         </ScrollView>
 
         {/* Konten */}
-        <View style={{ flex: 1 }}>
-          <PagerView
-            ref={pagerRef}
-            style={styles.pager}
-            initialPage={current}
-            onPageSelected={(e) => updateActive(e.nativeEvent.position)}
-          >
-            {items.map((item, index) => (
-              <View key={index} collapsable={false} style={{ flex: 1 }}>
-                {item?.props?.children}
-              </View>
-            ))}
-          </PagerView>
-        </View>
+        <PagerView
+          ref={pagerRef}
+          style={[styles.pager, { height: currentHeight || 800 }]}
+          initialPage={current}
+          onPageSelected={(e) => updateActive(e.nativeEvent.position)}
+        >
+          {items.map((item, index) => (
+            <View key={index} collapsable={false}>
+              {item?.props?.children}
+            </View>
+          ))}
+        </PagerView>
       </ScrollView>
     </View>
   );
@@ -131,5 +130,6 @@ const styles = StyleSheet.create({
   },
   tabActive: { backgroundColor: Color.primary[1000] },
   tabInactive: { backgroundColor: Color.gray[100] },
-  pager: { flex: 1, minHeight: 800 },
+  pager: { flex: 1, minHeight: 800, marginBottom: 10 },
+  scrollViewContainer: { flexGrow: 1 },
 });
