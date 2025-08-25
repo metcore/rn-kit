@@ -67,23 +67,34 @@ const Tab: React.FC<TabProps> = ({
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               return (
-                <Pressable
-                  key={index}
-                  style={[
-                    styles.tabButton,
-                    isActive ? styles.tabActive : styles.tabInactive,
-                  ]}
-                  onPress={() => handleHeaderPress(index)}
-                >
-                  <Typography
-                    center
-                    variant="t2"
-                    weight="semibold"
-                    color={isActive ? Color.base.white100 : Color.gray[700]}
-                  >
-                    {item.props.name}
-                  </Typography>
-                </Pressable>
+                <React.Fragment key={index}>
+                  {!item.props.renderTabName && (
+                    <Pressable
+                      style={[
+                        styles.tabButton,
+                        isActive ? styles.tabActive : styles.tabInactive,
+                      ]}
+                      onPress={() => handleHeaderPress(index)}
+                    >
+                      <Typography
+                        center
+                        variant="t2"
+                        weight="semibold"
+                        color={isActive ? Color.base.white100 : Color.gray[700]}
+                      >
+                        {item.props.name}
+                      </Typography>
+                    </Pressable>
+                  )}
+
+                  {item.props.renderTabName && (
+                    <Pressable onPress={() => handleHeaderPress(index)}>
+                      {item.props.renderTabName({
+                        isActive,
+                      })}
+                    </Pressable>
+                  )}
+                </React.Fragment>
               );
             })}
           </View>

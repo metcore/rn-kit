@@ -1,4 +1,12 @@
-import { Button, Container, Tab, TabItem } from '@herca/rn-kit';
+import {
+  Button,
+  Color,
+  Container,
+  Icon,
+  Tab,
+  TabItem,
+  Typography,
+} from '@herca/rn-kit';
 import LeaveApproveScreen from './example/Leave/LeaveApproveScreen';
 import LeaveDetailScreen from './example/Leave/LeaveDetailScreen';
 import { StyleSheet, View } from 'react-native';
@@ -36,7 +44,25 @@ export default function TabScreen() {
             <LeaveApproveScreen />
           </View>
         </TabItem>
-        <TabItem name={'name1'}>
+        <TabItem
+          renderTabName={({ isActive }) => (
+            <View style={[styles.tabButton, isActive && styles.tabActive]}>
+              <Icon
+                name="info-circle-outline"
+                size={19}
+                color={isActive ? Color.base.white100 : Color.gray[700]}
+              />
+              <Typography
+                center
+                variant="t2"
+                weight="semibold"
+                color={isActive ? Color.base.white100 : Color.gray[700]}
+              >
+                {isActive ? 'Wow it works!' : 'Click Me!'}
+              </Typography>
+            </View>
+          )}
+        >
           <LeaveDetailScreen />
         </TabItem>
       </Tab>
@@ -51,4 +77,18 @@ const Header = () => {
 const styles = StyleSheet.create({
   header: { height: 200, backgroundColor: 'black' },
   container: { flex: 1, gap: 5 },
+  tabButton: {
+    borderRadius: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+    flexDirection: 'row',
+    gap: 4,
+  },
+  tabActive: {
+    backgroundColor: Color.primary[1000],
+    borderRadius: 8,
+  },
 });

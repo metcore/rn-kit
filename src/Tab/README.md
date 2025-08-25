@@ -89,19 +89,20 @@ Setiap tab dibungkus dalam `ScrollView` vertikal, sehingga bisa discroll ke bawa
 
 ### `TabProps`
 
-| Properti       | Tipe                      | Keterangan                    |
-| -------------- | ------------------------- | ----------------------------- |
-| `children`     | `React.ReactNode`         | Daftar elemen `<TabItem />`   |
-| `current?`     | `number`                  | Indeks tab aktif (default: 0) |
-| `onChangeTab?` | `(index: number) => void` | Callback saat tab berpindah   |
-| `renderHeader` | `React.ReactElement` |  tambahan react element di atas tab  |
+| Properti       | Tipe                      | Keterangan                         |
+| -------------- | ------------------------- | ---------------------------------- |
+| `children`     | `React.ReactNode`         | Daftar elemen `<TabItem />`        |
+| `current?`     | `number`                  | Indeks tab aktif (default: 0)      |
+| `onChangeTab?` | `(index: number) => void` | Callback saat tab berpindah        |
+| `renderHeader` | `React.ReactElement`      | tambahan react element di atas tab |
 
 ### `TabItemProps`
 
-| Properti    | Tipe                  | Keterangan                         |
-| ----------- | --------------------- | ---------------------------------- |
-| `name`      | `string`              | Nama/tab label yang ditampilkan    |
-| `component` | `React.ComponentType` | Komponen yang akan dirender di tab |
+| Properti        | Tipe                                                    | Keterangan                                                                                          |
+| --------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `name`          | `string`                                                | Label/nama tab yang akan ditampilkan. Wajib diisi jika renderTabName tidak digunakan.               |
+| `renderTabName` | `(props: { isActive: boolean; }) => React.ReactElement` | Fungsi untuk me-render custom label/tab menggunakan komponen sendiri. Wajib diisi jika name kosong. |
+| `component`     | `React.ComponentType`                                   | Komponen yang akan dirender di tab                                                                  |
 
 ---
 
