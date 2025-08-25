@@ -66,6 +66,11 @@ import DiscountFill from './icons/DiscountFill';
 import CopyFill from './icons/CopyFill';
 import CopyTextFill from './icons/CopyTextFill';
 import ShieldCheckedFill from './icons/ShieldFillChecked';
+import CalendarEdit from './icons/CalendarEdit';
+import InfoCircleOutline from './icons/InfoCircleOutline';
+import Tag from './icons/Tag';
+import Tool from './icons/Tool';
+import UserEdit from './icons/UserEdit';
 
 const icons: Record<
   IconNameProps,
@@ -136,6 +141,11 @@ const icons: Record<
   'copy-fill': CopyFill,
   'copy-text-fill': CopyTextFill,
   'shield-checked-fill': ShieldCheckedFill,
+  'calendar-edit': CalendarEdit,
+  'info-circle-outline': InfoCircleOutline,
+  'user-edit': UserEdit,
+  'Tag': Tag,
+  'Tool': Tool,
 };
 
 const Icon: React.FC<IconProps> = ({
