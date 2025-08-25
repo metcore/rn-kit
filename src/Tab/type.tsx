@@ -1,9 +1,19 @@
 import React, { type ReactElement } from 'react';
 
-export interface TabItemProps {
-  name: string | number;
-  children: React.ReactElement<any>;
-}
+export type TabItemProps =
+  | {
+      name: string | number;
+      children: React.ReactElement<any>;
+      height?: number;
+      renderTabName?: never;
+    }
+  | {
+      name?: string | number;
+      children: React.ReactElement<any>;
+      height?: number;
+      renderTabName: (props: { isActive: boolean }) => React.ReactElement;
+    };
+
 export interface TabProps {
   children: ReactElement<TabItemProps> | ReactElement<TabItemProps>[];
   current?: number;

@@ -113,3 +113,8 @@ export default function App() {
 - copy-fill
 - copy-text-fill
 - shield-checked-fill
+- calendar-edit
+- info-circle-outline
+- Tag
+- Tool
+- user-edit

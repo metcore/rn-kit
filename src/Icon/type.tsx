@@ -67,6 +67,11 @@ export type IconNameProps =
   | 'copy-fill'
   | 'copy-text-fill'
   | 'shield-checked-fill'
+  | 'calendar-edit'
+  | 'info-circle-outline'
+  | 'Tag'
+  | 'Tool'
+  | 'user-edit'
   | 'whatsapp-fill';
 
 export interface IconProps {

@@ -24,6 +24,7 @@ const Tab: React.FC<TabProps> = ({
 
   const [activeIndex, setActiveIndex] = useState<number>(current);
   const pagerRef = useRef<PagerView>(null);
+  const currentHeight = items[activeIndex]?.props?.height ?? 0;
 
   useEffect(() => {
     setActiveIndex(current);
@@ -51,7 +52,7 @@ const Tab: React.FC<TabProps> = ({
     <View style={styles.container}>
       <ScrollView
         stickyHeaderIndices={[renderHeader ? 1 : 0]} // bikin tabBar sticky
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={styles.scrollViewContainer}
       >
         {/* Header */}
         {renderHeader ? renderHeader : null}
@@ -66,43 +67,52 @@ const Tab: React.FC<TabProps> = ({
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               return (
-                <Pressable
-                  key={index}
-                  style={[
-                    styles.tabButton,
-                    isActive ? styles.tabActive : styles.tabInactive,
-                  ]}
-                  onPress={() => handleHeaderPress(index)}
-                >
-                  <Typography
-                    center
-                    variant="t2"
-                    weight="semibold"
-                    color={isActive ? Color.base.white100 : Color.gray[700]}
-                  >
-                    {item.props.name}
-                  </Typography>
-                </Pressable>
+                <React.Fragment key={index}>
+                  {!item.props.renderTabName && (
+                    <Pressable
+                      style={[
+                        styles.tabButton,
+                        isActive ? styles.tabActive : styles.tabInactive,
+                      ]}
+                      onPress={() => handleHeaderPress(index)}
+                    >
+                      <Typography
+                        center
+                        variant="t2"
+                        weight="semibold"
+                        color={isActive ? Color.base.white100 : Color.gray[700]}
+                      >
+                        {item.props.name}
+                      </Typography>
+                    </Pressable>
+                  )}
+
+                  {item.props.renderTabName && (
+                    <Pressable onPress={() => handleHeaderPress(index)}>
+                      {item.props.renderTabName({
+                        isActive,
+                      })}
+                    </Pressable>
+                  )}
+                </React.Fragment>
               );
             })}
           </View>
         </ScrollView>
 
         {/* Konten */}
-        <View style={{ flex: 1 }}>
-          <PagerView
-            ref={pagerRef}
-            style={styles.pager}
-            initialPage={current}
-            onPageSelected={(e) => updateActive(e.nativeEvent.position)}
-          >
-            {items.map((item, index) => (
-              <View key={index} collapsable={false} style={{ flex: 1 }}>
-                {item?.props?.children}
-              </View>
-            ))}
-          </PagerView>
-        </View>
+        <PagerView
+          ref={pagerRef}
+          style={[styles.pager, { height: currentHeight || 800 }]}
+          initialPage={current}
+          onPageSelected={(e) => updateActive(e.nativeEvent.position)}
+        >
+          {items.map((item, index) => (
+            <View key={index} collapsable={false}>
+              {item?.props?.children}
+            </View>
+          ))}
+        </PagerView>
       </ScrollView>
     </View>
   );
@@ -131,5 +141,6 @@ const styles = StyleSheet.create({
   },
   tabActive: { backgroundColor: Color.primary[1000] },
   tabInactive: { backgroundColor: Color.gray[100] },
-  pager: { flex: 1, minHeight: 800 },
+  pager: { flex: 1, minHeight: 800, marginBottom: 10 },
+  scrollViewContainer: { flexGrow: 1 },
 });
