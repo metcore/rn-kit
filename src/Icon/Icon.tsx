@@ -71,6 +71,9 @@ import InfoCircleOutline from './icons/InfoCircleOutline';
 import Tag from './icons/Tag';
 import Tool from './icons/Tool';
 import UserEdit from './icons/UserEdit';
+import ImagePlus from './icons/ImagePlus';
+import Bolt from './icons/Bolt';
+import BoltSlash from './icons/BoltSlash';
 
 const icons: Record<
   IconNameProps,
@@ -146,6 +149,9 @@ const icons: Record<
   'user-edit': UserEdit,
   'Tag': Tag,
   'Tool': Tool,
+  'Bolt': Bolt,
+  'bolt-slash': BoltSlash,
+  'image-plus': ImagePlus,
 };
 
 const Icon: React.FC<IconProps> = ({
