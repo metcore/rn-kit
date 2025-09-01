@@ -68,6 +68,9 @@ const icons: IconNameProps[] = [
   'copy-fill',
   'copy-text-fill',
   'shield-checked-fill',
+  'Bolt',
+  'bolt-slash',
+  'image-plus',
 ];
 
 export default function IconScreen() {
