@@ -72,6 +72,9 @@ export type IconNameProps =
   | 'Tag'
   | 'Tool'
   | 'user-edit'
+  | 'Bolt'
+  | 'bolt-slash'
+  | 'image-plus'
   | 'whatsapp-fill';
 
 export interface IconProps {

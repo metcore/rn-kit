@@ -118,3 +118,6 @@ export default function App() {
 - Tag
 - Tool
 - user-edit
+- Bolt
+- bolt-slash
+- image-plus
