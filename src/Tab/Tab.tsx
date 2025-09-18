@@ -48,72 +48,104 @@ const Tab: React.FC<TabProps> = ({
 
   if (items.length === 0) return null;
 
+  function renderTabBar() {
+    return (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.tabBarWrapper}
+      >
+        <View style={styles.tabBar}>
+          {items.map((item, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <React.Fragment key={index}>
+                {!item.props.renderTabName && (
+                  <Pressable
+                    style={[
+                      styles.tabButton,
+                      isActive ? styles.tabActive : styles.tabInactive,
+                    ]}
+                    onPress={() => handleHeaderPress(index)}
+                  >
+                    <Typography
+                      center
+                      variant="t2"
+                      weight="semibold"
+                      color={isActive ? Color.base.white100 : Color.gray[700]}
+                    >
+                      {item.props.name}
+                    </Typography>
+                  </Pressable>
+                )}
+
+                {item.props.renderTabName && (
+                  <Pressable onPress={() => handleHeaderPress(index)}>
+                    {item.props.renderTabName({
+                      isActive,
+                    })}
+                  </Pressable>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </View>
+      </ScrollView>
+    );
+  }
+
+  function renderMainContent() {
+    const minHeight = 800;
+    return (
+      <PagerView
+        ref={pagerRef}
+        style={[
+          styles.pager,
+          renderHeader
+            ? {
+                height: currentHeight || minHeight,
+                minHeight: minHeight,
+              }
+            : undefined,
+        ]}
+        initialPage={current}
+        onPageSelected={(e) => updateActive(e.nativeEvent.position)}
+      >
+        {items.map((item, index) => (
+          <View key={index} collapsable={false}>
+            {item?.props?.children}
+          </View>
+        ))}
+      </PagerView>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        stickyHeaderIndices={[renderHeader ? 1 : 0]} // bikin tabBar sticky
-        contentContainerStyle={styles.scrollViewContainer}
-      >
-        {/* Header */}
-        {renderHeader ? renderHeader : null}
-
-        {/* TabBar (sticky + horizontal scroll) */}
+      {renderHeader ? (
         <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.tabBarWrapper}
+          stickyHeaderIndices={[renderHeader ? 1 : 0]} // bikin tabBar sticky
+          contentContainerStyle={styles.scrollViewContainer}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={styles.tabBar}>
-            {items.map((item, index) => {
-              const isActive = index === activeIndex;
-              return (
-                <React.Fragment key={index}>
-                  {!item.props.renderTabName && (
-                    <Pressable
-                      style={[
-                        styles.tabButton,
-                        isActive ? styles.tabActive : styles.tabInactive,
-                      ]}
-                      onPress={() => handleHeaderPress(index)}
-                    >
-                      <Typography
-                        center
-                        variant="t2"
-                        weight="semibold"
-                        color={isActive ? Color.base.white100 : Color.gray[700]}
-                      >
-                        {item.props.name}
-                      </Typography>
-                    </Pressable>
-                  )}
+          {/* Header */}
+          {renderHeader ? renderHeader : null}
 
-                  {item.props.renderTabName && (
-                    <Pressable onPress={() => handleHeaderPress(index)}>
-                      {item.props.renderTabName({
-                        isActive,
-                      })}
-                    </Pressable>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </View>
+          {/* TabBar (sticky + horizontal scroll) */}
+          {renderTabBar()}
+
+          {/* Konten */}
+          {renderMainContent()}
         </ScrollView>
+      ) : (
+        <View style={styles.scrollViewContainer}>
+          {/* TabBar (sticky + horizontal scroll) */}
+          <View>{renderTabBar()}</View>
 
-        {/* Konten */}
-        <PagerView
-          ref={pagerRef}
-          style={[styles.pager, { height: currentHeight || 800 }]}
-          initialPage={current}
-          onPageSelected={(e) => updateActive(e.nativeEvent.position)}
-        >
-          {items.map((item, index) => (
-            <View key={index} collapsable={false}>
-              {item?.props?.children}
-            </View>
-          ))}
-        </PagerView>
-      </ScrollView>
+          {/* Konten */}
+          {renderMainContent()}
+        </View>
+      )}
     </View>
   );
 };
@@ -141,6 +173,6 @@ const styles = StyleSheet.create({
   },
   tabActive: { backgroundColor: Color.primary[1000] },
   tabInactive: { backgroundColor: Color.gray[100] },
-  pager: { flex: 1, minHeight: 800, marginBottom: 10 },
+  pager: { flex: 1, marginBottom: 10 },
   scrollViewContainer: { flexGrow: 1 },
 });

@@ -39,7 +39,9 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "work-android": "yarn workspace @herca/rn-kit-example run android --port=8082",
+    "work-start": "yarn workspace @herca/rn-kit-example run start --port=8082"
   },
   "keywords": [
     "react-native",
