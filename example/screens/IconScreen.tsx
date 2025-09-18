@@ -71,6 +71,13 @@ const icons: IconNameProps[] = [
   'Bolt',
   'bolt-slash',
   'image-plus',
+  'Signature',
+  'info-circle-fill',
+  'Trash',
+  'time-forward',
+  'Money',
+  'Flag',
+  'Coupon',
 ];
 
 export default function IconScreen() {
