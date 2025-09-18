@@ -78,6 +78,7 @@ const icons: IconNameProps[] = [
   'Money',
   'Flag',
   'Coupon',
+  'more-vertical',
 ];
 
 export default function IconScreen() {
