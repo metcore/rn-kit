@@ -75,8 +75,14 @@ export type IconNameProps =
   | 'Bolt'
   | 'bolt-slash'
   | 'image-plus'
+  | 'Trash'
+  | 'time-forward'
+  | 'Signature'
+  | 'Money'
+  | 'info-circle-fill'
+  | 'Flag'
+  | 'Coupon'
   | 'whatsapp-fill';
-
 export interface IconProps {
   name: IconNameProps;
   size?: number;

@@ -74,6 +74,13 @@ import UserEdit from './icons/UserEdit';
 import ImagePlus from './icons/ImagePlus';
 import Bolt from './icons/Bolt';
 import BoltSlash from './icons/BoltSlash';
+import Trash from './icons/Trash';
+import TimeForward from './icons/TimeForward';
+import Signature from './icons/Signature';
+import Money from './icons/Money';
+import InfoCircleFill from './icons/InfoCircleFill';
+import Flag from './icons/Flag';
+import Coupon from './icons/Coupon';
 
 const icons: Record<
   IconNameProps,
@@ -152,6 +159,13 @@ const icons: Record<
   'Bolt': Bolt,
   'bolt-slash': BoltSlash,
   'image-plus': ImagePlus,
+  'Trash': Trash,
+  'time-forward': TimeForward,
+  'Signature': Signature,
+  'Money': Money,
+  'info-circle-fill': InfoCircleFill,
+  'Flag': Flag,
+  'Coupon': Coupon,
 };
 
 const Icon: React.FC<IconProps> = ({
