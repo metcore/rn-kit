@@ -82,6 +82,7 @@ export type IconNameProps =
   | 'info-circle-fill'
   | 'Flag'
   | 'Coupon'
+  | 'more-vertical'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;

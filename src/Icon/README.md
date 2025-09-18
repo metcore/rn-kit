@@ -121,3 +121,11 @@ export default function App() {
 - Bolt
 - bolt-slash
 - image-plus
+- Trash
+- time-forward
+- Signature
+- Money
+- info-circle-fill
+- Flag
+- Coupon
+- more-vertical
