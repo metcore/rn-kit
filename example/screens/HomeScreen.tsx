@@ -207,6 +207,12 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('TextEditor')}
             block
           />
+          <Button
+            color="success"
+            title="Input File"
+            onPress={() => navigation.navigate('InputFile')}
+            block
+          />
           <Typography variant="h3" weight="bold">
             Tool
           </Typography>

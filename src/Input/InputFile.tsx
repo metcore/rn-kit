@@ -1,41 +1,67 @@
+import { useState, useEffect } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
 import Color from '../Color/Color';
-import Card from '../Ui/Card';
-import Center from '../Ui/Center';
-import Typography from '../Typography/Typography';
-import BottomSheet from '../BottomSheet/BottomSheet';
-import { useState } from 'react';
 import List from '../List/List';
 import ListItem from '../List/ListItem';
+import Typography from '../Typography/Typography';
+import Card from '../Ui/Card';
+import Center from '../Ui/Center';
 
 import { pick } from '@react-native-documents/picker';
 import { viewDocument } from '@react-native-documents/viewer';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Icon from '../Icon';
+import Input from './Input';
+
+export interface ModalOption {
+  title?: string;
+  description?: string;
+}
+export interface modalPickFileText {
+  title?: string;
+  description?: string;
+  camera?: ModalOption;
+  gallery?: ModalOption;
+  document?: ModalOption;
+}
 
 type InputFileProps = {
   title?: string;
   description?: string;
-  maxFileSize?: number;
   accept?: string[];
   multiple?: boolean;
-  onChange?: (files: any[]) => void;
+  onChange?: (files: any) => void;
+  value?: any[];
+  modalPickFileText?: modalPickFileText;
+  useChangeLabel?: boolean;
+  btnChooseFileText?: string;
+  modalDeleteText?: ModalOption & {
+    confirmBtn?: {
+      confirm?: string;
+      cancel?: string;
+    };
+  };
 };
 
 export default function InputFile({
   title = 'Upload File',
   description = 'File harus berformat JPG, PNG dan PDF',
-  maxFileSize = 5,
   accept = ['application/pdf', 'image/jpeg', 'image/png'],
+  btnChooseFileText = 'Choose File',
   multiple = false,
+  value,
+  modalPickFileText,
+  modalDeleteText,
+  useChangeLabel = false,
   onChange,
 }: InputFileProps) {
   const [isOpenBottomSheetTypeFile, setIsOpenBottomSheetTypeFile] =
     useState(false);
   const [isOpenBottomSheetDeleteFile, setIsOpenBottomSheetDeleteFile] =
     useState(false);
-  const [files, setFiles] = useState<any[]>([]);
+  const [files, setFiles] = useState<any[]>(value || []);
   const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(
     null
   );
@@ -46,6 +72,12 @@ export default function InputFile({
 
   const handlePickFile = async () => {
     try {
+      if (selectedFileIndex !== null) {
+        console.log(selectedFileIndex);
+        confirmReplaceFile(selectedFileIndex);
+        return;
+      }
+
       const result = await pick({ type: accept, multiple });
       const pickedFiles = multiple ? result : [result[0]];
       const newFiles = [...files, ...pickedFiles];
@@ -60,12 +92,19 @@ export default function InputFile({
 
   const handlePreviewFile = (file: any) => {
     if (file?.uri) {
-      viewDocument(file.uri);
+      viewDocument({ uri: file.uri, mimeType: file.type }).catch((error) =>
+        console.error('Error opening document:', error)
+      );
     }
   };
 
   const handleOnPressButtonCamera = async () => {
     try {
+      if (selectedFileIndex !== null) {
+        confirmReplaceFile(selectedFileIndex, 'camera');
+        return;
+      }
+
       const result = await launchCamera({ mediaType: 'photo' });
       if (result.didCancel || !result.assets) return;
       const newFiles = [...files, result.assets[0]];
@@ -79,6 +118,11 @@ export default function InputFile({
 
   const handleOnPressButtonGallery = async () => {
     try {
+      if (selectedFileIndex !== null) {
+        confirmReplaceFile(selectedFileIndex, 'gallery');
+        return;
+      }
+
       const result = await launchImageLibrary({
         mediaType: 'photo',
         selectionLimit: multiple ? 0 : 1,
@@ -108,6 +152,46 @@ export default function InputFile({
     setIsOpenBottomSheetDeleteFile(false);
   };
 
+  const handleReplaceFile = (index: number) => {
+    setIsOpenBottomSheetTypeFile(true);
+    setSelectedFileIndex(index);
+  };
+
+  const confirmReplaceFile = async (
+    index: number,
+    type?: 'gallery' | 'camera'
+  ) => {
+    let replacedFile: any | null = null;
+
+    if (type === 'gallery') {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: multiple ? 0 : 1,
+      });
+      if (!result.assets || result.assets.length === 0) return;
+      replacedFile = { ...result.assets[0], labelFile: files[index].labelFile };
+    } else if (type === 'camera') {
+      const result = await launchCamera({ mediaType: 'photo' });
+      if (!result.assets || result.assets.length === 0) return;
+      replacedFile = { ...result.assets[0], labelFile: files[index].labelFile };
+    } else {
+      const result = await pick({ type: accept, multiple });
+      if (!result || result.length === 0) return;
+      replacedFile = { ...result[0], labelFile: files[index].labelFile };
+    }
+
+    const updatedFiles = files.map((f, i) => (i === index ? replacedFile : f));
+
+    setFiles(updatedFiles);
+    onChange?.(updatedFiles);
+    setSelectedFileIndex(null);
+    setIsOpenBottomSheetTypeFile(false);
+  };
+
+  useEffect(() => {
+    setFiles(value ?? []);
+  }, [value]);
+
   return (
     <View style={styles.wrapper}>
       <Card style={styles.containerInput}>
@@ -121,50 +205,103 @@ export default function InputFile({
           </Typography>
           <Button
             color="primary"
-            title="Choose File"
+            title={btnChooseFileText}
+            size="small"
             onPress={handleOnPresChoseFile}
           />
         </Center>
       </Card>
 
       {files.map((file, index) => (
-        <Card key={index}>
-          <TouchableOpacity onPress={() => handlePreviewFile(file)}>
-            <View style={styles.containerPreview}>
-              <View style={styles.containerListItem}>
-                <Image
-                  source={
-                    file.uri?.endsWith('.pdf')
-                      ? require('../Input/assets/input-file.png')
-                      : { uri: file.uri }
-                  }
-                  style={styles.previewImage}
-                />
-                <View style={styles.fileDetails}>
-                  <Typography
-                    variant="t1"
-                    weight="semibold"
-                    color={Color.gray[600]}
-                  >
-                    {file.name || `Image_${index + 1}`}
-                  </Typography>
-                  <Typography
-                    variant="t2"
-                    weight="regular"
-                    color={Color.gray[600]}
-                  >
-                    {(file.size / (1024 * 1024)).toFixed(2)} MB
-                  </Typography>
+        <View style={styles.previewWrapper} key={index}>
+          {useChangeLabel && (
+            <Input
+              label="Nama Dokumen #1"
+              placeholder="Masukkan Nama Dokumen"
+              value={file.labelFile}
+              onChangeText={(text) => {
+                const updatedFiles = files.map((f, i) =>
+                  i === index ? { ...f, labelFile: text } : f
+                );
+                setFiles(updatedFiles);
+                onChange?.(updatedFiles);
+              }}
+            />
+          )}
+          <View style={styles.gap4}>
+            <Card>
+              <TouchableOpacity onPress={() => handlePreviewFile(file)}>
+                <View style={styles.containerPreview}>
+                  <View style={[styles.containerListItem, styles.flex1]}>
+                    {file.type.startsWith('image') ? (
+                      <Image
+                        source={
+                          file.uri?.endsWith('.pdf')
+                            ? require('../Input/assets/input-file.png')
+                            : { uri: file.uri }
+                        }
+                        style={styles.previewImage}
+                      />
+                    ) : (
+                      <View style={styles.previewImage}>
+                        <Icon name="Document" color={Color.primary[1000]} />
+                      </View>
+                    )}
+                    <View style={styles.fileDetails}>
+                      <Typography
+                        variant="t1"
+                        weight="semibold"
+                        color={Color.gray[600]}
+                        numberOfLines={1}
+                      >
+                        {file.name || `Image_${index + 1}`}
+                      </Typography>
+                      <Typography
+                        variant="t2"
+                        weight="regular"
+                        color={Color.gray[600]}
+                      >
+                        {(
+                          (file?.size ?? file?.fileSize ?? 0) /
+                          (1024 * 1024)
+                        ).toFixed(2)}
+                        MB
+                      </Typography>
+                    </View>
+                  </View>
+                  <View style={styles.action}>
+                    {file.error && (
+                      <Icon
+                        name="exclamation-triangle"
+                        color={Color.danger[500]}
+                        size={20}
+                      />
+                    )}
+                    <TouchableOpacity onPress={() => handleReplaceFile(index)}>
+                      <Icon
+                        name="rotate-right"
+                        size={18}
+                        color={Color.gray[700]}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => confirmDeleteFile(index)}>
+                      <Icon name="Times" size={12} color={Color.gray[700]} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-              <Button
-                variant="tertiary"
-                title="X"
-                onPress={() => confirmDeleteFile(index)}
-              />
-            </View>
-          </TouchableOpacity>
-        </Card>
+              </TouchableOpacity>
+            </Card>
+
+            {file.hint && (
+              <Typography
+                variant="t3"
+                color={!file.error ? Color.gray[700] : Color.danger[500]}
+              >
+                {file.hint}
+              </Typography>
+            )}
+          </View>
+        </View>
       ))}
 
       <BottomSheet
@@ -174,10 +311,10 @@ export default function InputFile({
         <View style={styles.bottomSheetContent}>
           <Center style={styles.bottomSheetCenter}>
             <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-              Upload Dokumen
+              {modalPickFileText?.title || 'Upload Dokumen'}
             </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[800]}>
-              Unggah dokumen maksimal {maxFileSize}MB
+            <Typography variant="t1" weight="regular" color={Color.gray[600]}>
+              {modalPickFileText?.description || 'Unggah dokumen maksimal'}
             </Typography>
           </Center>
           <List>
@@ -191,10 +328,11 @@ export default function InputFile({
                       weight="semibold"
                       color={Color.gray[800]}
                     >
-                      Ambil Foto
+                      {modalPickFileText?.camera?.title || 'Ambil Foto'}
                     </Typography>
                     <Typography variant="t2" color={Color.gray[600]}>
-                      Langsung ambil gambar dari kamera
+                      {modalPickFileText?.camera?.description ||
+                        'Langsung ambil gambar dari kamera'}
                     </Typography>
                   </View>
                 </View>
@@ -210,10 +348,11 @@ export default function InputFile({
                       weight="semibold"
                       color={Color.gray[800]}
                     >
-                      Pilih dari Galeri
+                      {modalPickFileText?.gallery?.title || 'Pilih dari Galeri'}
                     </Typography>
                     <Typography variant="t2" color={Color.gray[600]}>
-                      Cari gambar dari galeri perangkatmu
+                      {modalPickFileText?.gallery?.description ||
+                        'Cari gambar dari galeri perangkatmu'}
                     </Typography>
                   </View>
                 </View>
@@ -229,10 +368,11 @@ export default function InputFile({
                       weight="semibold"
                       color={Color.gray[800]}
                     >
-                      Pilih dari Dokumen
+                      {modalPickFileText?.document?.title || 'Pilih Dokumen'}
                     </Typography>
                     <Typography variant="t2" color={Color.gray[600]}>
-                      Cari file dari penyimpanan dokumen
+                      {modalPickFileText?.document?.description ||
+                        'Pilih dokumen dari perangkatmu'}
                     </Typography>
                   </View>
                 </View>
@@ -248,23 +388,34 @@ export default function InputFile({
       >
         <View style={styles.deleteFileContent}>
           <Center style={styles.deleteFileCenter}>
-            <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-              Hapus Dokumen
+            <Typography
+              variant="p2"
+              weight="semibold"
+              color={Color.gray[800]}
+              center
+            >
+              {modalDeleteText?.title || 'Hapus Dokumen'}
             </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-              Apakah kamu akan menghapus dokumen yang dipilih?
+            <Typography
+              variant="t1"
+              weight="regular"
+              color={Color.gray[500]}
+              center
+            >
+              {modalDeleteText?.description ||
+                'Apakah kamu akan menghapus dokumen yang dipilih?'}
             </Typography>
           </Center>
           <View>
             <Button
               color="danger"
-              title="Ya, Hapus File"
+              title={modalDeleteText?.confirmBtn?.confirm || 'Hapus'}
               onPress={deleteFile}
             />
             <Button
               color="primary"
               variant="tertiary"
-              title="Batal"
+              title={modalDeleteText?.confirmBtn?.cancel || 'Batal'}
               onPress={() => setIsOpenBottomSheetDeleteFile(false)}
             />
           </View>
@@ -280,7 +431,8 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     borderStyle: 'dashed',
-    backgroundColor: Color.gray[100],
+    backgroundColor: Color.gray[50],
+    borderRadius: 16,
   },
   centerInput: {
     gap: 14,
@@ -295,14 +447,18 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   fileDetails: {
     justifyContent: 'center',
-    gap: 8,
+    gap: 4,
+    flex: 1,
   },
   containerListItem: {
     flexDirection: 'row',
     gap: 8,
+    alignItems: 'center',
   },
   bottomSheetContent: {
     gap: 16,
@@ -315,6 +471,21 @@ const styles = StyleSheet.create({
   },
   deleteFileCenter: {
     alignItems: 'center',
+    gap: 4,
+  },
+  action: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    flexShrink: 0,
+  },
+  previewWrapper: {
+    gap: 12,
+  },
+  flex1: {
+    flex: 1,
+  },
+  gap4: {
     gap: 4,
   },
 });
