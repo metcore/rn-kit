@@ -33,10 +33,10 @@ type InputFileProps = {
   accept?: string[];
   multiple?: boolean;
   onChange?: (files: any) => void;
-  value: any[];
+  value?: any[];
   modalPickFileText?: modalPickFileText;
   useChangeLabel?: boolean;
-  btnChooseFileText: string;
+  btnChooseFileText?: string;
   modalDeleteText?: ModalOption & {
     confirmBtn?: {
       confirm?: string;
@@ -61,7 +61,7 @@ export default function InputFile({
     useState(false);
   const [isOpenBottomSheetDeleteFile, setIsOpenBottomSheetDeleteFile] =
     useState(false);
-  const [files, setFiles] = useState<any[]>(value);
+  const [files, setFiles] = useState<any[]>(value || []);
   const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(
     null
   );

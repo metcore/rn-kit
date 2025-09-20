@@ -279,7 +279,6 @@ export default function LeaveForm() {
             <InputFile
               title="Upload KTP"
               description="Format JPG atau PDF maksimal 2MB"
-              maxFileSize={2}
               accept={['image/jpeg', 'application/pdf']}
               multiple={false}
               onChange={(files) => console.log('Uploaded files:', files)}
