@@ -1863,6 +1863,8 @@ __metadata:
     "@react-native-community/cli": 18.0.0
     "@react-native-community/cli-platform-android": 18.0.0
     "@react-native-community/cli-platform-ios": 18.0.0
+    "@react-native-documents/picker": ^10.1.6
+    "@react-native-documents/viewer": ^1.0.2
     "@react-native/babel-preset": 0.79.2
     "@react-native/metro-config": 0.79.2
     "@react-native/typescript-config": 0.79.2
@@ -1873,6 +1875,7 @@ __metadata:
     react-native: 0.79.2
     react-native-blob-util: ^0.22.2
     react-native-builder-bob: ^0.40.12
+    react-native-image-picker: ^8.2.1
     react-native-monorepo-config: ^0.1.9
     react-native-pager-view: ^6.8.1
     react-native-pdf: ^6.7.7
@@ -1880,6 +1883,7 @@ __metadata:
     react-native-screens: ^4.11.1
     react-native-signature-canvas: ^5.0.1
     react-native-svg: ^15.12.0
+    react-native-vision-camera: ^4.7.2
     react-native-webview: ^13.15.0
   languageName: unknown
   linkType: soft
@@ -2922,6 +2926,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-documents/picker@npm:^10.1.6":
+  version: 10.1.6
+  resolution: "@react-native-documents/picker@npm:10.1.6"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 24de8e7957c7e59cf318116f59b1e1ba6c4cf0c02e5c3d44bac54db1467340622e653cf758cd3a9868414c4a879374df7fcda830a670689e47e08fc07e119fb5
+  languageName: node
+  linkType: hard
+
 "@react-native-documents/viewer@npm:^1.0.1":
   version: 1.0.1
   resolution: "@react-native-documents/viewer@npm:1.0.1"
@@ -2929,6 +2943,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 15226949357a10bdb923f92cecdc5eda2937f9e61c98f13ca663cc88eb933d93c234c1b11807ef240f9e35ecbb8323489f75a31c3972fb18b876e01c33fe3f11
+  languageName: node
+  linkType: hard
+
+"@react-native-documents/viewer@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@react-native-documents/viewer@npm:1.0.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: bfa04f5343ed97a05f7041562d2d380fb64bea96671a47f79a2b814fdb6413a9780216740351ad675e32ba3b4bb385c47be6ef672248f771ee1bc4ce6249a8c0
   languageName: node
   linkType: hard
 
@@ -10778,6 +10802,26 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 0a78333ab4fb1aae38f190a22a1afcbfa2ae9192ccd2ac7a989f3108bd32afe1b84800b4dce0f92c68ad4eca6809046b5f997fbfcb072b872dd34ea04c8f44aa
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^4.7.2":
+  version: 4.7.2
+  resolution: "react-native-vision-camera@npm:4.7.2"
+  peerDependencies:
+    "@shopify/react-native-skia": "*"
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    "@shopify/react-native-skia":
+      optional: true
+    react-native-reanimated:
+      optional: true
+    react-native-worklets-core:
+      optional: true
+  checksum: d0ed87b10f0be61c25b317cc599a7c4724ff6baccea211dd5b26bcf906c197e7445ef69a0ba4fa41a68221d8d90e941f2f55410c363b4a63209a41a3d0fa3f7d
   languageName: node
   linkType: hard
 
