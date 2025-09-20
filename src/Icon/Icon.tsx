@@ -81,6 +81,7 @@ import Money from './icons/Money';
 import InfoCircleFill from './icons/InfoCircleFill';
 import Flag from './icons/Flag';
 import Coupon from './icons/Coupon';
+import MoreVertical from './icons/MoreVertical';
 
 const icons: Record<
   IconNameProps,
@@ -166,6 +167,7 @@ const icons: Record<
   'info-circle-fill': InfoCircleFill,
   'Flag': Flag,
   'Coupon': Coupon,
+  'more-vertical': MoreVertical,
 };
 
 const Icon: React.FC<IconProps> = ({
