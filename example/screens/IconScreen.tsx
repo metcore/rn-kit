@@ -79,6 +79,9 @@ const icons: IconNameProps[] = [
   'Flag',
   'Coupon',
   'more-vertical',
+  'rotate-right',
+  'exclamation-triangle',
+  'pdf-file',
 ];
 
 export default function IconScreen() {

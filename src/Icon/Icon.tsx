@@ -82,6 +82,9 @@ import InfoCircleFill from './icons/InfoCircleFill';
 import Flag from './icons/Flag';
 import Coupon from './icons/Coupon';
 import MoreVertical from './icons/MoreVertical';
+import ExclamationTriangle from './icons/ExclamationTriangle';
+import PdfFile from './icons/PdfFile';
+import RotateRight from './icons/RotateRight';
 
 const icons: Record<
   IconNameProps,
@@ -168,6 +171,9 @@ const icons: Record<
   'Flag': Flag,
   'Coupon': Coupon,
   'more-vertical': MoreVertical,
+  'exclamation-triangle': ExclamationTriangle,
+  'pdf-file': PdfFile,
+  'rotate-right': RotateRight,
 };
 
 const Icon: React.FC<IconProps> = ({
