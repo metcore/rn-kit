@@ -55,6 +55,7 @@ type RootStackParamList = {
   Skeleton: undefined;
   BadgeIcon: undefined;
   InputFile: undefined;
+  PdfView: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
