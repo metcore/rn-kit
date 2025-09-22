@@ -223,8 +223,10 @@ export default function InputFile({
         <View style={styles.previewWrapper} key={index}>
           {useChangeLabel && (
             <Input
-              label={`${changeLableProps?.label} ${index + 1}`}
-              placeholder={changeLableProps?.placeholder}
+              label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
+              placeholder={
+                changeLableProps?.placeholder || 'Masukan Nama Dokumen'
+              }
               value={file.labelFile}
               onChangeText={(text) => {
                 const updatedFiles = files.map((f, i) =>
