@@ -6,6 +6,7 @@ Mendukung **camera**, **gallery**, dan **document picker** dengan tampilan previ
 ---
 
 ## ✨ Fitur
+
 - Upload file dari **kamera**, **galeri**, atau **dokumen perangkat**.
 - Preview file (gambar atau dokumen).
 - Mendukung **multiple file upload**.
@@ -17,7 +18,9 @@ Mendukung **camera**, **gallery**, dan **document picker** dengan tampilan previ
 ---
 
 ## 📦 Dependencies
+
 Komponen ini membutuhkan beberapa library:
+
 - [`@react-native-documents/picker`](https://github.com/react-native-documents/picker)
 - [`@react-native-documents/viewer`](https://github.com/react-native-documents/viewer)
 - [`react-native-image-picker`](https://github.com/react-native-image-picker/react-native-image-picker)
@@ -27,8 +30,8 @@ Komponen ini membutuhkan beberapa library:
 ## 🚀 Penggunaan
 
 ```tsx
-import InputFile from "@/components/Input/InputFile";
-import { useState } from "react";
+import InputFile from '@/components/Input/InputFile';
+import { useState } from 'react';
 
 export default function ExampleScreen() {
   const [files, setFiles] = useState<any[]>([]);
@@ -42,18 +45,21 @@ export default function ExampleScreen() {
       value={files}
       useChangeLabel={true}
       modalPickFileText={{
-        title: "Pilih Sumber",
-        description: "Unggah dokumen atau ambil foto",
-        camera: { title: "Kamera", description: "Ambil foto langsung" },
-        gallery: { title: "Galeri", description: "Pilih gambar dari galeri" },
-        document: { title: "Dokumen", description: "Pilih file dari perangkat" },
+        title: 'Pilih Sumber',
+        description: 'Unggah dokumen atau ambil foto',
+        camera: { title: 'Kamera', description: 'Ambil foto langsung' },
+        gallery: { title: 'Galeri', description: 'Pilih gambar dari galeri' },
+        document: {
+          title: 'Dokumen',
+          description: 'Pilih file dari perangkat',
+        },
       }}
       modalDeleteText={{
-        title: "Hapus File?",
-        description: "Apakah kamu yakin ingin menghapus file ini?",
+        title: 'Hapus File?',
+        description: 'Apakah kamu yakin ingin menghapus file ini?',
         confirmBtn: {
-          confirm: "Ya, Hapus",
-          cancel: "Batal",
+          confirm: 'Ya, Hapus',
+          cancel: 'Batal',
         },
       }}
       onChange={(newFiles) => setFiles(newFiles)}
@@ -66,24 +72,26 @@ export default function ExampleScreen() {
 
 ## ⚙️ Props
 
-| Prop               | Tipe                              | Default                                                   | Deskripsi                                                                 |
-|--------------------|-----------------------------------|-----------------------------------------------------------|---------------------------------------------------------------------------|
-| `title`            | `string`                          | `"Upload File"`                                           | Judul input file.                                                         |
-| `description`      | `string`                          | `"File harus berformat JPG, PNG dan PDF"`                 | Deskripsi singkat tentang file yang diterima.                             |
-| `accept`           | `string[]`                        | `["application/pdf", "image/jpeg", "image/png"]`          | Tipe MIME file yang diizinkan.                                            |
-| `multiple`         | `boolean`                         | `false`                                                   | Jika `true`, memungkinkan memilih banyak file sekaligus.                  |
-| `value`            | `any[]`                           | `[]`                                                      | Daftar file yang sudah dipilih (state dari parent).                       |
-| `onChange`         | `(files: any[]) => void`          | `undefined`                                               | Callback saat daftar file berubah (add, replace, delete).                 |
-| `btnChooseFileText`| `string`                          | `"Choose File"`                                           | Label tombol untuk memilih file.                                          |
-| `modalPickFileText`| `modalPickFileText` (lihat bawah) | `undefined`                                               | Teks kustom pada modal pemilihan sumber file.                             |
-| `modalDeleteText`  | `ModalOption & confirmBtn`        | `undefined`                                               | Teks kustom pada modal konfirmasi hapus file.                             |
-| `useChangeLabel`   | `boolean`                         | `false`                                                   | Jika `true`, menampilkan input untuk memberi nama/label pada file.        |
+| Prop                | Tipe                              | Default                                          | Deskripsi                                                          |
+| ------------------- | --------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------ |
+| `title`             | `string`                          | `"Upload File"`                                  | Judul input file.                                                  |
+| `description`       | `string`                          | `"File harus berformat JPG, PNG dan PDF"`        | Deskripsi singkat tentang file yang diterima.                      |
+| `accept`            | `string[]`                        | `["application/pdf", "image/jpeg", "image/png"]` | Tipe MIME file yang diizinkan.                                     |
+| `multiple`          | `boolean`                         | `false`                                          | Jika `true`, memungkinkan memilih banyak file sekaligus.           |
+| `value`             | `any[]`                           | `[]`                                             | Daftar file yang sudah dipilih (state dari parent).                |
+| `onChange`          | `(files: any[]) => void`          | `undefined`                                      | Callback saat daftar file berubah (add, replace, delete).          |
+| `btnChooseFileText` | `string`                          | `"Choose File"`                                  | Label tombol untuk memilih file.                                   |
+| `modalPickFileText` | `ModalPickFileText` (lihat bawah) | `undefined`                                      | Teks kustom pada modal pemilihan sumber file.                      |
+| `modalDeleteText`   | `ModalOption & confirmBtn`        | `undefined`                                      | Teks kustom pada modal konfirmasi hapus file.                      |
+| `useChangeLabel`    | `boolean`                         | `false`                                          | Jika `true`, menampilkan input untuk memberi nama/label pada file. |
+| `changeLableProps`  | `ChangeLabelProps` (lihat bawah)  | `undefined`                                      | Teks kustom pada input text diatas preview file untuk              |
 
 ---
 
 ## 🔤 Tipe Tambahan
 
 ### `ModalOption`
+
 ```ts
 interface ModalOption {
   title?: string;
@@ -92,8 +100,9 @@ interface ModalOption {
 ```
 
 ### `modalPickFileText`
+
 ```ts
-interface modalPickFileText {
+interface ModalPickFileText {
   title?: string;
   description?: string;
   camera?: ModalOption;
@@ -103,6 +112,7 @@ interface modalPickFileText {
 ```
 
 ### `modalDeleteText`
+
 ```ts
 interface ModalOption {
   title?: string;
@@ -114,9 +124,19 @@ interface ModalOption {
 }
 ```
 
+### `changeLabelProps`
+
+```ts
+interface ChangeLabelProps {
+  label?: string;
+  placeholder?: string;
+}
+```
+
 ---
 
 ## 📸 Preview UI
+
 - **Card input awal** → tombol pilih file + icon ilustrasi.
 - **Preview file** → menampilkan nama, ukuran, icon (atau thumbnail jika image).
 - **Aksi file**:
@@ -127,6 +147,7 @@ interface ModalOption {
 ---
 
 ## 🛠 Catatan
+
 1. Pastikan permission kamera & storage sudah diatur (Android/iOS).
 2. File hasil picker akan memiliki property standar (`uri`, `type`, `name`, `size`).
 3. Untuk **multiple upload**, `value` berupa array file yang akan dikelola oleh parent.
