@@ -129,3 +129,6 @@ export default function App() {
 - Flag
 - Coupon
 - more-vertical
+- exclamation-triangle
+- pdf-file
+- rotate-right

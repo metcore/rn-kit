@@ -239,7 +239,9 @@ export default function StepScreen() {
           </Container>
         </StepItem>
         <StepItem title="Step 3">
-          <Container></Container>
+          <Container>
+            <View />
+          </Container>
         </StepItem>
         <StepItem title="Step 4">
           <ScrollView>
