@@ -121,6 +121,7 @@ Komponen untuk mengumpulkan input dari pengguna.
 - [Select](./src/Select/README.md)
 - [Switch](./src/Switch/README.md)
 - [TextArea](./src/TextArea/README.md)
+- [InputFile](./src/Input/README_INPUT_FILE.md)
 
 ---
 
