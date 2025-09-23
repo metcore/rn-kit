@@ -12,18 +12,16 @@ type Source = {
   method?: string;
 };
 
-const PdfView = ({ source }: { source: Source }) => {
+interface Props extends React.ComponentProps<typeof Pdf> {
+  source: Source;
+}
+
+const PdfView = ({ source, ...props }: Props) => {
   if (!source) return <View />;
 
   return (
     <View style={styles.container}>
-      <Pdf
-        source={source}
-        onLoadComplete={(pages) => console.log('number of pages:', pages)}
-        onPageChanged={(page) => console.log('current page:', page)}
-        onError={(err) => console.error(err)}
-        style={styles.pdf}
-      />
+      <Pdf source={source} style={styles.pdf} {...props} />
     </View>
   );
 };

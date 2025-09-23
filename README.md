@@ -172,6 +172,7 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)
 - [Skeleton](./src/Skeleton/README.md)
+- [PdfView](./src/FileView/PDF_VIEW_README.md)
 
 ---
 

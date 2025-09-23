@@ -59,6 +59,7 @@ import TabDefaultScreen from '../screens/TabDefaultScreen';
 import TabStickyScreen from '../screens/TabStickyScreen';
 import BadgeIconScreen from '../screens/BadgeIconScreen';
 import InputFileScreen from '../screens/InputFileScreen';
+import PdfViewScreen from '../screens/PdfViewScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -189,6 +190,7 @@ const App = () => {
             <Stack.Screen name="TimePicker" component={TimePickerScreen} />
             <Stack.Screen name="BadgeIcon" component={BadgeIconScreen} />
             <Stack.Screen name="InputFile" component={InputFileScreen} />
+            <Stack.Screen name="PdfView" component={PdfViewScreen} />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}

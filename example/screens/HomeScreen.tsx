@@ -264,6 +264,12 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('Skeleton')}
             block
           />
+          <Button
+            color="success"
+            title="Pdf Viewer"
+            onPress={() => navigation.navigate('PdfView')}
+            block
+          />
           <Typography variant="h3" weight="bold" style={styles.title}>
             Example Screen
           </Typography>
