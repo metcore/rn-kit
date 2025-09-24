@@ -85,6 +85,8 @@ import MoreVertical from './icons/MoreVertical';
 import ExclamationTriangle from './icons/ExclamationTriangle';
 import PdfFile from './icons/PdfFile';
 import RotateRight from './icons/RotateRight';
+import ArrowUpCircleFill from './icons/ArrowUpCircleFill';
+import ClipBoardListCheck2 from './icons/ClipBoardListCheck2';
 
 const icons: Record<
   IconNameProps,
@@ -174,6 +176,8 @@ const icons: Record<
   'exclamation-triangle': ExclamationTriangle,
   'pdf-file': PdfFile,
   'rotate-right': RotateRight,
+  'arrow-up-circle-fill': ArrowUpCircleFill,
+  'clipboard-list-check-fill-2': ClipBoardListCheck2,
 };
 
 const Icon: React.FC<IconProps> = ({

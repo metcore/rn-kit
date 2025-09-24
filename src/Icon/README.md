@@ -132,3 +132,5 @@ export default function App() {
 - exclamation-triangle
 - pdf-file
 - rotate-right
+- arrow-up-circle-fill
+- clipboard-list-check-fill-2
