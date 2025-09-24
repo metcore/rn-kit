@@ -19,12 +19,17 @@ export interface ModalOption {
   title?: string;
   description?: string;
 }
-export interface modalPickFileText {
+export interface ModalPickFileText {
   title?: string;
   description?: string;
   camera?: ModalOption;
   gallery?: ModalOption;
   document?: ModalOption;
+}
+
+export interface ChangeLabelProps {
+  label?: string;
+  placeholder?: string;
 }
 
 type InputFileProps = {
@@ -34,7 +39,7 @@ type InputFileProps = {
   multiple?: boolean;
   onChange?: (files: any) => void;
   value?: any[];
-  modalPickFileText?: modalPickFileText;
+  modalPickFileText?: ModalPickFileText;
   useChangeLabel?: boolean;
   btnChooseFileText?: string;
   modalDeleteText?: ModalOption & {
@@ -43,6 +48,7 @@ type InputFileProps = {
       cancel?: string;
     };
   };
+  changeLableProps?: ChangeLabelProps;
 };
 
 export default function InputFile({
@@ -55,6 +61,7 @@ export default function InputFile({
   modalPickFileText,
   modalDeleteText,
   useChangeLabel = false,
+  changeLableProps,
   onChange,
 }: InputFileProps) {
   const [isOpenBottomSheetTypeFile, setIsOpenBottomSheetTypeFile] =
@@ -216,8 +223,10 @@ export default function InputFile({
         <View style={styles.previewWrapper} key={index}>
           {useChangeLabel && (
             <Input
-              label="Nama Dokumen #1"
-              placeholder="Masukkan Nama Dokumen"
+              label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
+              placeholder={
+                changeLableProps?.placeholder || 'Masukan Nama Dokumen'
+              }
               value={file.labelFile}
               onChangeText={(text) => {
                 const updatedFiles = files.map((f, i) =>

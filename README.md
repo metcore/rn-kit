@@ -121,6 +121,7 @@ Komponen untuk mengumpulkan input dari pengguna.
 - [Select](./src/Select/README.md)
 - [Switch](./src/Switch/README.md)
 - [TextArea](./src/TextArea/README.md)
+- [InputFile](./src/Input/README_INPUT_FILE.md)
 
 ---
 
@@ -171,6 +172,7 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [Timeline](./src/Timeline/README.md)
 - [Typography](./src/Typography/README.md)
 - [Skeleton](./src/Skeleton/README.md)
+- [PdfView](./src/FileView/PDF_VIEW_README.md)
 
 ---
 

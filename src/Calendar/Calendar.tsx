@@ -198,7 +198,7 @@ const Calendar = ({
       return selectedTextColor;
     }
     if (mark?.selected) return mark?.textColor || selectedTextColor;
-    return Color.gray[600];
+    return Color.gray[700];
   };
 
   const handlePressDay = (date: Date) => {
@@ -221,6 +221,26 @@ const Calendar = ({
         onChange?.({ startDate: selected, endDate: null });
       }
     }
+  };
+
+  const getDayCellOpacity = (cell: any, date: Date, keyWeek: WeekDay) => {
+    const key = formatDateKey(date);
+    const mark = markedDates[key];
+
+    const isStart = isSameDate(startDate, date);
+    const isEnd = isSameDate(endDate, date);
+    const isSelected =
+      (mode === 'single' && isStart) ||
+      (mode === 'range' && (isStart || isEnd));
+
+    const hasCustomColor =
+      (mark?.backgroundColor && mark.selected) ||
+      (disabledDays && disabledDays[keyWeek]) ||
+      isDisabledDate(date);
+
+    if (hasCustomColor || isSelected) return 1; // full opacity
+    if (cell.from !== 'current') return 0.5; // pudar
+    return 1; // default
   };
 
   const calendarMatrix = generateCalendarMatrix();
@@ -281,7 +301,7 @@ const Calendar = ({
             weight="medium"
             variant="t2"
             center
-            color={Color.gray[600]}
+            color={Color.gray[700]}
             style={{ width: 32, textAlign: 'center' }}
           >
             {day}
@@ -300,6 +320,8 @@ const Calendar = ({
             const disabled = isMarkDisableDate(mark) || isDisabledDate(date);
             const backgroundColor = setBackgroundDay(date, colIndex as WeekDay);
             const textColor = setTextColor(date, colIndex as WeekDay);
+
+            const opacity = getDayCellOpacity(cell, date, colIndex as WeekDay);
             return (
               <Pressable
                 disabled={disabled}
@@ -307,7 +329,12 @@ const Calendar = ({
                 onPress={() => handlePressDay(date)}
               >
                 <View style={[styles.dayCell, { backgroundColor }]}>
-                  <Typography variant="t2" weight="medium" color={textColor}>
+                  <Typography
+                    variant="t2"
+                    weight="medium"
+                    color={textColor}
+                    style={{ opacity }}
+                  >
                     {day}
                   </Typography>
                 </View>

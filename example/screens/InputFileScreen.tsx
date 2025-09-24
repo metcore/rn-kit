@@ -33,6 +33,7 @@ export default function InputFileScreen() {
     <ScrollView>
       <Container style={styles.container}>
         <InputFile
+          useChangeLabel
           onChange={(value) => setAttachments(value)}
           value={attachments}
           title="Upload bukti pembayaran"
