@@ -82,6 +82,8 @@ const icons: IconNameProps[] = [
   'rotate-right',
   'exclamation-triangle',
   'pdf-file',
+  'clipboard-list-check-fill-2',
+  'arrow-up-circle-fill',
 ];
 
 export default function IconScreen() {
