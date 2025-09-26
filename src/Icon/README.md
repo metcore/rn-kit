@@ -134,3 +134,5 @@ export default function App() {
 - rotate-right
 - arrow-up-circle-fill
 - clipboard-list-check-fill-2
+- Phone
+- Envelope

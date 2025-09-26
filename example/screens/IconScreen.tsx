@@ -84,6 +84,8 @@ const icons: IconNameProps[] = [
   'pdf-file',
   'clipboard-list-check-fill-2',
   'arrow-up-circle-fill',
+  'Envelope',
+  'Phone',
 ];
 
 export default function IconScreen() {
