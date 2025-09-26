@@ -87,6 +87,8 @@ import PdfFile from './icons/PdfFile';
 import RotateRight from './icons/RotateRight';
 import ArrowUpCircleFill from './icons/ArrowUpCircleFill';
 import ClipBoardListCheck2 from './icons/ClipBoardListCheck2';
+import Phone from './icons/Phone';
+import Envelope from './icons/Envelope';
 
 const icons: Record<
   IconNameProps,
@@ -178,6 +180,8 @@ const icons: Record<
   'rotate-right': RotateRight,
   'arrow-up-circle-fill': ArrowUpCircleFill,
   'clipboard-list-check-fill-2': ClipBoardListCheck2,
+  'Phone': Phone,
+  'Envelope': Envelope,
 };
 
 const Icon: React.FC<IconProps> = ({

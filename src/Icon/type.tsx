@@ -88,6 +88,8 @@ export type IconNameProps =
   | 'more-vertical'
   | 'clipboard-list-check-fill-2'
   | 'arrow-up-circle-fill'
+  | 'Envelope'
+  | 'Phone'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;
