@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from '../Icon';
 import Color from '../Color/Color';
@@ -37,6 +37,11 @@ const Input: React.FC<InputProps> = ({
 
   const showRightIcons = (clearButton && inputValue !== '') || iconRight;
 
+  useEffect(() => {
+    if (value !== undefined) {
+      setInputValue(value);
+    }
+  }, [value]);
   return (
     <View style={styles.gap}>
       {label ? <LabelForm title={label} /> : null}
