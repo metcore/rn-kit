@@ -14,6 +14,7 @@ export interface InputProps extends TextInputProps {
   secureTextEntry?: boolean;
   iconRightColor?: string;
   prefix?: React.ReactNode;
+  required?: boolean;
 }
 
 export interface TextAreaProps extends InputProps {
