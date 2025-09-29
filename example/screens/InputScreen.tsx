@@ -1,20 +1,32 @@
 import { Color, Container, Input, Typography } from '@herca/rn-kit';
+import { useEffect, useRef } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
+  TextInput,
   View,
 } from 'react-native';
 
 export default function InputScreen() {
+  const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView>
         <Container style={styles.container}>
-          <Input label="Basic" placeholder="Type here ..." />
+          <Input
+            label="Basic"
+            placeholder="Type here ..."
+            required
+            ref={inputRef}
+          />
           <Input
             icon="User"
             label="With Left Icon"

@@ -6,105 +6,113 @@ import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
 import type { InputProps } from './type';
 
-const Input: React.FC<InputProps> = ({
-  icon,
-  iconRight,
-  label,
-  style,
-  value,
-  clearButton = false,
-  hasError = false,
-  hint,
-  onChangeText,
-  onPressIconLeft,
-  onPressIconRight,
-  secureTextEntry = false,
-  iconRightColor,
-  prefix,
-  ...rest
-}) => {
-  const [inputValue, setInputValue] = useState(value || '');
+const Input = React.forwardRef<TextInput, InputProps>(
+  (
+    {
+      icon,
+      iconRight,
+      label,
+      style,
+      value,
+      clearButton = false,
+      hasError = false,
+      hint,
+      onChangeText,
+      onPressIconLeft,
+      onPressIconRight,
+      secureTextEntry = false,
+      iconRightColor,
+      prefix,
+      required = false,
+      ...rest
+    },
+    ref
+  ) => {
+    const [inputValue, setInputValue] = useState(value || '');
 
-  const handleClear = () => {
-    setInputValue('');
-    onChangeText?.('');
-  };
+    const handleClear = () => {
+      setInputValue('');
+      onChangeText?.('');
+    };
 
-  const handleChange = (text: string) => {
-    setInputValue(text);
-    onChangeText?.(text);
-  };
+    const handleChange = (text: string) => {
+      setInputValue(text);
+      onChangeText?.(text);
+    };
 
-  const showRightIcons = (clearButton && inputValue !== '') || iconRight;
+    const showRightIcons = (clearButton && inputValue !== '') || iconRight;
 
-  useEffect(() => {
-    if (value !== undefined) {
-      setInputValue(value);
-    }
-  }, [value]);
-  return (
-    <View style={styles.gap}>
-      {label ? <LabelForm title={label} /> : null}
+    useEffect(() => {
+      if (value !== undefined) {
+        setInputValue(value);
+      }
+    }, [value]);
 
-      <View
-        style={[
-          styles.container,
-          {
-            borderColor: hasError ? Color.danger[500] : Color.gray[100],
-          },
-        ]}
-      >
-        {icon && (
-          <TouchableOpacity onPress={onPressIconLeft} hitSlop={10}>
-            <Icon name={icon} size={20} color="#888" />
-          </TouchableOpacity>
-        )}
+    return (
+      <View style={styles.gap}>
+        {label ? <LabelForm title={label} required={required} /> : null}
 
-        {prefix && <View style={styles.prefixContainer}>{prefix}</View>}
-
-        <TextInput
-          {...rest}
-          style={[styles.input, style]}
-          secureTextEntry={secureTextEntry}
-          value={inputValue}
-          onChangeText={handleChange}
-          placeholderTextColor={Color.gray[400]}
-        />
-
-        {showRightIcons && (
-          <View style={styles.rightContainer}>
-            {clearButton && inputValue !== '' && (
-              <TouchableOpacity
-                onPress={handleClear}
-                style={iconRight && styles.mr8}
-              >
-                <Icon name="x-circle" size={20} color="#aaa" />
-              </TouchableOpacity>
-            )}
-            {iconRight && (
-              <TouchableOpacity onPress={onPressIconRight} hitSlop={10}>
-                <Icon
-                  name={iconRight}
-                  size={20}
-                  color={iconRightColor ?? '#888'}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-      </View>
-      {hint ? (
-        <Typography
-          color={hasError ? Color.danger[500] : Color.gray[700]}
-          variant="t3"
-          weight="medium"
+        <View
+          style={[
+            styles.container,
+            {
+              borderColor: hasError ? Color.danger[500] : Color.gray[100],
+            },
+          ]}
         >
-          {hint}
-        </Typography>
-      ) : null}
-    </View>
-  );
-};
+          {icon && (
+            <TouchableOpacity onPress={onPressIconLeft} hitSlop={10}>
+              <Icon name={icon} size={20} color="#888" />
+            </TouchableOpacity>
+          )}
+
+          {prefix && <View style={styles.prefixContainer}>{prefix}</View>}
+
+          <TextInput
+            {...rest}
+            ref={ref}
+            style={[styles.input, style]}
+            secureTextEntry={secureTextEntry}
+            value={inputValue}
+            onChangeText={handleChange}
+            placeholderTextColor={Color.gray[400]}
+          />
+
+          {showRightIcons && (
+            <View style={styles.rightContainer}>
+              {clearButton && inputValue !== '' && (
+                <TouchableOpacity
+                  onPress={handleClear}
+                  style={iconRight && styles.mr8}
+                >
+                  <Icon name="x-circle" size={20} color="#aaa" />
+                </TouchableOpacity>
+              )}
+              {iconRight && (
+                <TouchableOpacity onPress={onPressIconRight} hitSlop={10}>
+                  <Icon
+                    name={iconRight}
+                    size={20}
+                    color={iconRightColor ?? '#888'}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+        </View>
+        {hint ? (
+          <Typography
+            color={hasError ? Color.danger[500] : Color.gray[700]}
+            variant="t3"
+            weight="medium"
+          >
+            {hint}
+          </Typography>
+        ) : null}
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   gap: {
