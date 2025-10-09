@@ -7,7 +7,7 @@ interface Props {
   style?: object;
 }
 
-const Bold: React.FC<Props> = ({ size = 24, color = '#000', style }) => (
+const AlignLeft: React.FC<Props> = ({ size = 24, color = '#000', style }) => (
   <Svg
     width={size + 1}
     height={size}
@@ -16,7 +16,7 @@ const Bold: React.FC<Props> = ({ size = 24, color = '#000', style }) => (
     style={style}
   >
     <Path
-      d="M6.33333 12H14.3333C16.5425 12 18.3333 10.2091 18.3333 8C18.3333 5.79086 16.5425 4 14.3333 4H6.33333V12ZM6.33333 12H15.3333C17.5425 12 19.3333 13.7909 19.3333 16C19.3333 18.2091 17.5425 20 15.3333 20H6.33333V12Z"
+      d="M16.6667 10H3.66667M20.6667 6H3.66667M20.6667 14H3.66667M16.6667 18H3.66667"
       stroke={color}
       stroke-width="2"
       stroke-linecap="round"
@@ -25,4 +25,4 @@ const Bold: React.FC<Props> = ({ size = 24, color = '#000', style }) => (
   </Svg>
 );
 
-export default Bold;
+export default AlignLeft;
