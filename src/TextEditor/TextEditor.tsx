@@ -418,8 +418,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       }, 300);
     };
 
-    console.log(showLinkModal);
-
     const insertLink = () => {
       if (!linkUrl.trim()) {
         Alert.alert('Error', 'URL tidak boleh kosong');
