@@ -80,7 +80,6 @@ export default function InputFile({
   const handlePickFile = async () => {
     try {
       if (selectedFileIndex !== null) {
-        console.log(selectedFileIndex);
         confirmReplaceFile(selectedFileIndex);
         return;
       }
