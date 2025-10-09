@@ -7,16 +7,10 @@ interface Props {
   style?: object;
 }
 
-const Italic: React.FC<Props> = ({ size = 24, color = '#909090', style }) => (
-  <Svg
-    width={size + 1}
-    height={size}
-    viewBox="0 0 25 24"
-    fill="none"
-    style={style}
-  >
+const AlignRight: React.FC<Props> = ({ size = 24, color = '#000', style }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={style}>
     <Path
-      d="M19.3333 4H10.3333M14.3333 20H5.33333M15.3333 4L9.33333 20"
+      d="M21 10H8M21 6H4M21 14H4M21 18H8"
       stroke={color}
       stroke-width="2"
       stroke-linecap="round"
@@ -25,4 +19,4 @@ const Italic: React.FC<Props> = ({ size = 24, color = '#909090', style }) => (
   </Svg>
 );
 
-export default Italic;
+export default AlignRight;

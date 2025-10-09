@@ -90,6 +90,13 @@ export type IconNameProps =
   | 'arrow-up-circle-fill'
   | 'Envelope'
   | 'Phone'
+  | 'strike-through'
+  | 'align-left'
+  | 'align-right'
+  | 'align-center'
+  | 'list-un-ordered'
+  | 'list-ordered'
+  | 'Link'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;

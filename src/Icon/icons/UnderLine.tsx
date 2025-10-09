@@ -12,9 +12,15 @@ const UnderLine: React.FC<Props> = ({
   color = '#909090',
   style,
 }) => (
-  <Svg width={size} height={size} viewBox="0 0 16 17" fill="none" style={style}>
+  <Svg
+    width={size + 1}
+    height={size}
+    viewBox="0 0 25 24"
+    fill="none"
+    style={style}
+  >
     <Path
-      d="M12.9999 1.41016V7.24349C12.9999 10.0049 10.7613 12.2435 7.99992 12.2435C5.23849 12.2435 2.99992 10.0049 2.99992 7.24349V1.41016M1.33325 15.5768H14.6666"
+      d="M18.6667 4V11C18.6667 14.3137 15.9804 17 12.6667 17C9.35296 17 6.66667 14.3137 6.66667 11V4M4.66667 21H20.6667"
       stroke={color}
       stroke-width="2"
       stroke-linecap="round"
