@@ -32,11 +32,12 @@ export default function Select({
   header,
   onEndReached,
   submitBtnLabel,
+  searchValue,
   value,
 }: SelectProps) {
   // const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
-  const [searchQuery, setSearchQuery] = useState<string>();
+  const [searchQuery, setSearchQuery] = useState<string>(searchValue || '');
   const { show } = useToast();
   // useEffect(() => {
   //   setIsOpenSelect(isOpen);
@@ -82,6 +83,11 @@ export default function Select({
     }
   }, [value]);
 
+  useEffect(() => {
+    if (searchValue !== undefined) {
+      setSearchQuery(searchValue);
+    }
+  }, [searchValue]);
   return (
     <BottomSheet
       onClose={(val: boolean) => handleOnCloseBottom(val)}
