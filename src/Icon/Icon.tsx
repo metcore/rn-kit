@@ -89,6 +89,13 @@ import ArrowUpCircleFill from './icons/ArrowUpCircleFill';
 import ClipBoardListCheck2 from './icons/ClipBoardListCheck2';
 import Phone from './icons/Phone';
 import Envelope from './icons/Envelope';
+import AlignCenter from './icons/AlignCenter';
+import AlignLeft from './icons/AlignLeft';
+import AlignRight from './icons/AlignRight';
+import StrikeThrough from './icons/StrikeThrough';
+import Link from './icons/Link';
+import ListOrdered from './icons/ListOrdered';
+import ListUnOrdered from './icons/ListUnOrdered';
 
 const icons: Record<
   IconNameProps,
@@ -182,6 +189,13 @@ const icons: Record<
   'clipboard-list-check-fill-2': ClipBoardListCheck2,
   'Phone': Phone,
   'Envelope': Envelope,
+  'align-center': AlignCenter,
+  'align-left': AlignLeft,
+  'align-right': AlignRight,
+  'strike-through': StrikeThrough,
+  'Link': Link,
+  'list-ordered': ListOrdered,
+  'list-un-ordered': ListUnOrdered,
 };
 
 const Icon: React.FC<IconProps> = ({
