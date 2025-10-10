@@ -17,7 +17,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  type KeyboardEvent,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import BottomSheet from '../BottomSheet/BottomSheet';
@@ -90,7 +89,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     },
     ref
   ) => {
-    const [keyboardHeight, setKeyboardHeight] = useState(0);
     const [showToolbar, setShowToolbar] = useState<boolean>(false);
     const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
     const [characterCount, setCharacterCount] = useState(0);
@@ -101,9 +99,10 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     const webviewRef = useRef<WebView>(null);
     const inputUrlRef = useRef<TextInput>(null);
 
+    // Sekarang handleOnChange hanya dipanggil sebagai fallback
     const handleOnChange = (data: string) => {
-      // Remove HTML tags untuk hitung karakter
-      const textOnly = data.replace(/<[^>]*>/g, '');
+      // Fallback jika message bukan JSON
+      const textOnly = data.replace(/<[^>]*>/g, '').trim();
       setCharacterCount(textOnly.length);
 
       if (maxLength && textOnly.length > maxLength) {
@@ -156,6 +155,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
             width: 99.9%;
             height: 100%;
             overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           }
           #editor {
             height: 100%;
@@ -213,13 +213,29 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
             editor.classList.remove('placeholder');
           }
 
+          // Kirim initial character count saat load
+          setTimeout(() => {
+            const charCount = editor.textContent.trim().length;
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'initialCount',
+              characterCount: charCount
+            }));
+          }, 100);
+
           editor.addEventListener("input", () => {
             if (editor.textContent.trim()) {
               editor.classList.remove('placeholder');
             } else {
               editor.classList.add('placeholder');
             }
-            window.ReactNativeWebView.postMessage(editor.innerHTML);
+
+            // Kirim HTML dan character count
+            const charCount = editor.textContent.trim().length;
+            window.ReactNativeWebView.postMessage(JSON.stringify({
+              type: 'content',
+              html: editor.innerHTML,
+              characterCount: charCount
+            }));
           });
 
           editor.addEventListener("focus", () => {
@@ -342,7 +358,14 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
                     range.collapse(true);
                     selection.removeAllRanges();
                     selection.addRange(range);
-                    window.ReactNativeWebView.postMessage(editor.innerHTML);
+
+                    // Update content dan character count
+                    const charCount = editor.textContent.trim().length;
+                    window.ReactNativeWebView.postMessage(JSON.stringify({
+                      type: 'content',
+                      html: editor.innerHTML,
+                      characterCount: charCount
+                    }));
                     return;
                   }
                 }
@@ -363,7 +386,14 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
                 selection.removeAllRanges();
                 selection.addRange(range);
               }
-              window.ReactNativeWebView.postMessage(editor.innerHTML);
+
+              // Update content dan character count
+              const charCount = editor.textContent.trim().length;
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'content',
+                html: editor.innerHTML,
+                characterCount: charCount
+              }));
             } else {
               editor.focus();
               document.execCommand(command, false, null);
@@ -389,18 +419,25 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       if (webviewRef.current) {
         if (Platform.OS === 'ios') {
           webviewRef.current.injectJavaScript(`
-        document.execCommand('${command}', false, null);
-        const formats = [];
-        if (document.queryCommandState('bold')) formats.push('bold');
-        if (document.queryCommandState('italic')) formats.push('italic');
-        if (document.queryCommandState('underline')) formats.push('underline');
-        if (document.queryCommandState('strikeThrough')) formats.push('strikeThrough');
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-          type: 'formats',
-          formats: formats
-        }));
-        true;
-      `);
+            const editor = document.getElementById('editor');
+            editor.focus();
+            document.execCommand('${command}', false, null);
+
+            // Force update formats after command
+            setTimeout(() => {
+              const formats = [];
+              if (document.queryCommandState('bold')) formats.push('bold');
+              if (document.queryCommandState('italic')) formats.push('italic');
+              if (document.queryCommandState('underline')) formats.push('underline');
+              if (document.queryCommandState('strikeThrough')) formats.push('strikeThrough');
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'formats',
+                formats: formats
+              }));
+              window.ReactNativeWebView.postMessage(editor.innerHTML);
+            }, 50);
+            true;
+        `);
         } else {
           webviewRef.current.postMessage(command);
         }
@@ -408,14 +445,17 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     };
 
     const openLinkModal = () => {
-      // Get selected text first
       if (webviewRef.current) {
         webviewRef.current.postMessage('getSelectedText');
       }
-      setShowLinkModal(true);
+
+      setTimeout(() => {
+        setShowLinkModal(true);
+      }, 50);
+
       setTimeout(() => {
         inputUrlRef.current?.focus();
-      }, 300);
+      }, 350);
     };
 
     const insertLink = () => {
@@ -425,7 +465,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       }
 
       let finalUrl = linkUrl.trim();
-      // Add https:// if no protocol
       if (!finalUrl.match(/^https?:\/\//i)) {
         finalUrl = 'https://' + finalUrl;
       }
@@ -439,61 +478,71 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       if (webviewRef.current) {
         if (Platform.OS === 'ios') {
           webviewRef.current.injectJavaScript(`
-          const linkData = ${linkData};
-          const editor = document.getElementById('editor');
-          editor.focus();
-          const selection = window.getSelection();
+        const linkData = ${linkData};
+        const editor = document.getElementById('editor');
+        editor.focus();
+        const selection = window.getSelection();
 
-          if (selection && selection.rangeCount > 0) {
-            const range = selection.getRangeAt(0);
+        if (selection && selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
 
-            // If editing existing link
-            if (linkData.isExisting) {
-              let linkElement = null;
-              let node = range.startContainer;
+          if (linkData.isExisting) {
+            let linkElement = null;
+            let node = range.startContainer;
 
-              while (node && node !== editor) {
-                if (node.nodeName === 'A') {
-                  linkElement = node;
-                  break;
-                }
-                node = node.parentNode;
+            while (node && node !== editor) {
+              if (node.nodeName === 'A') {
+                linkElement = node;
+                break;
               }
-
-              if (!linkElement && range.commonAncestorContainer.nodeType === 1) {
-                linkElement = range.commonAncestorContainer.querySelector('a');
-              }
-
-              if (linkElement) {
-                linkElement.href = linkData.url;
-                linkElement.textContent = linkData.text;
-                range.setStartAfter(linkElement);
-                range.collapse(true);
-                selection.removeAllRanges();
-                selection.addRange(range);
-                window.ReactNativeWebView.postMessage(editor.innerHTML);
-                true;
-                return;
-              }
+              node = node.parentNode;
             }
 
-            // Create new link
-            const link = document.createElement('a');
-            link.href = linkData.url;
-            link.textContent = linkData.text;
-            link.target = '_blank';
-            range.deleteContents();
-            range.insertNode(link);
-            const space = document.createTextNode(' ');
-            link.parentNode.insertBefore(space, link.nextSibling);
-            range.setStartAfter(space);
-            range.collapse(true);
-            selection.removeAllRanges();
-            selection.addRange(range);
+            if (!linkElement && range.commonAncestorContainer.nodeType === 1) {
+              linkElement = range.commonAncestorContainer.querySelector('a');
+            }
+
+            if (linkElement) {
+              linkElement.href = linkData.url;
+              linkElement.textContent = linkData.text;
+              range.setStartAfter(linkElement);
+              range.collapse(true);
+              selection.removeAllRanges();
+              selection.addRange(range);
+
+              const charCount = editor.textContent.trim().length;
+              window.ReactNativeWebView.postMessage(JSON.stringify({
+                type: 'content',
+                html: editor.innerHTML,
+                characterCount: charCount
+              }));
+              true;
+              return;
+            }
           }
-          window.ReactNativeWebView.postMessage(editor.innerHTML);
-          true;
-        `);
+
+          const link = document.createElement('a');
+          link.href = linkData.url;
+          link.textContent = linkData.text;
+          link.target = '_blank';
+          range.deleteContents();
+          range.insertNode(link);
+          const space = document.createTextNode(' ');
+          link.parentNode.insertBefore(space, link.nextSibling);
+          range.setStartAfter(space);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+
+        const charCount = editor.textContent.trim().length;
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: 'content',
+          html: editor.innerHTML,
+          characterCount: charCount
+        }));
+        true;
+      `);
         } else {
           webviewRef.current.postMessage('insertLink:' + linkData);
         }
@@ -507,9 +556,12 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
 
     const closeLinkModal = () => {
       setShowLinkModal(false);
-      setLinkText('');
-      setLinkUrl('');
-      setIsEditingLink(false);
+
+      setTimeout(() => {
+        setLinkText('');
+        setLinkUrl('');
+        setIsEditingLink(false);
+      }, 300);
     };
 
     const handleWebViewMessage = (event: any) => {
@@ -519,34 +571,50 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
         const parsed = JSON.parse(data);
 
         if (parsed.type === 'formats') {
-          setActiveFormats(new Set(parsed.formats));
+          requestAnimationFrame(() => {
+            setActiveFormats(new Set(parsed.formats));
+          });
         } else if (parsed.type === 'focus') {
-          onFocus?.();
+          requestAnimationFrame(() => {
+            onFocus?.();
+          });
         } else if (parsed.type === 'blur') {
-          onBlur?.();
+          requestAnimationFrame(() => {
+            onBlur?.();
+          });
         } else if (parsed.type === 'selectedText') {
-          setLinkText(parsed.text);
-          // Clean URL (remove protocol prefix for editing)
-          const cleanUrl = parsed.url.replace(/^https?:\/\//, '');
-          setLinkUrl(cleanUrl);
-          setIsEditingLink(parsed.isExisting || false);
+          requestAnimationFrame(() => {
+            setLinkText(parsed.text);
+            const cleanUrl = parsed.url.replace(/^https?:\/\//, '');
+            setLinkUrl(cleanUrl);
+            setIsEditingLink(parsed.isExisting || false);
+          });
+        } else if (parsed.type === 'initialCount') {
+          // Set initial character count saat pertama load
+          setCharacterCount(parsed.characterCount);
+        } else if (parsed.type === 'content') {
+          // Update character count dari WebView
+          setCharacterCount(parsed.characterCount);
+
+          // Cek maxLength
+          if (maxLength && parsed.characterCount > maxLength) {
+            // Optional: bisa tambahkan alert atau prevent
+            return;
+          }
+
+          onChange?.(parsed.html);
         }
       } catch {
-        // Jika bukan JSON, berarti itu HTML content
+        // Fallback ke cara lama jika bukan JSON (untuk backward compatibility)
         handleOnChange(data);
       }
     };
 
     useEffect(() => {
-      const showSub = Keyboard.addListener(
-        'keyboardDidShow',
-        (e: KeyboardEvent) => {
-          setKeyboardHeight(e.endCoordinates.height - 35);
-          setShowToolbar(true);
-        }
-      );
+      const showSub = Keyboard.addListener('keyboardDidShow', () => {
+        setShowToolbar(true);
+      });
       const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-        setKeyboardHeight(0);
         setShowToolbar(false);
       });
 
@@ -556,8 +624,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       };
     }, []);
 
-    const gap = Platform.OS === 'ios' ? 200 : 185;
-
     const isFormatActive = (format: string) => activeFormats.has(format);
 
     const toolbarButtons: ToolbarButton[] = [
@@ -565,7 +631,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       { command: 'italic', icon: 'Italic', label: 'Italic' },
       { command: 'underline', icon: 'UnderLine', label: 'Underline' },
       { command: 'strikeThrough', icon: 'strike-through', label: 'Strike' },
-      { command: 'link', icon: 'Link', label: 'Link', isSpecial: true },
+      // { command: 'link', icon: 'Link', label: 'Link', isSpecial: true },
       {
         command: 'insertUnorderedList',
         icon: 'list-un-ordered',
@@ -626,43 +692,51 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           </View>
         ) : null}
 
-        {showToolbar ? (
-          <SafeAreaView
-            style={[
-              styles.toolbar,
-              { top: Dimensions.get('screen').height - keyboardHeight - gap },
-            ]}
+        {showToolbar && (
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'position' : 'padding'}
           >
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.toolbarContent}
+            <SafeAreaView
+              style={[
+                styles.toolbar,
+                Platform?.OS === 'android' && Platform.Version < 35
+                  ? styles.mt10p
+                  : undefined,
+              ]}
             >
-              {toolbarButtons.map((button) => (
-                <TouchableOpacity
-                  key={button.command}
-                  onPress={() =>
-                    button.isSpecial
-                      ? openLinkModal()
-                      : formatText(button.command)
-                  }
-                  style={[
-                    styles.toolButton,
-                    isFormatActive(button.command) && styles.toolButtonActive,
-                  ]}
-                >
-                  <Icon
-                    name={button.icon}
-                    size={20}
-                    color={
-                      isFormatActive(button.command) ? '#fff' : Color.gray[900]
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.toolbarContent}
+              >
+                {toolbarButtons.map((button) => (
+                  <TouchableOpacity
+                    key={button.command}
+                    onPress={() =>
+                      button.isSpecial
+                        ? openLinkModal()
+                        : formatText(button.command)
                     }
-                  />
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </SafeAreaView>
-        ) : null}
+                    style={[
+                      styles.toolButton,
+                      isFormatActive(button.command) && styles.toolButtonActive,
+                    ]}
+                  >
+                    <Icon
+                      name={button.icon}
+                      size={20}
+                      color={
+                        isFormatActive(button.command)
+                          ? '#fff'
+                          : Color.gray[900]
+                      }
+                    />
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </SafeAreaView>
+          </KeyboardAvoidingView>
+        )}
 
         {/* Link Modal */}
         <BottomSheet
@@ -775,5 +849,8 @@ const styles = StyleSheet.create({
   },
   flex1: {
     flex: 1,
+  },
+  mt10p: {
+    marginTop: '10%',
   },
 });
