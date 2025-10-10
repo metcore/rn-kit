@@ -1,13 +1,18 @@
 // Footer.tsx
 import React, { useMemo } from 'react';
-import { SafeAreaView, StyleSheet, type ViewStyle } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import { useFooter } from '../Provider/Provider';
 import Color from '../Color/Color';
 import { useOptionalFocusEffect } from '../hooks/useOptionalFocusEffect';
 
 interface FooterProps {
   children: React.ReactNode;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Footer: React.FC<FooterProps> = ({ children, style }) => {

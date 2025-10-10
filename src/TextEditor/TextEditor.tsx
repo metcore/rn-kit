@@ -11,12 +11,12 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
+  type KeyboardEvent,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import BottomSheet from '../BottomSheet/BottomSheet';
@@ -26,6 +26,7 @@ import Icon, { type IconNameProps } from '../Icon';
 import Input from '../Input/Input';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
+import Footer from '../Ui/Footer';
 import type { TextEditorType } from './types';
 
 export interface TextEditorRef {
@@ -98,6 +99,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     const [isEditingLink, setIsEditingLink] = useState(false);
     const webviewRef = useRef<WebView>(null);
     const inputUrlRef = useRef<TextInput>(null);
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
 
     // Sekarang handleOnChange hanya dipanggil sebagai fallback
     const handleOnChange = (data: string) => {
@@ -419,25 +421,9 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       if (webviewRef.current) {
         if (Platform.OS === 'ios') {
           webviewRef.current.injectJavaScript(`
-            const editor = document.getElementById('editor');
-            editor.focus();
-            document.execCommand('${command}', false, null);
-
-            // Force update formats after command
-            setTimeout(() => {
-              const formats = [];
-              if (document.queryCommandState('bold')) formats.push('bold');
-              if (document.queryCommandState('italic')) formats.push('italic');
-              if (document.queryCommandState('underline')) formats.push('underline');
-              if (document.queryCommandState('strikeThrough')) formats.push('strikeThrough');
-              window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: 'formats',
-                formats: formats
-              }));
-              window.ReactNativeWebView.postMessage(editor.innerHTML);
-            }, 50);
-            true;
-        `);
+            document.execCommand('${command}', false, '');
+            true; //di ios harus biar berfunsi boldnya
+          `);
         } else {
           webviewRef.current.postMessage(command);
         }
@@ -445,13 +431,10 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     };
 
     const openLinkModal = () => {
+      setShowLinkModal(true);
       if (webviewRef.current) {
         webviewRef.current.postMessage('getSelectedText');
       }
-
-      setTimeout(() => {
-        setShowLinkModal(true);
-      }, 50);
 
       setTimeout(() => {
         inputUrlRef.current?.focus();
@@ -557,11 +540,9 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     const closeLinkModal = () => {
       setShowLinkModal(false);
 
-      setTimeout(() => {
-        setLinkText('');
-        setLinkUrl('');
-        setIsEditingLink(false);
-      }, 300);
+      setLinkText('');
+      setLinkUrl('');
+      setIsEditingLink(false);
     };
 
     const handleWebViewMessage = (event: any) => {
@@ -611,11 +592,16 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     };
 
     useEffect(() => {
-      const showSub = Keyboard.addListener('keyboardDidShow', () => {
-        setShowToolbar(true);
-      });
+      const showSub = Keyboard.addListener(
+        'keyboardDidShow',
+        (e: KeyboardEvent) => {
+          setShowToolbar(true);
+          setKeyboardHeight(e.endCoordinates.height);
+        }
+      );
       const hideSub = Keyboard.addListener('keyboardDidHide', () => {
         setShowToolbar(false);
+        setKeyboardHeight(0);
       });
 
       return () => {
@@ -631,7 +617,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       { command: 'italic', icon: 'Italic', label: 'Italic' },
       { command: 'underline', icon: 'UnderLine', label: 'Underline' },
       { command: 'strikeThrough', icon: 'strike-through', label: 'Strike' },
-      // { command: 'link', icon: 'Link', label: 'Link', isSpecial: true },
+      { command: 'link', icon: 'Link', label: 'Link', isSpecial: true },
       {
         command: 'insertUnorderedList',
         icon: 'list-un-ordered',
@@ -692,52 +678,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           </View>
         ) : null}
 
-        {showToolbar && (
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'position' : 'padding'}
-          >
-            <SafeAreaView
-              style={[
-                styles.toolbar,
-                Platform?.OS === 'android' && Platform.Version < 35
-                  ? styles.mt10p
-                  : undefined,
-              ]}
-            >
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.toolbarContent}
-              >
-                {toolbarButtons.map((button) => (
-                  <TouchableOpacity
-                    key={button.command}
-                    onPress={() =>
-                      button.isSpecial
-                        ? openLinkModal()
-                        : formatText(button.command)
-                    }
-                    style={[
-                      styles.toolButton,
-                      isFormatActive(button.command) && styles.toolButtonActive,
-                    ]}
-                  >
-                    <Icon
-                      name={button.icon}
-                      size={20}
-                      color={
-                        isFormatActive(button.command)
-                          ? '#fff'
-                          : Color.gray[900]
-                      }
-                    />
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </SafeAreaView>
-          </KeyboardAvoidingView>
-        )}
-
         {/* Link Modal */}
         <BottomSheet
           isOpen={showLinkModal}
@@ -779,6 +719,49 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
             </View>
           </View>
         </BottomSheet>
+
+        {showToolbar && (
+          <Footer
+            style={[
+              styles.toolbar,
+              {
+                bottom:
+                  Platform.OS === 'android' && Platform.Version < 35
+                    ? keyboardHeight - keyboardHeight
+                    : keyboardHeight,
+              },
+            ]}
+          >
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.toolbarContent}
+            >
+              {toolbarButtons.map((button) => (
+                <TouchableOpacity
+                  key={button.command}
+                  onPress={() =>
+                    button.isSpecial
+                      ? openLinkModal()
+                      : formatText(button.command)
+                  }
+                  style={[
+                    styles.toolButton,
+                    isFormatActive(button.command) && styles.toolButtonActive,
+                  ]}
+                >
+                  <Icon
+                    name={button.icon}
+                    size={20}
+                    color={
+                      isFormatActive(button.command) ? '#fff' : Color.gray[900]
+                    }
+                  />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </Footer>
+        )}
       </View>
     );
   }
@@ -816,7 +799,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 8,
     position: 'absolute',
-    left: -24,
     width: Dimensions.get('screen').width,
     alignItems: 'center',
   },
