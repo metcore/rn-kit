@@ -101,15 +101,9 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     const inputUrlRef = useRef<TextInput>(null);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-    // Sekarang handleOnChange hanya dipanggil sebagai fallback
     const handleOnChange = (data: string) => {
-      // Fallback jika message bukan JSON
       const textOnly = data.replace(/<[^>]*>/g, '').trim();
       setCharacterCount(textOnly.length);
-
-      if (maxLength && textOnly.length > maxLength) {
-        return;
-      }
 
       onChange?.(data);
     };
@@ -576,13 +570,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
         } else if (parsed.type === 'content') {
           // Update character count dari WebView
           setCharacterCount(parsed.characterCount);
-
-          // Cek maxLength
-          if (maxLength && parsed.characterCount > maxLength) {
-            // Optional: bisa tambahkan alert atau prevent
-            return;
-          }
-
           onChange?.(parsed.html);
         }
       } catch {
