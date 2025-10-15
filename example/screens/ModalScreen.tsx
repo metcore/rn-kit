@@ -16,6 +16,16 @@ export default function ModalScreen() {
   const [isOpenModalDefault, setOpenModalDefault] = useState(false);
   const [isOpenModalDefaultCannotClose, setOpenModalDefaultCannotClose] =
     useState(false);
+
+  const handleOnRequestClose = () => {
+    setOpenModalDefaultCannotClose(true);
+  };
+
+  const handleOnPres = () => {
+    setOpenModalDefault(false);
+    setOpenModalDefaultCannotClose(true);
+  };
+
   return (
     <View>
       <Container style={{ gap: 8 }}>
@@ -32,6 +42,7 @@ export default function ModalScreen() {
       </Container>
       <Modal
         onClose={() => setOpenModalDefault(false)}
+        onRequestClose={handleOnRequestClose}
         isOpen={isOpenModalDefault}
       >
         <Container>
@@ -57,7 +68,12 @@ export default function ModalScreen() {
                 </Typography>
               </Center>
             </View>
-            <Button title="Ok, Mengerti" block color="primary" />
+            <Button
+              title="Ok, Mengerti"
+              onPress={handleOnPres}
+              block
+              color="primary"
+            />
           </View>
         </Container>
       </Modal>
