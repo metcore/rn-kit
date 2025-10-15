@@ -582,7 +582,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       const showSub = Keyboard.addListener(
         'keyboardDidShow',
         (e: KeyboardEvent) => {
-          setShowToolbar(true);
+          // setShowToolbar(true);
           setKeyboardHeight(e.endCoordinates.height);
         }
       );
