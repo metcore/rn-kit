@@ -56,11 +56,10 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     Animated.spring(scaleAnim, {
       toValue: 0,
       useNativeDriver: true,
-    }).start();
-    setTimeout(() => {
+    }).start(() => {
       setIsVisible(false);
-      onClose?.(false);
-    }, 200);
+      onClose?.();
+    });
   }, [scaleAnim, onClose]);
 
   const handleBackdropPress = useCallback(() => {
