@@ -74,8 +74,10 @@ export default function BottomSheet({
         duration: 300,
         useNativeDriver: false,
       }).start(() => {
-        setIsVisible(false);
-        onClose && onClose(false);
+        requestAnimationFrame(() => {
+          setIsVisible(false);
+          onClose?.(false);
+        });
       });
     }
   }, [closable, translateY, onClose]);
@@ -193,8 +195,8 @@ export default function BottomSheet({
             {footer && (
               <SafeAreaView
                 onLayout={(event) => {
-                  const { height } = event.nativeEvent.layout;
-                  setHeightFooter(height);
+                  const { height: layoutHeight } = event.nativeEvent.layout;
+                  setHeightFooter(layoutHeight);
                 }}
                 style={styles.footer}
               >
