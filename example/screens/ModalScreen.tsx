@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 import type { NavigationProps } from '../type/navigation';
 
@@ -16,6 +16,12 @@ export default function ModalScreen() {
   const [isOpenModalDefault, setOpenModalDefault] = useState(false);
   const [isOpenModalDefaultCannotClose, setOpenModalDefaultCannotClose] =
     useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
     <View>
       <Container style={{ gap: 8 }}>
@@ -30,6 +36,19 @@ export default function ModalScreen() {
           color="primary"
         />
       </Container>
+      <Modal onClose={() => setIsVisible(false)} isOpen={isVisible}>
+        <Container>
+          <View style={{ gap: 32, alignItems: 'center' }}>
+            <Image source={require('../assets/positive-vote-1.png')} />
+            <Button
+              title="Ok, Mengerti"
+              block
+              color="primary"
+              onPress={() => setIsVisible(false)}
+            />
+          </View>
+        </Container>
+      </Modal>
       <Modal
         onClose={() => setOpenModalDefault(false)}
         isOpen={isOpenModalDefault}
