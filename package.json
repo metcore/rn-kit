@@ -1,6 +1,6 @@
 {
   "name": "@herca/rn-kit",
-  "version": "0.1.60",
+  "version": "0.1.61",
   "description": "React Native UI Kit",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
