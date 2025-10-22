@@ -88,3 +88,5 @@ export type { SkeletonProps } from './Skeleton/type';
 export { default as CounterButton } from './CounterButton/CounterButton';
 export { default as BadgeIcon } from './BadgeIcon/BadgeIcon';
 export { default as PdfView } from './FileView/PdfView';
+export { default as InputSelect } from './Input/InputSelect';
+export type { ChipValue } from './Chip/type';
