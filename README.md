@@ -112,6 +112,7 @@ Komponen untuk mengumpulkan input dari pengguna.
 - [DatePicker](./src/DatePicker/README_DATEPICKER.md)
 - [DropDown](./src/DropDown/README.md)
 - [Input](./src/Input/README_INPUT.md)
+- [Input Select](./src/Input/README_INPUT_SELECT.md)
 - [InputOtp](./src/Input/README_INPUT_OTP.md)
 - [Input Month](./src/Datepicker/README_MONTHPICKER.md)
 - [Input Password](./src/InputPassword/README.md)
