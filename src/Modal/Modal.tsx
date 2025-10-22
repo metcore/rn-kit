@@ -39,7 +39,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   containerStyle,
   modalStyle,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(isOpen);
   const scaleAnim = useState(() => new Animated.Value(0))[0];
 
   const showModal = useCallback(() => {
@@ -75,10 +75,10 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   useEffect(() => {
     if (isOpen) {
       showModal();
-    } else {
-      hideModal();
     }
-  }, [isOpen, showModal, hideModal]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const modalContentStyle = StyleSheet.flatten([
     {
