@@ -53,22 +53,31 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   }, [scaleAnim]);
 
   const hideModal = useCallback(() => {
-    setIsVisible(false);
-    onRequestClose?.();
-    onClose?.();
-  }, [onClose, onRequestClose]);
+    Animated.spring(scaleAnim, {
+      toValue: 0,
+      useNativeDriver: true,
+    }).start(() => {
+      setIsVisible(false);
+      onClose?.(false);
+    });
+  }, [scaleAnim, onClose]);
 
   const handleBackdropPress = useCallback(() => {
     if (closable) {
-      hideModal?.();
+      if (onRequestClose) {
+        onRequestClose();
+      } else {
+        hideModal();
+      }
     }
-  }, [closable, hideModal]);
+  }, [closable, onRequestClose, hideModal]);
 
   useEffect(() => {
     if (isOpen) {
       showModal();
+    } else {
+      hideModal();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
