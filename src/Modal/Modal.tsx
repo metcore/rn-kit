@@ -63,13 +63,11 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
       hideModal?.();
     }
   }, [closable, hideModal]);
-
   useEffect(() => {
     if (isOpen) {
       showModal();
-    } else {
-      hideModal();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
