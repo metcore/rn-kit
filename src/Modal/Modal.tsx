@@ -58,7 +58,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
       useNativeDriver: true,
     }).start(() => {
       setIsVisible(false);
-      onClose?.();
+      onClose?.(false);
     });
   }, [scaleAnim, onClose]);
 
@@ -75,8 +75,9 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   useEffect(() => {
     if (isOpen) {
       showModal();
+    } else {
+      hideModal();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
