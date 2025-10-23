@@ -73,7 +73,6 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   };
 
   const handleRequestClose = () => {
-    onRequestClose?.();
     userClose();
   };
 
