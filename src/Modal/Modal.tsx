@@ -50,36 +50,23 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     }).start();
   }, [scaleAnim]);
 
-  const animateOut = useCallback(
-    (cb?: () => void) => {
-      Animated.spring(scaleAnim, {
-        toValue: 0,
-        useNativeDriver: true,
-        damping: 20,
-        stiffness: 200,
-      }).start(({ finished }) => {
-        if (finished) cb?.();
-      });
-    },
-    [scaleAnim]
-  );
-
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
       animateIn();
     } else if (isVisible) {
-      animateOut(() => setIsVisible(false));
+      setIsVisible(false);
+      onRequestClose?.();
+      onClose?.();
     }
-  }, [isOpen, isVisible, animateIn, animateOut]);
+  }, [isOpen, isVisible, animateIn, onRequestClose, onClose]);
 
   const userClose = useCallback(() => {
     if (!closable) return;
-    animateOut(() => {
-      setIsVisible(false);
-      onClose?.(false);
-    });
-  }, [animateOut, closable, onClose]);
+    setIsVisible(false);
+    onRequestClose?.();
+    onClose?.();
+  }, [closable, onClose, onRequestClose]);
 
   const handleBackdropPress = () => {
     userClose();
