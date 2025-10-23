@@ -1,3 +1,4 @@
+import { Color, Icon } from '@herca/rn-kit';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
@@ -10,8 +11,6 @@ import {
   Platform,
   type ViewStyle,
 } from 'react-native';
-import Icon from '../Icon';
-import Color from '../Color/Color';
 
 interface ModalPopUpProps {
   isOpen: boolean;
@@ -39,11 +38,10 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   containerStyle,
   modalStyle,
 }) => {
-  const [isVisible, setIsVisible] = useState(isOpen);
+  const [isVisible, setIsVisible] = useState(isOpen ?? false);
   const scaleAnim = useState(() => new Animated.Value(0))[0];
 
-  const showModal = useCallback(() => {
-    setIsVisible(true);
+  const animateIn = useCallback(() => {
     Animated.spring(scaleAnim, {
       toValue: 1,
       useNativeDriver: true,
@@ -52,24 +50,31 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     }).start();
   }, [scaleAnim]);
 
-  const hideModal = useCallback(() => {
+  useEffect(() => {
+    if (isOpen) {
+      setIsVisible(true);
+      animateIn();
+    } else if (isVisible) {
+      setIsVisible(false);
+      onRequestClose?.();
+      onClose?.();
+    }
+  }, [isOpen, isVisible, animateIn, onRequestClose, onClose]);
+
+  const userClose = useCallback(() => {
+    if (!closable) return;
     setIsVisible(false);
     onRequestClose?.();
     onClose?.();
-  }, [onClose, onRequestClose]);
+  }, [closable, onClose, onRequestClose]);
 
-  const handleBackdropPress = useCallback(() => {
-    if (closable) {
-      hideModal?.();
-    }
-  }, [closable, hideModal]);
-  useEffect(() => {
-    if (isOpen) {
-      showModal();
-    }
+  const handleBackdropPress = () => {
+    userClose();
+  };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  const handleRequestClose = () => {
+    userClose();
+  };
 
   const modalContentStyle = StyleSheet.flatten([
     {
@@ -85,7 +90,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
     <Modal
       transparent
       visible={isVisible}
-      onRequestClose={handleBackdropPress}
+      onRequestClose={handleRequestClose}
       statusBarTranslucent
     >
       <View style={[styles.modalContainer, containerStyle]}>
@@ -99,7 +104,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
         <Animated.View style={[styles.modalContent, modalContentStyle]}>
           {closable && (
             <View style={styles.closeButtonContainer}>
-              <TouchableOpacity onPress={hideModal} style={styles.closeButton}>
+              <TouchableOpacity onPress={userClose} style={styles.closeButton}>
                 <View style={styles.iconButtonClose}>
                   <Icon name="Times" size={13} color={Color.gray[900]} />
                 </View>
@@ -116,11 +121,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   backdrop: {
     position: 'absolute',
     top: 0,
@@ -129,39 +130,25 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  backdropTouch: {
-    width: '100%',
-    height: '100%',
-  },
+  backdropTouch: { width: '100%', height: '100%' },
   modalContent: {
     borderRadius: 16,
     overflow: 'visible',
     ...Platform.select({
       ios: {
         shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4,
       },
-      android: {
-        elevation: 5,
-      },
+      android: { elevation: 5 },
     }),
   },
-  closeButtonContainer: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
-  },
+  closeButtonContainer: { position: 'absolute', top: 10, right: 10, zIndex: 1 },
   iconButtonClose: {
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    top: 'auto',
     flex: 1,
   },
   closeButton: {
@@ -170,9 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#ccc',
   },
-  contentContainer: {
-    padding: 16,
-  },
+  contentContainer: { padding: 16 },
 });
 
 export default ModalPopUp;
