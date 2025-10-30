@@ -57,6 +57,7 @@ type RootStackParamList = {
   InputFile: undefined;
   PdfView: undefined;
   InputSelect: undefined;
+  InputDate: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 import { View } from 'react-native';
 import type { DateProps } from '../../src/Calendar/CalendarPropsType';
+import { spacing } from '../../src/styles/spacing';
 
 export default function DatePickerScreen() {
   const [isOpenDatePickerSingle, setIsOpenDatePickerSingle] = useState(false);
@@ -21,7 +22,7 @@ export default function DatePickerScreen() {
   }>();
   return (
     <Container>
-      <View style={{ gap: 4 }}>
+      <View style={spacing.gap[4]}>
         <Button
           title="Open Date picker single"
           color="primary"
