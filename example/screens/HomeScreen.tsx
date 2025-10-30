@@ -149,6 +149,12 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
+            title="Input Date"
+            onPress={() => navigation.navigate('InputDate')}
+            block
+          />
+          <Button
+            color="success"
             title="Text Area"
             onPress={() => navigation.navigate('TextArea')}
             block

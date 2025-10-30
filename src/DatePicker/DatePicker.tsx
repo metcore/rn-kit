@@ -44,9 +44,9 @@ export default function DatePicker({
     date: null,
   });
 
-  const handleOnChangeCalendar = useCallback((value: DateRangeProps) => {
+  const handleOnChangeCalendar = useCallback((val: DateRangeProps) => {
     setMarkDates({});
-    setValueDatepicker(value);
+    setValueDatepicker(val);
     setErrorValidate(false);
   }, []);
 

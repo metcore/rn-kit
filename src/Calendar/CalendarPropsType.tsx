@@ -17,6 +17,12 @@ export type DateRangeProps = {
   date?: DateProps;
 };
 
+export type FormattedDateRangeProps = {
+  startDate?: string;
+  endDate?: string;
+  date?: string;
+};
+
 export type CalendarDisabledProp = {
   backgroundColor?: string | undefined;
   textColor?: string | undefined;

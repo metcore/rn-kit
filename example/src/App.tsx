@@ -61,6 +61,7 @@ import BadgeIconScreen from '../screens/BadgeIconScreen';
 import InputFileScreen from '../screens/InputFileScreen';
 import PdfViewScreen from '../screens/PdfViewScreen';
 import InputSelectScreen from '../screens/InputSelectScreen';
+import InputDateScreen from '../screens/InputDateScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -193,6 +194,7 @@ const App = () => {
             <Stack.Screen name="InputFile" component={InputFileScreen} />
             <Stack.Screen name="PdfView" component={PdfViewScreen} />
             <Stack.Screen name="InputSelect" component={InputSelectScreen} />
+            <Stack.Screen name="InputDate" component={InputDateScreen} />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}

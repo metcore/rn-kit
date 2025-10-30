@@ -113,6 +113,7 @@ Komponen untuk mengumpulkan input dari pengguna.
 - [DropDown](./src/DropDown/README.md)
 - [Input](./src/Input/README_INPUT.md)
 - [Input Select](./src/Input/README_INPUT_SELECT.md)
+- [Input Date](./src/Input/README_INPUT_DATE.md)
 - [InputOtp](./src/Input/README_INPUT_OTP.md)
 - [Input Month](./src/Datepicker/README_MONTHPICKER.md)
 - [Input Password](./src/InputPassword/README.md)
@@ -168,6 +169,7 @@ Komponen untuk menampilkan informasi atau elemen visual.
 - [Devider](./src/Ui/README_DEVIDER.md)
 - [Drawing](./src/Drawing/README.md)
 - [Footer](./src/Ui/README_FOOTER.md)
+- [ViewInsets](./src/Ui/README_VIEWINSETS.md)
 - [Icon](./src/Icon/README.md)
 - [List](./src/List/README.md)
 - [Timeline](./src/Timeline/README.md)
@@ -180,6 +182,12 @@ Komponen untuk menampilkan informasi atau elemen visual.
 ### Contex
 
 - [Provider](./src/Provider/README.md)
+
+---
+
+### Function
+
+- [Date Formatter](./src/function/README_DATE_FORMATTER.md)
 
 ## 🤝 Kontribusi
 
