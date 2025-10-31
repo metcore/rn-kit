@@ -52,6 +52,7 @@ export type IconNameProps =
   | 'plus-square'
   | 'at-sign'
   | 'briefcase-outline'
+  | 'briefcase-fill-bulk'
   | 'edit-square-outline'
   | 'globe-earth'
   | 'lock-fill'
@@ -97,6 +98,9 @@ export type IconNameProps =
   | 'list-un-ordered'
   | 'list-ordered'
   | 'Link'
+  | 'money-down'
+  | 'location-pin-outline'
+  | 'car-outline'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;

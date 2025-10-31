@@ -136,3 +136,7 @@ export default function App() {
 - clipboard-list-check-fill-2
 - Phone
 - Envelope
+- briefcase-fill-bulk
+- car-outline
+- location-pin-outline
+- money-down

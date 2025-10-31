@@ -96,6 +96,10 @@ import StrikeThrough from './icons/StrikeThrough';
 import Link from './icons/Link';
 import ListOrdered from './icons/ListOrdered';
 import ListUnOrdered from './icons/ListUnOrdered';
+import BriefcaseFillBulk from './icons/BriefcaseFillBulk';
+import LocationPinOutline from './icons/LocationPinOutline';
+import CarOutline from './icons/CarOutline';
+import MoneyDown from './icons/MoneyDown';
 
 const icons: Record<
   IconNameProps,
@@ -196,6 +200,10 @@ const icons: Record<
   'Link': Link,
   'list-ordered': ListOrdered,
   'list-un-ordered': ListUnOrdered,
+  'briefcase-fill-bulk': BriefcaseFillBulk,
+  'location-pin-outline': LocationPinOutline,
+  'car-outline': CarOutline,
+  'money-down': MoneyDown,
 };
 
 const Icon: React.FC<IconProps> = ({
