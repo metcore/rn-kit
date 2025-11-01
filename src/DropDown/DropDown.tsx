@@ -20,10 +20,12 @@ const Dropdown = ({
   maxHeight = 200,
   onSelect,
   renderButton,
+  renderItem,
+  width,
 }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | number>();
-  const [align, setAlign] = useState<'left' | 'right'>('left');
+  const [align, setAlign] = useState<'left' | 'right'>('right');
   const [buttonLayout, setButtonLayout] = useState({
     x: 0,
     y: 0,
@@ -78,6 +80,7 @@ const Dropdown = ({
                   align === 'right'
                     ? windowWidth - (buttonLayout.x + buttonLayout.width)
                     : undefined,
+                width: width,
               },
             ]}
           >
@@ -91,7 +94,11 @@ const Dropdown = ({
                     selected === item.value && styles.optionSelected,
                   ]}
                 >
-                  <Text>{item.label}</Text>
+                  {renderItem ? (
+                    renderItem(item, idx)
+                  ) : (
+                    <Text>{item.label}</Text>
+                  )}
                 </TouchableOpacity>
               ))}
             </ScrollView>
@@ -115,7 +122,6 @@ const styles = StyleSheet.create({
     borderColor: Color.gray[50],
     borderRadius: 8,
     backgroundColor: Color.base.white100,
-    width: 120,
   },
   option: {
     gap: 8,
