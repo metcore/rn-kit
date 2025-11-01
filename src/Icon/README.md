@@ -140,3 +140,5 @@ export default function App() {
 - car-outline
 - location-pin-outline
 - money-down
+- share-up
+- comment-fill

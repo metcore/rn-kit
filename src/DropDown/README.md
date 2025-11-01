@@ -8,8 +8,8 @@
 
 Komponen ini mengandalkan dependensi internal:
 
-* `Color` – sistem warna.
-* `ChipOptionProps` – tipe opsi.
+- `Color` – sistem warna.
+- `ChipOptionProps` – tipe opsi.
 
 Serta modul standar React Native: `Modal`, `ScrollView`, dll. Tidak memerlukan library eksternal.
 
@@ -17,12 +17,14 @@ Serta modul standar React Native: `Modal`, `ScrollView`, dll. Tidak memerlukan l
 
 ## API Reference
 
-| Prop           | Tipe                                | Default     | Deskripsi                                                           |
-| -------------- | ----------------------------------- | ----------- | ------------------------------------------------------------------- |
-| `options`      | `ChipOptionProps[]`                 | `[]`        | Daftar objek `{ label, value }` yang akan ditampilkan sebagai opsi. |
-| `maxHeight`    | `number`                            | `200`       | Tinggi maksimum daftar sebelum dapat di‐scroll.                     |
-| `onSelect`     | `(value: string \| number) => void` | `undefined` | Callback saat pengguna memilih opsi.                                |
-| `renderButton` | `React.ReactNode`                   | **(wajib)** | Elemen yang dipakai sebagai tombol pemicu dropdown.                 |
+| Prop           | Tipe                                | Default     | Deskripsi                                                                  |
+| -------------- | ----------------------------------- | ----------- | -------------------------------------------------------------------------- |
+| `options`      | `ChipOptionProps[]`                 | `[]`        | Daftar objek `{ label, value }` yang akan ditampilkan sebagai opsi.        |
+| `maxHeight`    | `number`                            | `200`       | Tinggi maksimum daftar sebelum dapat di‐scroll.                            |
+| `onSelect`     | `(value: string \| number) => void` | `undefined` | Callback saat pengguna memilih opsi.                                       |
+| `renderButton` | `React.ReactNode`                   | **(wajib)** | Elemen yang dipakai sebagai tombol pemicu dropdown.                        |
+| `renderItem`   | `React.ReactNode`                   | `undefined` | Elemen yang dipakai sebagai tombol di tiap item yang ada di dalam dropdown |
+| `width`        | `number`                            | `undefined` | Angka yang digunakan untuk mengatur lebar pembungkus list                  |
 
 ### Struktur `ChipOptionProps`
 
@@ -38,19 +40,18 @@ interface ChipOptionProps {
 ## Cara Kerja Singkat
 
 1. **Posisi & Alignment**
+   - Saat tombol ditekan, komponen mengukur posisi tombol (`UIManager.measureInWindow`).
+   - Jika titik tengah tombol berada di sisi kanan layar, daftar disejajarkan ke kanan; sebaliknya ke kiri.
 
-   * Saat tombol ditekan, komponen mengukur posisi tombol (`UIManager.measureInWindow`).
-   * Jika titik tengah tombol berada di sisi kanan layar, daftar disejajarkan ke kanan; sebaliknya ke kiri.
 2. **Modal & Pressable Overlay**
+   - Daftar opsi dibungkus `Modal` transparan.
+   - `Pressable` penuh layar di belakang daftar menangani klik di luar untuk menutup menu.
 
-   * Daftar opsi dibungkus `Modal` transparan.
-   * `Pressable` penuh layar di belakang daftar menangani klik di luar untuk menutup menu.
 3. **Scroll & Batas Tinggi**
+   - Daftar opsi di dalam `ScrollView` dengan properti `nestedScrollEnabled` agar tetap dapat di‐scroll di dalam modalsheet lain.
 
-   * Daftar opsi di dalam `ScrollView` dengan properti `nestedScrollEnabled` agar tetap dapat di‐scroll di dalam modalsheet lain.
 4. **Highlight Opsi Terpilih**
-
-   * Opsi aktif diberi style `optionSelected` – background `Color.primary[50]` & border `Color.primary[300]`.
+   - Opsi aktif diberi style `optionSelected` – background `Color.primary[50]` & border `Color.primary[300]`.
 
 ---
 
@@ -101,8 +102,8 @@ export default function DropdownExample() {
 
 ## Tips Implementasi
 
-* **Kontrol Render Button**: Anda bebas menggunakan komponen apa pun sebagai `renderButton` (ikon, input field, card, dll.). Dropdown akan menggunakan posisi & ukuran elemen ini.
-* **Close on Scroll Parent**: Jika dropdown dipakai dalam layar yang di‐scroll, pertimbangkan menutup dropdown saat parent di‐scroll untuk mencegah posisi meleset.
-* **Validasi**: Komponen tidak memaksa nilai default. Anda dapat men‐set `selected` manual via `useState` agar kontrol tetap ter‐sinkron.
+- **Kontrol Render Button**: Anda bebas menggunakan komponen apa pun sebagai `renderButton` (ikon, input field, card, dll.). Dropdown akan menggunakan posisi & ukuran elemen ini.
+- **Close on Scroll Parent**: Jika dropdown dipakai dalam layar yang di‐scroll, pertimbangkan menutup dropdown saat parent di‐scroll untuk mencegah posisi meleset.
+- **Validasi**: Komponen tidak memaksa nilai default. Anda dapat men‐set `selected` manual via `useState` agar kontrol tetap ter‐sinkron.
 
 ---
