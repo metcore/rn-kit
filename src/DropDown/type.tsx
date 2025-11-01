@@ -6,4 +6,6 @@ export interface DropDownProps {
   maxHeight?: number;
   onSelect?: (value: string | number) => void;
   renderButton: React.ReactNode;
+  renderItem?: (item: ChipOptionProps, index: number) => React.ReactNode;
+  width?: number;
 }
