@@ -101,6 +101,8 @@ export type IconNameProps =
   | 'money-down'
   | 'location-pin-outline'
   | 'car-outline'
+  | 'comment-fill'
+  | 'share-up'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;

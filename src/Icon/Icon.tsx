@@ -100,6 +100,8 @@ import BriefcaseFillBulk from './icons/BriefcaseFillBulk';
 import LocationPinOutline from './icons/LocationPinOutline';
 import CarOutline from './icons/CarOutline';
 import MoneyDown from './icons/MoneyDown';
+import CommentFill from './icons/CommentFill';
+import ShareUp from './icons/ShareUp';
 
 const icons: Record<
   IconNameProps,
@@ -204,6 +206,8 @@ const icons: Record<
   'location-pin-outline': LocationPinOutline,
   'car-outline': CarOutline,
   'money-down': MoneyDown,
+  'comment-fill': CommentFill,
+  'share-up': ShareUp,
 };
 
 const Icon: React.FC<IconProps> = ({
