@@ -12,15 +12,15 @@ export default function BadgeIconScreen() {
           <Typography variant="t2">: Default Color</Typography>
         </View>
         <View style={styles.sizeWrapper}>
-          <BadgeIcon icon="Box" color="primary" size="small" />
-          <BadgeIcon icon="Box" color="primary" />
-          <BadgeIcon icon="Box" color="primary" size="large" />
+          <BadgeIcon icon="Times" color="primary" size="small" />
+          <BadgeIcon icon="Times" color="primary" />
+          <BadgeIcon icon="Times" color="primary" size="large" />
           <Typography variant="t2">: Primary Color</Typography>
         </View>
         <View style={styles.sizeWrapper}>
-          <BadgeIcon icon="Box" color="info" size="small" />
-          <BadgeIcon icon="Box" color="info" />
-          <BadgeIcon icon="Box" color="info" size="large" />
+          <BadgeIcon icon="times-new" color="info" size="small" />
+          <BadgeIcon icon="times-new" color="info" />
+          <BadgeIcon icon="times-new" color="info" size="large" />
           <Typography variant="t2">: Info Color</Typography>
         </View>
         <View style={styles.sizeWrapper}>
