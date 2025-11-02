@@ -90,6 +90,8 @@ const icons: IconNameProps[] = [
   'car-outline',
   'location-pin-outline',
   'briefcase-fill-bulk',
+  'stopwatch-fill',
+  'times-new',
 ];
 
 export default function IconScreen() {

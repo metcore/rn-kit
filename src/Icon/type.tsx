@@ -103,6 +103,8 @@ export type IconNameProps =
   | 'car-outline'
   | 'comment-fill'
   | 'share-up'
+  | 'stopwatch-fill'
+  | 'times-new'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;

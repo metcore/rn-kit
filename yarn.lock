@@ -1898,8 +1898,8 @@ __metadata:
     "@eslint/js": ^9.22.0
     "@evilmartians/lefthook": ^1.5.0
     "@react-native-community/cli": 15.0.0-alpha.2
-    "@react-native-documents/picker": ^10.1.3
-    "@react-native-documents/viewer": ^1.0.1
+    "@react-native-documents/picker": ^10.1.6
+    "@react-native-documents/viewer": ^1.0.2
     "@react-native/babel-preset": 0.79.2
     "@react-native/eslint-config": ^0.78.0
     "@react-navigation/native": ^7.1.14
@@ -2916,16 +2916,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-documents/picker@npm:^10.1.3":
-  version: 10.1.5
-  resolution: "@react-native-documents/picker@npm:10.1.5"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: d92f97bcfb67328d1b73668e5f1aff8cf572d4b4c3b590258a365131344427d424baceea7549482bc9fb8cadf019386929fca1386f3b515f3af35d5af6e00497
-  languageName: node
-  linkType: hard
-
 "@react-native-documents/picker@npm:^10.1.6":
   version: 10.1.6
   resolution: "@react-native-documents/picker@npm:10.1.6"
@@ -2933,16 +2923,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 24de8e7957c7e59cf318116f59b1e1ba6c4cf0c02e5c3d44bac54db1467340622e653cf758cd3a9868414c4a879374df7fcda830a670689e47e08fc07e119fb5
-  languageName: node
-  linkType: hard
-
-"@react-native-documents/viewer@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@react-native-documents/viewer@npm:1.0.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 15226949357a10bdb923f92cecdc5eda2937f9e61c98f13ca663cc88eb933d93c234c1b11807ef240f9e35ecbb8323489f75a31c3972fb18b876e01c33fe3f11
   languageName: node
   linkType: hard
 
