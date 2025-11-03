@@ -146,3 +146,5 @@ export default function App() {
 - comment-fill
 - stopwatch-fill
 - times-new
+- credit-card
+- user-circle-money-up

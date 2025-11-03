@@ -105,6 +105,8 @@ export type IconNameProps =
   | 'share-up'
   | 'stopwatch-fill'
   | 'times-new'
+  | 'credit-card'
+  | 'user-circle-money-up'
   | 'whatsapp-fill';
 export interface IconProps {
   name: IconNameProps;

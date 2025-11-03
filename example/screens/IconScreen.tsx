@@ -92,6 +92,8 @@ const icons: IconNameProps[] = [
   'briefcase-fill-bulk',
   'stopwatch-fill',
   'times-new',
+  'credit-card',
+  'user-circle-money-up',
 ];
 
 export default function IconScreen() {

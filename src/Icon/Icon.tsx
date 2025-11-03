@@ -104,6 +104,8 @@ import CommentFill from './icons/CommentFill';
 import ShareUp from './icons/ShareUp';
 import StopwatchFill from './icons/StopwatchFill';
 import TimesNew from './icons/TimesNew';
+import UserCircleMoneyUp from './icons/UserCircleMoneyUp';
+import CreditCard from './icons/CreditCard';
 
 const icons: Record<
   IconNameProps,
@@ -212,6 +214,8 @@ const icons: Record<
   'share-up': ShareUp,
   'stopwatch-fill': StopwatchFill,
   'times-new': TimesNew,
+  'user-circle-money-up': UserCircleMoneyUp,
+  'credit-card': CreditCard,
 };
 
 const Icon: React.FC<IconProps> = ({
