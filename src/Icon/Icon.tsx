@@ -102,6 +102,10 @@ import CarOutline from './icons/CarOutline';
 import MoneyDown from './icons/MoneyDown';
 import CommentFill from './icons/CommentFill';
 import ShareUp from './icons/ShareUp';
+import StopwatchFill from './icons/StopwatchFill';
+import TimesNew from './icons/TimesNew';
+import UserCircleMoneyUp from './icons/UserCircleMoneyUp';
+import CreditCard from './icons/CreditCard';
 
 const icons: Record<
   IconNameProps,
@@ -208,6 +212,10 @@ const icons: Record<
   'money-down': MoneyDown,
   'comment-fill': CommentFill,
   'share-up': ShareUp,
+  'stopwatch-fill': StopwatchFill,
+  'times-new': TimesNew,
+  'user-circle-money-up': UserCircleMoneyUp,
+  'credit-card': CreditCard,
 };
 
 const Icon: React.FC<IconProps> = ({
