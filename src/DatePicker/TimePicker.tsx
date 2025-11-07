@@ -1,18 +1,18 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
   Animated,
-  type NativeSyntheticEvent,
+  Dimensions,
   type NativeScrollEvent,
+  type NativeSyntheticEvent,
   ScrollView,
+  StyleSheet,
+  View,
 } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Button from '../Button/Button';
-import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
+import Typography from '../Typography/Typography';
+import AnimatedItem from './partials/AnimatedItem';
 
 const ITEM_HEIGHT = 40;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -24,6 +24,9 @@ interface TimePickerProps {
   isOpen: boolean;
   onClose?: () => void;
   onChange?: (value: { hour: number; minute: number }) => void;
+  title?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
 }
 
 const generateItems = (max: number) => Array.from({ length: max }, (_, i) => i);
@@ -35,6 +38,9 @@ export default function TimePickerWheel({
   isOpen,
   onClose,
   onChange,
+  title = 'Pilih Waktu',
+  cancelLabel = 'Batal',
+  confirmLabel = 'Pilih',
 }: TimePickerProps) {
   const [selectedHour, setSelectedHour] = useState<number>(0);
   const [selectedMinute, setSelectedMinute] = useState<number>(0);
@@ -69,13 +75,9 @@ export default function TimePickerWheel({
         scrollToIndex(minuteRef, CENTER_INDEX_MINUTE);
       }, 100);
     }
-  }, [
-    isOpen,
-    selectedMinute,
-    selectedHour,
-    CENTER_INDEX_HOUR,
-    CENTER_INDEX_MINUTE,
-  ]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const scrollToIndex = (
     ref: React.RefObject<ScrollView | null>,
@@ -116,47 +118,6 @@ export default function TimePickerWheel({
     onClose?.();
   };
 
-  const renderAnimatedItem = (
-    value: number,
-    type: 'hour' | 'minute',
-    index: number,
-    scrollY: Animated.Value
-  ) => {
-    const normalizedValue =
-      type === 'hour' ? ((value % 24) + 24) % 24 : ((value % 60) + 60) % 60;
-
-    const inputRange = [
-      (index - 2) * ITEM_HEIGHT,
-      (index - 1) * ITEM_HEIGHT,
-      index * ITEM_HEIGHT,
-      (index + 1) * ITEM_HEIGHT,
-      (index + 2) * ITEM_HEIGHT,
-    ];
-
-    const scale = scrollY.interpolate({
-      inputRange,
-      outputRange: [0.7, 0.85, 1, 0.85, 0.7],
-      extrapolate: 'clamp',
-    });
-
-    const opacity = scrollY.interpolate({
-      inputRange,
-      outputRange: [0.3, 0.6, 1, 0.6, 0.3],
-      extrapolate: 'clamp',
-    });
-
-    return (
-      <Animated.View
-        key={`${type}-${index}`}
-        style={[styles.item, { transform: [{ scale }], opacity }]}
-      >
-        <Text style={styles.itemText}>
-          {normalizedValue.toString().padStart(2, '0')}
-        </Text>
-      </Animated.View>
-    );
-  };
-
   return (
     <BottomSheet
       isOpen={isOpen}
@@ -165,7 +126,7 @@ export default function TimePickerWheel({
         <View style={styles.footer}>
           <View style={styles.flex1}>
             <Button
-              title="Batal"
+              title={cancelLabel}
               variant="tertiary"
               onPress={onClose}
               color="primary"
@@ -174,7 +135,7 @@ export default function TimePickerWheel({
           </View>
           <View style={styles.flex1}>
             <Button
-              title="Pilih"
+              title={confirmLabel}
               onPress={handleSubmit}
               color="primary"
               size="medium"
@@ -190,7 +151,7 @@ export default function TimePickerWheel({
         center
         style={styles.hintTime}
       >
-        Pilih Waktu
+        {title}
       </Typography>
 
       <View style={styles.container}>
@@ -214,9 +175,15 @@ export default function TimePickerWheel({
               scrollEventThrottle={16}
               contentContainerStyle={styles.scrollContent}
             >
-              {hours.map((h, i) =>
-                renderAnimatedItem(h, 'hour', i, hourScrollY)
-              )}
+              {hours.map((h, i) => (
+                <AnimatedItem
+                  key={i}
+                  index={i}
+                  value={h}
+                  type="hour"
+                  scrollY={hourScrollY}
+                />
+              ))}
             </Animated.ScrollView>
           </View>
 
@@ -234,9 +201,15 @@ export default function TimePickerWheel({
               scrollEventThrottle={16}
               contentContainerStyle={styles.scrollContent}
             >
-              {minutes.map((m, i) =>
-                renderAnimatedItem(m, 'minute', i, minuteScrollY)
-              )}
+              {minutes.map((m, i) => (
+                <AnimatedItem
+                  key={i}
+                  index={i}
+                  value={m}
+                  type="minute"
+                  scrollY={minuteScrollY}
+                />
+              ))}
             </Animated.ScrollView>
           </View>
         </View>
@@ -269,16 +242,6 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 10.5,
     height: ITEM_HEIGHT * VISIBLE_ITEMS,
     overflow: 'hidden',
-  },
-  item: {
-    height: ITEM_HEIGHT,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  itemText: {
-    fontSize: 22,
-    color: Color.gray[900],
-    fontWeight: '600',
   },
   highlightOverlay: {
     position: 'absolute',
