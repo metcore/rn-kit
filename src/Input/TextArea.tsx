@@ -11,6 +11,7 @@ export default function TextArea({
   style,
   hint,
   onChangeText,
+  ...props
 }: TextAreaProps) {
   const handleOnChangeText = (value: string) => {
     onChangeText?.(value);
@@ -36,6 +37,8 @@ export default function TextArea({
           numberOfLines={14}
           style={[styles.input, style]}
           textAlignVertical="top"
+          placeholderTextColor={Color.gray[500]}
+          {...props}
         />
       </View>
       {hint ? (
