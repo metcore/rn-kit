@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Color from '../Color/Color';
 import type { StepItemProps } from './type';
+import Icon from '../Icon';
 
 const StepItem = ({
   index = 0,
@@ -28,9 +29,17 @@ const StepItem = ({
             isActive && styles.active,
           ]}
         >
-          <Text style={styles.circleText}>{index + 1}</Text>
+          {!isCompleted && <Text style={styles.circleText}>{index + 1}</Text>}
+          {isCompleted && <Icon name="Check" size={20} color="white" />}
         </View>
-        {!isLast && <View style={styles.line} />}
+        {!isLast && (
+          <View
+            style={[
+              styles.line,
+              isCompleted ? styles.completedLine : undefined,
+            ]}
+          />
+        )}
       </View>
     );
   }
@@ -70,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.info[500],
   },
   completed: {
-    backgroundColor: Color.info[500],
+    backgroundColor: Color.success[500],
   },
   line: {
     width: 40,
@@ -82,5 +91,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listContent: {},
+  completedLine: {
+    backgroundColor: Color.success[500],
+  },
 });
 export default StepItem;
