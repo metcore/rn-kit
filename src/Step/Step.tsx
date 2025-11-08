@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     width: screenWidth,
     backgroundColor: Color.info[50],
-    paddingVertical: 16,
+    paddingVertical: 8,
   },
   contentContainer: {
     flex: 1,
