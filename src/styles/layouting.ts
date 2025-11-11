@@ -6,6 +6,7 @@ export const layouting = {
     grow: { flexGrow: 1 },
     shrink: { flexShrink: 1 },
     row: { flexDirection: 'row' },
+    col: { flexDirection: 'column' },
     rowCenter: {
       flexDirection: 'row',
       alignItems: 'center',
