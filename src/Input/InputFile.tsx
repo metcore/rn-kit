@@ -1,19 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import BottomSheet from '../BottomSheet/BottomSheet';
-import Button from '../Button/Button';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import Color from '../Color/Color';
-import List from '../List/List';
-import ListItem from '../List/ListItem';
 import Typography from '../Typography/Typography';
-import Card from '../Ui/Card';
-import Center from '../Ui/Center';
 
 import { pick } from '@react-native-documents/picker';
 import { viewDocument } from '@react-native-documents/viewer';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import Icon from '../Icon';
+import { spacing } from '../styles/spacing';
 import Input from './Input';
+import CardTrigger from './partials/InputFile/CardTrigger';
+import ItemPreview from './partials/InputFile/ItemPreview';
+import ModalDelete from './partials/InputFile/ModalDelete';
+import ModalPicker from './partials/InputFile/ModalPicker';
 
 export interface ModalOption {
   title?: string;
@@ -199,34 +197,23 @@ export default function InputFile({
   }, [value]);
 
   return (
-    <View style={styles.wrapper}>
-      <Card style={styles.containerInput}>
-        <Center style={styles.centerInput}>
-          <Image source={require('./assets/input-file.png')} />
-          <Typography variant="t1" weight="semibold" color={Color.gray[500]}>
-            {title}
-          </Typography>
-          <Typography variant="t3" weight="regular" color={Color.gray[500]}>
-            {description}
-          </Typography>
-          <Button
-            color="primary"
-            title={btnChooseFileText}
-            size="small"
-            onPress={handleOnPresChoseFile}
-          />
-        </Center>
-      </Card>
+    <View style={spacing.gap[12]}>
+      <CardTrigger
+        title={title}
+        description={description}
+        btnSelect={btnChooseFileText}
+        onPress={handleOnPresChoseFile}
+      />
 
       {files.map((file, index) => (
-        <View style={styles.previewWrapper} key={index}>
+        <View style={spacing.gap[12]} key={index}>
           {useChangeLabel && (
             <Input
               label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
+              value={file.labelFile}
               placeholder={
                 changeLableProps?.placeholder || 'Masukan Nama Dokumen'
               }
-              value={file.labelFile}
               onChangeText={(text) => {
                 const updatedFiles = files.map((f, i) =>
                   i === index ? { ...f, labelFile: text } : f
@@ -236,69 +223,15 @@ export default function InputFile({
               }}
             />
           )}
-          <View style={styles.gap4}>
-            <Card>
-              <TouchableOpacity onPress={() => handlePreviewFile(file)}>
-                <View style={styles.containerPreview}>
-                  <View style={[styles.containerListItem, styles.flex1]}>
-                    {file.type.startsWith('image') ? (
-                      <Image
-                        source={
-                          file.uri?.endsWith('.pdf')
-                            ? require('../Input/assets/input-file.png')
-                            : { uri: file.uri }
-                        }
-                        style={styles.previewImage}
-                      />
-                    ) : (
-                      <View style={styles.previewImage}>
-                        <Icon name="Document" color={Color.primary[1000]} />
-                      </View>
-                    )}
-                    <View style={styles.fileDetails}>
-                      <Typography
-                        variant="t1"
-                        weight="semibold"
-                        color={Color.gray[600]}
-                        numberOfLines={1}
-                      >
-                        {file.name || `Image_${index + 1}`}
-                      </Typography>
-                      <Typography
-                        variant="t2"
-                        weight="regular"
-                        color={Color.gray[600]}
-                      >
-                        {(
-                          (file?.size ?? file?.fileSize ?? 0) /
-                          (1024 * 1024)
-                        ).toFixed(2)}
-                        MB
-                      </Typography>
-                    </View>
-                  </View>
-                  <View style={styles.action}>
-                    {file.error && (
-                      <Icon
-                        name="exclamation-triangle"
-                        color={Color.danger[500]}
-                        size={20}
-                      />
-                    )}
-                    <TouchableOpacity onPress={() => handleReplaceFile(index)}>
-                      <Icon
-                        name="rotate-right"
-                        size={18}
-                        color={Color.gray[700]}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => confirmDeleteFile(index)}>
-                      <Icon name="Times" size={12} color={Color.gray[700]} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </Card>
+
+          <View style={spacing.gap[4]}>
+            <ItemPreview
+              index={index}
+              file={file}
+              onPress={() => handlePreviewFile(file)}
+              onReplace={() => handleReplaceFile(index)}
+              onDelete={() => confirmDeleteFile(index)}
+            />
 
             {file.hint && (
               <Typography
@@ -312,188 +245,52 @@ export default function InputFile({
         </View>
       ))}
 
-      <BottomSheet
+      <ModalPicker
         isOpen={isOpenBottomSheetTypeFile}
         onClose={() => setIsOpenBottomSheetTypeFile(false)}
-      >
-        <View style={styles.bottomSheetContent}>
-          <Center style={styles.bottomSheetCenter}>
-            <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-              {modalPickFileText?.title || 'Upload Dokumen'}
-            </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[600]}>
-              {modalPickFileText?.description || 'Unggah dokumen maksimal'}
-            </Typography>
-          </Center>
-          <List>
-            <ListItem>
-              <TouchableOpacity onPress={handleOnPressButtonCamera}>
-                <View style={styles.containerListItem}>
-                  <Icon name="Camera" color={Color.primary[1000]} />
-                  <View>
-                    <Typography
-                      variant="t2"
-                      weight="semibold"
-                      color={Color.gray[800]}
-                    >
-                      {modalPickFileText?.camera?.title || 'Ambil Foto'}
-                    </Typography>
-                    <Typography variant="t2" color={Color.gray[600]}>
-                      {modalPickFileText?.camera?.description ||
-                        'Langsung ambil gambar dari kamera'}
-                    </Typography>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </ListItem>
-            <ListItem>
-              <TouchableOpacity onPress={handleOnPressButtonGallery}>
-                <View style={styles.containerListItem}>
-                  <Icon name="Image" color={Color.primary[1000]} />
-                  <View>
-                    <Typography
-                      variant="t2"
-                      weight="semibold"
-                      color={Color.gray[800]}
-                    >
-                      {modalPickFileText?.gallery?.title || 'Pilih dari Galeri'}
-                    </Typography>
-                    <Typography variant="t2" color={Color.gray[600]}>
-                      {modalPickFileText?.gallery?.description ||
-                        'Cari gambar dari galeri perangkatmu'}
-                    </Typography>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </ListItem>
-            <ListItem>
-              <TouchableOpacity onPress={handlePickFile}>
-                <View style={styles.containerListItem}>
-                  <Icon name="Document" color={Color.primary[1000]} />
-                  <View>
-                    <Typography
-                      variant="t2"
-                      weight="semibold"
-                      color={Color.gray[800]}
-                    >
-                      {modalPickFileText?.document?.title || 'Pilih Dokumen'}
-                    </Typography>
-                    <Typography variant="t2" color={Color.gray[600]}>
-                      {modalPickFileText?.document?.description ||
-                        'Pilih dokumen dari perangkatmu'}
-                    </Typography>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </ListItem>
-          </List>
-        </View>
-      </BottomSheet>
+        title={modalPickFileText?.title || 'Upload Dokumen'}
+        description={
+          modalPickFileText?.description || 'Unggah dokumen maksimal'
+        }
+        camera={{
+          icon: 'Camera',
+          title: modalPickFileText?.camera?.title || 'Ambil Foto',
+          onPress: handleOnPressButtonCamera,
+          description:
+            modalPickFileText?.camera?.description ||
+            'Langsung ambil gambar dari kamera',
+        }}
+        gallery={{
+          icon: 'Image',
+          title: modalPickFileText?.gallery?.title || 'Pilih Dari Galeri',
+          onPress: handleOnPressButtonGallery,
+          description:
+            modalPickFileText?.gallery?.description ||
+            'Cari gambar dari galeri perangkatmu',
+        }}
+        document={{
+          icon: 'Document',
+          title: modalPickFileText?.document?.title || 'Pilih Dokumen',
+          onPress: handlePickFile,
+          description:
+            modalPickFileText?.document?.description ||
+            'Pilih dokumen dari perangkatmu',
+        }}
+      />
 
-      <BottomSheet
+      <ModalDelete
         isOpen={isOpenBottomSheetDeleteFile}
         onClose={() => setIsOpenBottomSheetDeleteFile(false)}
-      >
-        <View style={styles.deleteFileContent}>
-          <Center style={styles.deleteFileCenter}>
-            <Typography
-              variant="p2"
-              weight="semibold"
-              color={Color.gray[800]}
-              center
-            >
-              {modalDeleteText?.title || 'Hapus Dokumen'}
-            </Typography>
-            <Typography
-              variant="t1"
-              weight="regular"
-              color={Color.gray[500]}
-              center
-            >
-              {modalDeleteText?.description ||
-                'Apakah kamu akan menghapus dokumen yang dipilih?'}
-            </Typography>
-          </Center>
-          <View>
-            <Button
-              color="danger"
-              title={modalDeleteText?.confirmBtn?.confirm || 'Hapus'}
-              onPress={deleteFile}
-            />
-            <Button
-              color="primary"
-              variant="tertiary"
-              title={modalDeleteText?.confirmBtn?.cancel || 'Batal'}
-              onPress={() => setIsOpenBottomSheetDeleteFile(false)}
-            />
-          </View>
-        </View>
-      </BottomSheet>
+        title={modalDeleteText?.title || 'Hapus Dokumen'}
+        descripition={
+          modalDeleteText?.description ||
+          'Apakah kamu akan menghapus dokumen yang dipilih?'
+        }
+        confirm={modalDeleteText?.confirmBtn?.confirm || 'Hapus'}
+        onConfirm={deleteFile}
+        cancel={modalDeleteText?.confirmBtn?.cancel || 'Batal'}
+        onCnacel={() => setIsOpenBottomSheetDeleteFile(false)}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    gap: 12,
-  },
-  containerInput: {
-    borderStyle: 'dashed',
-    backgroundColor: Color.gray[50],
-    borderRadius: 16,
-  },
-  centerInput: {
-    gap: 14,
-  },
-  containerPreview: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: 8,
-  },
-  previewImage: {
-    width: 44,
-    height: 44,
-    borderRadius: 6,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fileDetails: {
-    justifyContent: 'center',
-    gap: 4,
-    flex: 1,
-  },
-  containerListItem: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-  },
-  bottomSheetContent: {
-    gap: 16,
-  },
-  bottomSheetCenter: {
-    alignItems: 'center',
-  },
-  deleteFileContent: {
-    gap: 10,
-  },
-  deleteFileCenter: {
-    alignItems: 'center',
-    gap: 4,
-  },
-  action: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    flexShrink: 0,
-  },
-  previewWrapper: {
-    gap: 12,
-  },
-  flex1: {
-    flex: 1,
-  },
-  gap4: {
-    gap: 4,
-  },
-});
