@@ -13,10 +13,14 @@ export default function InputFileScreen() {
   const [attachments, setAttachments] = useState<any[]>([]);
 
   const validate = () => {
-    const validated = attachments.map((file) => {
+    const validated = attachments.map((file, index) => {
       const size = (file?.size ?? file?.fileSize ?? 0) / (1024 * 1024);
       if (size > 3) {
-        return { ...file, hint: 'Ukuran file melebihi 3MB', error: true };
+        return {
+          ...file,
+          hint: `Ukuran file untuk file ke ${index + 1} melebihi 3MB`,
+          error: true,
+        };
       }
 
       return { ...file, hint: undefined, error: false };
@@ -33,17 +37,49 @@ export default function InputFileScreen() {
     <ScrollView>
       <Container style={styles.container}>
         <InputFile
-          useChangeLabel
+          multiple
+          variant="small"
           onChange={(value) => setAttachments(value)}
           value={attachments}
-          title="Upload bukti pembayaran"
+          title="Upload File"
+          btnChooseFileText="Pilih File"
+          modalPickFileText={{
+            title: 'pilih file yang kamu sukai',
+            description: 'Pilih file yang kamu sukai di alamm 5MB.',
+            camera: {
+              title: 'Ambil Fotooo',
+              description: 'Ambil foto dari kamera mu',
+            },
+            gallery: {
+              title: 'Ambil Foto Dari Galeri',
+              description: 'Awas ada sule',
+            },
+            document: {
+              title: 'Ambil dokumen',
+              description: 'Cari dokumen dari file manager!',
+            },
+          }}
+          modalDeleteText={{
+            title: 'Ini Adalah Title',
+            description: 'Ini Adalah description yang sangat panjang dan',
+            confirmBtn: {
+              confirm: 'Hapus',
+              cancel: 'Cek Kembali',
+            },
+          }}
+        />
+
+        <InputFile
+          onChange={(value) => setAttachments(value)}
+          value={attachments}
+          title="Upload bukti"
           btnChooseFileText="Pilih File"
           description="Uplaod bukti pembayaran sekarang juga gpl ya"
           modalPickFileText={{
             title: 'pilih file yang kamu sukai',
             description: 'Pilih file yang kamu sukai di alamm 5MB.',
             camera: {
-              title: 'Ambil Foto',
+              title: 'Ambil Fotooo',
               description: 'Ambil foto dari kamera mu',
             },
             gallery: {
@@ -84,6 +120,7 @@ export default function InputFileScreen() {
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 45,
+    gap: 10,
   },
   footer: {
     padding: 24,

@@ -1,15 +1,18 @@
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import Button from '../../../Button/Button';
 import Typography from '../../../Typography/Typography';
 import Card from '../../../Ui/Card';
 import Center from '../../../Ui/Center';
 import Color from '../../../Color/Color';
+import { spacing } from '../../../styles/spacing';
 
 interface Props {
   title: string;
   description: string;
   btnSelect?: string;
   onPress?: () => void;
+  hasError?: boolean;
+  hint?: string;
 }
 
 export default function CardTrigger({
@@ -17,17 +20,36 @@ export default function CardTrigger({
   description,
   btnSelect,
   onPress,
+  hint,
+  hasError,
 }: Props) {
   return (
     <Card style={styles.containerInput}>
       <Center style={styles.centerInput}>
         <Image source={require('../../assets/input-file.png')} />
-        <Typography variant="t1" weight="semibold" color={Color.gray[500]}>
-          {title}
-        </Typography>
-        <Typography variant="t3" weight="regular" color={Color.gray[500]}>
-          {description}
-        </Typography>
+        <View style={spacing.gap[4]}>
+          <Typography
+            variant="t1"
+            weight="semibold"
+            color={Color.gray[500]}
+            center
+          >
+            {title}
+          </Typography>
+          {hint && (
+            <Typography
+              variant="t3"
+              weight="regular"
+              color={hasError ? Color.danger[500] : Color.gray[500]}
+              center
+            >
+              {hint}
+            </Typography>
+          )}
+          <Typography variant="t3" weight="regular" color={Color.gray[500]}>
+            {description}
+          </Typography>
+        </View>
         <Button
           color="primary"
           title={btnSelect}

@@ -12,6 +12,7 @@ import CardTrigger from './partials/InputFile/CardTrigger';
 import ItemPreview from './partials/InputFile/ItemPreview';
 import ModalDelete from './partials/InputFile/ModalDelete';
 import ModalPicker from './partials/InputFile/ModalPicker';
+import CardTriggerSmall from './partials/InputFile/CardTriggerSmall';
 
 export interface ModalOption {
   title?: string;
@@ -30,15 +31,13 @@ export interface ChangeLabelProps {
   placeholder?: string;
 }
 
-type InputFileProps = {
+type BaseInputFileProps = {
   title?: string;
-  description?: string;
   accept?: string[];
   multiple?: boolean;
   onChange?: (files: any) => void;
   value?: any[];
   modalPickFileText?: ModalPickFileText;
-  useChangeLabel?: boolean;
   btnChooseFileText?: string;
   modalDeleteText?: ModalOption & {
     confirmBtn?: {
@@ -46,8 +45,27 @@ type InputFileProps = {
       cancel?: string;
     };
   };
-  changeLableProps?: ChangeLabelProps;
+  hasError?: boolean;
 };
+
+type DefaultVariantProps = BaseInputFileProps & {
+  variant?: 'default';
+  description?: string;
+  useChangeLabel?: boolean;
+  changeLableProps?: ChangeLabelProps;
+  hint?: string;
+};
+
+type SmallVariantProps = BaseInputFileProps & {
+  variant: 'small';
+  description?: never;
+  useChangeLabel?: never;
+  changeLableProps?: never;
+  hint?: never;
+};
+
+// Union type
+type InputFileProps = DefaultVariantProps | SmallVariantProps;
 
 export default function InputFile({
   title = 'Upload File',
@@ -60,6 +78,9 @@ export default function InputFile({
   modalDeleteText,
   useChangeLabel = false,
   changeLableProps,
+  variant = 'default',
+  hint,
+  hasError,
   onChange,
 }: InputFileProps) {
   const [isOpenBottomSheetTypeFile, setIsOpenBottomSheetTypeFile] =
@@ -198,52 +219,86 @@ export default function InputFile({
 
   return (
     <View style={spacing.gap[12]}>
-      <CardTrigger
-        title={title}
-        description={description}
-        btnSelect={btnChooseFileText}
-        onPress={handleOnPresChoseFile}
-      />
+      {variant === 'default' && (
+        <CardTrigger
+          title={title}
+          hint={hint}
+          hasError={hasError}
+          description={description}
+          btnSelect={btnChooseFileText}
+          onPress={handleOnPresChoseFile}
+        />
+      )}
 
-      {files.map((file, index) => (
-        <View style={spacing.gap[12]} key={index}>
-          {useChangeLabel && (
-            <Input
-              label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
-              value={file.labelFile}
-              placeholder={
-                changeLableProps?.placeholder || 'Masukan Nama Dokumen'
-              }
-              onChangeText={(text) => {
-                const updatedFiles = files.map((f, i) =>
-                  i === index ? { ...f, labelFile: text } : f
-                );
-                setFiles(updatedFiles);
-                onChange?.(updatedFiles);
-              }}
-            />
+      {variant === 'small' && (
+        <View style={spacing.gap[4]}>
+          <CardTriggerSmall
+            files={files}
+            title={title}
+            textButton={btnChooseFileText}
+            onChooseFile={handleOnPresChoseFile}
+            onPreview={handlePreviewFile}
+            onReplace={handleReplaceFile}
+            onDelete={confirmDeleteFile}
+          />
+          {files.length > 0 && (
+            <>
+              {files
+                .filter((file) => !!file.error)
+                .map((file, index) => (
+                  <Typography
+                    key={index}
+                    variant="t3"
+                    color={Color.danger[500]}
+                  >
+                    {file.hint}
+                  </Typography>
+                ))}
+            </>
           )}
-
-          <View style={spacing.gap[4]}>
-            <ItemPreview
-              index={index}
-              file={file}
-              onPress={() => handlePreviewFile(file)}
-              onReplace={() => handleReplaceFile(index)}
-              onDelete={() => confirmDeleteFile(index)}
-            />
-
-            {file.hint && (
-              <Typography
-                variant="t3"
-                color={!file.error ? Color.gray[700] : Color.danger[500]}
-              >
-                {file.hint}
-              </Typography>
-            )}
-          </View>
         </View>
-      ))}
+      )}
+
+      {variant === 'default' &&
+        files.map((file, index) => (
+          <View style={spacing.gap[12]} key={index}>
+            {useChangeLabel && (
+              <Input
+                label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
+                value={file.labelFile}
+                placeholder={
+                  changeLableProps?.placeholder || 'Masukan Nama Dokumen'
+                }
+                onChangeText={(text) => {
+                  const updatedFiles = files.map((f, i) =>
+                    i === index ? { ...f, labelFile: text } : f
+                  );
+                  setFiles(updatedFiles);
+                  onChange?.(updatedFiles);
+                }}
+              />
+            )}
+
+            <View style={spacing.gap[4]}>
+              <ItemPreview
+                index={index}
+                file={file}
+                onPress={() => handlePreviewFile(file)}
+                onReplace={() => handleReplaceFile(index)}
+                onDelete={() => confirmDeleteFile(index)}
+              />
+
+              {file.hint && (
+                <Typography
+                  variant="t3"
+                  color={!file.error ? Color.gray[700] : Color.danger[500]}
+                >
+                  {file.hint}
+                </Typography>
+              )}
+            </View>
+          </View>
+        ))}
 
       <ModalPicker
         isOpen={isOpenBottomSheetTypeFile}
