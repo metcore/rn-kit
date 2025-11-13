@@ -97,7 +97,7 @@ const Dropdown = ({
                   {renderItem ? (
                     renderItem(item, idx)
                   ) : (
-                    <Text>{item.label}</Text>
+                    <Text style={{ color: Color.gray[900] }}>{item.label}</Text>
                   )}
                 </TouchableOpacity>
               ))}
