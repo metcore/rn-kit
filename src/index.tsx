@@ -54,6 +54,7 @@ export { default as ListItem } from './List/ListItem';
 export { default as Loading } from './Loading/Loading';
 export { default as Avatar } from './Avatar/Avatar';
 export { default as AvatarGroup } from './Avatar/AvatarGroup';
+export { default as Spinner } from './Spinner/Spinner';
 export { default as Badge } from './Badge/Badge';
 export type {
   Variant as BadgeVariant,
