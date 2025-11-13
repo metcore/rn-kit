@@ -148,3 +148,4 @@ export default function App() {
 - times-new
 - credit-card
 - user-circle-money-up
+- FaceId

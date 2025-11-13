@@ -97,6 +97,12 @@ const HomeScreen: React.FC = () => {
           />
           <Button
             color="success"
+            title="Spinner"
+            onPress={() => navigation.navigate('Spinner')}
+            block
+          />
+          <Button
+            color="success"
             title="Icons"
             onPress={() => navigation.navigate('Icons')}
             block

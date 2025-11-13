@@ -62,6 +62,7 @@ import InputFileScreen from '../screens/InputFileScreen';
 import PdfViewScreen from '../screens/PdfViewScreen';
 import InputSelectScreen from '../screens/InputSelectScreen';
 import InputDateScreen from '../screens/InputDateScreen';
+import SpinnerScreen from '../screens/SpinnerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -103,6 +104,7 @@ const App = () => {
               name="CounterButton"
               component={CounterButtonScreen}
             />
+            <Stack.Screen name="Spinner" component={SpinnerScreen} />
             <Stack.Screen name="Select" component={SelectScreen} />
             <Stack.Screen name="CheckBox" component={CheckBox} />
             <Stack.Screen name="Chip" component={ChipScreen} />
