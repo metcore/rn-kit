@@ -10,12 +10,29 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 export default function InputFileScreen() {
-  const [attachments, setAttachments] = useState<any[]>([]);
+  const onlineFiles = [
+    {
+      id: 1,
+      name: 'React Native Docs.pdf',
+      uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+      type: 'application/pdf',
+    },
+    {
+      id: 2,
+      name: 'Sample Image.jpg',
+      uri: 'https://cdn.herca.id/stg/uploads/images_face_recog/98_2025-09-03_1417182857c2f1-6278-4c26-9919-cad4495974ca.JPEG',
+      type: 'image/jpeg',
+    },
+  ];
+
+  const [attachments, setAttachments] = useState<any[]>(onlineFiles);
+  const [hasError, setHasError] = useState(false);
 
   const validate = () => {
     const validated = attachments.map((file, index) => {
       const size = (file?.size ?? file?.fileSize ?? 0) / (1024 * 1024);
       if (size > 3) {
+        setHasError(true);
         return {
           ...file,
           hint: `Ukuran file untuk file ke ${index + 1} melebihi 3MB`,
@@ -40,6 +57,7 @@ export default function InputFileScreen() {
           multiple
           variant="small"
           onChange={(value) => setAttachments(value)}
+          hasError={hasError}
           value={attachments}
           title="Upload File"
           btnChooseFileText="Pilih File"
@@ -70,8 +88,9 @@ export default function InputFileScreen() {
         />
 
         <InputFile
-          onChange={(value) => setAttachments(value)}
           value={attachments}
+          hasError={hasError}
+          onChange={(value) => setAttachments(value)}
           title="Upload bukti"
           btnChooseFileText="Pilih File"
           description="Uplaod bukti pembayaran sekarang juga gpl ya"

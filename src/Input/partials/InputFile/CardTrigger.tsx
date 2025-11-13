@@ -24,7 +24,10 @@ export default function CardTrigger({
   hasError,
 }: Props) {
   return (
-    <Card style={styles.containerInput}>
+    <Card
+      style={styles.containerInput}
+      borderColor={hasError ? Color.danger[500] : undefined}
+    >
       <Center style={styles.centerInput}>
         <Image source={require('../../assets/input-file.png')} />
         <View style={spacing.gap[4]}>

@@ -21,6 +21,7 @@ interface Props {
   onPreview?: (file: any) => void;
   onReplace?: (index: number) => void;
   onDelete?: (index: number) => void;
+  hasError?: boolean;
 }
 
 export default function CardTriggerSmall({
@@ -31,15 +32,15 @@ export default function CardTriggerSmall({
   onDelete,
   onPreview,
   onReplace,
+  hasError,
 }: Props) {
   const Component = files?.length === 0 ? View : TouchableOpacity;
-
   return (
     <View style={[layouting.flex.row, spacing.gap[8]]}>
       <Card
         style={[styles.card, files.length === 0 ? layouting.flex.grow : {}]}
         backgroundColor={Color?.gray[50]}
-        borderColor={Color?.gray[200]}
+        borderColor={hasError ? Color.danger[500] : undefined}
       >
         <Component
           style={[

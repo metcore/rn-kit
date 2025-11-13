@@ -13,6 +13,7 @@ import ItemPreview from './partials/InputFile/ItemPreview';
 import ModalDelete from './partials/InputFile/ModalDelete';
 import ModalPicker from './partials/InputFile/ModalPicker';
 import CardTriggerSmall from './partials/InputFile/CardTriggerSmall';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 
 export interface ModalOption {
   title?: string;
@@ -115,11 +116,30 @@ export default function InputFile({
     }
   };
 
-  const handlePreviewFile = (file: any) => {
-    if (file?.uri) {
-      viewDocument({ uri: file.uri, mimeType: file.type }).catch((error) =>
-        console.error('Error opening document:', error)
-      );
+  const handlePreviewFile = async (file: any) => {
+    try {
+      let fileUri = file.uri;
+
+      if (file.uri.startsWith('http')) {
+        const { dirs } = ReactNativeBlobUtil.fs;
+        const dir = dirs.DocumentDir;
+        const ext = file.name.split('.').pop() || 'tmp';
+        const localPath = `${dir}/${Date.now()}.${ext}`;
+
+        const res = await ReactNativeBlobUtil.config({ path: localPath }).fetch(
+          'GET',
+          file.uri
+        );
+        fileUri = 'file://' + res.path();
+        console.log({ res });
+      }
+
+      await viewDocument({
+        uri: file.uri.startsWith('http') ? fileUri : file.uri,
+        mimeType: file.type,
+      });
+    } catch (err) {
+      console.error('Error opening document:', err);
     }
   };
 
@@ -235,6 +255,7 @@ export default function InputFile({
           <CardTriggerSmall
             files={files}
             title={title}
+            hasError={hasError}
             textButton={btnChooseFileText}
             onChooseFile={handleOnPresChoseFile}
             onPreview={handlePreviewFile}
