@@ -106,6 +106,7 @@ import StopwatchFill from './icons/StopwatchFill';
 import TimesNew from './icons/TimesNew';
 import UserCircleMoneyUp from './icons/UserCircleMoneyUp';
 import CreditCard from './icons/CreditCard';
+import FaceId from './icons/FaceId';
 
 const icons: Record<
   IconNameProps,
@@ -216,6 +217,7 @@ const icons: Record<
   'times-new': TimesNew,
   'user-circle-money-up': UserCircleMoneyUp,
   'credit-card': CreditCard,
+  'FaceId': FaceId,
 };
 
 const Icon: React.FC<IconProps> = ({

@@ -1356,7 +1356,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-document-picker (10.1.5):
+  - react-native-document-picker (10.1.6):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1380,7 +1380,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-document-viewer (1.0.1):
+  - react-native-document-viewer (1.0.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1897,7 +1897,7 @@ PODS:
     - React-logger (= 0.79.2)
     - React-perflogger (= 0.79.2)
     - React-utils (= 0.79.2)
-  - RnKit (0.1.58):
+  - RnKit (0.1.70):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2022,6 +2022,12 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.7.1)
+  - VisionCamera (4.7.2):
+    - VisionCamera/Core (= 4.7.2)
+    - VisionCamera/React (= 4.7.2)
+  - VisionCamera/Core (4.7.2)
+  - VisionCamera/React (4.7.2):
+    - React-Core
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2066,9 +2072,9 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
-  - "react-native-document-picker (from `../../node_modules/@react-native-documents/picker`)"
-  - "react-native-document-viewer (from `../../node_modules/@react-native-documents/viewer`)"
-  - react-native-image-picker (from `../../node_modules/react-native-image-picker`)
+  - "react-native-document-picker (from `../node_modules/@react-native-documents/picker`)"
+  - "react-native-document-viewer (from `../node_modules/@react-native-documents/viewer`)"
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2107,6 +2113,7 @@ DEPENDENCIES:
   - RnKit (from `../..`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -2194,11 +2201,11 @@ EXTERNAL SOURCES:
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
   react-native-document-picker:
-    :path: "../../node_modules/@react-native-documents/picker"
+    :path: "../node_modules/@react-native-documents/picker"
   react-native-document-viewer:
-    :path: "../../node_modules/@react-native-documents/viewer"
+    :path: "../node_modules/@react-native-documents/viewer"
   react-native-image-picker:
-    :path: "../../node_modules/react-native-image-picker"
+    :path: "../node_modules/react-native-image-picker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -2275,6 +2282,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2318,8 +2327,8 @@ SPEC CHECKSUMS:
   React-Mapbuffer: c3f4b608e4a59dd2f6a416ef4d47a14400194468
   React-microtasksnativemodule: 054f34e9b82f02bd40f09cebd4083828b5b2beb6
   react-native-blob-util: ad4b90441a79599b4b869f475eb324ac579f97f8
-  react-native-document-picker: 83d9d2da9f2708162da3b92b87421182425e4487
-  react-native-document-viewer: 56522f6ca034ae6a0c887eceb570be68ba6750de
+  react-native-document-picker: aedcbb974ce9aa1b01ed83c2d7e0d6aa0786d845
+  react-native-document-viewer: c5edda18e6a36cd588e775fe474feaa3f36e7ba4
   react-native-image-picker: db0b3e3c7ae57680876318d4f42e7dbedd72244a
   react-native-pager-view: 919534782a0489f7e2aeeb9a8b8959edfd3f067a
   react-native-pdf: 36118ab1926ea47ea8de8b1b8f681b69e3afc7d3
@@ -2356,10 +2365,11 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 04d5eb15eb46be6720e17a4a7fa92940a776e584
   ReactCodegen: c63eda03ba1d94353fb97b031fc84f75a0d125ba
   ReactCommon: 76d2dc87136d0a667678668b86f0fca0c16fdeb0
-  RnKit: d4f5fa8c67ce7bf0df6e8861ed166b78dabd9467
+  RnKit: 4a08db14184752b4a286fc8e021124c523b2f0c1
   RNScreens: 482e9707f9826230810c92e765751af53826d509
   RNSVG: 8a1054afe490b5d63b9792d7ae3c1fde8c05cdd0
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  VisionCamera: 30b358b807324c692064f78385e9a732ce1bebfe
   Yoga: c758bfb934100bb4bf9cbaccb52557cee35e8bdf
 
 PODFILE CHECKSUM: 0550a77f3d3792d199d6b8a866040f71809d79f3

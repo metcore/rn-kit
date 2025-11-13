@@ -58,6 +58,7 @@ type RootStackParamList = {
   PdfView: undefined;
   InputSelect: undefined;
   InputDate: undefined;
+  Spinner: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

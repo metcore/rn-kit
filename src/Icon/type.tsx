@@ -107,7 +107,8 @@ export type IconNameProps =
   | 'times-new'
   | 'credit-card'
   | 'user-circle-money-up'
-  | 'whatsapp-fill';
+  | 'whatsapp-fill'
+  | 'FaceId';
 export interface IconProps {
   name: IconNameProps;
   size?: number;
