@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
+  FlatList,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
-  ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
@@ -18,7 +18,8 @@ const ITEM_HEIGHT = 40;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const VISIBLE_ITEMS = 5;
 const MIDDLE_INDEX = Math.floor(VISIBLE_ITEMS / 2);
-const REPEAT_COUNT = 5;
+
+const INFINITE_CYCLES = 100;
 
 interface TimePickerProps {
   isOpen: boolean;
@@ -29,10 +30,10 @@ interface TimePickerProps {
   cancelLabel?: string;
 }
 
-const generateItems = (max: number) => Array.from({ length: max }, (_, i) => i);
-
-const repeatItems = (items: number[], repeatCount: number) =>
-  Array.from({ length: repeatCount }).flatMap(() => items);
+const generateInfiniteData = (max: number, cycles: number) => {
+  const base = Array.from({ length: max }, (_, i) => i);
+  return Array.from({ length: cycles }).flatMap(() => base);
+};
 
 export default function TimePickerWheel({
   isOpen,
@@ -45,46 +46,52 @@ export default function TimePickerWheel({
   const [selectedHour, setSelectedHour] = useState<number>(0);
   const [selectedMinute, setSelectedMinute] = useState<number>(0);
 
-  const hourRef = useRef<ScrollView>(null);
-  const minuteRef = useRef<ScrollView>(null);
+  const hourRef = useRef<FlatList<any> | null>(null);
+  const minuteRef = useRef<FlatList<any> | null>(null);
 
   const hourScrollY = useRef(new Animated.Value(0)).current;
   const minuteScrollY = useRef(new Animated.Value(0)).current;
 
-  const hoursBase = generateItems(24);
-  const minutesBase = generateItems(60);
+  const hours = generateInfiniteData(24, INFINITE_CYCLES);
+  const minutes = generateInfiniteData(60, INFINITE_CYCLES);
 
-  const hours = useMemo(
-    () => repeatItems(hoursBase, REPEAT_COUNT),
-    [hoursBase]
-  );
-  const minutes = useMemo(
-    () => repeatItems(minutesBase, REPEAT_COUNT),
-    [minutesBase]
-  );
-
-  const CENTER_INDEX_HOUR =
-    Math.floor(hours.length / 2 / 24) * 24 + selectedHour;
-  const CENTER_INDEX_MINUTE =
-    Math.floor(minutes.length / 2 / 60) * 60 + selectedMinute;
+  // Posisi tengah untuk initial scroll
+  const MIDDLE_HOUR_INDEX = Math.floor(hours.length / 2 / 24) * 24;
+  const MIDDLE_MINUTE_INDEX = Math.floor(minutes.length / 2 / 60) * 60;
 
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => {
-        scrollToIndex(hourRef, CENTER_INDEX_HOUR);
-        scrollToIndex(minuteRef, CENTER_INDEX_MINUTE);
+        hourRef.current?.scrollToIndex({
+          index: MIDDLE_HOUR_INDEX + selectedHour,
+          animated: false,
+        });
+        minuteRef.current?.scrollToIndex({
+          index: MIDDLE_MINUTE_INDEX + selectedMinute,
+          animated: false,
+        });
       }, 100);
     }
+  }, [
+    isOpen,
+    selectedHour,
+    selectedMinute,
+    MIDDLE_HOUR_INDEX,
+    MIDDLE_MINUTE_INDEX,
+  ]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  const getItemLayout = (_: any, index: number) => ({
+    length: ITEM_HEIGHT,
+    offset: ITEM_HEIGHT * index,
+    index,
+  });
 
   const scrollToIndex = (
-    ref: React.RefObject<ScrollView | null>,
+    ref: React.RefObject<FlatList | null>,
     index: number,
     animated: boolean = true
   ) => {
-    ref.current?.scrollTo({ y: index * ITEM_HEIGHT, animated });
+    ref.current?.scrollToIndex({ index, animated });
   };
 
   const handleScrollEnd = (
@@ -95,28 +102,77 @@ export default function TimePickerWheel({
     const index = Math.round(offsetY / ITEM_HEIGHT);
 
     if (type === 'hour') {
-      const realValue = hours[index % 24] as number;
+      const realValue = index % 24;
       setSelectedHour(realValue);
 
-      const newCenter = Math.floor(hours.length / 2 / 24) * 24 + realValue;
-      if (Math.abs(index - newCenter) > 12) {
-        scrollToIndex(hourRef, newCenter, false);
+      // Re-center jika mendekati ujung data
+      const distanceFromStart = index;
+      const distanceFromEnd = hours.length - index;
+
+      if (distanceFromStart < 50 || distanceFromEnd < 50) {
+        const newCenter = MIDDLE_HOUR_INDEX + realValue;
+        setTimeout(() => {
+          scrollToIndex(hourRef, newCenter, false);
+        }, 50);
       }
     } else {
-      const realValue = minutes[index % 60] as number;
+      const realValue = index % 60;
       setSelectedMinute(realValue);
 
-      const newCenter = Math.floor(minutes.length / 2 / 60) * 60 + realValue;
-      if (Math.abs(index - newCenter) > 12) {
-        scrollToIndex(minuteRef, newCenter, false);
+      // Re-center jika mendekati ujung data
+      const distanceFromStart = index;
+      const distanceFromEnd = minutes.length - index;
+
+      if (distanceFromStart < 50 || distanceFromEnd < 50) {
+        const newCenter = MIDDLE_MINUTE_INDEX + realValue;
+        setTimeout(() => {
+          scrollToIndex(minuteRef, newCenter, false);
+        }, 50);
       }
     }
+  };
+
+  const handleScrollToIndexFailed = (info: any) => {
+    const wait = new Promise((resolve) => setTimeout(resolve, 100));
+    wait.then(() => {
+      if (info.averageItemLength && info.index) {
+        scrollToIndex(
+          info.index < hours.length ? hourRef : minuteRef,
+          info.index,
+          false
+        );
+      }
+    });
   };
 
   const handleSubmit = () => {
     onChange?.({ hour: selectedHour, minute: selectedMinute });
     onClose?.();
   };
+
+  const renderHourItem = ({ item, index }: { item: number; index: number }) => (
+    <AnimatedItem
+      index={index}
+      value={item}
+      type="hour"
+      scrollY={hourScrollY}
+    />
+  );
+
+  const renderMinuteItem = ({
+    item,
+    index,
+  }: {
+    item: number;
+    index: number;
+  }) => (
+    <AnimatedItem
+      index={index}
+      value={item}
+      type="minute"
+      scrollY={minuteScrollY}
+    />
+  );
 
   return (
     <BottomSheet
@@ -161,9 +217,13 @@ export default function TimePickerWheel({
         </View>
 
         <View style={styles.scrollContainer}>
+          {/* Hour Picker */}
           <View style={styles.pickerColumn}>
-            <Animated.ScrollView
+            <Animated.FlatList
               ref={hourRef}
+              data={hours}
+              renderItem={renderHourItem}
+              keyExtractor={(_, index) => `hour-${index}`}
               showsVerticalScrollIndicator={false}
               snapToInterval={ITEM_HEIGHT}
               decelerationRate="fast"
@@ -173,23 +233,23 @@ export default function TimePickerWheel({
                 { useNativeDriver: true }
               )}
               scrollEventThrottle={16}
+              getItemLayout={getItemLayout}
+              onScrollToIndexFailed={handleScrollToIndexFailed}
+              initialNumToRender={VISIBLE_ITEMS + 2}
+              maxToRenderPerBatch={10}
+              windowSize={11}
+              removeClippedSubviews={true}
               contentContainerStyle={styles.scrollContent}
-            >
-              {hours.map((h, i) => (
-                <AnimatedItem
-                  key={i}
-                  index={i}
-                  value={h}
-                  type="hour"
-                  scrollY={hourScrollY}
-                />
-              ))}
-            </Animated.ScrollView>
+            />
           </View>
 
+          {/* Minute Picker */}
           <View style={styles.pickerColumn}>
-            <Animated.ScrollView
+            <Animated.FlatList
               ref={minuteRef}
+              data={minutes}
+              renderItem={renderMinuteItem}
+              keyExtractor={(_, index) => `minute-${index}`}
               showsVerticalScrollIndicator={false}
               snapToInterval={ITEM_HEIGHT}
               decelerationRate="fast"
@@ -199,18 +259,14 @@ export default function TimePickerWheel({
                 { useNativeDriver: true }
               )}
               scrollEventThrottle={16}
+              getItemLayout={getItemLayout}
+              onScrollToIndexFailed={handleScrollToIndexFailed}
+              initialNumToRender={VISIBLE_ITEMS + 2}
+              maxToRenderPerBatch={10}
+              windowSize={11}
+              removeClippedSubviews={true}
               contentContainerStyle={styles.scrollContent}
-            >
-              {minutes.map((m, i) => (
-                <AnimatedItem
-                  key={i}
-                  index={i}
-                  value={m}
-                  type="minute"
-                  scrollY={minuteScrollY}
-                />
-              ))}
-            </Animated.ScrollView>
+            />
           </View>
         </View>
       </View>

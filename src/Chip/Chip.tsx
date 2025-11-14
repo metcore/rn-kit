@@ -111,7 +111,7 @@ const Chip: React.FC<ChipProps> = ({
       onRefresh={onRefresh}
       refreshing={refreshing}
       scrollEnabled={scrollable}
-      keyboardShouldPersistTaps="always"
+      keyboardShouldPersistTaps="handled"
       numColumns={numColumns}
       contentContainerStyle={[
         styles.container,
