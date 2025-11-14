@@ -59,7 +59,9 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
       onRequestClose?.();
       onClose?.();
     }
-  }, [isOpen, isVisible, animateIn, onRequestClose, onClose]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, animateIn]);
 
   const userClose = useCallback(() => {
     if (!closable) return;
