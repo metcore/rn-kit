@@ -123,14 +123,14 @@ export default function InputFile({
 
       if (file.uri.startsWith('http')) {
         const { dirs } = ReactNativeBlobUtil.fs;
-        const dir = dirs.DocumentDir;
+        const dir = dirs.CacheDir;
         const ext = file.name.split('.').pop() || 'tmp';
         const localPath = `${dir}/${Date.now()}.${ext}`;
 
-        const res = await ReactNativeBlobUtil.config({ path: localPath }).fetch(
-          'GET',
-          file.uri
-        );
+        const res = await ReactNativeBlobUtil.config({
+          path: localPath,
+          fileCache: true,
+        }).fetch('GET', file.uri);
 
         fileUri = 'file://' + res.path();
         fileType = res.respInfo.headers['content-type'];
