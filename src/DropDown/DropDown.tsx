@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ const Dropdown = ({
   renderButton,
   renderItem,
   width,
+  value,
 }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | number>();
@@ -40,10 +41,10 @@ const Dropdown = ({
     if (!isOpen) {
       const handle = findNodeHandle(buttonRef.current);
       if (handle) {
-        UIManager.measureInWindow(handle, (x, y, width, height) => {
+        UIManager.measureInWindow(handle, (x, y, w, height) => {
           const middle = windowWidth / 2;
-          setAlign(x + width / 2 > middle ? 'right' : 'left');
-          setButtonLayout({ x, y, width, height });
+          setAlign(x + w / 2 > middle ? 'right' : 'left');
+          setButtonLayout({ x, y, width: w, height });
           setIsOpen(true);
         });
       }
@@ -52,11 +53,17 @@ const Dropdown = ({
     }
   };
 
-  const handlePressOption = (value: ChipOptionProps) => {
-    setSelected(value.value);
+  const handlePressOption = (selectedOption: ChipOptionProps) => {
+    setSelected(selectedOption.value);
     setIsOpen(false);
-    onSelect?.(value.value);
+    onSelect?.(selectedOption.value);
   };
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelected(value as string | number);
+    }
+  }, [value]);
 
   return (
     <>

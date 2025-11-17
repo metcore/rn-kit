@@ -14,6 +14,8 @@ import {
   generateMonthOptions,
   generateYearOptions,
 } from '../DatePicker/helpers';
+import { layouting } from '../styles/layouting';
+import { spacing } from '../styles/spacing';
 
 const DAYS: DayNameTuple = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -40,8 +42,10 @@ const Calendar = ({
   disabledBackgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR,
   disabledTextColor = DEFAULT_DISABLED_TEXT_COLOR,
   dayName = DAYS,
+  language = 'en',
+  initialDate = new Date(),
 }: CalendarTypes) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(initialDate);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -252,9 +256,9 @@ const Calendar = ({
         <TouchableOpacity style={styles.buttonNav} onPress={goToPrevMonth}>
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
         </TouchableOpacity>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <View style={[layouting.flex.rowCenter, spacing.gap[8]]}>
           <Dropdown
-            options={generateMonthOptions()}
+            options={generateMonthOptions(language === 'id' ? 'id' : 'en')}
             onSelect={handleOnSelectMonthDropdown}
             renderButton={
               <View style={styles.containerDropDown}>
@@ -264,7 +268,10 @@ const Calendar = ({
                   weight="semibold"
                   color={Color.gray[900]}
                 >
-                  {currentDate.toLocaleString('default', { month: 'long' })}
+                  {currentDate.toLocaleString(
+                    language === 'id' ? 'id-ID' : 'en-US',
+                    { month: 'long' }
+                  )}
                 </Typography>
               </View>
             }
@@ -302,7 +309,7 @@ const Calendar = ({
             variant="t2"
             center
             color={Color.gray[700]}
-            style={{ width: 32, textAlign: 'center' }}
+            style={styles.dayName}
           >
             {day}
           </Typography>
@@ -410,6 +417,7 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: 'center',
   },
+  dayName: { width: 32, textAlign: 'center' },
 });
 
 export default Calendar;

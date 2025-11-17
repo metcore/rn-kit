@@ -46,7 +46,6 @@ export default function DatePickerScreen() {
           setValueSingle(value.date);
         }}
         onClose={() => setIsOpenDatePickerSingle(false)}
-        placholder={'Pilih tanggal'}
         value={{ date: valueSingle }}
         disabledDays={{
           0: {
@@ -86,7 +85,6 @@ export default function DatePickerScreen() {
           endDate: valueRange?.endDate,
         }}
         onClose={() => setIsOpenDatePickerRange(false)}
-        placholder={'Pilih tanggal'}
         required={true}
       />
     </Container>

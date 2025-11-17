@@ -12,7 +12,10 @@ import type { FormattedDateRangeProps } from '../Calendar/CalendarPropsType';
 import { dateFormatter } from '../function/dateFormatter';
 
 type DatePickerProps = React.ComponentProps<typeof DatePicker>;
-type DatePickerPropsWithoutOnChange = Omit<DatePickerProps, 'onChange'>;
+type DatePickerPropsWithoutOnChange = Omit<
+  DatePickerProps,
+  'onChange' | 'isOpen' | 'onClose' | 'mode' | 'onChange'
+>;
 
 interface BaseProps {
   label: string;
@@ -182,6 +185,7 @@ export default function InputDate({
         isOpen={isDatePickerOpen}
         onClose={handleCloseDatePicker}
         value={rawValue()}
+        language={language}
         onChange={(val: DateRangeProps) => {
           handleDateChange(val);
         }}

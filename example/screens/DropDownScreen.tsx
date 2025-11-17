@@ -58,11 +58,21 @@ const options: OptionsProp[] = [
 ];
 
 export default function DropDownScreen() {
+  // const [selected, setSelected] = useState<number | null>(null);
+  // const handleSelect = (val: number) => {
+  //   setSelected(val);
+
+  //   setTimeout(() => {
+  //     setSelected(null);
+  //   }, 300);
+  // };
   return (
     <Container>
       <DropDown
         maxHeight={500}
         options={options}
+        // value={selected}
+        // onSelect={(val) => handleSelect(val as number)}
         renderButton={<Icon name="more-vertical" />}
         renderItem={(item) => (
           <View style={[layouting.flex.rowCenter, spacing.gap[4]]}>

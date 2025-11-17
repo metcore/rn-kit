@@ -7,11 +7,12 @@ import Alert from '../Alert/Alert';
 import {
   type CalendarMarkDatesType,
   type CalendarModeType,
+  type CalendarTypes,
   type DateRangeProps,
 } from '../Calendar/CalendarPropsType';
 import Color from '../Color/Color';
 
-interface DatePickerProps {
+interface DatePickerProps extends CalendarTypes {
   onChange: (selectedDate: DateRangeProps) => void;
   isOpen: boolean;
   onClose: () => void;
@@ -21,7 +22,8 @@ interface DatePickerProps {
   hint?: string;
   mode?: CalendarModeType;
   value?: DateRangeProps;
-  [key: string]: any;
+  confirmLabel?: string;
+  cancelLabel?: string;
 }
 
 export default function DatePicker({
@@ -34,6 +36,8 @@ export default function DatePicker({
   hint,
   mode,
   value,
+  confirmLabel = 'Terapkan',
+  cancelLabel = 'Batalkan',
   ...calendarProps
 }: DatePickerProps) {
   const [errorValidate, setErrorValidate] = useState<boolean>(false);
@@ -135,14 +139,14 @@ export default function DatePicker({
             <View style={styles.buttonWrapper}>
               <Button
                 variant="tertiary"
-                title="Batalkan"
+                title={cancelLabel}
                 color="primary"
                 onPress={handleOnPressCancelButton}
               />
             </View>
             <View style={styles.buttonWrapper}>
               <Button
-                title="Terapkan"
+                title={confirmLabel}
                 color="primary"
                 onPress={handleOnPressSubmitButton}
               />

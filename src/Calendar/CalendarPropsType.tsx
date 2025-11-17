@@ -66,4 +66,6 @@ export interface CalendarTypes {
     [day in WeekDay]?: boolean | DisabledDayStyle;
   };
   dayName?: DayNameTuple;
+  language?: 'en' | 'id';
+  initialDate?: Date;
 }
