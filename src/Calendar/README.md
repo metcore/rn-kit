@@ -29,7 +29,7 @@ Komponen kalender ini dibuat menggunakan React Native dan memungkinkan pengguna 
 | `onChange`                | `(date: Date \| [Date, Date]) => void` | —                                                     | Fungsi callback saat tanggal dipilih                      |
 | `selectedBackgroundColor` | `string` (CSS color)                   | `'#0f62fe'`                                           | Warna latar belakang tanggal yang dipilih                 |
 | `selectedTextColor`       | `string` (CSS color)                   | `'#ffffff'`                                           | Warna teks pada tanggal yang dipilih                      |
-
+| `initialDate`             | `Date`                                 | `new Date(2026, 1, 1)`                                | Inisialisasi tanggal saat pertamakali render              |
 
 ---
 
@@ -38,6 +38,7 @@ Komponen kalender ini dibuat menggunakan React Native dan memungkinkan pengguna 
 Komponen ini bersifat kustom dan belum tersedia sebagai package npm. Salin file `Calendar.tsx` ke dalam proyek React Native-mu.
 
 ### Kebutuhan:
+
 - React Native
 - TypeScript (opsional, tapi direkomendasikan)
 - `dayjs` sebagai pengganti `moment.js` jika diperlukan
@@ -72,3 +73,4 @@ export default function App() {
     />
   );
 }
+```
