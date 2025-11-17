@@ -119,6 +119,7 @@ export default function InputFile({
   const handlePreviewFile = async (file: any) => {
     try {
       let fileUri = file.uri;
+      let fileType = file.type;
 
       if (file.uri.startsWith('http')) {
         const { dirs } = ReactNativeBlobUtil.fs;
@@ -130,13 +131,14 @@ export default function InputFile({
           'GET',
           file.uri
         );
+
         fileUri = 'file://' + res.path();
-        console.log({ res });
+        fileType = res.respInfo.headers['content-type'];
       }
 
       await viewDocument({
-        uri: file.uri.startsWith('http') ? fileUri : file.uri,
-        mimeType: file.type,
+        uri: fileUri,
+        mimeType: fileType,
       });
     } catch (err) {
       console.error('Error opening document:', err);
