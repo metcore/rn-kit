@@ -8,4 +8,5 @@ export interface DropDownProps {
   renderButton: React.ReactNode;
   renderItem?: (item: ChipOptionProps, index: number) => React.ReactNode;
   width?: number;
+  value?: string | number | null;
 }

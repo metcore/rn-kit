@@ -25,6 +25,7 @@ Serta modul standar React Native: `Modal`, `ScrollView`, dll. Tidak memerlukan l
 | `renderButton` | `React.ReactNode`                   | **(wajib)** | Elemen yang dipakai sebagai tombol pemicu dropdown.                        |
 | `renderItem`   | `React.ReactNode`                   | `undefined` | Elemen yang dipakai sebagai tombol di tiap item yang ada di dalam dropdown |
 | `width`        | `number`                            | `undefined` | Angka yang digunakan untuk mengatur lebar pembungkus list                  |
+| `value`        | `number \| string`                  | `undefined` | Props yang dapat memungkinkan state selected dari luar                     |
 
 ### Struktur `ChipOptionProps`
 
