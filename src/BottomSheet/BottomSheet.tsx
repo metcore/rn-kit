@@ -80,7 +80,9 @@ export default function BottomSheet({
         });
       });
     }
-  }, [closable, translateY, onClose]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [closable, translateY]);
 
   const showModal = useCallback(() => {
     setIsVisible(true);
