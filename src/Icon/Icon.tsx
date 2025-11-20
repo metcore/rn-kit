@@ -107,6 +107,10 @@ import TimesNew from './icons/TimesNew';
 import UserCircleMoneyUp from './icons/UserCircleMoneyUp';
 import CreditCard from './icons/CreditCard';
 import FaceId from './icons/FaceId';
+import BriefcaseFill from './icons/BriefcaseFill';
+import UserTagFill from './icons/UserTagFill';
+import Cake from './icons/Cake';
+import Building from './icons/Building';
 
 const icons: Record<
   IconNameProps,
@@ -218,6 +222,10 @@ const icons: Record<
   'user-circle-money-up': UserCircleMoneyUp,
   'credit-card': CreditCard,
   'FaceId': FaceId,
+  'briefcase-fill': BriefcaseFill,
+  'user-tag-fill': UserTagFill,
+  'Cake': Cake,
+  'Building': Building,
 };
 
 const Icon: React.FC<IconProps> = ({

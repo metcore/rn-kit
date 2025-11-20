@@ -95,6 +95,10 @@ const icons: IconNameProps[] = [
   'credit-card',
   'user-circle-money-up',
   'FaceId',
+  'Building',
+  'user-tag-fill',
+  'Cake',
+  'briefcase-fill',
 ];
 
 export default function IconScreen() {
