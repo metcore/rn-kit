@@ -44,7 +44,15 @@ export default function ItemPreview({
                 <BtnIcon onPress={() => onDelete(index)} />
               )}
 
-              <Image source={{ uri: file.uri }} style={styles.previewImage} />
+              <Image
+                source={{ uri: file.uri }}
+                style={[
+                  styles.previewImage,
+                  variant === 'small' && file.error
+                    ? styles.previewImageSmallError
+                    : {},
+                ]}
+              />
             </View>
           )}
 
@@ -179,4 +187,5 @@ const styles = StyleSheet.create({
     padding: 2,
     borderRadius: 10,
   },
+  previewImageSmallError: { borderWidth: 1, borderColor: Color.danger[500] },
 });
