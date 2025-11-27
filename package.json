@@ -41,6 +41,7 @@
     "prepare": "bob build",
     "release": "release-it --only-version",
     "work-android": "yarn workspace @herca/rn-kit-example run android --port=8082",
+    "work-ios": "yarn workspace @herca/rn-kit-example run ios --port=8082",
     "work-start": "yarn workspace @herca/rn-kit-example run start --port=8082"
   },
   "keywords": [
