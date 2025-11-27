@@ -68,4 +68,6 @@ export interface CalendarTypes {
   dayName?: DayNameTuple;
   language?: 'en' | 'id';
   initialDate?: Date;
+  dateStart?: string | null;
+  dateEnd?: string | null;
 }
