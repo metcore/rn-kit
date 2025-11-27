@@ -1,4 +1,5 @@
 import {
+  Button,
   Calendar,
   Card,
   Color,
@@ -28,11 +29,20 @@ export default function CalendarScreen() {
   };
   return (
     <Container>
+      <Button
+        title="reset"
+        onPress={() => {
+          setStartDate(undefined);
+          setEndDate(undefined);
+        }}
+      />
       <ScrollView>
         <Typography>Mode : Range</Typography>
         <Card>
           <Calendar
             mode="range"
+            dateStart={startDate}
+            dateEnd={endDate}
             disabledDays={{
               0: {
                 backgroundColor: Color.danger[50],

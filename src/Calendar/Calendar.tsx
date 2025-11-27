@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import Color from '../Color/Color';
 import type {
@@ -44,6 +44,8 @@ const Calendar = ({
   dayName = DAYS,
   language = 'en',
   initialDate = new Date(),
+  dateStart,
+  dateEnd,
 }: CalendarTypes) => {
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -249,6 +251,15 @@ const Calendar = ({
 
   const calendarMatrix = generateCalendarMatrix();
   const year = currentDate.getFullYear();
+
+  useEffect(() => {
+    if (mode === 'range' && !dateStart && !dateEnd) {
+      setStartDate(null);
+      setEndDate(null);
+    }
+    console.log({ dateStart, dateEnd });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateStart, dateEnd]);
 
   return (
     <View style={styles.container}>
