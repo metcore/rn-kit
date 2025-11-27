@@ -288,6 +288,12 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('PdfView')}
             block
           />
+          <Button
+            color="success"
+            title="Calendar"
+            onPress={() => navigation.navigate('Calendar')}
+            block
+          />
           <Typography variant="h3" weight="bold" style={styles.title}>
             Example Screen
           </Typography>
