@@ -1,4 +1,5 @@
 import {
+  Button,
   Container,
   dateFormatter,
   InputDate,
@@ -21,6 +22,12 @@ export default function InputDateScreen() {
 
   return (
     <Container style={spacing.gap[8]}>
+      <Button
+        title="Reset Date"
+        onPress={() =>
+          setDateRange({ startDate: undefined, endDate: undefined })
+        }
+      />
       <InputDate label="Basic Single Date" placeholder="Select Date" />
 
       <InputDate

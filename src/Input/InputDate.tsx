@@ -6,7 +6,7 @@ import {
   type CalendarModeType,
   type DateRangeProps,
 } from '@herca/rn-kit';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { FormattedDateRangeProps } from '../Calendar/CalendarPropsType';
 import { dateFormatter } from '../function/dateFormatter';
@@ -144,6 +144,13 @@ export default function InputDate({
       };
     }
   };
+
+  useEffect(() => {
+    if (!value && !valueDateEnd) {
+      setDateValue(undefined);
+      setRaw(undefined);
+    }
+  }, [value, valueDateEnd]);
 
   return (
     <View style={styles.gap4}>
