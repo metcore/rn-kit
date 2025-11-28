@@ -97,3 +97,4 @@ export type { ChipValue } from './Chip/type';
 export { default as InputDate } from './Input/InputDate';
 export { dateFormatter } from './function/dateFormatter';
 export { default as ViewInsets } from './Ui/ViewInsets';
+export { default as Spinner } from './Spinner/Spinner';
