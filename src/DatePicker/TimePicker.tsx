@@ -25,6 +25,7 @@ interface TimePickerProps {
   isOpen: boolean;
   onClose?: () => void;
   onChange?: (value: { hour: number; minute: number }) => void;
+  value?: { hour: number; minute: number };
   title?: string;
   confirmLabel?: string;
   cancelLabel?: string;
@@ -39,12 +40,15 @@ export default function TimePickerWheel({
   isOpen,
   onClose,
   onChange,
+  value,
   title = 'Pilih Waktu',
   cancelLabel = 'Batal',
   confirmLabel = 'Pilih',
 }: TimePickerProps) {
-  const [selectedHour, setSelectedHour] = useState<number>(0);
-  const [selectedMinute, setSelectedMinute] = useState<number>(0);
+  const [selectedHour, setSelectedHour] = useState<number>(value?.hour ?? 0);
+  const [selectedMinute, setSelectedMinute] = useState<number>(
+    value?.minute ?? 0
+  );
 
   const hourRef = useRef<FlatList<any> | null>(null);
   const minuteRef = useRef<FlatList<any> | null>(null);
@@ -58,6 +62,14 @@ export default function TimePickerWheel({
   // Posisi tengah untuk initial scroll
   const MIDDLE_HOUR_INDEX = Math.floor(hours.length / 2 / 24) * 24;
   const MIDDLE_MINUTE_INDEX = Math.floor(minutes.length / 2 / 60) * 60;
+
+  // Update state ketika value prop berubah
+  useEffect(() => {
+    if (value) {
+      setSelectedHour(value.hour);
+      setSelectedMinute(value.minute);
+    }
+  }, [value]);
 
   useEffect(() => {
     if (isOpen) {
