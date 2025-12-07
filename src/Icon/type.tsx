@@ -112,7 +112,8 @@ export type IconNameProps =
   | 'Building'
   | 'briefcase-fill'
   | 'user-tag-fill'
-  | 'FaceId';
+  | 'FaceId'
+  | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;
   size?: number;
