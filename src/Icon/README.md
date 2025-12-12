@@ -148,4 +148,10 @@ export default function App() {
 - times-new
 - credit-card
 - user-circle-money-up
+- whatsapp-fill
+- Cake
+- Building
+- briefcase-fill
+- user-tag-fill
 - FaceId
+- warning-letter

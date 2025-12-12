@@ -111,6 +111,7 @@ import BriefcaseFill from './icons/BriefcaseFill';
 import UserTagFill from './icons/UserTagFill';
 import Cake from './icons/Cake';
 import Building from './icons/Building';
+import WarningLetter from './icons/WarningLetter';
 
 const icons: Record<
   IconNameProps,
@@ -226,6 +227,7 @@ const icons: Record<
   'user-tag-fill': UserTagFill,
   'Cake': Cake,
   'Building': Building,
+  'warning-letter': WarningLetter,
 };
 
 const Icon: React.FC<IconProps> = ({

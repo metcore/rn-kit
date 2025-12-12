@@ -99,6 +99,7 @@ const icons: IconNameProps[] = [
   'user-tag-fill',
   'Cake',
   'briefcase-fill',
+  'warning-letter',
 ];
 
 export default function IconScreen() {
