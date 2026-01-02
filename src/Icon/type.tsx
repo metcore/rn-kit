@@ -124,6 +124,7 @@ export type IconNameProps =
   | 'file-list-plus'
   | 'Login'
   | 'Logout'
+  | 'credit-card-fill'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;

@@ -123,6 +123,7 @@ import CalendarClose from './icons/CalendarClose';
 import FileListPlus from './icons/FileListPlus';
 import Logout from './icons/Logout';
 import Login from './icons/Login';
+import CreditCardFill from './icons/CreditCardFill';
 
 const icons: Record<
   IconNameProps,
@@ -250,6 +251,7 @@ const icons: Record<
   'file-list-plus': FileListPlus,
   'Login': Login,
   'Logout': Logout,
+  'credit-card-fill': CreditCardFill,
 };
 
 const Icon: React.FC<IconProps> = ({

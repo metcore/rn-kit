@@ -112,6 +112,7 @@ const icons: IconNameProps[] = [
   'file-list-plus',
   'Login',
   'Logout',
+  'credit-card-fill',
 ];
 
 export default function IconScreen() {
