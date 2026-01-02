@@ -118,6 +118,11 @@ import Receipt from './icons/Receipt';
 import DocumentListPay from './icons/DocumentListPay';
 import SettingGear from './icons/SettingGear';
 import Pencil from './icons/Pencil';
+import CalendarCheck from './icons/CalendarCheck';
+import CalendarClose from './icons/CalendarClose';
+import FileListPlus from './icons/FileListPlus';
+import Logout from './icons/Logout';
+import Login from './icons/Login';
 
 const icons: Record<
   IconNameProps,
@@ -240,6 +245,11 @@ const icons: Record<
   'Receipt': Receipt,
   'setting-gear': SettingGear,
   'Pencil': Pencil,
+  'calendar-check': CalendarCheck,
+  'calendar-close': CalendarClose,
+  'file-list-plus': FileListPlus,
+  'Login': Login,
+  'Logout': Logout,
 };
 
 const Icon: React.FC<IconProps> = ({

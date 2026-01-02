@@ -161,3 +161,8 @@ export default function App() {
 - Receipt
 - setting-gear
 - Pencil
+- calendar-check
+- calendar-close
+- file-list-plus
+- Login
+- Logout
