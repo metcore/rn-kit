@@ -118,6 +118,7 @@ export type IconNameProps =
   | 'user-clock'
   | 'document-list-pay'
   | 'setting-gear'
+  | 'Pencil'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;

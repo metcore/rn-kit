@@ -117,6 +117,7 @@ import UserClock from './icons/UserClock';
 import Receipt from './icons/Receipt';
 import DocumentListPay from './icons/DocumentListPay';
 import SettingGear from './icons/SettingGear';
+import Pencil from './icons/Pencil';
 
 const icons: Record<
   IconNameProps,
@@ -238,6 +239,7 @@ const icons: Record<
   'user-clock': UserClock,
   'Receipt': Receipt,
   'setting-gear': SettingGear,
+  'Pencil': Pencil,
 };
 
 const Icon: React.FC<IconProps> = ({

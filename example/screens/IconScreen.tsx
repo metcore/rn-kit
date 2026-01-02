@@ -105,6 +105,7 @@ const icons: IconNameProps[] = [
   'document-list-pay',
   'user-clock',
   'Receipt',
+  'Pencil',
   'setting-gear',
 ];
 
