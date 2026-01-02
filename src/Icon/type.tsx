@@ -113,6 +113,10 @@ export type IconNameProps =
   | 'briefcase-fill'
   | 'user-tag-fill'
   | 'FaceId'
+  | 'document-list'
+  | 'Receipt'
+  | 'user-clock'
+  | 'document-list-pay'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;
