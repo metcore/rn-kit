@@ -155,3 +155,8 @@ export default function App() {
 - user-tag-fill
 - FaceId
 - warning-letter
+- document-list
+- documnet-list-pay
+- user-clock
+- Receipt
+- setting-gear

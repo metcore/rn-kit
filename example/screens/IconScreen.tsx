@@ -1,6 +1,7 @@
-import { Container, Icon, Typography } from '@herca/rn-kit';
+import { Container, Icon, Input, Typography } from '@herca/rn-kit';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import type { IconNameProps } from '../../src/Icon';
+import { useState } from 'react';
 
 const icons: IconNameProps[] = [
   'AirPlane',
@@ -100,20 +101,36 @@ const icons: IconNameProps[] = [
   'Cake',
   'briefcase-fill',
   'warning-letter',
+  'document-list',
+  'document-list-pay',
+  'user-clock',
+  'Receipt',
+  'setting-gear',
 ];
 
 export default function IconScreen() {
+  const [query, setQuery] = useState<string>('');
+
   return (
     <ScrollView>
+      <Container>
+        <Input
+          placeholder="Search ..."
+          icon="Search"
+          onChangeText={(val) => setQuery(val)}
+        />
+      </Container>
       <Container style={styles.container}>
-        {icons.map((name) => (
-          <View key={name} style={styles.wrapper}>
-            <Icon name={name as IconNameProps} size={30} />
-            <Typography variant="p3" weight="semibold" style={styles.title}>
-              {name}
-            </Typography>
-          </View>
-        ))}
+        {icons
+          .filter((name) => name.includes(query))
+          .map((name) => (
+            <View key={name} style={styles.wrapper}>
+              <Icon name={name as IconNameProps} size={30} />
+              <Typography variant="p3" weight="semibold" style={styles.title}>
+                {name}
+              </Typography>
+            </View>
+          ))}
       </Container>
     </ScrollView>
   );
