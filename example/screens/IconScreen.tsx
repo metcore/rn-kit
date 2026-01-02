@@ -105,7 +105,13 @@ const icons: IconNameProps[] = [
   'document-list-pay',
   'user-clock',
   'Receipt',
+  'Pencil',
   'setting-gear',
+  'calendar-check',
+  'calendar-close',
+  'file-list-plus',
+  'Login',
+  'Logout',
 ];
 
 export default function IconScreen() {

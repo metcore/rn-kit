@@ -160,3 +160,9 @@ export default function App() {
 - user-clock
 - Receipt
 - setting-gear
+- Pencil
+- calendar-check
+- calendar-close
+- file-list-plus
+- Login
+- Logout
