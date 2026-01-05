@@ -113,6 +113,15 @@ const icons: IconNameProps[] = [
   'Login',
   'Logout',
   'credit-card-fill',
+  'file-list-plus-outline',
+  'grid-fill-bulk',
+  'hourglass-fill-bulk',
+  'money-up-fill-bulk',
+  'plane-fill-bulk',
+  'rotate-card-fill-bulk',
+  'stopwatch-check-fill',
+  'stopwatch-check-outline',
+  'user-check-fill-bulk',
 ];
 
 export default function IconScreen() {

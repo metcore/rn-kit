@@ -125,6 +125,15 @@ export type IconNameProps =
   | 'Login'
   | 'Logout'
   | 'credit-card-fill'
+  | 'user-check-fill-bulk'
+  | 'plane-fill-bulk'
+  | 'hourglass-fill-bulk'
+  | 'rotate-card-fill-bulk'
+  | 'money-up-fill-bulk'
+  | 'grid-fill-bulk'
+  | 'file-list-plus-outline'
+  | 'stopwatch-check-fill'
+  | 'stopwatch-check-outline'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;
