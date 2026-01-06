@@ -117,6 +117,22 @@ import UserClock from './icons/UserClock';
 import Receipt from './icons/Receipt';
 import DocumentListPay from './icons/DocumentListPay';
 import SettingGear from './icons/SettingGear';
+import Pencil from './icons/Pencil';
+import CalendarCheck from './icons/CalendarCheck';
+import CalendarClose from './icons/CalendarClose';
+import FileListPlus from './icons/FileListPlus';
+import Logout from './icons/Logout';
+import Login from './icons/Login';
+import CreditCardFill from './icons/CreditCardFill';
+import FilelistPlusOutline from './icons/FileListPlusOutline';
+import GridFillBulk from './icons/GridFillBulk';
+import HourGlassFillBulk from './icons/HourGlassFillBulk';
+import MoneyUpFillBulk from './icons/MoneyUpFillBulk';
+import PlaneFillBulk from './icons/PlaneFillBulk';
+import RotateCardFillBulk from './icons/RotateCardFillBulk';
+import StopwatchCheckFill from './icons/StopwatchCheckFill';
+import StopwatchCheckOutline from './icons/StopwatchCheckOutline';
+import UserCheckFillBulk from './icons/UserCheckFillBulk';
 
 const icons: Record<
   IconNameProps,
@@ -238,6 +254,22 @@ const icons: Record<
   'user-clock': UserClock,
   'Receipt': Receipt,
   'setting-gear': SettingGear,
+  'Pencil': Pencil,
+  'calendar-check': CalendarCheck,
+  'calendar-close': CalendarClose,
+  'file-list-plus': FileListPlus,
+  'Login': Login,
+  'Logout': Logout,
+  'credit-card-fill': CreditCardFill,
+  'file-list-plus-outline': FilelistPlusOutline,
+  'grid-fill-bulk': GridFillBulk,
+  'hourglass-fill-bulk': HourGlassFillBulk,
+  'money-up-fill-bulk': MoneyUpFillBulk,
+  'plane-fill-bulk': PlaneFillBulk,
+  'rotate-card-fill-bulk': RotateCardFillBulk,
+  'stopwatch-check-fill': StopwatchCheckFill,
+  'stopwatch-check-outline': StopwatchCheckOutline,
+  'user-check-fill-bulk': UserCheckFillBulk,
 };
 
 const Icon: React.FC<IconProps> = ({
