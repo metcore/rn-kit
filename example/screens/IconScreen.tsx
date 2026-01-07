@@ -122,6 +122,8 @@ const icons: IconNameProps[] = [
   'stopwatch-check-fill',
   'stopwatch-check-outline',
   'user-check-fill-bulk',
+  'arrow-right-long',
+  'stopwatch-fill-2',
 ];
 
 export default function IconScreen() {
