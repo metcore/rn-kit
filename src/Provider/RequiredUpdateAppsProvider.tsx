@@ -34,10 +34,16 @@ export default function RequiredUpdateAppsProvider({
             color={Color.gray[600]}
             center
           >
-            {description}.
+            {description}
           </Typography>
           <View style={{}}>
-            <Button title={buttonText} color="primary" />
+            <Button
+              title={buttonText}
+              color="primary"
+              onPress={() => {
+                onUpdate?.(false);
+              }}
+            />
           </View>
         </Container>
       </Modal>
