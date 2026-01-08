@@ -134,6 +134,8 @@ export type IconNameProps =
   | 'file-list-plus-outline'
   | 'stopwatch-check-fill'
   | 'stopwatch-check-outline'
+  | 'stopwatch-fill-2'
+  | 'arrow-right-long'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;

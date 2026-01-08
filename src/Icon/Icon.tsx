@@ -133,6 +133,8 @@ import RotateCardFillBulk from './icons/RotateCardFillBulk';
 import StopwatchCheckFill from './icons/StopwatchCheckFill';
 import StopwatchCheckOutline from './icons/StopwatchCheckOutline';
 import UserCheckFillBulk from './icons/UserCheckFillBulk';
+import StopwatchFill2 from './icons/StopwatchFill2';
+import ArrowRightLong from './icons/ArrowRightLong';
 
 const icons: Record<
   IconNameProps,
@@ -270,6 +272,8 @@ const icons: Record<
   'stopwatch-check-fill': StopwatchCheckFill,
   'stopwatch-check-outline': StopwatchCheckOutline,
   'user-check-fill-bulk': UserCheckFillBulk,
+  'stopwatch-fill-2': StopwatchFill2,
+  'arrow-right-long': ArrowRightLong,
 };
 
 const Icon: React.FC<IconProps> = ({
