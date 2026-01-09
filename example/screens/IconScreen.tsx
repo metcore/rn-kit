@@ -124,6 +124,10 @@ const icons: IconNameProps[] = [
   'user-check-fill-bulk',
   'arrow-right-long',
   'stopwatch-fill-2',
+  'Sun',
+  'users-slash',
+  'user-square',
+  'hourglass-fill',
 ];
 
 export default function IconScreen() {
