@@ -76,7 +76,7 @@ const App = () => {
           'Kami telah menambahkan fitur penting. Silakan update sekarang.',
         onUpdate: () =>
           Linking.openURL(
-            'https://play.google.com/store/apps/details?id=com.herca.hris2'
+            'https://play.google.com/store/apps/details?id=com.herca.hris'
           ),
       }}
     >
