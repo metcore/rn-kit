@@ -135,6 +135,10 @@ import StopwatchCheckOutline from './icons/StopwatchCheckOutline';
 import UserCheckFillBulk from './icons/UserCheckFillBulk';
 import StopwatchFill2 from './icons/StopwatchFill2';
 import ArrowRightLong from './icons/ArrowRightLong';
+import HourGlassFill from './icons/HourglassFill';
+import UserSquare from './icons/UserSquare';
+import UsersSlash from './icons/UsersSlash';
+import Sun from './icons/Sun';
 
 const icons: Record<
   IconNameProps,
@@ -274,6 +278,10 @@ const icons: Record<
   'user-check-fill-bulk': UserCheckFillBulk,
   'stopwatch-fill-2': StopwatchFill2,
   'arrow-right-long': ArrowRightLong,
+  'hourglass-fill': HourGlassFill,
+  'user-square': UserSquare,
+  'users-slash': UsersSlash,
+  'Sun': Sun,
 };
 
 const Icon: React.FC<IconProps> = ({

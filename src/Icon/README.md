@@ -176,3 +176,7 @@ export default function App() {
 - stopwatch-check-fill
 - stopwatch-check-outline
 - user-check-fill-bulk
+- users-slash
+- user-square
+- hourglass-fill
+- sun
