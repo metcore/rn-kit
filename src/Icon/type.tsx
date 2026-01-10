@@ -136,6 +136,10 @@ export type IconNameProps =
   | 'stopwatch-check-outline'
   | 'stopwatch-fill-2'
   | 'arrow-right-long'
+  | 'hourglass-fill'
+  | 'users-slash'
+  | 'user-square'
+  | 'Sun'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;
