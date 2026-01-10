@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import Color from '../Color/Color';
 import type {
@@ -23,6 +23,7 @@ const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
 const DEFAULT_SELECTED_TEXT_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_BACKGROUND_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_TEXT_COLOR = Color.gray[400];
+
 export const formatDate = (date: Date | undefined | null) => {
   if (!date) return null;
   const y = date.getFullYear();
@@ -30,6 +31,7 @@ export const formatDate = (date: Date | undefined | null) => {
   const d = `${date.getDate()}`.padStart(2, '0');
   return `${y}-${m}-${d}`;
 };
+
 const Calendar = ({
   markedDates = {},
   disabledDays,
@@ -50,6 +52,11 @@ const Calendar = ({
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+
+  // HYBRID LOGIC: Pakai props jika ada, fallback ke internal state
+  const isControlled = dateStart !== undefined || dateEnd !== undefined;
+  const internalStartDate = isControlled ? (dateStart ?? null) : startDate;
+  const internalEndDate = isControlled ? (dateEnd ?? null) : endDate;
 
   const getDaysInMonth = (month: number, year: number) =>
     new Date(year, month + 1, 0).getDate();
@@ -135,11 +142,13 @@ const Calendar = ({
     newDate.setFullYear(Number(value));
     setCurrentDate(newDate);
   };
+
   const handleOnSelectMonthDropdown = (value: string | number) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(value as number);
     setCurrentDate(newDate);
   };
+
   const isWeekDay = (day: number): day is WeekDay => day >= 0 && day <= 6;
 
   const isDisabledDate = (date: Date) => {
@@ -150,11 +159,16 @@ const Calendar = ({
     return false;
   };
 
-  const isSameDate = (a: Date | null, b: Date) =>
-    !!a && a.getTime() === b.getTime();
+  const isSameDate = (a: Date | null, b: Date) => {
+    if (!a) return false;
+    return normalizeDate(a).getTime() === normalizeDate(b).getTime();
+  };
 
   const isDateInRange = (date: Date) =>
-    startDate && endDate && date >= startDate && date <= endDate;
+    internalStartDate &&
+    internalEndDate &&
+    date >= internalStartDate &&
+    date <= internalEndDate;
 
   const isMarkDisableDate = (mark: MarkedDate | undefined) => !!mark?.disabled;
 
@@ -162,8 +176,10 @@ const Calendar = ({
     const key = formatDateKey(date);
     const mark = markedDates[key];
     const inRange = isDateInRange(date);
-    const isStart = isSameDate(startDate, date);
-    const isEnd = isSameDate(endDate, date);
+
+    const isStart = isSameDate(internalStartDate as Date, date);
+    const isEnd = isSameDate(internalEndDate as Date, date);
+
     if (disabledDays && disabledDays[keyWeek]) {
       return typeof disabledDays[keyWeek] === 'object' &&
         disabledDays[keyWeek].hasOwnProperty('backgroundColor')
@@ -172,13 +188,16 @@ const Calendar = ({
     }
 
     if (isDisabledDate(date)) return disabledBackgroundColor;
+
     if (
       (mode === 'single' && isStart) ||
       (mode === 'range' && (isStart || isEnd))
     ) {
       return selectedBackgroundColor;
     }
+
     if (mark?.selected) return mark.backgroundColor || selectedBackgroundColor;
+
     if (inRange) return Color.primary[50];
     return 'white';
   };
@@ -197,33 +216,54 @@ const Calendar = ({
     }
 
     if (isDisabledDate(date)) return disabledTextColor;
+
     if (
       (mode === 'single' && isStart) ||
       (mode === 'range' && (isStart || isEnd))
     ) {
       return selectedTextColor;
     }
+
     if (mark?.selected) return mark?.textColor || selectedTextColor;
+
     return Color.gray[700];
   };
 
   const handlePressDay = (date: Date) => {
+    const key = formatDateKey(date);
+    const mark = markedDates[key];
+
+    if (isMarkDisableDate(mark) || isDisabledDate(date)) return;
+
     const selected = normalizeDate(date);
+
     if (mode === 'single') {
-      setStartDate(selected);
-      setEndDate(null);
+      if (!isControlled) {
+        setStartDate(selected);
+        setEndDate(null);
+      }
+
       onChange?.({ date: selected });
     } else {
+      // Range mode
+      if (!isControlled) {
+        if (!startDate || (startDate && endDate)) {
+          setStartDate(selected);
+          setEndDate(null);
+        } else if (selected >= startDate) {
+          setEndDate(selected);
+        } else {
+          setStartDate(selected);
+          setEndDate(null);
+        }
+      }
+
+      // Always call onChange
       if (!startDate || (startDate && endDate)) {
-        setStartDate(selected);
-        setEndDate(null);
         onChange?.({ startDate: selected, endDate: null });
       } else if (selected >= startDate) {
-        setEndDate(selected);
-        onChange?.({ startDate, endDate: selected });
+        onChange?.({ startDate: startDate as Date, endDate: selected });
       } else {
-        setStartDate(selected);
-        setEndDate(null);
         onChange?.({ startDate: selected, endDate: null });
       }
     }
@@ -251,15 +291,6 @@ const Calendar = ({
 
   const calendarMatrix = generateCalendarMatrix();
   const year = currentDate.getFullYear();
-
-  useEffect(() => {
-    if (mode === 'range' && !dateStart && !dateEnd) {
-      setStartDate(null);
-      setEndDate(null);
-    }
-    console.log({ dateStart, dateEnd });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateStart, dateEnd]);
 
   return (
     <View style={styles.container}>
