@@ -68,7 +68,7 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <Provider
-      requiredUpdated={true}
+      requiredUpdated={false}
       updateConfig={{
         fillScreen: false,
         title: 'Update terbaru tersedia',
