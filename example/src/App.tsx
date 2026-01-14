@@ -1,68 +1,67 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/HomeScreen';
-import ButtonScreen from '../screens/ButtonScreen';
-import TypographyScreen from '../screens/TypographyScreen';
-import BottomSheetScreen from '../screens/BottomSheetSreen';
-import SelectScreen from '../screens/SelectScreen';
-import ContainerScreen from '../screens/ContainerScreen';
-import CardScreen from '../screens/CardScreen';
-import InputScreen from '../screens/InputScreen';
-import InputPasswordScreen from '../screens/InputPasswordScreen';
-import ModalScreen from '../screens/ModalScreen';
-import List from '../screens/ListScreen';
-import CheckBox from '../screens/CheckBoxScreen';
-import FooterScreen from '../screens/FooterScreen';
-import ExampleScreen from '../screens/ExampleScreen';
-import AvatarScreen from '../screens/AvatarScreen';
-import BadgeScreen from '../screens/BadgeScreen';
-import AlertScreen from '../screens/AlertScreen';
 import { Provider } from '@herca/rn-kit';
-import DrawingScreen from '../screens/DrawingScreen';
-import SwitchScreen from '../screens/SwitchScreen';
-import AvatarGroupScreen from '../screens/AvatarGroupScreen';
-import RadioButtonScreen from '../screens/RadioButtonScreen';
-import CalendarScreen from '../screens/CalendarScreen';
-import DatePickerScreen from '../screens/DatePickerScreen';
-import SpScreen from '../screens/example/SP/SpScreen';
-import SpDetailScreen from '../screens/example/SP/SpDetailScreen';
-import SpSignatureScreen from '../screens/example/SP/SpSignatureScreen';
-import SpLatterScreen from '../screens/example/SP/SpLatterScreen';
-import LeaveScreen from '../screens/example/Leave/LeaveScreen';
-import LeaveFormScreen from '../screens/example/Leave/LeaveForm';
-import LeaveDetailScreen from '../screens/example/Leave/LeaveDetailScreen';
-import { Linking } from 'react-native';
 import { ToastProvider } from '../../src/Toast/ToastContext';
-import ToastScreen from '../screens/ToastScreen';
-import LeaveApproveScreen from '../screens/example/Leave/LeaveApproveScreen';
+import HeaderNavigation from '../components/Header/HeaderNavigation';
 import AccordionScreen from '../screens/AccordionScreen';
-import TextAreaScreen from '../screens/TextAreaScreen';
+import AlertScreen from '../screens/AlertScreen';
+import AvatarGroupScreen from '../screens/AvatarGroupScreen';
+import AvatarScreen from '../screens/AvatarScreen';
+import BadgeIconScreen from '../screens/BadgeIconScreen';
+import BadgeScreen from '../screens/BadgeScreen';
+import BottomSheetScreen from '../screens/BottomSheetSreen';
+import ButtonScreen from '../screens/ButtonScreen';
+import CalendarScreen from '../screens/CalendarScreen';
+import CardScreen from '../screens/CardScreen';
+import CheckBox from '../screens/CheckBoxScreen';
+import ChipScreen from '../screens/ChipScreen';
+import ContainerScreen from '../screens/ContainerScreen';
+import CounterButtonScreen from '../screens/CounterButtonScreen';
+import DatePickerScreen from '../screens/DatePickerScreen';
+import DrawingScreen from '../screens/DrawingScreen';
 import DropDownScreen from '../screens/DropDownScreen';
 import ForgotPasswordScreen from '../screens/example/Auth/ForgotPasswordScreen';
-import ChipScreen from '../screens/ChipScreen';
 import LoginScreen from '../screens/example/Auth/LoginScreen';
-import LabelScreen from '../screens/LabelScreen';
-import YearPickerScreen from '../screens/YearPickerScreen';
-import MonthPickerScreen from '../screens/MonthPickerScreen';
-import HeaderNavigation from '../components/Header/HeaderNavigation';
-import TimePickerScreen from '../screens/TimePickerScreen';
-import InputOtpScreen from '../screens/InputOtpScreen';
-import TimeLineScreen from '../screens/TimeLineScreen';
-import TabScreen from '../screens/TabScreen';
-import StepScreen from '../screens/StepScreen';
+import LeaveApproveScreen from '../screens/example/Leave/LeaveApproveScreen';
+import LeaveDetailScreen from '../screens/example/Leave/LeaveDetailScreen';
+import LeaveFormScreen from '../screens/example/Leave/LeaveForm';
+import LeaveScreen from '../screens/example/Leave/LeaveScreen';
+import SpDetailScreen from '../screens/example/SP/SpDetailScreen';
+import SpLatterScreen from '../screens/example/SP/SpLatterScreen';
+import SpScreen from '../screens/example/SP/SpScreen';
+import SpSignatureScreen from '../screens/example/SP/SpSignatureScreen';
+import ExampleScreen from '../screens/ExampleScreen';
+import FooterScreen from '../screens/FooterScreen';
+import HomeScreen from '../screens/HomeScreen';
 import IconScreen from '../screens/IconScreen';
-import CounterButtonScreen from '../screens/CounterButtonScreen';
-import TextEditorScreen from '../screens/TextEditorScreen';
-import SkeletonScreen from '../screens/SkeletonScreen';
-import TabDefaultScreen from '../screens/TabDefaultScreen';
-import TabStickyScreen from '../screens/TabStickyScreen';
-import BadgeIconScreen from '../screens/BadgeIconScreen';
-import InputFileScreen from '../screens/InputFileScreen';
-import PdfViewScreen from '../screens/PdfViewScreen';
-import InputSelectScreen from '../screens/InputSelectScreen';
 import InputDateScreen from '../screens/InputDateScreen';
+import InputFileScreen from '../screens/InputFileScreen';
+import InputOtpScreen from '../screens/InputOtpScreen';
+import InputPasswordScreen from '../screens/InputPasswordScreen';
+import InputScreen from '../screens/InputScreen';
+import InputSelectScreen from '../screens/InputSelectScreen';
+import LabelScreen from '../screens/LabelScreen';
+import List from '../screens/ListScreen';
+import ModalScreen from '../screens/ModalScreen';
+import MonthPickerScreen from '../screens/MonthPickerScreen';
+import PdfViewScreen from '../screens/PdfViewScreen';
+import RadioButtonScreen from '../screens/RadioButtonScreen';
+import SelectScreen from '../screens/SelectScreen';
+import SkeletonScreen from '../screens/SkeletonScreen';
 import SpinnerScreen from '../screens/SpinnerScreen';
+import StepScreen from '../screens/StepScreen';
+import SwitchScreen from '../screens/SwitchScreen';
+import TabDefaultScreen from '../screens/TabDefaultScreen';
+import TabScreen from '../screens/TabScreen';
+import TabStickyScreen from '../screens/TabStickyScreen';
+import TextAreaScreen from '../screens/TextAreaScreen';
+import TextEditorScreen from '../screens/TextEditorScreen';
+import TimeLineScreen from '../screens/TimeLineScreen';
+import TimePickerScreen from '../screens/TimePickerScreen';
+import ToastScreen from '../screens/ToastScreen';
+import TypographyScreen from '../screens/TypographyScreen';
+import YearPickerScreen from '../screens/YearPickerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,13 +70,11 @@ const App = () => {
     <Provider
       requiredUpdated={false}
       updateConfig={{
+        fillScreen: false,
         title: 'Update terbaru tersedia',
         description:
-          'Kami telah menambahkan fitur penting. Silakan update sekarang.',
-        onUpdate: () =>
-          Linking.openURL(
-            'https://play.google.com/store/apps/details?id=com.herca.hris'
-          ),
+          'Kami telah melakukan beberapa update peningkatan performa dan menambahkan fitur baru yang akan membuat pengalaman-mu semakin lebih baik.',
+        onUpdate: () => {},
       }}
     >
       <ToastProvider>
