@@ -3,4 +3,5 @@ export interface RequiredUpdateAppsProviderProps {
   description?: string;
   buttonText?: string;
   onUpdate?: (value: boolean) => void;
+  fillScreen?: boolean;
 }
