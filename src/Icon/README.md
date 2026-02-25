@@ -180,3 +180,5 @@ export default function App() {
 - user-square
 - hourglass-fill
 - sun
+- paper-board-check
+- user-change
