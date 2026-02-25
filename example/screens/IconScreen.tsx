@@ -128,6 +128,8 @@ const icons: IconNameProps[] = [
   'users-slash',
   'user-square',
   'hourglass-fill',
+  'paper-board-check',
+  'user-change',
 ];
 
 export default function IconScreen() {
