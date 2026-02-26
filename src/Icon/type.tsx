@@ -143,6 +143,7 @@ export type IconNameProps =
   | 'paper-board-check'
   | 'user-change'
   | 'calendar-plus'
+  | 'calendar-clock'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;

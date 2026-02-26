@@ -131,6 +131,7 @@ const icons: IconNameProps[] = [
   'paper-board-check',
   'user-change',
   'calendar-plus',
+  'calendar-clock',
 ];
 
 export default function IconScreen() {
