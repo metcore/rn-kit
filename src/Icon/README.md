@@ -182,3 +182,5 @@ export default function App() {
 - sun
 - paper-board-check
 - user-change
+- calendar-plus
+- calendar-clock
