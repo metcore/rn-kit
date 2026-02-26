@@ -140,6 +140,8 @@ export type IconNameProps =
   | 'users-slash'
   | 'user-square'
   | 'Sun'
+  | 'paper-board-check'
+  | 'user-change'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;

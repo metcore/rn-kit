@@ -139,6 +139,8 @@ import HourGlassFill from './icons/HourglassFill';
 import UserSquare from './icons/UserSquare';
 import UsersSlash from './icons/UsersSlash';
 import Sun from './icons/Sun';
+import PaperBoardCheck from './icons/PaperBoardCheck';
+import UserChange from './icons/UserChange';
 
 const icons: Record<
   IconNameProps,
@@ -282,6 +284,8 @@ const icons: Record<
   'user-square': UserSquare,
   'users-slash': UsersSlash,
   'Sun': Sun,
+  'paper-board-check': PaperBoardCheck,
+  'user-change': UserChange,
 };
 
 const Icon: React.FC<IconProps> = ({
