@@ -141,6 +141,7 @@ import UsersSlash from './icons/UsersSlash';
 import Sun from './icons/Sun';
 import PaperBoardCheck from './icons/PaperBoardCheck';
 import UserChange from './icons/UserChange';
+import CalendarPlus from './icons/CalendarPlus';
 
 const icons: Record<
   IconNameProps,
@@ -286,6 +287,7 @@ const icons: Record<
   'Sun': Sun,
   'paper-board-check': PaperBoardCheck,
   'user-change': UserChange,
+  'calendar-plus': CalendarPlus,
 };
 
 const Icon: React.FC<IconProps> = ({

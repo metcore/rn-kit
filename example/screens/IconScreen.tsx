@@ -130,6 +130,7 @@ const icons: IconNameProps[] = [
   'hourglass-fill',
   'paper-board-check',
   'user-change',
+  'calendar-plus',
 ];
 
 export default function IconScreen() {
