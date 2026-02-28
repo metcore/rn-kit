@@ -15,6 +15,9 @@ interface MonthPickerProps {
     value: number[] | { startDate: number | null; endDate: number | null }
   ) => void;
   mode?: PickerMode;
+  title?: string;
+  cancelLabel?: string;
+  confirmLabel?: string;
 }
 
 export default function MonthPicker({
@@ -22,6 +25,9 @@ export default function MonthPicker({
   onClose,
   onChange,
   mode = 'single',
+  cancelLabel = 'Batal',
+  confirmLabel = 'pilih',
+  title = 'Pilih Bulan',
 }: MonthPickerProps) {
   const [rangeValue, setRangeValue] = useState<{
     startDate: number | null;
@@ -91,7 +97,7 @@ export default function MonthPicker({
         <View style={styles.containerBottomSheetFooter}>
           <View style={styles.flex1}>
             <Button
-              title="Batal"
+              title={cancelLabel}
               variant="tertiary"
               size="medium"
               color="primary"
@@ -100,7 +106,7 @@ export default function MonthPicker({
           </View>
           <View style={styles.flex1}>
             <Button
-              title="Pilih"
+              title={confirmLabel}
               color="primary"
               size="medium"
               onPress={handleSubmit}
@@ -116,7 +122,7 @@ export default function MonthPicker({
           color={Color.gray[900]}
           center
         >
-          Pilih Bulan
+          {title}
         </Typography>
       </View>
 
