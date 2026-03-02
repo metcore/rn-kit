@@ -17,6 +17,7 @@ interface DrawingProps {
 const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   const ref = useRef<SignatureViewRef | null>(null);
 
+  const [canvasKey, setCanvasKey] = useState(0);
   const [internalDataURL, setInternalDataURL] = useState<any>(null);
   const [stepCount, setStepCount] = useState(0);
   const [undoCount, setUndoCount] = useState(0);
@@ -86,8 +87,8 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
 
   useEffect(() => {
     onChange?.(dataURL);
-    setInternalDataURL(dataURL);
-
+    setInternalDataURL(dataURL ?? null);
+    setCanvasKey((prev) => prev + 1); // force remount dengan dataURL baru
     setStepCount(dataURL ? 1 : 0);
     setUndoCount(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,6 +97,7 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   return (
     <View style={styles.container}>
       <SignatureCanvas
+        key={canvasKey}
         ref={ref}
         onEnd={handleEnd}
         onBegin={handleBegin}
