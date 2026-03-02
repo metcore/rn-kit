@@ -21,7 +21,9 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   const [stepCount, setStepCount] = useState(0);
   const [undoCount, setUndoCount] = useState(0);
 
-  const canUndo = stepCount - undoCount > 0;
+  const canUndo = dataURL
+    ? stepCount - undoCount > 1
+    : stepCount - undoCount > 0;
   const canRedo = undoCount > 0;
 
   const handleSignature = (signature: string) => {
