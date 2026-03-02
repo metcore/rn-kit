@@ -11,9 +11,10 @@ interface DrawingProps {
   onChange?: (value?: string | undefined | null) => void;
   onStart?: () => void;
   onEnd?: () => void;
+  dataURL?: string;
 }
 
-const Drawing = ({ onChange, onEnd, onStart }: DrawingProps) => {
+const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   const ref = useRef<SignatureViewRef | null>(null);
 
   const handleSignature = (signature: string) => {
@@ -76,7 +77,7 @@ const Drawing = ({ onChange, onEnd, onStart }: DrawingProps) => {
         onError={handleError}
         descriptionText=" "
         webStyle={`
-          .m-signature-pad {box-shadow: none; border-color:${Color.gray[200]}; border-radius: 12px;} 
+          .m-signature-pad {box-shadow: none; border-color:${Color.gray[200]}; border-radius: 12px; overflow: auto;} 
           .m-signature-pad--body {border-color:${Color.gray[200]}; border-radius:12px;}
           .m-signature-pad--footer{
             display: none; margin: 0,
@@ -89,6 +90,7 @@ const Drawing = ({ onChange, onEnd, onStart }: DrawingProps) => {
           cacheEnabled: true,
           androidLayerType: 'hardware',
         }}
+        dataURL={dataURL}
       />
       <View style={styles.footerConteiner}>
         <View style={styles.actionButtonContainer}>
