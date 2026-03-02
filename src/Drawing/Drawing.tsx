@@ -1,11 +1,11 @@
-import { useRef } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import SignatureCanvas, {
   type SignatureViewRef,
 } from 'react-native-signature-canvas';
-import Icon from '../Icon';
 import Button from '../Button/Button';
 import Color from '../Color/Color';
+import Icon from '../Icon';
 
 interface DrawingProps {
   onChange?: (value?: string | undefined | null) => void;
@@ -16,6 +16,13 @@ interface DrawingProps {
 
 const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   const ref = useRef<SignatureViewRef | null>(null);
+
+  const [internalDataURL, setInternalDataURL] = useState<any>(null);
+  const [stepCount, setStepCount] = useState(0);
+  const [undoCount, setUndoCount] = useState(0);
+
+  const canUndo = stepCount - undoCount > 0;
+  const canRedo = undoCount > 0;
 
   const handleSignature = (signature: string) => {
     if (signature && onChange) {
@@ -37,6 +44,8 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   };
 
   const handleEnd = () => {
+    setStepCount((prev) => prev + 1);
+    setUndoCount(0);
     refreshSignature();
     if (onEnd) {
       onEnd();
@@ -50,12 +59,16 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   };
 
   const undo = () => {
+    if (!canUndo) return;
     ref.current?.undo();
+    setUndoCount((prev) => prev + 1);
     refreshSignature();
   };
 
   const redo = () => {
+    if (!canRedo) return;
     ref.current?.redo();
+    setUndoCount((prev) => prev - 1);
     refreshSignature();
   };
 
@@ -63,8 +76,20 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
     ref.current?.clearSignature();
     if (onChange) {
       onChange(null);
+      setInternalDataURL('');
     }
+    setStepCount(0);
+    setUndoCount(0);
   };
+
+  useEffect(() => {
+    onChange?.(dataURL);
+    setInternalDataURL(dataURL);
+
+    setStepCount(dataURL ? 1 : 0);
+    setUndoCount(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataURL]);
 
   return (
     <View style={styles.container}>
@@ -90,14 +115,22 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
           cacheEnabled: true,
           androidLayerType: 'hardware',
         }}
-        dataURL={dataURL}
+        dataURL={internalDataURL}
       />
       <View style={styles.footerConteiner}>
         <View style={styles.actionButtonContainer}>
-          <TouchableOpacity onPress={undo}>
+          <TouchableOpacity
+            onPress={undo}
+            disabled={!canUndo}
+            style={!canUndo && styles.disabledButton}
+          >
             <Icon name="ArrowBackAlt" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={redo}>
+          <TouchableOpacity
+            onPress={redo}
+            disabled={!canRedo}
+            style={!canRedo && styles.disabledButton}
+          >
             <Icon name="ArrowForwardAlt" />
           </TouchableOpacity>
         </View>
@@ -126,6 +159,9 @@ const styles = StyleSheet.create({
   actionButtonContainer: {
     flexDirection: 'row',
     gap: 10,
+  },
+  disabledButton: {
+    opacity: 0.3,
   },
   preview: {
     width: 335,
