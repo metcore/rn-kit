@@ -143,6 +143,7 @@ import PaperBoardCheck from './icons/PaperBoardCheck';
 import UserChange from './icons/UserChange';
 import CalendarPlus from './icons/CalendarPlus';
 import CalendarClock from './icons/CalendarClock';
+import SortVertical from './icons/SortVertical';
 
 const icons: Record<
   IconNameProps,
@@ -290,6 +291,7 @@ const icons: Record<
   'user-change': UserChange,
   'calendar-plus': CalendarPlus,
   'calendar-clock': CalendarClock,
+  'sort-vertical': SortVertical,
 };
 
 const Icon: React.FC<IconProps> = ({
