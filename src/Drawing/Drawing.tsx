@@ -6,17 +6,30 @@ import SignatureCanvas, {
 import Button from '../Button/Button';
 import Color from '../Color/Color';
 import Icon from '../Icon';
+import Typography from '../Typography/Typography';
 
 interface DrawingProps {
   onChange?: (value?: string | undefined | null) => void;
   onStart?: () => void;
   onEnd?: () => void;
   dataURL?: string;
+  disabled?: boolean;
+  hint?: string;
+  hasError?: boolean;
 }
 
-const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
+const Drawing = ({
+  onChange,
+  onEnd,
+  onStart,
+  dataURL,
+  disabled,
+  hint,
+  hasError,
+}: DrawingProps) => {
   const ref = useRef<SignatureViewRef | null>(null);
 
+  const [canvasKey, setCanvasKey] = useState(0);
   const [internalDataURL, setInternalDataURL] = useState<any>(null);
   const [stepCount, setStepCount] = useState(0);
   const [undoCount, setUndoCount] = useState(0);
@@ -24,6 +37,7 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
   const canUndo = dataURL
     ? stepCount - undoCount > 1
     : stepCount - undoCount > 0;
+
   const canRedo = undoCount > 0;
 
   const handleSignature = (signature: string) => {
@@ -86,8 +100,8 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
 
   useEffect(() => {
     onChange?.(dataURL);
-    setInternalDataURL(dataURL);
-
+    setInternalDataURL(dataURL ?? null);
+    setCanvasKey((prev) => prev + 1); // force remount dengan dataURL baru
     setStepCount(dataURL ? 1 : 0);
     setUndoCount(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,54 +109,71 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
 
   return (
     <View style={styles.container}>
-      <SignatureCanvas
-        ref={ref}
-        onEnd={handleEnd}
-        onBegin={handleBegin}
-        onOK={handleSignature}
-        onEmpty={handleEmpty}
-        onError={handleError}
-        descriptionText=" "
-        webStyle={`
-          .m-signature-pad {box-shadow: none; border-color:${Color.gray[200]}; border-radius: 12px; overflow: auto;} 
-          .m-signature-pad--body {border-color:${Color.gray[200]}; border-radius:12px;}
+      <View style={styles.drawerContainer}>
+        <SignatureCanvas
+          key={canvasKey}
+          ref={ref}
+          onEnd={handleEnd}
+          onBegin={handleBegin}
+          onOK={handleSignature}
+          onEmpty={handleEmpty}
+          onError={handleError}
+          descriptionText=" "
+          webStyle={`
+          .m-signature-pad {box-shadow: none; border-color:${!hasError ? Color.gray[200] : Color.danger[300]}; border-radius: 12px; overflow: auto;}
           .m-signature-pad--footer{
             display: none; margin: 0,
           }
         `}
-        clearText={'Clear'}
-        penColor={Color.gray[900]}
-        backgroundColor={Color.base.white100}
-        webviewProps={{
-          cacheEnabled: true,
-          androidLayerType: 'hardware',
-        }}
-        dataURL={internalDataURL}
-      />
-      <View style={styles.footerConteiner}>
-        <View style={styles.actionButtonContainer}>
-          <TouchableOpacity
-            onPress={undo}
-            disabled={!canUndo}
-            style={!canUndo && styles.disabledButton}
-          >
-            <Icon name="ArrowBackAlt" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={redo}
-            disabled={!canRedo}
-            style={!canRedo && styles.disabledButton}
-          >
-            <Icon name="ArrowForwardAlt" />
-          </TouchableOpacity>
-        </View>
-        <Button
-          variant="outline"
-          color="primary"
-          title="Clear"
-          size="small"
-          onPress={clear}
+          clearText={'Clear'}
+          penColor={Color.gray[900]}
+          backgroundColor={Color.base.white100}
+          webviewProps={{
+            cacheEnabled: true,
+            androidLayerType: 'hardware',
+          }}
+          dataURL={internalDataURL}
         />
+
+        {disabled && (
+          <View pointerEvents="auto" style={styles.disabledOverlay} />
+        )}
+      </View>
+
+      <View>
+        {!!hint && (
+          <Typography
+            variant="t2"
+            color={hasError ? Color.danger[500] : Color.gray[900]}
+          >
+            {hint}
+          </Typography>
+        )}
+        <View style={styles.footerConteiner}>
+          <View style={styles.actionButtonContainer}>
+            <TouchableOpacity
+              onPress={undo}
+              disabled={!canUndo}
+              style={!canUndo && styles.disabledButton}
+            >
+              <Icon name="ArrowBackAlt" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={redo}
+              disabled={!canRedo}
+              style={!canRedo && styles.disabledButton}
+            >
+              <Icon name="ArrowForwardAlt" />
+            </TouchableOpacity>
+          </View>
+          <Button
+            variant="outline"
+            color="primary"
+            title="Clear"
+            size="small"
+            onPress={clear}
+          />
+        </View>
       </View>
     </View>
   );
@@ -150,7 +181,11 @@ const Drawing = ({ onChange, onEnd, onStart, dataURL }: DrawingProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 350,
+    height: 360,
+  },
+  drawerContainer: {
+    position: 'relative',
+    height: 310,
   },
   footerConteiner: {
     flexDirection: 'row',
@@ -172,6 +207,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
+  },
+  disabledOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255,255,255,0.5)',
   },
 });
 

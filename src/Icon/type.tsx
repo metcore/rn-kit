@@ -144,6 +144,7 @@ export type IconNameProps =
   | 'user-change'
   | 'calendar-plus'
   | 'calendar-clock'
+  | 'sort-vertical'
   | 'warning-letter';
 export interface IconProps {
   name: IconNameProps;
