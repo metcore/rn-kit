@@ -184,3 +184,4 @@ export default function App() {
 - user-change
 - calendar-plus
 - calendar-clock
+- sort-vertical
