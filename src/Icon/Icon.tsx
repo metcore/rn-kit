@@ -150,6 +150,7 @@ import Devices from './icons/Devices';
 import UserSquareOutline from './icons/UserSquareOutline';
 import BoxSearchOutline from './icons/BoxSearchOutline';
 import Hierarchy3 from './icons/Hierarchy3';
+import GlobalIcon from './icons/Global';
 
 const icons: Record<
   IconNameProps,
@@ -304,6 +305,7 @@ const icons: Record<
   'user-square-outline': UserSquareOutline,
   'box-search-outline': BoxSearchOutline,
   'hierarchy-3': Hierarchy3,
+  'global': GlobalIcon,
 };
 
 const Icon: React.FC<IconProps> = ({
