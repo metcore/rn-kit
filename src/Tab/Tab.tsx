@@ -17,6 +17,7 @@ const Tab: React.FC<TabProps> = ({
   current = 0,
   onChangeTab,
   renderHeader,
+  refreshControl,
 }) => {
   const items = Children.toArray(children).filter(
     isValidElement
@@ -124,6 +125,7 @@ const Tab: React.FC<TabProps> = ({
     <View style={styles.container}>
       {renderHeader ? (
         <ScrollView
+          refreshControl={refreshControl}
           stickyHeaderIndices={[renderHeader ? 1 : 0]} // bikin tabBar sticky
           contentContainerStyle={styles.scrollViewContainer}
           showsVerticalScrollIndicator={false}
