@@ -133,6 +133,13 @@ const icons: IconNameProps[] = [
   'calendar-plus',
   'calendar-clock',
   'sort-vertical',
+  'bar-code',
+  'cube-scan',
+  'devices',
+  'user-square-outline',
+  'box-search-outline',
+  'hierarchy-3',
+  'global',
 ];
 
 export default function IconScreen() {

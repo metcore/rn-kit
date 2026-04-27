@@ -1,4 +1,5 @@
 import React, { type ReactElement } from 'react';
+import type { RefreshControlProps } from 'react-native';
 
 export type TabItemProps =
   | {
@@ -19,4 +20,8 @@ export interface TabProps {
   current?: number;
   renderHeader?: React.ReactElement;
   onChangeTab?: (e: any) => void;
+  refreshControl?: React.ReactElement<
+    RefreshControlProps,
+    string | React.JSXElementConstructor<any>
+  >;
 }

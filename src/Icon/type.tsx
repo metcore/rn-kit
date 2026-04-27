@@ -145,7 +145,14 @@ export type IconNameProps =
   | 'calendar-plus'
   | 'calendar-clock'
   | 'sort-vertical'
-  | 'warning-letter';
+  | 'warning-letter'
+  | 'bar-code'
+  | 'devices'
+  | 'user-square-outline'
+  | 'box-search-outline'
+  | 'hierarchy-3'
+  | 'global'
+  | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;
   size?: number;
