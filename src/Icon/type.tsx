@@ -150,6 +150,7 @@ export type IconNameProps =
   | 'devices'
   | 'user-square-outline'
   | 'box-search-outline'
+  | 'hierarchy-3'
   | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;

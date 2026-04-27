@@ -138,6 +138,7 @@ const icons: IconNameProps[] = [
   'devices',
   'user-square-outline',
   'box-search-outline',
+  'hierarchy-3',
 ];
 
 export default function IconScreen() {

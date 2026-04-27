@@ -149,6 +149,7 @@ import CubeScan from './icons/CubeScan';
 import Devices from './icons/Devices';
 import UserSquareOutline from './icons/UserSquareOutline';
 import BoxSearchOutline from './icons/BoxSearchOutline';
+import Hierarchy3 from './icons/Hierarchy3';
 
 const icons: Record<
   IconNameProps,
@@ -302,6 +303,7 @@ const icons: Record<
   'devices': Devices,
   'user-square-outline': UserSquareOutline,
   'box-search-outline': BoxSearchOutline,
+  'hierarchy-3': Hierarchy3,
 };
 
 const Icon: React.FC<IconProps> = ({
