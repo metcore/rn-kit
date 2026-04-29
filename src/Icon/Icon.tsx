@@ -144,6 +144,13 @@ import UserChange from './icons/UserChange';
 import CalendarPlus from './icons/CalendarPlus';
 import CalendarClock from './icons/CalendarClock';
 import SortVertical from './icons/SortVertical';
+import BarCode from './icons/BarCode';
+import CubeScan from './icons/CubeScan';
+import Devices from './icons/Devices';
+import UserSquareOutline from './icons/UserSquareOutline';
+import BoxSearchOutline from './icons/BoxSearchOutline';
+import Hierarchy3 from './icons/Hierarchy3';
+import GlobalIcon from './icons/Global';
 
 const icons: Record<
   IconNameProps,
@@ -292,6 +299,13 @@ const icons: Record<
   'calendar-plus': CalendarPlus,
   'calendar-clock': CalendarClock,
   'sort-vertical': SortVertical,
+  'bar-code': BarCode,
+  'cube-scan': CubeScan,
+  'devices': Devices,
+  'user-square-outline': UserSquareOutline,
+  'box-search-outline': BoxSearchOutline,
+  'hierarchy-3': Hierarchy3,
+  'global': GlobalIcon,
 };
 
 const Icon: React.FC<IconProps> = ({
