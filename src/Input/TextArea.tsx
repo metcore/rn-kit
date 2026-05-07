@@ -11,6 +11,7 @@ export default function TextArea({
   style,
   hint,
   onChangeText,
+  required,
   ...props
 }: TextAreaProps) {
   const handleOnChangeText = (value: string) => {
@@ -19,7 +20,7 @@ export default function TextArea({
 
   return (
     <View style={styles.gap}>
-      {label ? <LabelForm title={label} /> : null}
+      {label ? <LabelForm required={required} title={label} /> : null}
 
       <View
         style={[
