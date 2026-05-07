@@ -1,16 +1,24 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Card from '../../../Ui/Card';
 import Color from '../../../Color/Color';
 import Typography from '../../../Typography/Typography';
 import Icon from '../../../Icon';
+import type { FileItem } from '../../type';
 
 interface Props {
-  file: any;
+  file: FileItem;
   onPress: () => void;
   index: number;
   onReplace: (index: number) => void;
   onDelete: (index: number) => void;
   variant?: 'default' | 'small';
+  loading?: boolean;
 }
 
 export default function ItemPreview({
@@ -20,6 +28,7 @@ export default function ItemPreview({
   onDelete,
   onReplace,
   variant = 'default',
+  loading = false,
 }: Props) {
   const Wrapper = variant === 'default' ? Card : View;
 
@@ -31,7 +40,13 @@ export default function ItemPreview({
         activeOpacity={0.7}
       >
         <View style={styles.containerListItem}>
-          {file.type.startsWith('image') && (
+          {loading && (
+            <View style={[styles.previewImage, styles.loading]}>
+              <ActivityIndicator color={Color.primary[1000]} />
+            </View>
+          )}
+
+          {!loading && file?.type?.startsWith('image') && (
             <View
               style={
                 (variant === 'small' ? styles.previewImageSmall : {},
@@ -56,7 +71,7 @@ export default function ItemPreview({
             </View>
           )}
 
-          {!file.type.startsWith('image') && (
+          {!loading && !file?.type?.startsWith('image') && (
             <View
               style={[
                 styles.previewImage,
@@ -166,6 +181,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     flexShrink: 0,
+  },
+
+  loading: {
+    borderWidth: 1,
+    borderColor: Color.gray[200],
+    backgroundColor: Color.gray[50],
   },
 
   // small

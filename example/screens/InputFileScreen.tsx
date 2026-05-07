@@ -5,12 +5,16 @@ import {
   Footer,
   InputFile,
   Typography,
+  useToast,
 } from '@herca/rn-kit';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import type { FileItem, UploadedFile } from '../../src/Input/type';
+import { types } from '@react-native-documents/picker';
 
 export default function InputFileScreen() {
-  const onlineFiles = [
+  const toast = useToast();
+  const onlineFiles: FileItem[] & { id: number }[] = [
     {
       id: 1,
       name: 'React Native Docs.pdf',
@@ -25,8 +29,12 @@ export default function InputFileScreen() {
     },
   ];
 
-  const [attachments, setAttachments] = useState<any[]>(onlineFiles);
+  const [attachments, setAttachments] = useState<FileItem[]>(onlineFiles);
   const [hasError, setHasError] = useState(false);
+
+  const [demoUploadValue, setDemoUploadValue] = useState<
+    UploadedFile<any>[] | null
+  >(null);
 
   const validate = () => {
     const validated = attachments.map((file, index) => {
@@ -86,8 +94,40 @@ export default function InputFileScreen() {
             },
           }}
         />
-
         <InputFile
+          multiple
+          maxSize={5}
+          title="Upload KTP"
+          maxSizeErrorMessage="File terlalu besar"
+          accept={[types.pdf, types.images]}
+          value={demoUploadValue as any[]}
+          uploadConfig={{
+            url: 'https://stg.media.herca.id/api/upload',
+            method: 'POST',
+            fieldName: 'file',
+            headers: {
+              'X-API-KEY': '',
+            },
+            extractUrl: (res: any) => res.data.url,
+            errorMessage: 'Gagal mengupload file',
+
+            onError: (file, err) => {
+              console.warn('Gagal upload:', file, err);
+            },
+
+            onUploadSuccess: (results) => {
+              console.log({ results });
+              toast.show('Uploaded', {
+                color: 'success',
+              });
+            },
+          }}
+          onChange={(uploadedResults) => {
+            setDemoUploadValue(uploadedResults);
+          }}
+        />
+
+        {/* <InputFile
           value={attachments}
           hasError={hasError}
           onChange={(value) => setAttachments(value)}
@@ -118,7 +158,7 @@ export default function InputFileScreen() {
               cancel: 'Cek Kembali',
             },
           }}
-        />
+        /> */}
 
         <View style={styles.resultContainer}>
           <Typography variant="t2" weight="medium" color={Color.gray[900]}>
