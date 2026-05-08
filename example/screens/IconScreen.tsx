@@ -141,6 +141,11 @@ const icons: IconNameProps[] = [
   'hierarchy-3',
   'global',
   'scan-qr',
+  'calendar-clock-triangle-exclamation',
+  'package',
+  'sticky-note-text-square',
+  'triangle-exclamation-time',
+  'user-edit-triangle-exclamation',
 ];
 
 export default function IconScreen() {
