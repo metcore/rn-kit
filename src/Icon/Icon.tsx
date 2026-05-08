@@ -152,6 +152,11 @@ import BoxSearchOutline from './icons/BoxSearchOutline';
 import Hierarchy3 from './icons/Hierarchy3';
 import GlobalIcon from './icons/Global';
 import ScanQr from './icons/ScanQr';
+import CalendarClockTriangleExclamation from './icons/CalendarClockTriangleExclamation';
+import Package from './icons/Package';
+import StickyNoteTextSquare from './icons/StickyNoteTextSquare';
+import TriangleExclamationTime from './icons/TriangleExclamationTime';
+import UserEditTriangleExclamation from './icons/UserEditTriangleExclamation';
 
 const icons: Record<
   IconNameProps,
@@ -308,6 +313,11 @@ const icons: Record<
   'hierarchy-3': Hierarchy3,
   'global': GlobalIcon,
   'scan-qr': ScanQr,
+  'calendar-clock-triangle-exclamation': CalendarClockTriangleExclamation,
+  'package': Package,
+  'sticky-note-text-square': StickyNoteTextSquare,
+  'triangle-exclamation-time': TriangleExclamationTime,
+  'user-edit-triangle-exclamation': UserEditTriangleExclamation,
 };
 
 const Icon: React.FC<IconProps> = ({

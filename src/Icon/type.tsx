@@ -153,6 +153,11 @@ export type IconNameProps =
   | 'hierarchy-3'
   | 'global'
   | 'scan-qr'
+  | 'package'
+  | 'calendar-clock-triangle-exclamation'
+  | 'sticky-note-text-square'
+  | 'triangle-exclamation-time'
+  | 'user-edit-triangle-exclamation'
   | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;
