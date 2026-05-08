@@ -152,6 +152,7 @@ export type IconNameProps =
   | 'box-search-outline'
   | 'hierarchy-3'
   | 'global'
+  | 'scan-qr'
   | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;

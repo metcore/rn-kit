@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { View } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 
-import { pick } from '@react-native-documents/picker';
+import { pick, types } from '@react-native-documents/picker';
 import { viewDocument } from '@react-native-documents/viewer';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { spacing } from '../styles/spacing';
@@ -14,64 +14,24 @@ import ModalDelete from './partials/InputFile/ModalDelete';
 import ModalPicker from './partials/InputFile/ModalPicker';
 import CardTriggerSmall from './partials/InputFile/CardTriggerSmall';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-
-export interface ModalOption {
-  title?: string;
-  description?: string;
-}
-export interface ModalPickFileText {
-  title?: string;
-  description?: string;
-  camera?: ModalOption;
-  gallery?: ModalOption;
-  document?: ModalOption;
-}
-
-export interface ChangeLabelProps {
-  label?: string;
-  placeholder?: string;
-}
-
-type BaseInputFileProps = {
-  title?: string;
-  accept?: string[];
-  multiple?: boolean;
-  onChange?: (files: any) => void;
-  value?: any[];
-  modalPickFileText?: ModalPickFileText;
-  btnChooseFileText?: string;
-  modalDeleteText?: ModalOption & {
-    confirmBtn?: {
-      confirm?: string;
-      cancel?: string;
-    };
-  };
-  hasError?: boolean;
-};
-
-type DefaultVariantProps = BaseInputFileProps & {
-  variant?: 'default';
-  description?: string;
-  useChangeLabel?: boolean;
-  changeLableProps?: ChangeLabelProps;
-  hint?: string;
-};
-
-type SmallVariantProps = BaseInputFileProps & {
-  variant: 'small';
-  description?: never;
-  useChangeLabel?: never;
-  changeLableProps?: never;
-  hint?: never;
-};
-
-// Union type
-type InputFileProps = DefaultVariantProps | SmallVariantProps;
+import type {
+  FileItem,
+  InputFileProps,
+  UploadConfig,
+  UploadedFile,
+} from './type';
+import { uploadFile } from './helpers/uploadFile';
 
 export default function InputFile({
   title = 'Upload File',
   description = 'File harus berformat JPG, PNG dan PDF',
-  accept = ['application/pdf', 'image/jpeg', 'image/png'],
+  accept = [
+    'application/pdf',
+    'image/jpeg',
+    'image/png',
+    types.pdf,
+    types.images,
+  ],
   btnChooseFileText = 'Choose File',
   multiple = false,
   value,
@@ -83,39 +43,81 @@ export default function InputFile({
   hint,
   hasError,
   onChange,
+  uploadConfig,
+  maxSize = 5, //5MB
+  maxSizeErrorMessage,
 }: InputFileProps) {
-  const [isOpenBottomSheetTypeFile, setIsOpenBottomSheetTypeFile] =
-    useState(false);
-  const [isOpenBottomSheetDeleteFile, setIsOpenBottomSheetDeleteFile] =
-    useState(false);
-  const [files, setFiles] = useState<any[]>(value || []);
-  const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(
-    null
-  );
+  const [isOpenBottomSheetTypeFile, setIsOpenBottomSheetTypeFile] = useState(false); //prettier-ignore
+  const [isOpenBottomSheetDeleteFile, setIsOpenBottomSheetDeleteFile] = useState(false); //prettier-ignore
+  const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(null); //prettier-ignore
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile<unknown>[]>([]); //prettier-ignore
+  const [internalErrorMessage, setInternalErrorMessage] = useState<string | null>(null); //prettier-ignore
+  const [files, setFiles] = useState<FileItem[]>(value || []);
+  const filesRef = useRef<FileItem[]>(files);
 
-  const handleOnPresChoseFile = () => {
-    setIsOpenBottomSheetTypeFile(true);
+  const calculatedMaxSize = maxSize * 1024 * 1024;
+
+  const uploadAndTrack = async (newFiles: FileItem[], config: UploadConfig) => {
+    setIsOpenBottomSheetTypeFile(false);
+
+    const withLoading = newFiles.map((f) => ({ ...f, uploading: true }));
+    setFiles((prev) => [...prev, ...withLoading]);
+
+    const results = await Promise.all(
+      newFiles.map((f) => uploadFile(f, config))
+    );
+
+    const currentFiles = filesRef.current;
+    const updatedFiles = currentFiles.map((f) => {
+      const match = results.find(
+        (r) => r.originalName === ('name' in f ? f.name : f.fileName)
+      );
+
+      if (!match) return f;
+
+      return {
+        ...f,
+        uploading: false,
+        error: match.uploadedData === null,
+        uploadedData: match.uploadedData,
+        hint:
+          match.uploadedData === null
+            ? (config.errorMessage ?? 'Upload gagal')
+            : f.hint,
+      };
+    });
+
+    setFiles(updatedFiles);
+
+    const newUploaded = [...uploadedFiles, ...results];
+    setUploadedFiles(newUploaded);
+    uploadConfig?.onUploadSuccess?.(newUploaded);
+    onChange?.(updatedFiles);
   };
 
-  const handlePickFile = async () => {
-    try {
-      if (selectedFileIndex !== null) {
-        confirmReplaceFile(selectedFileIndex);
-        return;
-      }
+  // validate max size
+  const validateMaxSize = (
+    assets: { size?: number | null; fileSize?: number | null }[]
+  ): boolean => {
+    if (!maxSize) return true;
 
-      const result = await pick({ type: accept, multiple });
-      const pickedFiles = multiple ? result : [result[0]];
-      const newFiles = [...files, ...pickedFiles];
-      setFiles(newFiles);
-      onChange?.(newFiles);
+    const oversized = assets.filter((f) => {
+      const size = f.size ?? f.fileSize ?? 0;
+      return size > (calculatedMaxSize ?? Infinity);
+    });
+
+    if (oversized.length > 0) {
+      setInternalErrorMessage(
+        maxSizeErrorMessage ?? 'Ukuran file melebihi batas maksimal'
+      );
       setIsOpenBottomSheetTypeFile(false);
-    } catch (error: any) {
-      if (error?.message?.toLowerCase().includes('user canceled')) return;
-      console.error('Failed to pick document:', error);
+      return false;
     }
+
+    return true;
   };
 
+  // preview file
   const handlePreviewFile = async (file: any) => {
     try {
       let fileUri = file.uri;
@@ -145,18 +147,63 @@ export default function InputFile({
     }
   };
 
+  // pick file
+  const handlePickFile = async () => {
+    try {
+      if (selectedFileIndex !== null) {
+        confirmReplaceFile(selectedFileIndex);
+        return;
+      }
+
+      const result = await pick({
+        type: accept,
+        allowMultiSelection: multiple,
+      });
+
+      const pickedFiles = multiple ? result : [result[0]];
+
+      if (!validateMaxSize(pickedFiles)) return;
+      setInternalErrorMessage(null);
+
+      if (uploadConfig) {
+        await uploadAndTrack(
+          pickedFiles as unknown as FileItem[],
+          uploadConfig
+        );
+      } else {
+        const newFiles = [...files, ...(pickedFiles as unknown as FileItem[])];
+        setFiles(newFiles);
+        onChange?.(newFiles);
+      }
+
+      setIsOpenBottomSheetTypeFile(false);
+    } catch (error: any) {
+      if (error?.message?.toLowerCase().includes('user canceled')) return;
+      console.error('Failed to pick document:', error);
+    }
+  };
+
   const handleOnPressButtonCamera = async () => {
     try {
       if (selectedFileIndex !== null) {
-        confirmReplaceFile(selectedFileIndex, 'camera');
+        await confirmReplaceFile(selectedFileIndex, 'camera');
         return;
       }
 
       const result = await launchCamera({ mediaType: 'photo' });
       if (result.didCancel || !result.assets) return;
-      const newFiles = [...files, result.assets[0]];
-      setFiles(newFiles);
-      onChange?.(newFiles);
+
+      if (!validateMaxSize(result.assets)) return;
+      setInternalErrorMessage(null);
+
+      if (uploadConfig) {
+        await uploadAndTrack(result.assets as FileItem[], uploadConfig);
+      } else {
+        const newFiles = [...files, result.assets[0] as FileItem];
+        setFiles(newFiles);
+        onChange?.(newFiles);
+      }
+
       setIsOpenBottomSheetTypeFile(false);
     } catch (error: any) {
       console.error('Failed to open camera:', error);
@@ -166,7 +213,7 @@ export default function InputFile({
   const handleOnPressButtonGallery = async () => {
     try {
       if (selectedFileIndex !== null) {
-        confirmReplaceFile(selectedFileIndex, 'gallery');
+        await confirmReplaceFile(selectedFileIndex, 'gallery');
         return;
       }
 
@@ -175,9 +222,18 @@ export default function InputFile({
         selectionLimit: multiple ? 0 : 1,
       });
       if (result.didCancel || !result.assets) return;
-      const newFiles = [...files, ...result.assets];
-      setFiles(newFiles);
-      onChange?.(newFiles);
+
+      if (!validateMaxSize(result.assets)) return;
+      setInternalErrorMessage(null);
+
+      if (uploadConfig) {
+        await uploadAndTrack(result.assets as FileItem[], uploadConfig);
+      } else {
+        const newFiles = [...files, ...(result.assets as FileItem[])];
+        setFiles(newFiles);
+        onChange?.(newFiles);
+      }
+
       setIsOpenBottomSheetTypeFile(false);
     } catch (error: any) {
       console.error('Failed to open gallery:', error);
@@ -192,13 +248,16 @@ export default function InputFile({
   const deleteFile = () => {
     if (selectedFileIndex !== null) {
       const newFiles = files.filter((_, i) => i !== selectedFileIndex);
+
       setFiles(newFiles);
+      setUploadedFiles(newFiles as unknown as UploadedFile<unknown>[]);
       onChange?.(newFiles);
       setSelectedFileIndex(null);
     }
     setIsOpenBottomSheetDeleteFile(false);
   };
 
+  // replace attachment
   const handleReplaceFile = (index: number) => {
     setIsOpenBottomSheetTypeFile(true);
     setSelectedFileIndex(index);
@@ -208,32 +267,90 @@ export default function InputFile({
     index: number,
     type?: 'gallery' | 'camera'
   ) => {
-    let replacedFile: any | null = null;
+    const labelFile = files?.[index]?.labelFile;
 
-    if (type === 'gallery') {
-      const result = await launchImageLibrary({
-        mediaType: 'photo',
-        selectionLimit: multiple ? 0 : 1,
+    // handler untuk pick
+    const pickFile = async (): Promise<FileItem | null> => {
+      if (type === 'gallery') {
+        const result = await launchImageLibrary({
+          mediaType: 'photo',
+          selectionLimit: multiple ? 0 : 1,
+        });
+
+        if (!result.assets?.length) return null;
+        return { ...result.assets[0], labelFile };
+      }
+
+      if (type === 'camera') {
+        const result = await launchCamera({ mediaType: 'photo' });
+
+        if (!result.assets?.length) return null;
+        return { ...result.assets[0], labelFile: files?.[index]?.labelFile };
+      }
+
+      const result = await pick({
+        type: accept,
+        allowMultiSelection: multiple,
       });
-      if (!result.assets || result.assets.length === 0) return;
-      replacedFile = { ...result.assets[0], labelFile: files[index].labelFile };
-    } else if (type === 'camera') {
-      const result = await launchCamera({ mediaType: 'photo' });
-      if (!result.assets || result.assets.length === 0) return;
-      replacedFile = { ...result.assets[0], labelFile: files[index].labelFile };
+
+      if (!result?.length) return null;
+      return { ...result[0], labelFile } as unknown as FileItem;
+    };
+
+    const replacedFile = await pickFile();
+    if (!replacedFile) return;
+
+    // handle validasi max size
+    if (!validateMaxSize([replacedFile])) return;
+    setInternalErrorMessage(null);
+
+    // handle upload
+    if (uploadConfig) {
+      setIsOpenBottomSheetTypeFile(false);
+
+      const withLoading = files.map((f, i) =>
+        i === index ? { ...replacedFile, uploading: true } : f
+      );
+
+      setFiles(withLoading);
+
+      const results = await Promise.all([
+        uploadFile(replacedFile, uploadConfig),
+      ]);
+
+      const uploadResult = results[0];
+      const updatedFiles = filesRef.current.map((f, i) =>
+        i === index
+          ? {
+              ...replacedFile,
+              uploading: false,
+              uploadedData: uploadResult.uploadedData,
+              error: uploadResult.uploadedData === null,
+              hint:
+                uploadResult.uploadedData === null
+                  ? (uploadConfig.errorMessage ?? 'Upload gagal')
+                  : replacedFile.hint,
+            }
+          : f
+      );
+
+      setFiles(updatedFiles);
+      onChange?.(updatedFiles);
     } else {
-      const result = await pick({ type: accept, multiple });
-      if (!result || result.length === 0) return;
-      replacedFile = { ...result[0], labelFile: files[index].labelFile };
+      const updatedFiles = files.map((f, i) =>
+        i === index ? replacedFile : f
+      );
+      setFiles(updatedFiles);
+      onChange?.(updatedFiles);
     }
 
-    const updatedFiles = files.map((f, i) => (i === index ? replacedFile : f));
-
-    setFiles(updatedFiles);
-    onChange?.(updatedFiles);
     setSelectedFileIndex(null);
     setIsOpenBottomSheetTypeFile(false);
   };
+
+  useEffect(() => {
+    filesRef.current = files;
+  }, [files]);
 
   useEffect(() => {
     setFiles(value ?? []);
@@ -244,11 +361,11 @@ export default function InputFile({
       {variant === 'default' && (
         <CardTrigger
           title={title}
-          hint={hint}
-          hasError={hasError}
+          hint={hint || (internalErrorMessage as string)}
+          hasError={hasError || !!internalErrorMessage}
           description={description}
           btnSelect={btnChooseFileText}
-          onPress={handleOnPresChoseFile}
+          onPress={() => setIsOpenBottomSheetTypeFile(true)}
         />
       )}
 
@@ -259,11 +376,17 @@ export default function InputFile({
             title={title}
             hasError={hasError}
             textButton={btnChooseFileText}
-            onChooseFile={handleOnPresChoseFile}
+            onChooseFile={() => setIsOpenBottomSheetTypeFile(true)}
             onPreview={handlePreviewFile}
             onReplace={handleReplaceFile}
             onDelete={confirmDeleteFile}
           />
+          {internalErrorMessage && (
+            <Typography variant="t3" color={Color.danger[500]}>
+              {internalErrorMessage}
+            </Typography>
+          )}
+
           {files.length > 0 && (
             <>
               {files
@@ -306,6 +429,7 @@ export default function InputFile({
               <ItemPreview
                 index={index}
                 file={file}
+                loading={file.uploading}
                 onPress={() => handlePreviewFile(file)}
                 onReplace={() => handleReplaceFile(index)}
                 onDelete={() => confirmDeleteFile(index)}

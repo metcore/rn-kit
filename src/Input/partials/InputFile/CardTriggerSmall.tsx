@@ -85,6 +85,7 @@ export default function CardTriggerSmall({
               key={index}
               index={index}
               file={file}
+              loading={file.uploading}
               onPress={() => onPreview?.(file)}
               onDelete={() => onDelete?.(index)}
               onReplace={() => onReplace?.(index)}
