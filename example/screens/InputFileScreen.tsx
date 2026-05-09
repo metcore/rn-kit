@@ -96,7 +96,7 @@ export default function InputFileScreen() {
         />
         <InputFile
           multiple
-          maxSize={5}
+          maxSize={1}
           title="Upload KTP"
           maxSizeErrorMessage="File terlalu besar"
           accept={[types.pdf, types.images]}
@@ -106,7 +106,7 @@ export default function InputFileScreen() {
             method: 'POST',
             fieldName: 'file',
             headers: {
-              'X-API-KEY': '',
+              'X-API-KEY': '19ee5d65cf71b64e5ed168dbf4817e89bc9024b90c499557',
             },
             extractUrl: (res: any) => res.data.url,
             errorMessage: 'Gagal mengupload file',
@@ -127,7 +127,7 @@ export default function InputFileScreen() {
           }}
         />
 
-        {/* <InputFile
+        <InputFile
           value={attachments}
           hasError={hasError}
           onChange={(value) => setAttachments(value)}
@@ -158,7 +158,7 @@ export default function InputFileScreen() {
               cancel: 'Cek Kembali',
             },
           }}
-        /> */}
+        />
 
         <View style={styles.resultContainer}>
           <Typography variant="t2" weight="medium" color={Color.gray[900]}>
