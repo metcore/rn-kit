@@ -157,6 +157,16 @@ import Package from './icons/Package';
 import StickyNoteTextSquare from './icons/StickyNoteTextSquare';
 import TriangleExclamationTime from './icons/TriangleExclamationTime';
 import UserEditTriangleExclamation from './icons/UserEditTriangleExclamation';
+import BookMark from './icons/BookMark';
+import CalendarClockFillBulk from './icons/CalendarClockFillBulk';
+import ClockSquareFill from './icons/ClockSquareFill';
+import FileListPlusFillBulk from './icons/FileListPlusFillBulk';
+import FuelFill from './icons/FuelFill';
+import PackageToolFill from './icons/PackageToolFill';
+import PaySlipFill from './icons/PaySlipFill';
+import StopWatchCheckFillBulk from './icons/StopWartchCheckFillBulk';
+import UserClockFillBulk from './icons/UserClockFillBulk';
+import UsersFillBulk from './icons/UsersFillBulk';
 
 const icons: Record<
   IconNameProps,
@@ -318,6 +328,16 @@ const icons: Record<
   'sticky-note-text-square': StickyNoteTextSquare,
   'triangle-exclamation-time': TriangleExclamationTime,
   'user-edit-triangle-exclamation': UserEditTriangleExclamation,
+  'bookmark': BookMark,
+  'calendar-clock-fill-bulk': CalendarClockFillBulk,
+  'clock-square-fill': ClockSquareFill,
+  'file-list-plus-fill-bulk': FileListPlusFillBulk,
+  'fuel-fill': FuelFill,
+  'package-tool-fill': PackageToolFill,
+  'payslip-fill': PaySlipFill,
+  'stopwatch-check-fill-bulk': StopWatchCheckFillBulk,
+  'user-clock-fill-bulk': UserClockFillBulk,
+  'users-fill-bulk': UsersFillBulk,
 };
 
 const Icon: React.FC<IconProps> = ({

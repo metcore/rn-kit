@@ -158,6 +158,16 @@ export type IconNameProps =
   | 'sticky-note-text-square'
   | 'triangle-exclamation-time'
   | 'user-edit-triangle-exclamation'
+  | 'bookmark'
+  | 'calendar-clock-fill-bulk'
+  | 'clock-square-fill'
+  | 'fuel-fill'
+  | 'package-tool-fill'
+  | 'payslip-fill'
+  | 'stopwatch-check-fill-bulk'
+  | 'user-clock-fill-bulk'
+  | 'users-fill-bulk'
+  | 'file-list-plus-fill-bulk'
   | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;
