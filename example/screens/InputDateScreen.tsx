@@ -38,12 +38,11 @@ export default function InputDateScreen() {
       />
 
       <InputDate
+        hasClear
         label="Single Date Custom Value"
         placeholder="Select Date"
         value={dateFormatter({ date: singleDate })}
         datePickerProps={{
-          isConfirmButtonDisabled: true,
-          maxDate: new Date(),
           value: {
             date: singleDate,
           },
