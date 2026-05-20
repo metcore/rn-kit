@@ -146,6 +146,16 @@ const icons: IconNameProps[] = [
   'sticky-note-text-square',
   'triangle-exclamation-time',
   'user-edit-triangle-exclamation',
+  'bookmark',
+  'calendar-clock-fill-bulk',
+  'clock-square-fill',
+  'file-list-plus-fill-bulk',
+  'fuel-fill',
+  'package-tool-fill',
+  'payslip-fill',
+  'stopwatch-check-fill-bulk',
+  'user-clock-fill-bulk',
+  'users-fill-bulk',
 ];
 
 export default function IconScreen() {
