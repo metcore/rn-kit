@@ -7,9 +7,11 @@ import {
   type DateRangeProps,
 } from '@herca/rn-kit';
 import { useState, useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import type { FormattedDateRangeProps } from '../Calendar/CalendarPropsType';
 import { dateFormatter } from '../function/dateFormatter';
+import { layouting } from '../styles/layouting';
+import { spacing } from '../styles/spacing';
 
 type DatePickerProps = React.ComponentProps<typeof DatePicker>;
 type DatePickerPropsWithoutOnChange = Omit<
@@ -28,6 +30,7 @@ interface BaseProps {
   onDateChange?: (value: DateRangeProps) => void;
   mode?: CalendarModeType;
   language?: 'en' | 'id';
+  hasClear?: boolean;
 }
 
 type SingleModeProps = BaseProps & {
@@ -54,6 +57,7 @@ export default function InputDate({
   onDateChange,
   mode = 'single',
   language,
+  hasClear,
   ...props
 }: Props) {
   const [isDatePickerOpen, setSelectOpen] = useState<boolean>(false);
@@ -161,20 +165,52 @@ export default function InputDate({
       <View style={styles.wrapper}>
         {/* sart date */}
         <Pressable
-          style={[styles.pickerTrigger, value !== '' && styles.hasValue]}
+          style={[
+            styles.pickerTrigger,
+            (value || dateValue) && styles.hasValue,
+          ]}
           onPress={handleOpenSelect}
           {...props}
         >
           <Typography variant="t2" color={Color.gray[900]} weight="medium">
             {startDate() ?? placeholder}
           </Typography>
-          <Icon name="ArrowDown" size={14} color={Color.gray[700]} />
+          <View style={[layouting.flex.rowCenter, spacing.gap[8]]}>
+            {hasClear && (value || dateValue) && (
+              <TouchableOpacity
+                style={{
+                  backgroundColor: Color.gray[600],
+                  borderRadius: 999,
+                  padding: 3,
+                }}
+                onPress={() => {
+                  onDateChange?.({
+                    date: null,
+                    startDate: null,
+                    endDate: null,
+                  });
+
+                  setDateValue({
+                    date: undefined,
+                    endDate: undefined,
+                    startDate: undefined,
+                  });
+                }}
+              >
+                <Icon name="times-new" size={14} color={'white'} />
+              </TouchableOpacity>
+            )}
+            <Icon name="ArrowDown" size={14} color={Color.gray[700]} />
+          </View>
         </Pressable>
 
         {/* end date */}
         {mode === 'range' && (
           <Pressable
-            style={[styles.pickerTrigger, value !== '' && styles.hasValue]}
+            style={[
+              styles.pickerTrigger,
+              (value || dateValue) && styles.hasValue,
+            ]}
             onPress={handleOpenSelect}
             {...props}
           >
