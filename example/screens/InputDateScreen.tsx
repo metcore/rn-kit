@@ -42,6 +42,8 @@ export default function InputDateScreen() {
         placeholder="Select Date"
         value={dateFormatter({ date: singleDate })}
         datePickerProps={{
+          isConfirmButtonDisabled: true,
+          maxDate: new Date(),
           value: {
             date: singleDate,
           },
