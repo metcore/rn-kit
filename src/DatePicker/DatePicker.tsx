@@ -24,6 +24,8 @@ interface DatePickerProps extends CalendarTypes {
   value?: DateRangeProps;
   confirmLabel?: string;
   cancelLabel?: string;
+  isCancelButtonDisabled?: boolean;
+  isConfirmButtonDisabled?: boolean;
 }
 
 export default function DatePicker({
@@ -38,6 +40,8 @@ export default function DatePicker({
   value,
   confirmLabel = 'Terapkan',
   cancelLabel = 'Batalkan',
+  isCancelButtonDisabled = false,
+  isConfirmButtonDisabled = false,
   ...calendarProps
 }: DatePickerProps) {
   const [errorValidate, setErrorValidate] = useState<boolean>(false);
@@ -142,6 +146,7 @@ export default function DatePicker({
                 title={cancelLabel}
                 color="primary"
                 onPress={handleOnPressCancelButton}
+                disabled={isCancelButtonDisabled}
               />
             </View>
             <View style={styles.buttonWrapper}>
@@ -149,6 +154,7 @@ export default function DatePicker({
                 title={confirmLabel}
                 color="primary"
                 onPress={handleOnPressSubmitButton}
+                disabled={isConfirmButtonDisabled}
               />
             </View>
           </View>
