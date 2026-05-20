@@ -65,6 +65,7 @@ function MyForm() {
 | `onDateChange`      | `(value: DateRangeProps) => void` | `undefined`        | Callback ketika tanggal berubah                    |
 | `mode`              | `'single' \| 'range'`             | `'single'`         | Mode pemilihan tanggal                             |
 | `language`          | `'en' \| 'id'`                    | `undefined`        | Bahasa untuk format tanggal                        |
+| `hasClear`          | `boolean`                         | `false`            | Nilai boolean untuk menampilkan opsi hapus tanggal |
 
 ### Single Mode Specific Props
 
