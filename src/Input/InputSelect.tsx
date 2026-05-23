@@ -89,7 +89,7 @@ export default function InputSelect({
           style={[
             styles.select,
             hasError && border.color.danger[300],
-            internalValue !== '' && !hasError && border.color.primary[300],
+            internalValue && !hasError && border.color.primary[300],
           ]}
           onPress={handleOpenSelect}
           {...props}
