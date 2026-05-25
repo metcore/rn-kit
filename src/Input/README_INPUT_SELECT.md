@@ -69,6 +69,8 @@ export default function Example() {
 | `subtitle`      | `string`                            | `undefined`        | Subtitle tambahan di bawah value                     |
 | `badge`         | `{ value: string; color: Variant }` | `undefined`        | Badge yang ditampilkan di samping value              |
 | `useModal`      | `boolean`                           | `true`             | Gunakan modal untuk menampilkan opsi                 |
+| `required`      | `boolean`                           | `false`            | Untuk menampilkan indikator bintang di label         |
+| `labelColor`    | `stirng`                            | `true`             | Untuk mengubah warna label                           |
 
 ### Pressable Props
 

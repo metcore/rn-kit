@@ -2,6 +2,7 @@ import {
   Badge,
   Color,
   Icon,
+  LabelForm,
   Select,
   Typography,
   type ChipOptionProps,
@@ -18,6 +19,8 @@ type SelectProps = React.ComponentProps<typeof Select>;
 type SelectPropsWithoutData = Omit<SelectProps, 'data'>;
 
 interface Props extends React.ComponentProps<typeof Pressable> {
+  required?: boolean;
+  labelColor?: string;
   label: string;
   placeholder?: string;
   options?: ChipOptionProps[];
@@ -54,6 +57,8 @@ export default function InputSelect({
   subtitle,
   badge,
   useModal = true,
+  required,
+  labelColor,
   ...props
 }: Props) {
   const [isSelectOpen, setSelectOpen] = useState<boolean>(false);
@@ -80,9 +85,7 @@ export default function InputSelect({
 
   return (
     <View style={spacing.gap[4]}>
-      <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
-        {label}
-      </Typography>
+      <LabelForm title={label} required={required} color={labelColor} />
 
       <View style={[spacing.gap[4], layouting.flex.grow]}>
         <Pressable

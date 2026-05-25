@@ -195,3 +195,5 @@ export default function App() {
 - user-clock-fill-bulk
 - users-fill-bulk
 - file-list-plus-fill-bulk
+- play-fill
+- ban-outline
