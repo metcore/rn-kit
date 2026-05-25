@@ -168,6 +168,7 @@ import WarningLetter from './icons/WarningLetter';
 import WhatsAppFill from './icons/WhatsappFill';
 import XCircle from './icons/XCircle';
 import type { IconNameProps, IconProps } from './type';
+import BanOutline from './icons/BanOutline';
 
 const icons: Record<
   IconNameProps,
@@ -340,6 +341,7 @@ const icons: Record<
   'user-clock-fill-bulk': UserClockFillBulk,
   'play-fill': PlayFill,
   'users-fill-bulk': UsersFillBulk,
+  'ban-outline': BanOutline,
 };
 
 const Icon: React.FC<IconProps> = ({

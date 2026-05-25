@@ -196,3 +196,4 @@ export default function App() {
 - users-fill-bulk
 - file-list-plus-fill-bulk
 - play-fill
+- ban-outline
