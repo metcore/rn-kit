@@ -168,6 +168,8 @@ export type IconNameProps =
   | 'user-clock-fill-bulk'
   | 'users-fill-bulk'
   | 'file-list-plus-fill-bulk'
+  | 'play-fill'
+  | 'ban-outline'
   | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;

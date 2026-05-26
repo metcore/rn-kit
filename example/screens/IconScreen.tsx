@@ -156,6 +156,7 @@ const icons: IconNameProps[] = [
   'stopwatch-check-fill-bulk',
   'user-clock-fill-bulk',
   'users-fill-bulk',
+  'play-fill',
 ];
 
 export default function IconScreen() {
