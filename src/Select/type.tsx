@@ -34,4 +34,5 @@ export interface SelectProps {
   footer?: React.ComponentType<any> | React.ReactElement | null | undefined;
   header?: React.ComponentType<any> | React.ReactElement | null | undefined;
   searchValue?: string;
+  onSelectedChange?: (value: ChipOptionProps[]) => void;
 }

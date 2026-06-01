@@ -34,14 +34,11 @@ export default function Select({
   submitBtnLabel,
   searchValue,
   value,
+  onSelectedChange,
 }: SelectProps) {
-  // const [isOpenSelect, setIsOpenSelect] = useState<boolean | undefined>(false);
   const [selected, setSelected] = useState<ChipSelectedProps>();
   const [searchQuery, setSearchQuery] = useState<string>(searchValue || '');
   const { show } = useToast();
-  // useEffect(() => {
-  //   setIsOpenSelect(isOpen);
-  // }, [isOpen]);
 
   const handleOnCloseBottom = useCallback(
     (val: boolean) => {
@@ -61,7 +58,7 @@ export default function Select({
     return true;
   };
 
-  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+  const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleOnSearch = (val: string) => {
     setSearchQuery(val);
@@ -78,10 +75,17 @@ export default function Select({
   };
 
   useEffect(() => {
-    if (value !== undefined) {
+    if (!multiple && value !== undefined) {
       setSelected(value);
     }
-  }, [value]);
+  }, [value, multiple]);
+
+  useEffect(() => {
+    if (multiple && isOpen) {
+      setSelected(value ?? []);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   useEffect(() => {
     if (searchValue !== undefined) {
@@ -140,6 +144,13 @@ export default function Select({
               header={header}
               onSelect={(item) => {
                 setSelected(item);
+                console.log('selected item', item);
+                const selectedData = data.filter(
+                  (option) => Array.isArray(item) && item.includes(option.value)
+                );
+
+                onSelectedChange?.(selectedData);
+
                 if (!multiple && required) {
                   onSubmit?.(item);
                   handleOnCloseBottom(false);

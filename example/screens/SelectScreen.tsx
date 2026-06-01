@@ -87,6 +87,9 @@ export default function SelectScreen() {
     useState<boolean>(false);
   const [isProductFetching, setIsProductFetching] = useState<boolean>(false);
   const [products, setProducts] = useState<any[]>([]);
+  const [temponaryValue, setTemponaryValue] = useState<ChipOptionProps[]>([]);
+
+  console.log({ temponaryValue });
 
   const handleSubmitSelectCustom = (val: ChipSelectedProps) => {
     setSubmitValue(val);
@@ -241,6 +244,7 @@ export default function SelectScreen() {
         onClose={() => setIsOpenSelectCustom(false)}
         data={DATA}
         multiple
+        onSelectedChange={(val) => setTemponaryValue(val)}
         renderItem={renderItem}
         onSubmit={handleSubmitSelectCustom}
       />
