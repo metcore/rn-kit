@@ -72,6 +72,7 @@ export interface UploadConfig {
   onError?: (fileItem: FileItem, error: string) => void;
   errorMessage?: string;
   onUploadSuccess?: (results: UploadedFile<unknown>[]) => void;
+  onUploading?: (isUploading?: boolean) => void;
 }
 
 export type FileItemExtras = {

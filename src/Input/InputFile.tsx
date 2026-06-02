@@ -59,6 +59,7 @@ export default function InputFile({
 
   const uploadAndTrack = async (newFiles: FileItem[], config: UploadConfig) => {
     setIsOpenBottomSheetTypeFile(false);
+    uploadConfig?.onUploading?.(true);
 
     const withLoading = newFiles.map((f) => ({ ...f, uploading: true }));
     setFiles((prev) => [...prev, ...withLoading]);
@@ -92,6 +93,7 @@ export default function InputFile({
     const newUploaded = [...uploadedFiles, ...results];
     setUploadedFiles(newUploaded);
     uploadConfig?.onUploadSuccess?.(newUploaded);
+    uploadConfig?.onUploading?.(false);
     onChange?.(updatedFiles);
   };
 
@@ -307,6 +309,7 @@ export default function InputFile({
     // handle upload
     if (uploadConfig) {
       setIsOpenBottomSheetTypeFile(false);
+      uploadConfig?.onUploading?.(true);
 
       const withLoading = files.map((f, i) =>
         i === index ? { ...replacedFile, uploading: true } : f
@@ -336,6 +339,10 @@ export default function InputFile({
 
       setFiles(updatedFiles);
       onChange?.(updatedFiles);
+      uploadConfig?.onUploading?.(false);
+      uploadConfig?.onUploadSuccess?.(
+        updatedFiles as unknown as UploadedFile<unknown>[]
+      );
     } else {
       const updatedFiles = files.map((f, i) =>
         i === index ? replacedFile : f
