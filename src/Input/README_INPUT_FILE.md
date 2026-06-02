@@ -132,18 +132,19 @@ export default function ExampleScreen() {
 
 ### Base Props (Tersedia di Semua Variant)
 
-| Prop                | Tipe                       | Default                                          | Deskripsi                                                                                                                          |
-| ------------------- | -------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `title`             | `string`                   | `"Upload File"`                                  | Judul input file.                                                                                                                  |
-| `accept`            | `string[]`                 | `["application/pdf", "image/jpeg", "image/png"]` | Tipe MIME file yang diizinkan.                                                                                                     |
-| `multiple`          | `boolean`                  | `false`                                          | Jika `true`, memungkinkan memilih banyak file sekaligus.                                                                           |
-| `value`             | `any[]`                    | `[]`                                             | Daftar file yang sudah dipilih (state dari parent).                                                                                |
-| `onChange`          | `(files: any[]) => void`   | `undefined`                                      | Callback saat daftar file berubah (add, replace, delete). Menerima `FileItem[]` (dengan `uploadedData` jika `uploadConfig` diset). |
-| `btnChooseFileText` | `string`                   | `"Choose File"`                                  | Label tombol untuk memilih file.                                                                                                   |
-| `uploadConfig`      | `UploadConfig`             | `undefined`                                      | Konfigurasi upload otomatis ke server. Jika tidak diset, file hanya disimpan di local state.                                       |
-| `modalPickFileText` | `ModalPickFileText`        | `undefined`                                      | Teks kustom pada modal pemilihan sumber file.                                                                                      |
-| `modalDeleteText`   | `ModalOption & confirmBtn` | `undefined`                                      | Teks kustom pada modal konfirmasi hapus file.                                                                                      |
-| `hasError`          | `boolean`                  | `false`                                          | Menampilkan state error pada input.                                                                                                |
+| Prop                | Tipe                              | Default                                          | Deskripsi                                                                                                                          |
+| ------------------- | --------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `title`             | `string`                          | `"Upload File"`                                  | Judul input file.                                                                                                                  |
+| `accept`            | `string[]`                        | `["application/pdf", "image/jpeg", "image/png"]` | Tipe MIME file yang diizinkan.                                                                                                     |
+| `multiple`          | `boolean`                         | `false`                                          | Jika `true`, memungkinkan memilih banyak file sekaligus.                                                                           |
+| `value`             | `any[]`                           | `[]`                                             | Daftar file yang sudah dipilih (state dari parent).                                                                                |
+| `onChange`          | `(files: any[]) => void`          | `undefined`                                      | Callback saat daftar file berubah (add, replace, delete). Menerima `FileItem[]` (dengan `uploadedData` jika `uploadConfig` diset). |
+| `btnChooseFileText` | `string`                          | `"Choose File"`                                  | Label tombol untuk memilih file.                                                                                                   |
+| `uploadConfig`      | `UploadConfig`                    | `undefined`                                      | Konfigurasi upload otomatis ke server. Jika tidak diset, file hanya disimpan di local state.                                       |
+| `modalPickFileText` | `ModalPickFileText`               | `undefined`                                      | Teks kustom pada modal pemilihan sumber file.                                                                                      |
+| `modalDeleteText`   | `ModalOption & confirmBtn`        | `undefined`                                      | Teks kustom pada modal konfirmasi hapus file.                                                                                      |
+| `hasError`          | `boolean`                         | `false`                                          | Menampilkan state error pada input.                                                                                                |
+| `onUploading`       | `(isUploading?: boolean) => void` | `undefiend`                                      | Expose value uploading ke parent                                                                                                   |
 
 ### Default Variant Props (`variant?: 'default'`)
 

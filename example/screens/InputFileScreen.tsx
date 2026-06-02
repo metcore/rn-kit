@@ -31,6 +31,7 @@ export default function InputFileScreen() {
 
   const [attachments, setAttachments] = useState<FileItem[]>(onlineFiles);
   const [hasError, setHasError] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const [demoUploadValue, setDemoUploadValue] = useState<
     UploadedFile<any>[] | null
@@ -105,6 +106,9 @@ export default function InputFileScreen() {
             url: 'https://stg.media.herca.id/api/upload',
             method: 'POST',
             fieldName: 'file',
+            onUploading: (uploading) => {
+              setIsUploading(uploading ?? false);
+            },
             headers: {
               'X-API-KEY': '19ee5d65cf71b64e5ed168dbf4817e89bc9024b90c499557',
             },
@@ -169,7 +173,13 @@ export default function InputFileScreen() {
           </Typography>
         </View>
         <Footer style={styles.footer}>
-          <Button title="Simpan" onPress={validate} color="primary" />
+          <Button
+            title="Simpan"
+            onPress={validate}
+            color="primary"
+            loading={isUploading}
+            disabled={isUploading}
+          />
         </Footer>
       </Container>
     </ScrollView>
