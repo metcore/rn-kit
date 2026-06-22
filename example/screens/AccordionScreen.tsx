@@ -98,6 +98,65 @@ export default function AccordionScreen() {
             </View>
           </View>
         </AccordionItem>
+
+        <AccordionItem>
+          <TouchableOpacity onPress={() => setIsOpenSub(!isOpenSub)}>
+            <Typography variant="t1">Show more</Typography>
+          </TouchableOpacity>
+          <Accordion isOpen={isOpenSub}>
+            <AccordionItem>
+              <Typography variant="t2">Item</Typography>
+            </AccordionItem>
+            <AccordionItem>
+              <Typography variant="t2">Quantity</Typography>
+            </AccordionItem>
+          </Accordion>
+        </AccordionItem>
+        <AccordionItem>
+          <View style={{ gap: 12 }}>
+            <View style={styles.containerAccordionItem}>
+              <View>
+                <Typography
+                  weight="semibold"
+                  variant="t2"
+                  color={Color.gray[900]}
+                >
+                  Ban Bocor
+                </Typography>
+                <Typography
+                  weight="medium"
+                  variant="t3"
+                  color={Color.gray[700]}
+                >
+                  Ban Bocor
+                </Typography>
+              </View>
+              <View>
+                <Typography
+                  weight="regular"
+                  variant="t3"
+                  color={Color.gray[700]}
+                >
+                  2.00x
+                </Typography>
+              </View>
+            </View>
+            <View style={styles.containerAccordionItem}>
+              <View>
+                <Badge value="0.00%" size="small" color="danger" />
+              </View>
+              <View>
+                <Typography
+                  weight="semibold"
+                  variant="t2"
+                  color={Color.gray[900]}
+                >
+                  2.00x
+                </Typography>
+              </View>
+            </View>
+          </View>
+        </AccordionItem>
         <AccordionItem>
           <TouchableOpacity onPress={() => setIsOpenSub(!isOpenSub)}>
             <Typography variant="t1">Show more</Typography>

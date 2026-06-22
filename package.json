@@ -1,6 +1,6 @@
 {
   "name": "@herca/rn-kit",
-  "version": "0.1.108",
+  "version": "0.1.111",
   "description": "React Native UI Kit",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -86,11 +86,13 @@
     "react-native-builder-bob": "^0.40.8",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "react-native-safe-area-context": "^5.5.1"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-safe-area-context": "^5.5.1"
   },
   "dependencies": {
     "@react-native-documents/picker": "^10.1.6",
@@ -101,7 +103,6 @@
     "react-native-image-picker": "^8.2.1",
     "react-native-pager-view": "^6.8.1",
     "react-native-pdf": "^6.7.7",
-    "react-native-safe-area-context": "^5.5.1",
     "react-native-screens": "^4.11.1",
     "react-native-signature-canvas": "^5.0.1",
     "react-native-svg": "^15.12.0",
