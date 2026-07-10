@@ -144,7 +144,6 @@ export default function Select({
               header={header}
               onSelect={(item) => {
                 setSelected(item);
-                console.log('selected item', item);
                 const selectedData = data.filter(
                   (option) => Array.isArray(item) && item.includes(option.value)
                 );
