@@ -70,4 +70,6 @@ export interface CalendarTypes {
   initialDate?: Date;
   dateStart?: string | null;
   dateEnd?: string | null;
+  onMonthChange?: (month: number) => void;
+  onYearChange?: (year: number) => void;
 }
