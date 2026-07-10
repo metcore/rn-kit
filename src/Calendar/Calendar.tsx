@@ -48,6 +48,8 @@ const Calendar = ({
   initialDate = new Date(),
   dateStart,
   dateEnd,
+  onMonthChange,
+  onYearChange,
 }: CalendarTypes) => {
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -55,8 +57,16 @@ const Calendar = ({
 
   // HYBRID LOGIC: Pakai props jika ada, fallback ke internal state
   const isControlled = dateStart !== undefined || dateEnd !== undefined;
-  const internalStartDate = isControlled ? (dateStart ?? null) : startDate;
-  const internalEndDate = isControlled ? (dateEnd ?? null) : endDate;
+  const internalStartDate = isControlled
+    ? dateStart
+      ? new Date(dateStart)
+      : null
+    : startDate;
+  const internalEndDate = isControlled
+    ? dateEnd
+      ? new Date(dateEnd)
+      : null
+    : endDate;
 
   const getDaysInMonth = (month: number, year: number) =>
     new Date(year, month + 1, 0).getDate();
@@ -127,25 +137,45 @@ const Calendar = ({
 
   const goToNextMonth = () => {
     const newDate = new Date(currentDate);
+    const prevYear = newDate.getFullYear();
+
     newDate.setMonth(newDate.getMonth() + 1);
+    const newYear = newDate.getFullYear();
+
+    if (prevYear !== newYear) {
+      onYearChange?.(newYear);
+    }
+
+    onMonthChange?.(newDate.getMonth() + 1);
     setCurrentDate(newDate);
   };
 
   const goToPrevMonth = () => {
     const newDate = new Date(currentDate);
+    const prevYear = newDate.getFullYear();
+
     newDate.setMonth(newDate.getMonth() - 1);
+    const newYear = newDate.getFullYear();
+
+    if (prevYear !== newYear) {
+      onYearChange?.(newYear);
+    }
+
+    onMonthChange?.(newDate.getMonth() + 1);
     setCurrentDate(newDate);
   };
 
   const handleOnSelectYearDropdown = (value: string | number) => {
     const newDate = new Date(currentDate);
     newDate.setFullYear(Number(value));
+    onYearChange?.(Number(value));
     setCurrentDate(newDate);
   };
 
   const handleOnSelectMonthDropdown = (value: string | number) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(value as number);
+    onMonthChange?.(Number(value) + 1);
     setCurrentDate(newDate);
   };
 
@@ -205,8 +235,8 @@ const Calendar = ({
   const setTextColor = (date: Date, keyWeek: WeekDay) => {
     const key = formatDateKey(date);
     const mark = markedDates[key];
-    const isStart = isSameDate(startDate, date);
-    const isEnd = isSameDate(endDate, date);
+    const isStart = isSameDate(internalStartDate, date);
+    const isEnd = isSameDate(internalEndDate, date);
 
     if (disabledDays && disabledDays[keyWeek]) {
       return typeof disabledDays[keyWeek] === 'object' &&
@@ -258,11 +288,10 @@ const Calendar = ({
         }
       }
 
-      // Always call onChange
-      if (!startDate || (startDate && endDate)) {
+      if (!internalStartDate || (internalStartDate && internalEndDate)) {
         onChange?.({ startDate: selected, endDate: null });
-      } else if (selected >= startDate) {
-        onChange?.({ startDate: startDate as Date, endDate: selected });
+      } else if (selected >= internalStartDate) {
+        onChange?.({ startDate: internalStartDate as Date, endDate: selected });
       } else {
         onChange?.({ startDate: selected, endDate: null });
       }

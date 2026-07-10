@@ -4,6 +4,7 @@ import {
   Card,
   Color,
   Container,
+  dateFormatter,
   Typography,
   type DateRangeProps,
 } from '@herca/rn-kit';
@@ -12,8 +13,16 @@ import { ScrollView } from 'react-native';
 import type { DateProps } from '../../src/Calendar/CalendarPropsType';
 
 export default function CalendarScreen() {
-  const [startDate, setStartDate] = useState<string | null | undefined>();
-  const [endDate, setEndDate] = useState<string | null | undefined>();
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  const [startDate, setStartDate] = useState<string | null | undefined>(
+    dateFormatter({ date: firstDayOfMonth })
+  );
+  const [endDate, setEndDate] = useState<string | null | undefined>(
+    dateFormatter({ date: lastDayOfMonth })
+  );
 
   const formatDate = (date: DateProps) => {
     if (!date) return null;
@@ -24,9 +33,13 @@ export default function CalendarScreen() {
   };
 
   const hanOnChange = (obj: DateRangeProps) => {
-    setEndDate(formatDate(obj.endDate));
     setStartDate(formatDate(obj.startDate));
+    setEndDate(formatDate(obj.endDate));
+
+    console.log({ obj });
   };
+
+  console.log({ startDate, endDate });
   return (
     <Container>
       <Button
@@ -43,6 +56,9 @@ export default function CalendarScreen() {
             mode="range"
             dateStart={startDate}
             dateEnd={endDate}
+            onChange={hanOnChange}
+            onMonthChange={(month) => console.log({ month })}
+            onYearChange={(year) => console.log({ year })}
             disabledDays={{
               0: {
                 backgroundColor: Color.danger[50],
@@ -80,13 +96,6 @@ export default function CalendarScreen() {
                 selected: true,
                 textColor: Color.base.white100,
               },
-            }}
-            selectedBackgroundColor={Color.primary[1000]}
-            selectedTextColor={Color.success[300]}
-            disabledBackgroundColor={Color.base.white100}
-            disabledTextColor={Color.gray[400]}
-            onChange={(obj: DateRangeProps) => {
-              hanOnChange(obj);
             }}
           />
         </Card>
