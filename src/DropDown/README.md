@@ -26,6 +26,7 @@ Serta modul standar React Native: `Modal`, `ScrollView`, dll. Tidak memerlukan l
 | `renderItem`   | `React.ReactNode`                   | `undefined` | Elemen yang dipakai sebagai tombol di tiap item yang ada di dalam dropdown |
 | `width`        | `number`                            | `undefined` | Angka yang digunakan untuk mengatur lebar pembungkus list                  |
 | `value`        | `number \| string`                  | `undefined` | Props yang dapat memungkinkan state selected dari luar                     |
+| `testID`       | `string`                            | `undefined` | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-trigger`, `-modal`, dan `-option-{value}` (atau `-item-{index}` jika opsi tidak memiliki `value`) untuk tiap opsi.  |
 
 ### Struktur `ChipOptionProps`
 

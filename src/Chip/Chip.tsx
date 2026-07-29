@@ -7,6 +7,7 @@ import {
   type ChipValue,
 } from './type';
 import ChipItem from './ChipItem';
+import { getTestID } from '../helpers/getTestID';
 
 const Chip: React.FC<ChipProps> = ({
   options,
@@ -25,6 +26,7 @@ const Chip: React.FC<ChipProps> = ({
   onEndReached,
   footer,
   header,
+  testID,
 }) => {
   const isHorizontal = direction === 'horizontal';
   const [chipItemWidth, setChipItemWidth] = useState(0);
@@ -89,6 +91,7 @@ const Chip: React.FC<ChipProps> = ({
       renderItem={({ item }) => (
         <ChipItem
           item={item}
+          itemTestID={getTestID(testID, `option-${item.value}`)}
           isSelected={() => isSelected(item.value)}
           color={color}
           block={block}

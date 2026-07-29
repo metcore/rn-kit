@@ -43,6 +43,7 @@ export default function FAQSection() {
 | `isOpen`       | `boolean`                   | ❌    | `true`  | Menentukan apakah Accordion terbuka saat pertama kali dirender.                 |
 | `onCollapse`   | `(isOpen: boolean) => void` | ❌    | -       | Callback saat status terbuka/tutup berubah.                                     |
 | `variant`      | `'default' \| 'borderless'` | ❌    | -       | Opsi untuk menampilkan sebuah border di pembungkus accordion nya atau tidak     |
+| `testID`       | `string`                    | ❌    | -       | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-trigger` untuk header (belum ada suffix per-item pada `AccordionItem`).  |
 
 ### AccordionItem
 

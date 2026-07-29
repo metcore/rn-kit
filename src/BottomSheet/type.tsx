@@ -12,4 +12,5 @@ export interface BottomSheetProops {
   height?: BottomSheetHeighProps;
   pullBar?: React.ReactNode;
   footer?: React.ReactNode;
+  testID?: string;
 }

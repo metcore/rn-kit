@@ -5,6 +5,7 @@ import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Color from '../Color/Color';
 import { generateMonthOptions } from './helpers';
+import { getTestID } from '../helpers/getTestID';
 
 type PickerMode = 'single' | 'range' | 'multiple';
 
@@ -18,6 +19,7 @@ interface MonthPickerProps {
   title?: string;
   cancelLabel?: string;
   confirmLabel?: string;
+  testID?: string;
 }
 
 export default function MonthPicker({
@@ -28,6 +30,7 @@ export default function MonthPicker({
   cancelLabel = 'Batal',
   confirmLabel = 'pilih',
   title = 'Pilih Bulan',
+  testID,
 }: MonthPickerProps) {
   const [rangeValue, setRangeValue] = useState<{
     startDate: number | null;
@@ -91,12 +94,14 @@ export default function MonthPicker({
 
   return (
     <BottomSheet
+      testID={getTestID(testID, 'sheet')}
       isOpen={isOpen}
       onClose={onClose}
       footer={
         <View style={styles.containerBottomSheetFooter}>
           <View style={styles.flex1}>
             <Button
+              testID={getTestID(testID, 'cancel')}
               title={cancelLabel}
               variant="tertiary"
               size="medium"
@@ -106,6 +111,7 @@ export default function MonthPicker({
           </View>
           <View style={styles.flex1}>
             <Button
+              testID={getTestID(testID, 'confirm')}
               title={confirmLabel}
               color="primary"
               size="medium"
@@ -137,6 +143,7 @@ export default function MonthPicker({
             return (
               <View style={styles.yearItem}>
                 <TouchableOpacity
+                  testID={getTestID(testID, `option-${item.value}`)}
                   onPress={() => handleSelectMonth(item.value)}
                   style={[
                     styles.option,

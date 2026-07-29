@@ -46,3 +46,4 @@ export default function App() {
 | `onChange`       | `(selected: string[]) => void`                                         | Callback saat nilai pilihan berubah.                                         |                                                 |
 | `direction`      | \`'vertical'                                                           | 'horizontal'\` (opsional)                                                    | Arah tampilan checkbox (default: `'vertical'`). |
 | `color`          | `primary \| danger \| warning \| orange \| info \| success \| purple ` | warna background jika checkbox di centang                                    | Arah tampilan checkbox (default: `'vertical'`). |
+| `testID`         | `string`                                                               | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-option-{value}` untuk tiap item checkbox. | |

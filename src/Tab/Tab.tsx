@@ -10,6 +10,7 @@ import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
+import { getTestID } from '../helpers/getTestID';
 import type { TabItemProps, TabProps } from './type';
 
 const Tab: React.FC<TabProps> = ({
@@ -18,6 +19,7 @@ const Tab: React.FC<TabProps> = ({
   onChangeTab,
   renderHeader,
   refreshControl,
+  testID,
 }) => {
   const items = Children.toArray(children).filter(
     isValidElement
@@ -63,6 +65,7 @@ const Tab: React.FC<TabProps> = ({
               <React.Fragment key={index}>
                 {!item.props.renderTabName && (
                   <Pressable
+                    testID={getTestID(testID, `item-${index}`)}
                     style={[
                       styles.tabButton,
                       isActive ? styles.tabActive : styles.tabInactive,
@@ -81,7 +84,10 @@ const Tab: React.FC<TabProps> = ({
                 )}
 
                 {item.props.renderTabName && (
-                  <Pressable onPress={() => handleHeaderPress(index)}>
+                  <Pressable
+                    testID={getTestID(testID, `item-${index}`)}
+                    onPress={() => handleHeaderPress(index)}
+                  >
                     {item.props.renderTabName({
                       isActive,
                     })}
@@ -113,7 +119,11 @@ const Tab: React.FC<TabProps> = ({
         onPageSelected={(e) => updateActive(e.nativeEvent.position)}
       >
         {items.map((item, index) => (
-          <View key={index} collapsable={false}>
+          <View
+            key={index}
+            testID={getTestID(testID, `panel-${index}`)}
+            collapsable={false}
+          >
             {item?.props?.children}
           </View>
         ))}

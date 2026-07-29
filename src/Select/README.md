@@ -31,6 +31,7 @@ Komponen `Select` adalah komponen pemilihan data berbasis bottom sheet dengan du
 | `header`      | ReactElement                                    | –       | Jika ingin chip mempunyai header.                                                                                                                             |
 | `footer`      | ReactElement                                    | –       | Jika ingin chip mempunyai footer.                                                                                                                             |
 | `value`       | ChipSelectedProps                               | –       | Nilai pilihan yang dikontrol dari luar. Cocok untuk membuat komponen controlled. Akan mensinkronkan state internal selected dengan value setiap kali berubah. |
+| `testID`      | `string`                                        | –       | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-sheet`, `-search`, `-submit`, dan `-option-{value}` (via `Chip`). |
 
 ## 📌 Contoh Penggunaan
 

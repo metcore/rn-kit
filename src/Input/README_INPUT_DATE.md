@@ -66,6 +66,7 @@ function MyForm() {
 | `mode`              | `'single' \| 'range'`             | `'single'`         | Mode pemilihan tanggal                             |
 | `language`          | `'en' \| 'id'`                    | `undefined`        | Bahasa untuk format tanggal                        |
 | `hasClear`          | `boolean`                         | `false`            | Nilai boolean untuk menampilkan opsi hapus tanggal |
+| `testID`            | `string`                          | `undefined`        | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-trigger`, `-trigger-end` (mode range), `-label`, `-clear`. `testID` mentah diteruskan ke `DatePicker`, yang menurunkan suffix-nya sendiri: `-sheet`, `-cancel`, `-confirm`, `-error`. |
 
 ### Single Mode Specific Props
 

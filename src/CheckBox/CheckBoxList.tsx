@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Typography, Color, CheckBox } from '@herca/rn-kit';
+import Typography from '../Typography/Typography';
+import Color from '../Color/Color';
+import CheckBox from './CheckBox';
+import { getTestID } from '../helpers/getTestID';
 import type { Variant } from './type';
 
 interface CheckBoxListItem {
@@ -15,6 +18,7 @@ interface CheckBoxListProps {
   onChange: (selected: string[]) => void;
   direction?: 'vertical' | 'horizontal';
   color?: Variant;
+  testID?: string;
 }
 
 const CheckBoxList: React.FC<CheckBoxListProps> = ({
@@ -23,6 +27,7 @@ const CheckBoxList: React.FC<CheckBoxListProps> = ({
   onChange,
   direction = 'vertical',
   color = 'primary',
+  testID,
 }) => {
   const toggleValue = (value: string) => {
     const newSelected = selectedValues.includes(value)
@@ -42,6 +47,7 @@ const CheckBoxList: React.FC<CheckBoxListProps> = ({
       {items.map((item) => (
         <CheckBox
           key={item.value}
+          testID={getTestID(testID, `option-${item.value}`)}
           checked={selectedValues.includes(item.value)}
           color={color}
           onChange={() => toggleValue(item.value)}

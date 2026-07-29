@@ -19,6 +19,7 @@ interface Props {
   onDelete: (index: number) => void;
   variant?: 'default' | 'small';
   loading?: boolean;
+  testID?: string;
 }
 
 export default function ItemPreview({
@@ -29,12 +30,14 @@ export default function ItemPreview({
   onReplace,
   variant = 'default',
   loading = false,
+  testID,
 }: Props) {
   const Wrapper = variant === 'default' ? Card : View;
 
   return (
     <Wrapper>
       <TouchableOpacity
+        testID={testID}
         onPress={onPress}
         style={styles.containerPreview}
         activeOpacity={0.7}

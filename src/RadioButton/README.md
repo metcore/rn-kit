@@ -18,6 +18,7 @@ import RadioButton from './RadioButton';
 | `selectedValue`  | `string \| null`                           | `null`      | Nilai yang saat ini dipilih oleh pengguna.                               |
 | `onChange`       | `(value: string) => void`                  | -           | Fungsi callback saat item dipilih.                                       |
 | `direction`      | `'vertical' \| 'horizontal'`               | `'vertical'`| Arah layout dari item radio: vertikal atau horizontal.                   |
+| `testID`         | `string`                                   | -           | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-option-{value}` dan `-option-{value}-label` untuk tiap item.  |
 
 ## 📄 Tipe `RadioButtonItem`
 

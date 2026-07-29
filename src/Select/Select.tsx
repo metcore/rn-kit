@@ -14,6 +14,7 @@ import Loading from '../Loading/Loading';
 import { useToast } from '../Toast/ToastContext';
 import { type SelectProps } from './type';
 import { useRef } from 'react';
+import { getTestID } from '../helpers/getTestID';
 export default function Select({
   isOpen,
   data,
@@ -35,6 +36,7 @@ export default function Select({
   searchValue,
   value,
   onSelectedChange,
+  testID,
 }: SelectProps) {
   const [selected, setSelected] = useState<ChipSelectedProps>();
   const [searchQuery, setSearchQuery] = useState<string>(searchValue || '');
@@ -94,12 +96,14 @@ export default function Select({
   }, [searchValue]);
   return (
     <BottomSheet
+      testID={getTestID(testID, 'sheet')}
       onClose={(val: boolean) => handleOnCloseBottom(val)}
       isOpen={isOpen}
       height={height}
       footer={
         multiple ? (
           <Button
+            testID={getTestID(testID, 'submit')}
             title={submitBtnLabel ?? 'Lanjutkan'}
             color="primary"
             disabled={(!selected || selected.length === 0) && required}
@@ -115,6 +119,7 @@ export default function Select({
             accessible={false}
           >
             <Input
+              testID={getTestID(testID, 'search')}
               submitBehavior="submit"
               icon="Search"
               placeholder="Search"
@@ -128,6 +133,7 @@ export default function Select({
         ) : (
           <View style={styles.containerChip}>
             <Chip
+              testID={testID}
               options={data}
               direction="vertical"
               scrollable={true}

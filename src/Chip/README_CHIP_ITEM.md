@@ -17,6 +17,7 @@ Komponen `ChipItem` merupakan komponen presentasional dalam bentuk "chip" atau "
 | `isHorizontal` | `boolean`                                                                                        | `false`      | Jika true, maka `block` akan diabaikan agar chip tetap fleksibel secara horizontal |
 | `onPress`      | `(disabled: boolean, val: ChipOptionProps) => void`                                              | `undefined`  | Callback saat chip ditekan                                                         |
 | `onLayout`     | `(event: LayoutChangeEvent) => void`                                                             | `undefined`  | Callback ketika layout chip dihitung oleh React Native                             |
+| `itemTestID`   | `string`                                                                                         | `undefined`  | ID untuk automation testing (Maestro/Detox/Appium), diterapkan langsung ke `Pressable` chip tanpa suffix tambahan. Biasanya diisi otomatis oleh `Chip` sebagai `{testID}-option-{value}`. |
 
 ---
 

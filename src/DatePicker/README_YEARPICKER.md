@@ -18,6 +18,7 @@ Semua outputnya dibungkus dalam komponen **BottomSheet** untuk konsistensi UI.
 | `onClose`  | `() => void`                                                                          | `-`        | Dipanggil saat pengguna menutup picker atau menekan **Batal**.                       |
 | `onChange` | `(value: number[] \| { startDate: number \| null; endDate: number \| null }) => void` | `-`        | Dipanggil setelah pengguna menekan **Pilih**. Bentuk *value* bergantung pada `mode`. |
 | `mode`     | `'single' \| 'range' \| 'multiple'`                                                   | `'single'` | Menentukan mode pemilihan.                                                           |
+| `testID`   | `string`                                                                              | `-`        | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-sheet`, `-cancel`, `-confirm`, dan `-option-{year}` untuk tiap tahun. |
 
 ### Bentuk *value* `onChange`
 

@@ -21,6 +21,7 @@ Komponen `Chip` digunakan untuk menampilkan daftar pilihan seperti tag, filter, 
 | `renderItem`     | `(item, isSelected, isDisabled) => ReactNode`| –              | Jika ingin custom tampilan chip secara manual.                          |
 | `header`     | ReactElement| –              | Jika ingin chip mempunyai header.                          |
 | `footer`     | ReactElement| –              | Jika ingin chip mempunyai footer.                          |
+| `testID`     | `string` | –              | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-option-{value}` untuk tiap chip item (Chip sendiri tidak merender testID pada root).  |
 
 ---
 

@@ -135,6 +135,7 @@ export interface ChipItem {
   isHorizontal?: boolean;
   onPress?: (isDisabled: boolean, value: ChipOptionProps) => void;
   onLayout?: (event: LayoutChangeEvent) => void;
+  itemTestID?: string;
 }
 export interface ChipProps {
   options: ChipOptionProps[];
@@ -153,4 +154,5 @@ export interface ChipProps {
   refreshing?: boolean;
   footer?: React.ComponentType<any> | React.ReactElement | null | undefined;
   header?: React.ComponentType<any> | React.ReactElement | null | undefined;
+  testID?: string;
 }

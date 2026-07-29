@@ -5,6 +5,7 @@ import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Color from '../Color/Color';
 import Icon from '../Icon';
+import { getTestID } from '../helpers/getTestID';
 
 type PickerMode = 'single' | 'range' | 'multiple';
 
@@ -15,6 +16,7 @@ interface YearPickerProps {
     value: number[] | { startDate: number | null; endDate: number | null }
   ) => void;
   mode?: PickerMode;
+  testID?: string;
 }
 
 export default function YearPicker({
@@ -22,6 +24,7 @@ export default function YearPicker({
   onClose,
   onChange,
   mode = 'single',
+  testID,
 }: YearPickerProps) {
   const currentYear = new Date().getFullYear();
   const pageSize = 9;
@@ -103,12 +106,14 @@ export default function YearPicker({
 
   return (
     <BottomSheet
+      testID={getTestID(testID, 'sheet')}
       isOpen={isOpen}
       onClose={onClose}
       footer={
         <View style={styles.containerBottomSheetFooter}>
           <View style={styles.flex1}>
             <Button
+              testID={getTestID(testID, 'cancel')}
               title="Batal"
               variant="tertiary"
               size="medium"
@@ -118,6 +123,7 @@ export default function YearPicker({
           </View>
           <View style={styles.flex1}>
             <Button
+              testID={getTestID(testID, 'confirm')}
               title="Pilih"
               color="primary"
               size="medium"
@@ -162,6 +168,7 @@ export default function YearPicker({
             return (
               <View style={styles.yearItem}>
                 <TouchableOpacity
+                  testID={getTestID(testID, `option-${item}`)}
                   onPress={() => handleSelectYear(item)}
                   style={[
                     styles.option,

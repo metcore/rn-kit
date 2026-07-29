@@ -34,6 +34,7 @@ Komponen `Select` adalah komponen pemilihan data berbasis bottom sheet dengan du
 | `refreshing`       | `boolean`                                                | `false`     | Status untuk pull-to-refresh                                                                                                               |
 | `onEndReached`     | `() => void`                                             | -           | Dipanggil saat scroll mencapai akhir list                                                                                                  |
 | `onSelectedChange` | `onSelectedChange?: (value: ChipOptionProps[]) => void;` | -           | Dipanggil saat selected berubah                                                                                                             |
+| `testID`           | `string`                                                 | –           | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-sheet`, `-search`, `-submit`, dan `-option-{value}` (via `Chip`).          |
 
 ## 📌 Contoh Penggunaan
 

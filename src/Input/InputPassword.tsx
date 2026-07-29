@@ -11,17 +11,22 @@ interface InputPasswordProps extends TextInputProps {
   label?: string;
   hint?: string;
   hasError?: boolean;
+  testID?: string;
   onPressIconLeft?: () => void;
   onPressIconRight?: () => void;
 }
 
-export default function InputPassword(props: InputPasswordProps) {
+export default function InputPassword({
+  testID,
+  ...props
+}: InputPasswordProps) {
   const [secureText, setSecureText] = useState(true);
 
   return (
     <View>
       <Input
         {...props}
+        testID={testID}
         iconRight={secureText ? 'Eye' : 'EyeOpen'}
         secureTextEntry={secureText}
         onPressIconRight={() => setSecureText(!secureText)}
