@@ -24,4 +24,5 @@ export interface TabProps {
     RefreshControlProps,
     string | React.JSXElementConstructor<any>
   >;
+  testID?: string;
 }
