@@ -169,6 +169,8 @@ import WhatsAppFill from './icons/WhatsappFill';
 import XCircle from './icons/XCircle';
 import type { IconNameProps, IconProps } from './type';
 import BanOutline from './icons/BanOutline';
+import FileListStar from './icons/FileListStar';
+import TextFill from './icons/TextFill';
 
 const icons: Record<
   IconNameProps,
@@ -342,6 +344,8 @@ const icons: Record<
   'play-fill': PlayFill,
   'users-fill-bulk': UsersFillBulk,
   'ban-outline': BanOutline,
+  'file-list-star-fill': FileListStar,
+  'text-fill': TextFill,
 };
 
 const Icon: React.FC<IconProps> = ({
