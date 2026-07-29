@@ -3,6 +3,7 @@ import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import Icon, { type IconNameProps } from '../Icon';
+import { getTestID } from '../helpers/getTestID';
 
 type ToastColor =
   | 'default'
@@ -73,6 +74,7 @@ interface ToastProps {
   onClear?: (val: boolean) => void;
   onHide?: (val: boolean) => void;
   children?: React.ReactNode;
+  testID?: string;
 }
 const Toast = ({
   visible,
@@ -83,6 +85,7 @@ const Toast = ({
   icon = 'ExclamationMark',
   onClear,
   children,
+  testID,
 }: ToastProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const validColors: ToastColor[] = [
@@ -130,19 +133,25 @@ const Toast = ({
 
   return (
     <Animated.View
+      testID={testID}
       style={[styles.toast, baseContainerStyle, { opacity: fadeAnim }]}
     >
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <View style={styles.content}>
             <Icon name={icon} size={20} color={COLOR_MAP[safeColor].text} />
-            <Typography variant="t2" color={COLOR_MAP[safeColor].text}>
-              {message}
-            </Typography>
+            <View testID={getTestID(testID, 'message')}>
+              <Typography variant="t2" color={COLOR_MAP[safeColor].text}>
+                {message}
+              </Typography>
+            </View>
           </View>
           <View style={styles.actionWrapper}>
             {children}
-            <Pressable onPress={handlePressClearButton}>
+            <Pressable
+              testID={getTestID(testID, 'clear')}
+              onPress={handlePressClearButton}
+            >
               <Icon name="Times" size={10} color={COLOR_MAP[safeColor].text} />
             </Pressable>
           </View>

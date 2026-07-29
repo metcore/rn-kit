@@ -1,7 +1,10 @@
-import { Color, Icon, Typography } from '@herca/rn-kit';
+import Color from '../Color/Color';
+import Icon from '../Icon';
+import Typography from '../Typography/Typography';
 import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { Variant } from './type';
+import { getTestID } from '../helpers/getTestID';
 // import type { ColorVariantType } from '../Color/type';
 
 interface CheckBoxProps {
@@ -13,6 +16,7 @@ interface CheckBoxProps {
   renderLabel?: () => React.ReactNode;
   renderHint?: () => React.ReactNode;
   color?: Variant;
+  testID?: string;
 }
 
 const COLORS: Record<Variant, { background: string; borderColor: string }> = {
@@ -38,6 +42,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   renderLabel,
   renderHint,
   color = 'primary',
+  testID,
 }) => {
   const [value, setValue] = useState<boolean>(false);
   const { background, borderColor } = COLORS[color];
@@ -54,6 +59,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
 
   return (
     <Pressable
+      testID={testID}
       onPress={() => !disabled && handlePress()}
       style={styles.container}
     >
@@ -71,9 +77,11 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       </View>
       <View>
         {label && (
-          <Typography variant="t2" weight="medium" color={Color.gray[900]}>
-            {label}
-          </Typography>
+          <View testID={getTestID(testID, 'label')}>
+            <Typography variant="t2" weight="medium" color={Color.gray[900]}>
+              {label}
+            </Typography>
+          </View>
         )}
         {hint && (
           <Typography variant="t3" weight="medium" color={Color.gray[600]}>

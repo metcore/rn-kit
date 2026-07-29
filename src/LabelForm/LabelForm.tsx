@@ -6,15 +6,17 @@ interface Props {
   title: string;
   required?: boolean;
   color?: string;
+  testID?: string;
 }
 
 export default function LabelForm({
   title,
   required,
   color = Color.gray[900],
+  testID,
 }: Props) {
   return (
-    <View>
+    <View testID={testID}>
       <Typography variant="t2" weight="semibold" color={color}>
         {title}{' '}
         {required && (

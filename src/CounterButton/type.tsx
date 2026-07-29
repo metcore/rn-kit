@@ -6,4 +6,5 @@ export interface CounterButtonType {
   max?: number;
   disabledDecrease?: boolean;
   disabledIncrease?: boolean;
+  testID?: string;
 }
