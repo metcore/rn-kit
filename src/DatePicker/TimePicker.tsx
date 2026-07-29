@@ -13,6 +13,7 @@ import Button from '../Button/Button';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import AnimatedItem from './partials/AnimatedItem';
+import { getTestID } from '../helpers/getTestID';
 
 const ITEM_HEIGHT = 40;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -29,6 +30,7 @@ interface TimePickerProps {
   title?: string;
   confirmLabel?: string;
   cancelLabel?: string;
+  testID?: string;
 }
 
 const generateInfiniteData = (max: number, cycles: number) => {
@@ -44,6 +46,7 @@ export default function TimePickerWheel({
   title = 'Pilih Waktu',
   cancelLabel = 'Batal',
   confirmLabel = 'Pilih',
+  testID,
 }: TimePickerProps) {
   const [selectedHour, setSelectedHour] = useState<number>(value?.hour ?? 0);
   const [selectedMinute, setSelectedMinute] = useState<number>(
@@ -188,12 +191,16 @@ export default function TimePickerWheel({
 
   return (
     <BottomSheet
+      // testID typing lands in Task 7 (BottomSheetProops); forwarded now so
+      // the sheet resolves the id once that type is updated.
+      {...({ testID: getTestID(testID, 'sheet') } as any)}
       isOpen={isOpen}
       onClose={onClose}
       footer={
         <View style={styles.footer}>
           <View style={styles.flex1}>
             <Button
+              testID={getTestID(testID, 'cancel')}
               title={cancelLabel}
               variant="tertiary"
               onPress={onClose}
@@ -203,6 +210,7 @@ export default function TimePickerWheel({
           </View>
           <View style={styles.flex1}>
             <Button
+              testID={getTestID(testID, 'confirm')}
               title={confirmLabel}
               onPress={handleSubmit}
               color="primary"
@@ -232,6 +240,7 @@ export default function TimePickerWheel({
           {/* Hour Picker */}
           <View style={styles.pickerColumn}>
             <Animated.FlatList
+              testID={getTestID(testID, 'hour')}
               ref={hourRef}
               data={hours}
               renderItem={renderHourItem}
@@ -258,6 +267,7 @@ export default function TimePickerWheel({
           {/* Minute Picker */}
           <View style={styles.pickerColumn}>
             <Animated.FlatList
+              testID={getTestID(testID, 'minute')}
               ref={minuteRef}
               data={minutes}
               renderItem={renderMinuteItem}
