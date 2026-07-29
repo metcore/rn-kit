@@ -170,6 +170,8 @@ export type IconNameProps =
   | 'file-list-plus-fill-bulk'
   | 'play-fill'
   | 'ban-outline'
+  | 'file-list-star-fill'
+  | 'text-fill'
   | 'cube-scan';
 export interface IconProps {
   name: IconNameProps;

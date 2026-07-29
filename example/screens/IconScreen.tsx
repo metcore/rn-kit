@@ -157,6 +157,8 @@ const icons: IconNameProps[] = [
   'user-clock-fill-bulk',
   'users-fill-bulk',
   'play-fill',
+  'file-list-star-fill',
+  'text-fill',
 ];
 
 export default function IconScreen() {
