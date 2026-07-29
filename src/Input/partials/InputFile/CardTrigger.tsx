@@ -13,6 +13,7 @@ interface Props {
   onPress?: () => void;
   hasError?: boolean;
   hint?: string;
+  testID?: string;
 }
 
 export default function CardTrigger({
@@ -22,6 +23,7 @@ export default function CardTrigger({
   onPress,
   hint,
   hasError,
+  testID,
 }: Props) {
   return (
     <Card
@@ -54,6 +56,7 @@ export default function CardTrigger({
           </Typography>
         </View>
         <Button
+          testID={testID}
           color="primary"
           title={btnSelect}
           size="small"

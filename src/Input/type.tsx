@@ -90,6 +90,7 @@ export type FileItem = (PickedFile | ImageAsset) & FileItemExtras;
 export type DocumentType = (typeof types)[keyof typeof types];
 
 export interface BaseInputFileProps {
+  testID?: string;
   title?: string;
   accept?: string[] | DocumentType[];
   multiple?: boolean;

@@ -21,8 +21,10 @@ import type {
   UploadedFile,
 } from './type';
 import { uploadFile } from './helpers/uploadFile';
+import { getTestID } from '../helpers/getTestID';
 
 export default function InputFile({
+  testID,
   title = 'Upload File',
   description = 'File harus berformat JPG, PNG dan PDF',
   accept = [
@@ -367,6 +369,7 @@ export default function InputFile({
     <View style={spacing.gap[12]}>
       {variant === 'default' && (
         <CardTrigger
+          testID={getTestID(testID, 'trigger')}
           title={title}
           hint={hint || (internalErrorMessage as string)}
           hasError={hasError || !!internalErrorMessage}
@@ -379,6 +382,7 @@ export default function InputFile({
       {variant === 'small' && (
         <View style={spacing.gap[4]}>
           <CardTriggerSmall
+            testID={getTestID(testID, 'trigger')}
             files={files}
             title={title}
             hasError={hasError}
@@ -389,9 +393,11 @@ export default function InputFile({
             onDelete={confirmDeleteFile}
           />
           {internalErrorMessage && (
-            <Typography variant="t3" color={Color.danger[500]}>
-              {internalErrorMessage}
-            </Typography>
+            <View testID={getTestID(testID, 'error')}>
+              <Typography variant="t3" color={Color.danger[500]}>
+                {internalErrorMessage}
+              </Typography>
+            </View>
           )}
 
           {files.length > 0 && (
@@ -399,13 +405,11 @@ export default function InputFile({
               {files
                 .filter((file) => !!file.error)
                 .map((file, index) => (
-                  <Typography
-                    key={index}
-                    variant="t3"
-                    color={Color.danger[500]}
-                  >
-                    {file.hint}
-                  </Typography>
+                  <View key={index} testID={getTestID(testID, 'error')}>
+                    <Typography variant="t3" color={Color.danger[500]}>
+                      {file.hint}
+                    </Typography>
+                  </View>
                 ))}
             </>
           )}
@@ -417,6 +421,7 @@ export default function InputFile({
           <View style={spacing.gap[12]} key={index}>
             {useChangeLabel && (
               <Input
+                testID={getTestID(testID, `input-${index}`)}
                 label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
                 value={file.labelFile}
                 placeholder={
@@ -434,6 +439,7 @@ export default function InputFile({
 
             <View style={spacing.gap[4]}>
               <ItemPreview
+                testID={getTestID(testID, `item-${index}`)}
                 index={index}
                 file={file}
                 loading={file.uploading}
@@ -443,18 +449,21 @@ export default function InputFile({
               />
 
               {file.hint && (
-                <Typography
-                  variant="t3"
-                  color={!file.error ? Color.gray[700] : Color.danger[500]}
-                >
-                  {file.hint}
-                </Typography>
+                <View testID={getTestID(testID, 'error')}>
+                  <Typography
+                    variant="t3"
+                    color={!file.error ? Color.gray[700] : Color.danger[500]}
+                  >
+                    {file.hint}
+                  </Typography>
+                </View>
               )}
             </View>
           </View>
         ))}
 
       <ModalPicker
+        testID={getTestID(testID, 'sheet')}
         isOpen={isOpenBottomSheetTypeFile}
         onClose={() => setIsOpenBottomSheetTypeFile(false)}
         title={modalPickFileText?.title || 'Upload Dokumen'}
@@ -488,6 +497,7 @@ export default function InputFile({
       />
 
       <ModalDelete
+        testID={getTestID(testID, 'modal-delete')}
         isOpen={isOpenBottomSheetDeleteFile}
         onClose={() => setIsOpenBottomSheetDeleteFile(false)}
         title={modalDeleteText?.title || 'Hapus Dokumen'}

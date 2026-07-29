@@ -22,6 +22,7 @@ interface Props {
   onReplace?: (index: number) => void;
   onDelete?: (index: number) => void;
   hasError?: boolean;
+  testID?: string;
 }
 
 export default function CardTriggerSmall({
@@ -33,6 +34,7 @@ export default function CardTriggerSmall({
   onPreview,
   onReplace,
   hasError,
+  testID,
 }: Props) {
   const Component = files?.length === 0 ? View : TouchableOpacity;
   return (
@@ -48,7 +50,7 @@ export default function CardTriggerSmall({
             files.length > 0 ? layouting.flex.col : {},
             files.length > 0 ? spacing.gap[6] : {},
           ]}
-          {...(files?.length > 0 && { onPress: onChooseFile })}
+          {...(files?.length > 0 && { onPress: onChooseFile, testID })}
         >
           <Image
             source={require('../../assets/input-file.png')}
@@ -65,6 +67,7 @@ export default function CardTriggerSmall({
 
         {files.length === 0 && (
           <Button
+            testID={testID}
             title={textButton}
             color="primary"
             size="small"
