@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
-import { Typography, Color } from '@herca/rn-kit';
+import Typography from '../Typography/Typography';
+import Color from '../Color/Color';
+import { getTestID } from '../helpers/getTestID';
 
 interface RadioButtonItem {
   label: string;
@@ -13,6 +15,7 @@ interface RadioButtonProps {
   selectedValue: string | null;
   onChange?: (value: string) => void;
   direction?: 'vertical' | 'horizontal';
+  testID?: string;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -20,6 +23,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   selectedValue,
   onChange,
   direction = 'vertical',
+  testID,
 }) => {
   const [internalValue, setInternalValue] = useState<string | null>(
     selectedValue
@@ -57,6 +61,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
         return (
           <View key={item.value} style={styles.item}>
             <Pressable
+              testID={getTestID(testID, `option-${item.value}`)}
               onPress={() => handleOnPress(item)}
               style={[styles.radioContainer, item.disabled && styles.disabled]}
             >
@@ -65,9 +70,15 @@ const RadioButton: React.FC<RadioButtonProps> = ({
               >
                 {isChecked && <View style={styles.innerCircle} />}
               </View>
-              <Typography variant="t2" weight="medium" color={Color.gray[800]}>
-                {item.label}
-              </Typography>
+              <View testID={getTestID(testID, `option-${item.value}-label`)}>
+                <Typography
+                  variant="t2"
+                  weight="medium"
+                  color={Color.gray[800]}
+                >
+                  {item.label}
+                </Typography>
+              </View>
             </Pressable>
           </View>
         );
