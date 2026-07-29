@@ -34,12 +34,12 @@ describe('InputSelect testID', () => {
     expect(queryByTestId('undefined-trigger')).toBeNull();
   });
 
-  // The -sheet id itself resolves inside <Select>'s BottomSheet body, whose
-  // testID forwarding is Task 7 (not landed). But Select's own search Input
-  // (Task 3 plumbing) mounts inside BottomSheet's children once its Modal is
-  // visible, so we can assert precedence indirectly, without Task 7: open
-  // the select and confirm a testID passed via selectProps does not clobber
-  // the id InputSelect derives for the sheet.
+  // InputSelect passes its RAW testID to <Select>, which owns its own suffix
+  // namespace (deriving `-sheet`/`-search`/`-submit`/`-option-*`). Select's
+  // search Input mounts inside BottomSheet's children once its Modal is
+  // visible, so we can assert precedence indirectly: open the select and
+  // confirm a testID passed via selectProps does not clobber the id Select
+  // derives from InputSelect's base.
   it('does not let selectProps.testID override the derived sheet id', () => {
     const { getByTestId, queryByTestId } = render(
       <ToastProvider>
@@ -53,7 +53,7 @@ describe('InputSelect testID', () => {
 
     fireEvent.press(getByTestId('favorite-trigger'));
 
-    expect(getByTestId('favorite-sheet-search-input')).toBeTruthy();
+    expect(getByTestId('favorite-search-input')).toBeTruthy();
     expect(queryByTestId('bogus-search-input')).toBeNull();
   });
 });

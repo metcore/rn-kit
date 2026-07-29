@@ -237,8 +237,8 @@ Sebagian besar komponen interaktif pada `@herca/rn-kit` mendukung prop opsional 
 | `CheckBoxList`   | –                                | `-option-{value}` (per opsi)                                           |
 | `RadioButton`    | –                                | `-option-{value}`, `-option-{value}-label`                             |
 | `Chip`           | – (tidak merender testID di root)| `-option-{value}` (per chip item)                                       |
-| `InputSelect`    | –                                | `-trigger`, `-label`, `-clear`, `-error`, `-sheet`                      |
-| `InputDate`      | –                                | `-trigger`, `-trigger-end` (mode range), `-label`, `-clear`, `-sheet`   |
+| `InputSelect`    | –                                | `-trigger`, `-label`, `-clear`, `-error`; meneruskan `testID` mentah ke `Select` sehingga mewarisi suffix `Select` (`-sheet`, `-search`, `-submit`, `-option-{value}`) |
+| `InputDate`      | –                                | `-trigger`, `-trigger-end` (mode range), `-label`, `-clear`; meneruskan `testID` mentah ke `DatePicker` sehingga mewarisi suffix `DatePicker` (`-sheet`, `-cancel`, `-confirm`, `-error`) |
 | `DropDown`       | –                                | `-trigger`, `-modal`, `-option-{value}` / `-item-{index}`               |
 | `Select`         | –                                | `-sheet`, `-search`, `-submit`, `-option-{value}` (via `Chip`)          |
 | `DatePicker`     | –                                | `-sheet`, `-cancel`, `-confirm`, `-error`                               |
@@ -249,7 +249,7 @@ Sebagian besar komponen interaktif pada `@herca/rn-kit` mendukung prop opsional 
 | `BottomSheet`    | elemen konten (tanpa suffix)      | `-backdrop`, `-close`, `-pullbar`, `-footer`                            |
 | `Tab`            | –                                | `-item-{index}`, `-panel-{index}`                                       |
 | `Accordion`      | –                                | `-trigger`                                                              |
-| `InputFile`      | –                                | `-trigger`, `-input-{index}`, `-item-{index}`, `-error`, `-sheet`, `-modal-delete` |
+| `InputFile`      | –                                | `-trigger`, `-file-{index}` (field nama dokumen per file → `-file-{index}-input`), `-item-{index}`, `-error` (error umum), `-error-{index}` (error per file), `-sheet`, `-modal-delete` |
 
 > Detail lebih lanjut untuk tiap komponen tersedia di README masing-masing komponen pada tabel [📚 Komponen Tersedia](#-komponen-tersedia) di atas.
 

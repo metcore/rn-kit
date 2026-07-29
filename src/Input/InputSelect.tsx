@@ -166,22 +166,21 @@ export default function InputSelect({
         </Pressable>
 
         {hint && (
-          <View testID={getTestID(testID, 'error')}>
-            <Typography
-              variant="t3"
-              color={hasError ? Color.danger[500] : Color.gray[700]}
-              weight="medium"
-              numberOfLines={1}
-            >
-              {hint}
-            </Typography>
-          </View>
+          <Typography
+            testID={getTestID(testID, 'error')}
+            variant="t3"
+            color={hasError ? Color.danger[500] : Color.gray[700]}
+            weight="medium"
+            numberOfLines={1}
+          >
+            {hint}
+          </Typography>
         )}
       </View>
 
       {useModal && (
         <Select
-          testID={getTestID(testID, 'sheet')}
+          testID={testID}
           isOpen={isSelectOpen}
           {...selectPropsWithoutTestID}
           data={options ?? []}

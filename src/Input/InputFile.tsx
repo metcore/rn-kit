@@ -405,7 +405,10 @@ export default function InputFile({
               {files
                 .filter((file) => !!file.error)
                 .map((file, index) => (
-                  <View key={index} testID={getTestID(testID, 'error')}>
+                  <View
+                    key={index}
+                    testID={getTestID(testID, `error-${index}`)}
+                  >
                     <Typography variant="t3" color={Color.danger[500]}>
                       {file.hint}
                     </Typography>
@@ -421,7 +424,7 @@ export default function InputFile({
           <View style={spacing.gap[12]} key={index}>
             {useChangeLabel && (
               <Input
-                testID={getTestID(testID, `input-${index}`)}
+                testID={getTestID(testID, `file-${index}`)}
                 label={`${changeLableProps?.label || 'Nama Dokumen'} ${index + 1}`}
                 value={file.labelFile}
                 placeholder={
@@ -449,7 +452,7 @@ export default function InputFile({
               />
 
               {file.hint && (
-                <View testID={getTestID(testID, 'error')}>
+                <View testID={getTestID(testID, `error-${index}`)}>
                   <Typography
                     variant="t3"
                     color={!file.error ? Color.gray[700] : Color.danger[500]}

@@ -57,7 +57,7 @@ describe('InputFile testID', () => {
     );
 
     expect(getByTestId('attachment-item-0')).toBeTruthy();
-    expect(getByTestId('attachment-error')).toBeTruthy();
+    expect(getByTestId('attachment-error-0')).toBeTruthy();
   });
 
   it('derives small-variant trigger and error testIDs', () => {
@@ -80,7 +80,7 @@ describe('InputFile testID', () => {
       />
     );
 
-    expect(getByTestId('attachment-error')).toBeTruthy();
+    expect(getByTestId('attachment-error-0')).toBeTruthy();
   });
 
   // Deferred coverage: `-sheet` (ModalPicker) and `-modal-delete` (ModalDelete)

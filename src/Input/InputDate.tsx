@@ -167,11 +167,14 @@ export default function InputDate({
 
   return (
     <View style={styles.gap4}>
-      <View testID={getTestID(testID, 'label')}>
-        <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
-          {label}
-        </Typography>
-      </View>
+      <Typography
+        testID={getTestID(testID, 'label')}
+        variant="t2"
+        weight="semibold"
+        color={Color.gray[900]}
+      >
+        {label}
+      </Typography>
 
       <View style={styles.wrapper}>
         {/* sart date */}
@@ -237,7 +240,7 @@ export default function InputDate({
       </View>
 
       <DatePicker
-        testID={getTestID(testID, 'sheet')}
+        testID={testID}
         {...datePickerPropsWithoutTestID}
         mode={mode}
         isOpen={isDatePickerOpen}
