@@ -35,4 +35,5 @@ export interface SelectProps {
   header?: React.ComponentType<any> | React.ReactElement | null | undefined;
   searchValue?: string;
   onSelectedChange?: (value: ChipOptionProps[]) => void;
+  testID?: string;
 }

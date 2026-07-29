@@ -1,19 +1,18 @@
-import {
-  Badge,
-  Color,
-  Icon,
-  LabelForm,
-  Select,
-  Typography,
-  type ChipOptionProps,
-  type IconNameProps,
-} from '@herca/rn-kit';
+import Badge from '../Badge/Badge';
+import Color from '../Color/Color';
+import Icon from '../Icon/Icon';
+import LabelForm from '../LabelForm/LabelForm';
+import Select from '../Select/Select';
+import Typography from '../Typography/Typography';
+import type { ChipOptionProps } from '../Chip/type';
+import type { IconNameProps } from '../Icon/type';
 import { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { spacing } from '../styles/spacing';
 import { border } from '../styles/border';
 import { layouting } from '../styles/layouting';
 import type { Variant } from '../Badge/type';
+import { getTestID } from '../helpers/getTestID';
 
 type SelectProps = React.ComponentProps<typeof Select>;
 type SelectPropsWithoutData = Omit<SelectProps, 'data'>;
@@ -59,6 +58,7 @@ export default function InputSelect({
   useModal = true,
   required,
   labelColor,
+  testID,
   ...props
 }: Props) {
   const [isSelectOpen, setSelectOpen] = useState<boolean>(false);
@@ -85,10 +85,16 @@ export default function InputSelect({
 
   return (
     <View style={spacing.gap[4]}>
-      <LabelForm title={label} required={required} color={labelColor} />
+      <LabelForm
+        testID={getTestID(testID, 'label')}
+        title={label}
+        required={required}
+        color={labelColor}
+      />
 
       <View style={[spacing.gap[4], layouting.flex.grow]}>
         <Pressable
+          testID={getTestID(testID, 'trigger')}
           style={[
             styles.select,
             hasError && border.color.danger[300],
@@ -138,7 +144,11 @@ export default function InputSelect({
           {/* right icon and action */}
           <View style={[layouting.flex.rowCenter, spacing.gap[8]]}>
             {onClear && internalValue && (
-              <TouchableOpacity activeOpacity={0.7} onPress={handleClear}>
+              <TouchableOpacity
+                testID={getTestID(testID, 'clear')}
+                activeOpacity={0.7}
+                onPress={handleClear}
+              >
                 <Icon name="x-circle" size={20} color="#aaa" />
               </TouchableOpacity>
             )}
@@ -151,19 +161,22 @@ export default function InputSelect({
         </Pressable>
 
         {hint && (
-          <Typography
-            variant="t3"
-            color={hasError ? Color.danger[500] : Color.gray[700]}
-            weight="medium"
-            numberOfLines={1}
-          >
-            {hint}
-          </Typography>
+          <View testID={getTestID(testID, 'error')}>
+            <Typography
+              variant="t3"
+              color={hasError ? Color.danger[500] : Color.gray[700]}
+              weight="medium"
+              numberOfLines={1}
+            >
+              {hint}
+            </Typography>
+          </View>
         )}
       </View>
 
       {useModal && (
         <Select
+          testID={getTestID(testID, 'sheet')}
           isOpen={isSelectOpen}
           {...selectProps}
           data={options ?? []}

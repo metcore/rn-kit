@@ -14,6 +14,7 @@ import {
 import Color from '../Color/Color';
 import type { DropDownProps } from './type';
 import type { ChipOptionProps } from '../Chip/type';
+import { getTestID } from '../helpers/getTestID';
 
 const Dropdown = ({
   options,
@@ -23,6 +24,7 @@ const Dropdown = ({
   renderItem,
   width,
   value,
+  testID,
 }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string | number>();
@@ -67,12 +69,17 @@ const Dropdown = ({
 
   return (
     <>
-      <TouchableOpacity ref={buttonRef} onPress={handleToggle}>
+      <TouchableOpacity
+        testID={getTestID(testID, 'trigger')}
+        ref={buttonRef}
+        onPress={handleToggle}
+      >
         {renderButton}
       </TouchableOpacity>
       {isOpen && (
         <Modal transparent animationType="none" visible>
           <Pressable
+            testID={getTestID(testID, 'modal')}
             style={StyleSheet.absoluteFillObject}
             onPress={() => setIsOpen(false)}
           />
@@ -95,6 +102,10 @@ const Dropdown = ({
               {options.map((item, idx) => (
                 <TouchableOpacity
                   key={idx}
+                  testID={getTestID(
+                    testID,
+                    item.value != null ? `option-${item.value}` : `item-${idx}`
+                  )}
                   onPress={() => handlePressOption(item)}
                   style={[
                     styles.option,
