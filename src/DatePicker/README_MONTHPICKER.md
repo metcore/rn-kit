@@ -14,6 +14,7 @@ Komponen **MonthPicker** adalah komponen pemilih bulan berbasis **React Native**
 | `onClose`  | `() => void`                                                                          | `undefined` | Callback yang dipanggil saat pengguna menekan tombol **Batal** atau menutup **BottomSheet**.                     |
 | `onChange` | `(value: number[] \| { startDate: number \| null; endDate: number \| null }) => void` | `undefined` | Callback yang dipanggil ketika pengguna menekan tombol **Pilih**. Parameter yang dikirim tergantung pada `mode`. |
 | `mode`     | `'single' \| 'range' \| 'multiple'`                                                   | `'single'`  | Menentukan cara pemilihan bulan.                                                                                 |
+| `testID`   | `string`                                                                              | `undefined` | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-sheet`, `-cancel`, `-confirm`, dan `-option-{value}` untuk tiap bulan. |
 
 ### Bentuk *value* yang Dikirim oleh `onChange`
 

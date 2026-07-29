@@ -24,6 +24,7 @@ Komponen `Button` ini adalah tombol serbaguna untuk aplikasi React Native. Mendu
 | `width`     | `number | string`                              | -          | Lebar tombol bisa dalam piksel atau persentase.                          |
 | `block`     | `boolean`                                      | `false`    | Jika `true`, tombol akan penuh lebar (`width: 100%`).                    |
 | `loading`   | `boolean`                                      | `false`    | Menampilkan indikator loading jika `true`.                               |
+| `testID`    | `string`                                       | -          | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen `Pressable` tombol, tanpa suffix.                    |
 
 ---
 

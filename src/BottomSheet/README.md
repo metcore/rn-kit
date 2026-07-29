@@ -19,6 +19,7 @@ Komponen `BottomSheet` adalah modal bawah (slide-up) untuk menampilkan konten di
 | `height`        | `number \| string`               | `'auto'`    | Tinggi dari konten bottom sheet.                                         |
 | `pullBar`       | `React.ReactNode`                | -           | Custom elemen untuk drag indicator.                                      |
 | `footer`        | `React.ReactNode`                | -           | Menambahkan elemen tetap di bawah konten.                                |
+| `testID`        | `string`                         | -           | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan pada elemen konten (tanpa suffix); menurunkan `-backdrop`, `-close`, `-pullbar`, dan `-footer`. |
 
 ---
 

@@ -71,6 +71,7 @@ export default function Example() {
 | `useModal`      | `boolean`                           | `true`             | Gunakan modal untuk menampilkan opsi                 |
 | `required`      | `boolean`                           | `false`            | Untuk menampilkan indikator bintang di label         |
 | `labelColor`    | `stirng`                            | `true`             | Untuk mengubah warna label                           |
+| `testID`        | `string`                            | `undefined`        | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-trigger`, `-label`, `-clear`, `-error`, dan `-sheet` (diteruskan ke `Select` bottom sheet). |
 
 ### Pressable Props
 

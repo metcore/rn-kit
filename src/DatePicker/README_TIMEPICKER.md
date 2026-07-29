@@ -12,6 +12,7 @@
 | `onClose`  | `() => void`                                        | `-`                    | Callback saat pengguna menutup **BottomSheet** atau menekan tombol **Batal**.                 |
 | `onChange` | `(value: { hour: number; minute: number }) => void` | `-`                    | Callback saat pengguna menekan tombol **Pilih**. Objek yang dikirim berisi `hour` & `minute`. |
 | `value`    | `{ hour: number; minute: number }`                  | `{hour: 0, minute: 0}` | Props untuk mengontrol value dari parent                                                      |
+| `testID`   | `string`                                            | `-`                    | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-sheet`, `-cancel`, `-confirm`, `-hour`, dan `-minute`. |
 
 ### Bentuk _value_ `onChange`
 

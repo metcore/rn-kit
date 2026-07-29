@@ -145,6 +145,7 @@ export default function ExampleScreen() {
 | `modalDeleteText`   | `ModalOption & confirmBtn`        | `undefined`                                      | Teks kustom pada modal konfirmasi hapus file.                                                                                      |
 | `hasError`          | `boolean`                         | `false`                                          | Menampilkan state error pada input.                                                                                                |
 | `onUploading`       | `(isUploading?: boolean) => void` | `undefiend`                                      | Expose value uploading ke parent                                                                                                   |
+| `testID`            | `string`                          | `undefined`                                      | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-trigger`, `-input-{index}`, `-item-{index}`, `-error`, `-sheet`, dan `-modal-delete`. |
 
 ### Default Variant Props (`variant?: 'default'`)
 

@@ -189,6 +189,72 @@ Komponen untuk menampilkan informasi atau elemen visual.
 
 - [Date Formatter](./src/function/README_DATE_FORMATTER.md)
 
+## 🧪 Automation Testing (testID)
+
+Sebagian besar komponen interaktif pada `@herca/rn-kit` mendukung prop opsional **`testID`** untuk kebutuhan automation testing (Maestro, Detox, Appium, dan sejenisnya).
+
+### Cara Kerja
+
+- `testID` di React Native otomatis dipetakan native oleh platform:
+  - **Android** → `resource-id`
+  - **iOS** → `accessibilityIdentifier`
+- Tool automation testing seperti **Maestro**, **Detox**, atau **Appium** menggunakan nilai ini untuk menemukan elemen di layar (`tapOn: { id: "..." }`, `element(by.id(...))`, dsb).
+- Untuk komponen yang terdiri dari beberapa sub-elemen (misalnya `Input` yang punya label, field, tombol clear, dan pesan error), library ini menerapkan **konvensi derived-suffix**: satu `testID` yang Anda berikan pada komponen akan diturunkan menjadi beberapa ID turunan dengan pola `{testID}-{suffix}`.
+
+  Contoh: `testID="email"` pada `Input` akan menghasilkan:
+  - `email-input` → elemen `TextInput`
+  - `email-label` → label
+  - `email-error` → pesan error/hint
+  - `email-clear` → tombol clear
+  - `email-toggle` → tombol ikon kanan (mis. show/hide password)
+
+- **Zero-overhead saat tidak digunakan**: jika prop `testID` tidak diisi (`undefined`), maka **tidak ada** prop `testID` yang dirender sama sekali pada elemen manapun (bukan string kosong) — sehingga tidak ada biaya tambahan maupun noise di tree komponen untuk aplikasi yang tidak memakai automation testing.
+
+### Contoh Penggunaan (Maestro)
+
+```yaml
+- tapOn:
+    id: "submit-btn"
+- tapOn:
+    id: "email-input"
+- inputText: "user@mail.com"
+    # target field: testID="email" -> email-input
+```
+
+### Tabel Konvensi Suffix per Komponen
+
+| Komponen         | `testID` diterapkan pada       | Suffix turunan                                                        |
+| ---------------- | ------------------------------- | ---------------------------------------------------------------------- |
+| `Button`         | `Pressable` (tanpa suffix)       | –                                                                      |
+| `Switch`         | `Pressable` (tanpa suffix)       | `-label`                                                               |
+| `CheckBox`       | `Pressable` (tanpa suffix)       | `-label`                                                               |
+| `CounterButton`  | –                                | `-decrement`, `-input`, `-increment`                                   |
+| `Toast`          | root (tanpa suffix)              | `-message`, `-clear` *(hanya jika `<Toast>` dirender langsung; belum diteruskan lewat `useToast().show()`)* |
+| `Input`          | –                                | `-input`, `-label`, `-error`, `-clear`, `-toggle`                       |
+| `TextArea`       | –                                | `-input`, `-label`, `-error`                                            |
+| `InputPassword`  | –                                | Meneruskan `testID` apa adanya ke `Input`, sehingga mewarisi seluruh suffix `Input` (`-input`, `-label`, `-error`, `-clear`, `-toggle`; `-toggle` = tombol show/hide password) |
+| `InputOtp`       | –                                | `-item-{index}` (per kotak digit), `-label`, `-error`                  |
+| `CheckBoxList`   | –                                | `-option-{value}` (per opsi)                                           |
+| `RadioButton`    | –                                | `-option-{value}`, `-option-{value}-label`                             |
+| `Chip`           | – (tidak merender testID di root)| `-option-{value}` (per chip item)                                       |
+| `InputSelect`    | –                                | `-trigger`, `-label`, `-clear`, `-error`, `-sheet`                      |
+| `InputDate`      | –                                | `-trigger`, `-trigger-end` (mode range), `-label`, `-clear`, `-sheet`   |
+| `DropDown`       | –                                | `-trigger`, `-modal`, `-option-{value}` / `-item-{index}`               |
+| `Select`         | –                                | `-sheet`, `-search`, `-submit`, `-option-{value}` (via `Chip`)          |
+| `DatePicker`     | –                                | `-sheet`, `-cancel`, `-confirm`, `-error`                               |
+| `YearPicker`     | –                                | `-sheet`, `-cancel`, `-confirm`, `-option-{year}`                       |
+| `MonthPicker`    | –                                | `-sheet`, `-cancel`, `-confirm`, `-option-{value}`                      |
+| `TimePicker`     | –                                | `-sheet`, `-cancel`, `-confirm`, `-hour`, `-minute`                     |
+| `Modal`          | elemen konten (tanpa suffix)      | `-backdrop`, `-close`                                                   |
+| `BottomSheet`    | elemen konten (tanpa suffix)      | `-backdrop`, `-close`, `-pullbar`, `-footer`                            |
+| `Tab`            | –                                | `-item-{index}`, `-panel-{index}`                                       |
+| `Accordion`      | –                                | `-trigger`                                                              |
+| `InputFile`      | –                                | `-trigger`, `-input-{index}`, `-item-{index}`, `-error`, `-sheet`, `-modal-delete` |
+
+> Detail lebih lanjut untuk tiap komponen tersedia di README masing-masing komponen pada tabel [📚 Komponen Tersedia](#-komponen-tersedia) di atas.
+
+---
+
 ## 🤝 Kontribusi
 
 Silakan baca panduan kontribusi pada [CONTRIBUTING.md](CONTRIBUTING.md) untuk mengetahui alur pengembangan dan kontribusi pada proyek ini.

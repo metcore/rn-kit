@@ -24,6 +24,7 @@ Komponen `CounterButton` adalah tombol penghitung sederhana (+ / -) yang digunak
 | `variant` | `'default'` \| `'color'`     | `'default'` | Menentukan gaya visual: `default` (outline) atau `color` (filled).       |
 | `disabledDecrease` | boolean    | `'false'` | disabled decrease    |
 | `disabledIncrease` | boolean    | `'false'` | disabled increase    |
+| `testID`  | `string`                     | `undefined` | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-decrement`, `-input`, dan `-increment` untuk tiap elemen. |
 
 ---
 

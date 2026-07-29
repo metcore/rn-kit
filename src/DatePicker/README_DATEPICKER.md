@@ -26,6 +26,7 @@ Komponen ini extend dari Calendar, jadi kalian bisa menggunakan semua props yang
 | `isOpen`    | `boolean`                       | Menentukan apakah BottomSheet sedang terbuka |
 | `hasError`  | `boolean`                       | (Opsional) Menandai jika terjadi kesalahan validasi |
 | `value`     | DateRangeProps                  | (Opsional) set default value |
+| `testID`    | `string`                        | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-sheet`, `-cancel`, `-confirm`, dan `-error`. |
 
 ---
 
