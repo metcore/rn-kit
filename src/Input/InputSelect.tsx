@@ -83,6 +83,11 @@ export default function InputSelect({
     setInternalValue(value);
   }, [value]);
 
+  // Strip any caller-provided testID out of selectProps before spreading it
+  // onto <Select>, so it can never clobber the derived `-sheet` id below.
+  const selectPropsWithoutTestID = { ...selectProps };
+  delete selectPropsWithoutTestID.testID;
+
   return (
     <View style={spacing.gap[4]}>
       <LabelForm
@@ -178,7 +183,7 @@ export default function InputSelect({
         <Select
           testID={getTestID(testID, 'sheet')}
           isOpen={isSelectOpen}
-          {...selectProps}
+          {...selectPropsWithoutTestID}
           data={options ?? []}
           onClose={handleCloseSelect}
         />

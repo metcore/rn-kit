@@ -159,6 +159,14 @@ export default function InputDate({
     }
   }, [value, valueDateEnd]);
 
+  // Strip any caller-provided testID out of datePickerProps before spreading
+  // it onto <DatePicker>, so it can never clobber the derived `-sheet` id
+  // below (mirrors the selectProps fix in InputSelect.tsx). `testID` isn't
+  // part of DatePickerProps yet (lands in Task 6); stripping it here now
+  // prevents that task from inheriting the same override bug.
+  const datePickerPropsWithoutTestID = { ...datePickerProps };
+  delete (datePickerPropsWithoutTestID as { testID?: string }).testID;
+
   return (
     <View style={styles.gap4}>
       <View testID={getTestID(testID, 'label')}>
@@ -234,7 +242,7 @@ export default function InputDate({
         // testID typing lands in Task 6 (DatePickerProps); forwarded now so
         // the sheet resolves the id once that type is updated.
         {...({ testID: getTestID(testID, 'sheet') } as any)}
-        {...datePickerProps}
+        {...datePickerPropsWithoutTestID}
         mode={mode}
         isOpen={isDatePickerOpen}
         onClose={handleCloseDatePicker}
