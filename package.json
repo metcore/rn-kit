@@ -84,10 +84,10 @@
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-builder-bob": "^0.40.8",
+    "react-native-safe-area-context": "^5.5.1",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
-    "typescript": "^5.8.3",
-    "react-native-safe-area-context": "^5.5.1"
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "react": "*",
@@ -103,7 +103,7 @@
     "react-native-image-picker": "^8.2.1",
     "react-native-pager-view": "^6.8.1",
     "react-native-pdf": "^6.7.7",
-    "react-native-screens": "^4.11.1",
+    "react-native-screens": "4.11.1",
     "react-native-signature-canvas": "^5.0.1",
     "react-native-svg": "^15.12.0",
     "react-native-webview": "^13.15.0"
