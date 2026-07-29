@@ -97,7 +97,10 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     const [linkText, setLinkText] = useState('');
     const [linkUrl, setLinkUrl] = useState('');
     const [isEditingLink, setIsEditingLink] = useState(false);
-    const webviewRef = useRef<WebView>(null);
+    // WebView is declared as `class WebView<P = undefined>` whose props are
+    // `WebViewProps & P`; the default `P = undefined` collapses props to `never`
+    // under React 19 types, so pin `P` to `object` to recover `WebViewProps`.
+    const webviewRef = useRef<WebView<object>>(null);
     const inputUrlRef = useRef<TextInput>(null);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -623,7 +626,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           style={[styles.editorWrapper, { minHeight: height, height: height }]}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <WebView
+          <WebView<object>
             ref={webviewRef}
             originWhitelist={['*']}
             source={{ html: htmlEditor }}
