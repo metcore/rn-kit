@@ -4,6 +4,7 @@ import { Icon } from '../Icon';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
+import { getTestID } from '../helpers/getTestID';
 import type { InputProps } from './type';
 
 const Input = React.forwardRef<TextInput, InputProps>(
@@ -24,6 +25,7 @@ const Input = React.forwardRef<TextInput, InputProps>(
       iconRightColor,
       prefix,
       required = false,
+      testID,
       ...rest
     },
     ref
@@ -50,7 +52,13 @@ const Input = React.forwardRef<TextInput, InputProps>(
 
     return (
       <View style={styles.gap}>
-        {label ? <LabelForm title={label} required={required} /> : null}
+        {label ? (
+          <LabelForm
+            testID={getTestID(testID, 'label')}
+            title={label}
+            required={required}
+          />
+        ) : null}
 
         <View
           style={[
@@ -69,6 +77,7 @@ const Input = React.forwardRef<TextInput, InputProps>(
           {prefix && <View style={styles.prefixContainer}>{prefix}</View>}
 
           <TextInput
+            testID={getTestID(testID, 'input')}
             {...rest}
             ref={ref}
             style={[styles.input, style]}
@@ -82,6 +91,7 @@ const Input = React.forwardRef<TextInput, InputProps>(
             <View style={styles.rightContainer}>
               {clearButton && inputValue !== '' && (
                 <TouchableOpacity
+                  testID={getTestID(testID, 'clear')}
                   onPress={handleClear}
                   style={iconRight && styles.mr8}
                 >
@@ -89,7 +99,11 @@ const Input = React.forwardRef<TextInput, InputProps>(
                 </TouchableOpacity>
               )}
               {iconRight && (
-                <TouchableOpacity onPress={onPressIconRight} hitSlop={10}>
+                <TouchableOpacity
+                  testID={getTestID(testID, 'toggle')}
+                  onPress={onPressIconRight}
+                  hitSlop={10}
+                >
                   <Icon
                     name={iconRight}
                     size={20}
@@ -101,13 +115,15 @@ const Input = React.forwardRef<TextInput, InputProps>(
           )}
         </View>
         {hint ? (
-          <Typography
-            color={hasError ? Color.danger[500] : Color.gray[700]}
-            variant="t3"
-            weight="medium"
-          >
-            {hint}
-          </Typography>
+          <View testID={getTestID(testID, 'error')}>
+            <Typography
+              color={hasError ? Color.danger[500] : Color.gray[700]}
+              variant="t3"
+              weight="medium"
+            >
+              {hint}
+            </Typography>
+          </View>
         ) : null}
       </View>
     );

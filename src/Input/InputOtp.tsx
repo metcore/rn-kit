@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import Color from '../Color/Color';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
+import { getTestID } from '../helpers/getTestID';
 
 type InputOtpProps = {
   length?: number;
@@ -11,6 +12,7 @@ type InputOtpProps = {
   hint?: string;
   hasError?: boolean;
   inputCenter?: boolean;
+  testID?: string;
 };
 
 const InputOtp: React.FC<InputOtpProps> = ({
@@ -20,6 +22,7 @@ const InputOtp: React.FC<InputOtpProps> = ({
   hint,
   hasError,
   inputCenter = false,
+  testID,
 }) => {
   const inputs = useRef<Array<TextInput | null>>([]);
   const values = useRef<string[]>(Array(length).fill(''));
@@ -50,7 +53,9 @@ const InputOtp: React.FC<InputOtpProps> = ({
 
   return (
     <View style={styles.gap4}>
-      {label ? <LabelForm title={label} /> : null}
+      {label ? (
+        <LabelForm testID={getTestID(testID, 'label')} title={label} />
+      ) : null}
       <View
         style={[
           styles.container,
@@ -68,6 +73,7 @@ const InputOtp: React.FC<InputOtpProps> = ({
           .map((_, i) => (
             <TextInput
               key={i}
+              testID={getTestID(testID, `item-${i}`)}
               style={[
                 styles.input,
                 // eslint-disable-next-line react-native/no-inline-styles
@@ -89,9 +95,11 @@ const InputOtp: React.FC<InputOtpProps> = ({
       </View>
 
       {hint ? (
-        <Typography color={hasError ? Color.danger[500] : ''} variant="t3">
-          {hint}
-        </Typography>
+        <View testID={getTestID(testID, 'error')}>
+          <Typography color={hasError ? Color.danger[500] : ''} variant="t3">
+            {hint}
+          </Typography>
+        </View>
       ) : null}
     </View>
   );
