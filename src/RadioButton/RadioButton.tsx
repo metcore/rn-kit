@@ -70,15 +70,14 @@ const RadioButton: React.FC<RadioButtonProps> = ({
               >
                 {isChecked && <View style={styles.innerCircle} />}
               </View>
-              <View testID={getTestID(testID, `option-${item.value}-label`)}>
-                <Typography
-                  variant="t2"
-                  weight="medium"
-                  color={Color.gray[800]}
-                >
-                  {item.label}
-                </Typography>
-              </View>
+              <Typography
+                testID={getTestID(testID, `option-${item.value}-label`)}
+                variant="t2"
+                weight="medium"
+                color={Color.gray[800]}
+              >
+                {item.label}
+              </Typography>
             </Pressable>
           </View>
         );

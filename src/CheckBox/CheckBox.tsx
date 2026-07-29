@@ -77,11 +77,14 @@ const CheckBox: React.FC<CheckBoxProps> = ({
       </View>
       <View>
         {label && (
-          <View testID={getTestID(testID, 'label')}>
-            <Typography variant="t2" weight="medium" color={Color.gray[900]}>
-              {label}
-            </Typography>
-          </View>
+          <Typography
+            testID={getTestID(testID, 'label')}
+            variant="t2"
+            weight="medium"
+            color={Color.gray[900]}
+          >
+            {label}
+          </Typography>
         )}
         {hint && (
           <Typography variant="t3" weight="medium" color={Color.gray[600]}>

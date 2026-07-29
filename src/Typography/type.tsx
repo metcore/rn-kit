@@ -1,16 +1,7 @@
 import type { ColorValue, StyleProp, TextStyle } from 'react-native';
 import React from 'react';
 export type TypographyVariantProps =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'p1'
-  | 'p2'
-  | 'p3'
-  | 't1'
-  | 't2'
-  | 't3';
+  'h1' | 'h2' | 'h3' | 'h4' | 'p1' | 'p2' | 'p3' | 't1' | 't2' | 't3';
 
 export type Weight = 'regular' | 'medium' | 'semibold' | 'bold';
 
@@ -57,4 +48,5 @@ export interface TypographyProps {
   center?: boolean;
   right?: boolean;
   left?: boolean;
+  testID?: string;
 }

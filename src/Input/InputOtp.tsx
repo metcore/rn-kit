@@ -95,11 +95,13 @@ const InputOtp: React.FC<InputOtpProps> = ({
       </View>
 
       {hint ? (
-        <View testID={getTestID(testID, 'error')}>
-          <Typography color={hasError ? Color.danger[500] : ''} variant="t3">
-            {hint}
-          </Typography>
-        </View>
+        <Typography
+          testID={getTestID(testID, 'error')}
+          color={hasError ? Color.danger[500] : ''}
+          variant="t3"
+        >
+          {hint}
+        </Typography>
       ) : null}
     </View>
   );

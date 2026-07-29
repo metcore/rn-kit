@@ -52,11 +52,13 @@ export default function TextArea({
         />
       </View>
       {hint ? (
-        <View testID={getTestID(testID, 'error')}>
-          <Typography color={hasError ? Color.danger[500] : ''} variant="t2">
-            {hint}
-          </Typography>
-        </View>
+        <Typography
+          testID={getTestID(testID, 'error')}
+          color={hasError ? Color.danger[500] : ''}
+          variant="t2"
+        >
+          {hint}
+        </Typography>
       ) : null}
     </View>
   );

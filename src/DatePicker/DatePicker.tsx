@@ -172,13 +172,21 @@ export default function DatePicker({
           onChange={handleOnChangeCalendar}
           {...calendarProps}
         />
-        <View testID={getTestID(testID, 'error')}>
+        {testID ? (
+          <View testID={getTestID(testID, 'error')}>
+            <Alert
+              color="danger"
+              message={hint ? hint : 'Error validation'}
+              hide={!errorValidate}
+            />
+          </View>
+        ) : (
           <Alert
             color="danger"
             message={hint ? hint : 'Error validation'}
             hide={!errorValidate}
           />
-        </View>
+        )}
       </BottomSheet>
     </View>
   );

@@ -115,15 +115,14 @@ const Input = React.forwardRef<TextInput, InputProps>(
           )}
         </View>
         {hint ? (
-          <View testID={getTestID(testID, 'error')}>
-            <Typography
-              color={hasError ? Color.danger[500] : Color.gray[700]}
-              variant="t3"
-              weight="medium"
-            >
-              {hint}
-            </Typography>
-          </View>
+          <Typography
+            testID={getTestID(testID, 'error')}
+            color={hasError ? Color.danger[500] : Color.gray[700]}
+            variant="t3"
+            weight="medium"
+          >
+            {hint}
+          </Typography>
         ) : null}
       </View>
     );

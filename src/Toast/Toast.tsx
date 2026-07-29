@@ -140,11 +140,13 @@ const Toast = ({
         <View style={styles.container}>
           <View style={styles.content}>
             <Icon name={icon} size={20} color={COLOR_MAP[safeColor].text} />
-            <View testID={getTestID(testID, 'message')}>
-              <Typography variant="t2" color={COLOR_MAP[safeColor].text}>
-                {message}
-              </Typography>
-            </View>
+            <Typography
+              testID={getTestID(testID, 'message')}
+              variant="t2"
+              color={COLOR_MAP[safeColor].text}
+            >
+              {message}
+            </Typography>
           </View>
           <View style={styles.actionWrapper}>
             {children}
