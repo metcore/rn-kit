@@ -94,9 +94,7 @@ export default function MonthPicker({
 
   return (
     <BottomSheet
-      // testID typing lands in Task 7 (BottomSheetProops); forwarded now so
-      // the sheet resolves the id once that type is updated.
-      {...({ testID: getTestID(testID, 'sheet') } as any)}
+      testID={getTestID(testID, 'sheet')}
       isOpen={isOpen}
       onClose={onClose}
       footer={

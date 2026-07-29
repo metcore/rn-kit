@@ -96,9 +96,7 @@ export default function Select({
   }, [searchValue]);
   return (
     <BottomSheet
-      // testID typing lands in Task 7 (BottomSheetProops); forwarded now so
-      // the sheet resolves the id once that type is updated.
-      {...({ testID: getTestID(testID, 'sheet') } as any)}
+      testID={getTestID(testID, 'sheet')}
       onClose={(val: boolean) => handleOnCloseBottom(val)}
       isOpen={isOpen}
       height={height}
