@@ -2,15 +2,20 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Color, Container, Icon, Typography } from '@herca/rn-kit';
+import type { IconNameProps } from '@herca/rn-kit';
 
 interface HeaderNavigationProps {
   title: string;
   showBackButton?: boolean;
+  rightIcon?: IconNameProps;
+  onRightPress?: () => void;
 }
 
 const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
   title,
   showBackButton = true,
+  rightIcon,
+  onRightPress,
 }) => {
   const navigation = useNavigation();
 
@@ -31,9 +36,11 @@ const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
             {title}
           </Typography>
 
-          <TouchableOpacity style={styles.rightButton}>
-            <Icon name="Search" size={20} color={Color.gray[900]} />
-          </TouchableOpacity>
+          {rightIcon && (
+            <TouchableOpacity onPress={onRightPress} style={styles.rightButton}>
+              <Icon name={rightIcon} size={20} color={Color.gray[900]} />
+            </TouchableOpacity>
+          )}
         </View>
       </Container>
     </SafeAreaView>
