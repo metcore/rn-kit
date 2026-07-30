@@ -1,181 +1,107 @@
-import { Color, Container } from '@herca/rn-kit';
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { InputSelect, type ChipValue } from '@herca/rn-kit';
+import { Color, InputSelect, Typography, type ChipValue } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
-const options = [
+const BRAND_OPTIONS = [
   { label: 'Apple', value: 1 },
   { label: 'Samsung', value: 2 },
   { label: 'Xiaomi', value: 3 },
   { label: 'Oppo', value: 4 },
   { label: 'Vivo', value: 5 },
-  { label: 'Realme', value: 6 },
-  { label: 'Asus', value: 7 },
-  { label: 'OnePlus', value: 8 },
-  { label: 'Huawei', value: 9 },
-  { label: 'Honor', value: 10 },
-  { label: 'Google', value: 11 },
-  { label: 'Motorola', value: 12 },
-  { label: 'Nokia', value: 13 },
-  { label: 'Infinix', value: 14 },
-  { label: 'Tecno', value: 15 },
-  { label: 'Sony', value: 16 },
-  { label: 'ZTE', value: 17 },
-  { label: 'Lenovo', value: 18 },
-  { label: 'Meizu', value: 19 },
-  { label: 'Nothing', value: 20 },
-  {
-    label:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, possimus.',
-    value: 21,
-  },
 ];
 
 export default function InputSelectScreen() {
-  const [selectedProduct, setSelectedProduct] = useState<ChipValue>(null);
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [single, setSingle] = useState<ChipValue>(null);
+  const [multi, setMulti] = useState<ChipValue[]>([]);
+  const [preselected, setPreselected] = useState<ChipValue>(1);
+
+  const labelOf = (value: ChipValue) =>
+    BRAND_OPTIONS.find((opt) => opt.value === value)?.label;
 
   return (
-    <Container style={styles.container}>
-      <InputSelect
-        label="Basic"
-        options={filteredOptions}
-        value={options?.find((opt) => opt.value === selectedProduct)?.label}
-        selectProps={{
-          delaySearch: 500,
-          value: [selectedProduct],
-          onSubmit: (value) => {
-            setSelectedProduct(value[0]);
-          },
-          onSearch: (value) => {
-            const result = options.filter((opt) =>
-              opt.label.toLowerCase().includes(value.toLowerCase())
-            );
+    <DemoScreen
+      title="Input Select"
+      description="Field pemicu bottom sheet berisi daftar opsi, mendukung pilihan tunggal, jamak, subtitle, badge, dan mode tanpa modal."
+    >
+      <DemoSection
+        title="Pilihan tunggal"
+        note="selectProps.onSubmit menerima array nilai terpilih; ambil elemen pertama untuk pilihan tunggal."
+      >
+        <InputSelect
+          label="Merek favorit"
+          options={BRAND_OPTIONS}
+          value={labelOf(single)}
+          selectProps={{
+            value: [single],
+            onSubmit: (value) => setSingle(value[0]),
+          }}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terpilih: ${labelOf(single) ?? '-'}`}
+        </Typography>
+      </DemoSection>
 
-            setFilteredOptions(result);
-          },
-        }}
-      />
+      <DemoSection
+        title="Pilihan jamak"
+        note="selectProps.multiple mengizinkan lebih dari satu opsi; nilai dan onSubmit berupa array ChipValue."
+      >
+        <DemoLabel text="selectProps={{ multiple: true }}" />
+        <InputSelect
+          label="Merek yang dipakai"
+          options={BRAND_OPTIONS}
+          value={multi.map(labelOf).filter(Boolean).join(', ')}
+          selectProps={{
+            multiple: true,
+            value: multi,
+            onSubmit: setMulti,
+          }}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terpilih: ${multi.map(labelOf).filter(Boolean).join(', ') || '-'}`}
+        </Typography>
+      </DemoSection>
 
-      <InputSelect
-        label="Icon"
-        options={filteredOptions}
-        icon="User"
-        iconColor={Color.primary[1000]}
-        value={options?.find((opt) => opt.value === selectedProduct)?.label}
-        selectProps={{
-          delaySearch: 500,
-          value: [selectedProduct],
-          onSubmit: (value) => {
-            setSelectedProduct(value[0]);
-          },
-          onSearch: (value) => {
-            const result = options.filter((opt) =>
-              opt.label.toLowerCase().includes(value.toLowerCase())
-            );
+      <DemoSection
+        title="Preselected"
+        note="value + selectProps.value diisi sejak awal untuk menampilkan pilihan yang sudah ada, mis. saat mode edit."
+      >
+        <InputSelect
+          label="Merek utama"
+          options={BRAND_OPTIONS}
+          value={labelOf(preselected)}
+          onClear={() => setPreselected(null)}
+          selectProps={{
+            value: [preselected],
+            onSubmit: (value) => setPreselected(value[0]),
+          }}
+        />
+      </DemoSection>
 
-            setFilteredOptions(result);
-          },
-        }}
-      />
+      <DemoSection
+        title="Subtitle & badge"
+        note="subtitle menambah baris info kedua; badge menampilkan label kecil berwarna di samping nilai."
+      >
+        <InputSelect
+          label="Status langganan"
+          value="Premium"
+          subtitle="Aktif sampai 31 Des 2026"
+          badge={{ value: 'Baru', color: 'success' }}
+          options={BRAND_OPTIONS}
+        />
+      </DemoSection>
 
-      <InputSelect
-        label="Hint"
-        hint="Select your favorite product"
-        options={filteredOptions}
-        iconColor={Color.primary[1000]}
-        value={options?.find((opt) => opt.value === selectedProduct)?.label}
-        selectProps={{
-          delaySearch: 500,
-          value: [selectedProduct],
-          onSubmit: (value) => {
-            setSelectedProduct(value[0]);
-          },
-          onSearch: (value) => {
-            const result = options.filter((opt) =>
-              opt.label.toLowerCase().includes(value.toLowerCase())
-            );
-
-            setFilteredOptions(result);
-          },
-        }}
-      />
-
-      <InputSelect
-        hasError
-        label="Validation Failed"
-        hint="Oops.. Something went wrong"
-        options={filteredOptions}
-        iconColor={Color.primary[1000]}
-        value={options?.find((opt) => opt.value === selectedProduct)?.label}
-        selectProps={{
-          delaySearch: 500,
-          value: [selectedProduct],
-          onSubmit: (value) => {
-            setSelectedProduct(value[0]);
-          },
-          onSearch: (value) => {
-            const result = options.filter((opt) =>
-              opt.label.toLowerCase().includes(value.toLowerCase())
-            );
-
-            setFilteredOptions(result);
-          },
-        }}
-      />
-
-      <InputSelect
-        label="Use Clear"
-        options={filteredOptions}
-        value={options?.find((opt) => opt.value === selectedProduct)?.label}
-        onClear={() => setSelectedProduct(null)}
-        selectProps={{
-          delaySearch: 500,
-          value: [selectedProduct],
-          onSubmit: (value) => {
-            setSelectedProduct(value[0]);
-          },
-          onSearch: (value) => {
-            const result = options.filter((opt) =>
-              opt.label.toLowerCase().includes(value.toLowerCase())
-            );
-
-            setFilteredOptions(result);
-          },
-        }}
-      />
-
-      <InputSelect
-        label="Use Subtitle & Badge"
-        subtitle="Subtitle here"
-        badge={{
-          value: 'New',
-          color: 'success',
-        }}
-        options={filteredOptions}
-        value={options?.find((opt) => opt.value === selectedProduct)?.label}
-        onClear={() => setSelectedProduct(null)}
-        selectProps={{
-          delaySearch: 500,
-          value: [selectedProduct],
-          onSubmit: (value) => {
-            setSelectedProduct(value[0]);
-          },
-          onSearch: (value) => {
-            const result = options.filter((opt) =>
-              opt.label.toLowerCase().includes(value.toLowerCase())
-            );
-
-            setFilteredOptions(result);
-          },
-        }}
-      />
-
-      <InputSelect label="Use Subtitle & Badge" useModal={false} />
-    </Container>
+      <DemoSection
+        title="Tanpa modal"
+        note="useModal={false} tidak membuka bottom sheet; gunakan onSelectClick untuk navigasi kustom, mis. ke layar detail."
+      >
+        <DemoLabel text="useModal={false}" />
+        <InputSelect
+          label="Alamat pengiriman"
+          value="Jl. Merdeka No. 1, Jakarta"
+          useModal={false}
+          onSelectClick={() => console.log('Buka layar pilih alamat')}
+        />
+      </DemoSection>
+    </DemoScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { gap: 12 },
-});

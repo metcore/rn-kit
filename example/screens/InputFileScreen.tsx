@@ -1,198 +1,85 @@
-import {
-  Button,
-  Color,
-  Container,
-  Footer,
-  InputFile,
-  Typography,
-  useToast,
-} from '@herca/rn-kit';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import type { FileItem, UploadedFile } from '../../src/Input/type';
+import { Color, InputFile, Typography } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 import { types } from '@react-native-documents/picker';
+// TODO: export dari @herca/rn-kit
+import type { FileItem } from '../../src/Input/type';
+
+const preloadedFiles: FileItem[] = [
+  {
+    name: 'React Native Docs.pdf',
+    uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    type: 'application/pdf',
+  },
+];
 
 export default function InputFileScreen() {
-  const toast = useToast();
-  const onlineFiles: FileItem[] & { id: number }[] = [
-    {
-      id: 1,
-      name: 'React Native Docs.pdf',
-      uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-      type: 'application/pdf',
-    },
-    {
-      id: 2,
-      name: 'Sample Image.jpg',
-      uri: 'https://cdn.herca.id/stg/uploads/images_face_recog/98_2025-09-03_1417182857c2f1-6278-4c26-9919-cad4495974ca.JPEG',
-      type: 'image/jpeg',
-    },
-  ];
-
-  const [attachments, setAttachments] = useState<FileItem[]>(onlineFiles);
-  const [hasError, setHasError] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const [demoUploadValue, setDemoUploadValue] = useState<
-    UploadedFile<any>[] | null
-  >(null);
-
-  const validate = () => {
-    const validated = attachments.map((file, index) => {
-      const size = (file?.size ?? file?.fileSize ?? 0) / (1024 * 1024);
-      if (size > 3) {
-        setHasError(true);
-        return {
-          ...file,
-          hint: `Ukuran file untuk file ke ${index + 1} melebihi 3MB`,
-          error: true,
-        };
-      }
-
-      return { ...file, hint: undefined, error: false };
-    });
-
-    setAttachments(validated);
-  };
-
-  // useEffect(() => {
-  //   console.log(attachments);
-  // }, [attachments]);
+  const [picked, setPicked] = useState<FileItem[]>([]);
+  const [attachments, setAttachments] = useState<FileItem[]>(preloadedFiles);
 
   return (
-    <ScrollView>
-      <Container style={styles.container}>
+    <DemoScreen
+      title="Input File"
+      description="Pemicu untuk memilih file dari kamera, galeri, atau dokumen perangkat, lengkap dengan preview, ganti, dan hapus file."
+    >
+      <DemoSection
+        title="Alur pilih file"
+        note="Menekan trigger membuka bottom sheet pilihan sumber (kamera/galeri/dokumen); multiple mengizinkan lebih dari satu file."
+      >
         <InputFile
           multiple
           variant="small"
-          onChange={(value) => setAttachments(value)}
-          hasError={hasError}
-          value={attachments}
-          title="Upload File"
-          btnChooseFileText="Pilih File"
-          modalPickFileText={{
-            title: 'pilih file yang kamu sukai',
-            description: 'Pilih file yang kamu sukai di alamm 5MB.',
-            camera: {
-              title: 'Ambil Fotooo',
-              description: 'Ambil foto dari kamera mu',
-            },
-            gallery: {
-              title: 'Ambil Foto Dari Galeri',
-              description: 'Awas ada sule',
-            },
-            document: {
-              title: 'Ambil dokumen',
-              description: 'Cari dokumen dari file manager!',
-            },
-          }}
-          modalDeleteText={{
-            title: 'Ini Adalah Title',
-            description: 'Ini Adalah description yang sangat panjang dan',
-            confirmBtn: {
-              confirm: 'Hapus',
-              cancel: 'Cek Kembali',
-            },
-          }}
+          title="Upload dokumen"
+          btnChooseFileText="Pilih file"
+          value={picked}
+          onChange={setPicked}
         />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terpilih: ${picked.length} file`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Daftar file terpilih"
+        note="value diisi dari luar untuk menampilkan file yang sudah ada, mis. saat mode edit; variant default menampilkan judul dan deskripsi."
+      >
         <InputFile
-          multiple
-          maxSize={1}
+          title="Bukti pembayaran"
+          description="Format JPG, PNG, atau PDF"
+          value={attachments}
+          onChange={setAttachments}
+        />
+      </DemoSection>
+
+      <DemoSection
+        title="Batasan tipe & ukuran"
+        note="accept membatasi tipe dokumen; maxSize (dalam MB) dan maxSizeErrorMessage menolak file yang kelebihan ukuran sebelum diproses."
+      >
+        <DemoLabel text="accept maxSize={1}" />
+        <InputFile
+          variant="small"
           title="Upload KTP"
-          maxSizeErrorMessage="File terlalu besar"
           accept={[types.pdf, types.images]}
-          value={demoUploadValue as any[]}
-          uploadConfig={{
-            url: 'https://stg.media.herca.id/api/upload',
-            method: 'POST',
-            fieldName: 'file',
-            onUploading: (uploading) => {
-              setIsUploading(uploading ?? false);
-            },
-            headers: {
-              'X-API-KEY': '19ee5d65cf71b64e5ed168dbf4817e89bc9024b90c499557',
-            },
-            extractUrl: (res: any) => res.data.url,
-            errorMessage: 'Gagal mengupload file',
-
-            onError: (file, err) => {
-              console.warn('Gagal upload:', file, err);
-            },
-
-            onUploadSuccess: (results) => {
-              console.log({ results });
-              toast.show('Uploaded', {
-                color: 'success',
-              });
-            },
-          }}
-          onChange={(uploadedResults) => {
-            setDemoUploadValue(uploadedResults);
-          }}
+          maxSize={1}
+          maxSizeErrorMessage="Ukuran file maksimal 1MB"
         />
+      </DemoSection>
 
+      <DemoSection
+        title="Hapus file"
+        note="Menekan file yang sudah ada memunculkan opsi ganti/hapus; modalDeleteText mengganti teks pada modal konfirmasi hapus."
+      >
         <InputFile
+          title="Bukti pembayaran"
           value={attachments}
-          hasError={hasError}
-          onChange={(value) => setAttachments(value)}
-          title="Upload bukti"
-          btnChooseFileText="Pilih File"
-          description="Uplaod bukti pembayaran sekarang juga gpl ya"
-          modalPickFileText={{
-            title: 'pilih file yang kamu sukai',
-            description: 'Pilih file yang kamu sukai di alamm 5MB.',
-            camera: {
-              title: 'Ambil Fotooo',
-              description: 'Ambil foto dari kamera mu',
-            },
-            gallery: {
-              title: 'Ambil Foto Dari Galeri',
-              description: 'Awas ada sule',
-            },
-            document: {
-              title: 'Ambil dokumen',
-              description: 'Cari dokumen dari file manager!',
-            },
-          }}
+          onChange={setAttachments}
           modalDeleteText={{
-            title: 'Ini Adalah Title',
-            description: 'Ini Adalah description yang sangat panjang dan',
-            confirmBtn: {
-              confirm: 'Hapus',
-              cancel: 'Cek Kembali',
-            },
+            title: 'Hapus dokumen ini?',
+            description: 'Dokumen yang dihapus tidak bisa dikembalikan.',
+            confirmBtn: { confirm: 'Hapus', cancel: 'Batal' },
           }}
         />
-
-        <View style={styles.resultContainer}>
-          <Typography variant="t2" weight="medium" color={Color.gray[900]}>
-            Result example:
-          </Typography>
-          <Typography variant="t3" weight="medium" color={Color.gray[600]}>
-            {JSON.stringify(attachments, null, 2)}
-          </Typography>
-        </View>
-        <Footer style={styles.footer}>
-          <Button
-            title="Simpan"
-            onPress={validate}
-            color="primary"
-            loading={isUploading}
-            disabled={isUploading}
-          />
-        </Footer>
-      </Container>
-    </ScrollView>
+      </DemoSection>
+    </DemoScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 45,
-    gap: 10,
-  },
-  footer: {
-    padding: 24,
-  },
-  resultContainer: { marginTop: 10 },
-});
