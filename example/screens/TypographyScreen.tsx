@@ -10,8 +10,8 @@ const VARIANTS = [
   { variant: 'p1', size: '20 / 30' },
   { variant: 'p2', size: '18 / 28' },
   { variant: 'p3', size: '16 / 26' },
-  { variant: 't1', size: '14 / 14' },
-  { variant: 't2', size: '12 / 14' },
+  { variant: 't1', size: '14 / 24' },
+  { variant: 't2', size: '12 / 20' },
   { variant: 't3', size: '10 / 14' },
 ] as const;
 

@@ -59,5 +59,7 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flex: 1,
+    gap: 20,
+    paddingTop: 12,
   },
 });
