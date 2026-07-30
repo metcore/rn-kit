@@ -59,7 +59,7 @@ export default function AvatarScreen() {
         title="Fallback tanpa data"
         note="Tanpa source maupun name, Avatar tetap tampil sebagai lingkaran polos berwarna backgroundColor."
       >
-        <DemoLabel text="backgroundColor tanpa name/source" />
+        <DemoLabel text="backgroundColor" />
         <Avatar size="large" backgroundColor={Color.gray[300]} />
       </DemoSection>
     </DemoScreen>

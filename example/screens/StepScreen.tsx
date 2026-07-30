@@ -42,7 +42,6 @@ export default function StepScreen() {
             ))}
           </Step>
         </View>
-        <DemoLabel text="Sebelumnya / Berikutnya" />
         <View style={styles.actions}>
           <Button
             title="Sebelumnya"
