@@ -1,6 +1,6 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   Button: undefined;
   Typography: undefined;
