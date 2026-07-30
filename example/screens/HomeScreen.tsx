@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Container, Input, Typography } from '@herca/rn-kit';
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { Color, Container, Icon, Input, Typography } from '@herca/rn-kit';
 import { useNavigation } from '@react-navigation/native';
 import ReactLogo from '../components/ReactLogo';
 import { COMPONENT_CATALOG } from '../data/componentCatalog';
@@ -35,27 +41,40 @@ const HomeScreen: React.FC = () => {
         keyboardShouldPersistTaps="handled"
       >
         <Container style={styles.container}>
-          <View style={styles.header}>
-            <ReactLogo size={48} />
-            <Typography variant="h2" weight="bold">
-              Rn-Kit Components
-            </Typography>
+          <View style={styles.topBar}>
+            <ReactLogo size={28} />
+            <View style={styles.flex}>
+              <Input
+                icon="Search"
+                placeholder="Cari komponen..."
+                value={query}
+                onChangeText={setQuery}
+                clearButton
+              />
+            </View>
           </View>
 
-          <Button
-            color="primary"
-            title="Example"
+          <Pressable
+            style={({ pressed }) => [
+              styles.banner,
+              pressed && styles.bannerPressed,
+            ]}
             onPress={() => navigation.navigate('Example')}
-            block
-          />
-
-          <Input
-            icon="Search"
-            placeholder="Cari komponen..."
-            value={query}
-            onChangeText={setQuery}
-            clearButton
-          />
+          >
+            <View style={styles.flex}>
+              <Typography
+                variant="t1"
+                weight="bold"
+                color={Color.base.white100}
+              >
+                Example App
+              </Typography>
+              <Typography variant="t3" color={Color.primary[200]}>
+                Lihat contoh screen jadi dari komponen rn-kit
+              </Typography>
+            </View>
+            <Icon name="arrow-right-long" size={20} color="#FFFFFF" />
+          </Pressable>
 
           {filteredCatalog.length === 0 && (
             <Typography variant="t1" style={styles.emptyState}>
@@ -65,18 +84,40 @@ const HomeScreen: React.FC = () => {
 
           {filteredCatalog.map((category) => (
             <View key={category.category} style={styles.section}>
-              <Typography variant="h3" weight="bold">
+              <Typography variant="p3" weight="semibold">
                 {category.category}
               </Typography>
               <View style={styles.grid}>
                 {category.items.map((item) => (
-                  <Button
+                  <Pressable
                     key={item.screen}
-                    color="primary"
-                    title={item.label}
+                    style={styles.tile}
                     onPress={() => navigation.navigate(item.screen as never)}
-                    width="48%"
-                  />
+                  >
+                    {({ pressed }) => (
+                      <>
+                        <View
+                          style={[
+                            styles.tileIconBox,
+                            pressed && styles.tileIconBoxPressed,
+                          ]}
+                        >
+                          <Icon
+                            name={item.icon}
+                            size={24}
+                            color={Color.primary[600]}
+                          />
+                        </View>
+                        <Typography
+                          variant="t3"
+                          style={styles.tileLabel}
+                          numberOfLines={2}
+                        >
+                          {item.label}
+                        </Typography>
+                      </>
+                    )}
+                  </Pressable>
                 ))}
               </View>
             </View>
@@ -95,20 +136,53 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   container: {
-    gap: 16,
+    gap: 20,
+    paddingTop: 8,
   },
-  header: {
+  topBar: {
+    flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginTop: 8,
+    gap: 10,
+  },
+  banner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: Color.primary[500],
+    borderRadius: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+  bannerPressed: {
+    backgroundColor: Color.primary[600],
   },
   section: {
-    gap: 8,
+    gap: 12,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    rowGap: 16,
+  },
+  tile: {
+    width: '25%',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 2,
+  },
+  tileIconBox: {
+    width: 56,
+    height: 56,
+    borderRadius: 18,
+    backgroundColor: Color.primary[50],
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tileIconBoxPressed: {
+    backgroundColor: Color.primary[100],
+  },
+  tileLabel: {
+    textAlign: 'center',
   },
   emptyState: {
     textAlign: 'center',

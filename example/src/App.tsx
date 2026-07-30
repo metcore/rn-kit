@@ -87,7 +87,11 @@ const App = () => {
               },
             }}
           >
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="Container" component={ContainerScreen} />
             <Stack.Screen name="Card" component={CardScreen} />
             <Stack.Screen name="Button" component={ButtonScreen} />
