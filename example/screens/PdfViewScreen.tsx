@@ -7,11 +7,10 @@ export default function PdfViewScreen() {
     <DemoScreen
       title="PdfView"
       description="PdfView menampilkan file PDF dari URL memakai react-native-pdf, memenuhi kontainer flex yang membungkusnya."
-      scrollable={false}
     >
       <DemoSection
         title="Menampilkan PDF dari URL"
-        note="source.uri menerima URL PDF; PdfView butuh kontainer dengan tinggi pasti (di sini flex:1) agar dokumen bisa discroll dan di-zoom."
+        note="source.uri menerima URL PDF; PdfView butuh kontainer dengan tinggi pasti (di sini tinggi tetap) agar dokumen bisa discroll dan di-zoom."
       >
         <View style={styles.viewer}>
           <PdfView
@@ -26,6 +25,8 @@ export default function PdfViewScreen() {
 
 const styles = StyleSheet.create({
   viewer: {
-    flex: 1,
+    height: 480,
+    borderRadius: 16,
+    overflow: 'hidden',
   },
 });
