@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { Color, Typography, BadgeIcon } from '@herca/rn-kit';
 import {
   DemoScreen,
@@ -42,12 +43,18 @@ export default function BadgeIconScreen() {
         note="Prop size mendukung tiga nilai: small, medium, dan large."
       >
         <DemoRow>
-          <DemoLabel text='size="small"' />
-          <BadgeIcon icon="Bell" color="primary" size="small" />
-          <DemoLabel text='size="medium"' />
-          <BadgeIcon icon="Bell" color="primary" size="medium" />
-          <DemoLabel text='size="large"' />
-          <BadgeIcon icon="Bell" color="primary" size="large" />
+          <View>
+            <DemoLabel text='size="small"' />
+            <BadgeIcon icon="Bell" color="primary" size="small" />
+          </View>
+          <View>
+            <DemoLabel text='size="medium"' />
+            <BadgeIcon icon="Bell" color="primary" size="medium" />
+          </View>
+          <View>
+            <DemoLabel text='size="large"' />
+            <BadgeIcon icon="Bell" color="primary" size="large" />
+          </View>
         </DemoRow>
       </DemoSection>
 
