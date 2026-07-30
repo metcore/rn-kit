@@ -26,7 +26,7 @@ export default function BadgeScreen() {
     >
       <DemoSection
         title="Varian warna"
-        note="Prop color memilih tema warna latar dan teks badge; bisa juga diisi kode hex kustom."
+        note="color memilih tema warna latar dan teks badge; bisa juga diisi kode hex kustom."
       >
         <DemoRow>
           {COLORS.map((color) => (
@@ -37,7 +37,7 @@ export default function BadgeScreen() {
 
       <DemoSection
         title="Ukuran"
-        note="Prop size hanya mendukung dua nilai: small dan medium."
+        note="size hanya mendukung dua nilai: small dan medium."
       >
         <DemoRow>
           <View>

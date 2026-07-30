@@ -16,7 +16,7 @@ const team = [
 export default function AvatarGroupScreen() {
   return (
     <DemoScreen
-      title="AvatarGroup"
+      title="Avatar Group"
       description="AvatarGroup menyusun beberapa Avatar bertumpuk; entri tanpa name maupun source menampilkan ikon pengguna sebagai fallback."
     >
       <DemoSection

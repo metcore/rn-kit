@@ -29,7 +29,7 @@ export default function BadgeIconScreen() {
     >
       <DemoSection
         title="Ikon & warna"
-        note="Prop icon menampilkan ikon di tengah badge; color memilih tema warna latar dan ikon."
+        note="icon menampilkan ikon di tengah badge; color memilih tema warna latar dan ikon."
       >
         <DemoRow>
           {COLORS.map((color) => (
@@ -40,7 +40,7 @@ export default function BadgeIconScreen() {
 
       <DemoSection
         title="Ukuran"
-        note="Prop size mendukung tiga nilai: small, medium, dan large."
+        note="size mendukung tiga nilai: small, medium, dan large."
       >
         <DemoRow>
           <View>

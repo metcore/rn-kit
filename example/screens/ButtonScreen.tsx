@@ -31,7 +31,7 @@ export default function ButtonScreen() {
     >
       <DemoSection
         title="Varian"
-        note="Prop variant mengubah gaya tampilan: default (penuh warna), outline (border saja), atau tertiary (minimalis)."
+        note="variant mengubah gaya tampilan: default (penuh warna), outline (border saja), atau tertiary (minimalis)."
       >
         <DemoRow>
           {VARIANTS.map((variant) => (
@@ -45,7 +45,7 @@ export default function ButtonScreen() {
 
       <DemoSection
         title="Ukuran"
-        note="Prop size mengatur padding tombol: small, medium, atau large."
+        note="size mengatur padding tombol: small, medium, atau large."
       >
         <DemoRow>
           {SIZES.map((size) => (
@@ -59,7 +59,7 @@ export default function ButtonScreen() {
 
       <DemoSection
         title="Warna"
-        note="Prop color memilih tema warna tombol pada variant default."
+        note="color memilih tema warna tombol pada variant default."
       >
         <DemoRow>
           {COLORS.map((color) => (
@@ -70,7 +70,7 @@ export default function ButtonScreen() {
 
       <DemoSection
         title="Keadaan nonaktif & loading"
-        note="Prop disabled mengunci tombol; loading menampilkan indikator sambil menyembunyikan title."
+        note="disabled mengunci tombol; loading menampilkan indikator sambil menyembunyikan title."
       >
         <DemoRow>
           <View style={styles.item}>
@@ -86,7 +86,7 @@ export default function ButtonScreen() {
 
       <DemoSection
         title="Lebar tombol"
-        note="Prop block membuat tombol memenuhi lebar kontainer; width mengatur lebar spesifik dalam piksel."
+        note="block membuat tombol memenuhi lebar kontainer; width mengatur lebar spesifik dalam piksel."
       >
         <DemoLabel text="block" />
         <Button title="Lebar penuh" block color="primary" />
@@ -96,7 +96,7 @@ export default function ButtonScreen() {
 
       <DemoSection
         title="Konten kustom"
-        note="Prop children menggantikan title sehingga isi tombol bisa berupa kombinasi ikon dan teks bebas."
+        note="children menggantikan title sehingga isi tombol bisa berupa kombinasi ikon dan teks bebas."
       >
         <DemoLabel text="children" />
         <Button color="primary">

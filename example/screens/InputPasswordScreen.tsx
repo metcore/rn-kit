@@ -26,7 +26,6 @@ export default function InputPasswordScreen() {
         title="Toggle lihat sandi"
         note="Ikon kanan (mata) dan togglenya sudah bawaan komponen; iconRight/onPressIconRight tidak perlu diatur manual."
       >
-        <DemoLabel text="tekan ikon mata untuk toggle" />
         <InputPassword
           icon="lock-fill"
           label="Kata sandi baru"
@@ -49,7 +48,7 @@ export default function InputPasswordScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Controlled"
+        title="Terkontrol"
         note="value + onChangeText mengontrol isi dari state; readout di bawah menghitung panjang karakternya."
       >
         <InputPassword

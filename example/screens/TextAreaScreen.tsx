@@ -21,7 +21,7 @@ export default function TextAreaScreen() {
 
       <DemoSection
         title="Tinggi kustom"
-        note="Prop height mengatur tinggi area teks secara eksplisit (default 116)."
+        note="height mengatur tinggi area teks secara eksplisit (default 116)."
       >
         <DemoLabel text="height={80}" />
         <TextArea
@@ -61,7 +61,7 @@ export default function TextAreaScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Nonaktif"
+        title="Keadaan nonaktif"
         note="editable={false} mengunci area teks agar tidak bisa diubah."
       >
         <DemoLabel text="editable={false}" />

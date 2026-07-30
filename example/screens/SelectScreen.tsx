@@ -120,7 +120,7 @@ export default function SelectScreen() {
 
       <DemoSection
         title="Nilai pra-pilih"
-        note="Prop value mensinkronkan pilihan yang sudah aktif setiap kali bottom sheet dibuka ulang."
+        note="value mensinkronkan pilihan yang sudah aktif setiap kali bottom sheet dibuka ulang."
       >
         <DemoLabel text="value={['mango']}" />
         <Button

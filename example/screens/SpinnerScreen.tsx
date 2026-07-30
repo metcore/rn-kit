@@ -23,7 +23,7 @@ export default function SpinnerScreen() {
     >
       <DemoSection
         title="Ukuran"
-        note="Prop size mengatur diameter spinner dalam piksel."
+        note="size mengatur diameter spinner dalam piksel."
       >
         <DemoRow>
           {SIZES.map((size) => (
@@ -37,7 +37,7 @@ export default function SpinnerScreen() {
 
       <DemoSection
         title="Warna"
-        note="Prop color mengatur warna awal gradasi stroke spinner."
+        note="color mengatur warna awal gradasi stroke spinner."
       >
         <DemoRow>
           {COLORS.map(({ label, value }) => (

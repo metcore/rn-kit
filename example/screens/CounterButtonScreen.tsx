@@ -11,7 +11,7 @@ export default function CounterButtonScreen() {
       description="Tombol penghitung untuk menaikkan atau menurunkan nilai numerik dalam batas minimum dan maksimum."
     >
       <DemoSection
-        title="Controlled dasar"
+        title="Terkontrol dasar"
         note="Nilai dikendalikan lewat value dan onChange; readout di bawah menampilkan nilai terkini."
       >
         <CounterButton value={value} min={1} max={10} onChange={setValue} />
@@ -22,7 +22,7 @@ export default function CounterButtonScreen() {
 
       <DemoSection
         title="Varian warna"
-        note="Prop variant menentukan gaya tombol +/-: default (outline) atau color (filled)."
+        note="variant menentukan gaya tombol +/-: default (outline) atau color (filled)."
       >
         <DemoLabel text='variant="color"' />
         <CounterButton value={2} min={0} max={10} variant="color" />

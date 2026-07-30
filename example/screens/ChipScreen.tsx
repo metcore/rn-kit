@@ -25,7 +25,7 @@ export default function ChipScreen() {
 
   return (
     <DemoScreen
-      title="Chip"
+      title="Chip Select"
       description="Chip menampilkan daftar opsi ringkas berbentuk pil, dipakai untuk filter, tag, atau pilihan tunggal/jamak."
     >
       <DemoSection
@@ -45,7 +45,7 @@ export default function ChipScreen() {
 
       <DemoSection
         title="Pilihan jamak"
-        note="Prop multiple mengizinkan lebih dari satu chip terpilih sekaligus."
+        note="multiple mengizinkan lebih dari satu chip terpilih sekaligus."
       >
         <DemoLabel text="multiple" />
         <Chip

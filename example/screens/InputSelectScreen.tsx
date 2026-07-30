@@ -63,7 +63,7 @@ export default function InputSelectScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Preselected"
+        title="Nilai pra-pilih"
         note="value + selectProps.value diisi sejak awal untuk menampilkan pilihan yang sudah ada, mis. saat mode edit."
       >
         <InputSelect

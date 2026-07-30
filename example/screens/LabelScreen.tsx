@@ -26,7 +26,7 @@ export default function LabelScreen() {
     >
       <DemoSection
         title="Varian warna"
-        note="Prop color menentukan 8 kombinasi warna background dan teks yang tersedia."
+        note="color menentukan 8 kombinasi warna background dan teks yang tersedia."
         row
       >
         {COLORS.map((color) => (
@@ -39,7 +39,7 @@ export default function LabelScreen() {
 
       <DemoSection
         title="Dengan icon"
-        note="Prop icon menampilkan ikon di sebelah kiri teks label."
+        note="icon menampilkan ikon di sebelah kiri teks label."
         row
       >
         <Label label="Terjadwal" color="info" icon="Calendar" />
@@ -57,7 +57,7 @@ export default function LabelScreen() {
 
       <DemoSection
         title="Konten kustom"
-        note="Prop children menggantikan label & icon bawaan dengan isi bebas."
+        note="children menggantikan label & icon bawaan dengan isi bebas."
       >
         <DemoLabel
           text={'<Label color="purple"><Icon /><Typography /></Label>'}
@@ -66,7 +66,7 @@ export default function LabelScreen() {
           <DemoRow style={styles.customRow}>
             <Icon name="Check" color={Color.purple[300]} size={12} />
             <Typography variant="t2" color={Color.purple[300]}>
-              Custom
+              Kustom
             </Typography>
           </DemoRow>
         </Label>

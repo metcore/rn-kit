@@ -48,7 +48,7 @@ export default function ContainerScreen() {
 
       <DemoSection
         title="Style override"
-        note="Prop style menambah atau menimpa gaya default Container, misalnya background dan radius."
+        note="style menambah atau menimpa gaya default Container, misalnya background dan radius."
       >
         <DemoLabel text="style={{ backgroundColor: Color.primary[50] }}" />
         <Container style={styles.overrideBg}>

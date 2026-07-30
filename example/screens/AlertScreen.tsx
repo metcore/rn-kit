@@ -21,7 +21,7 @@ export default function AlertScreen() {
     >
       <DemoSection
         title="Varian warna"
-        note="Prop color memilih tema warna latar, border, ikon, dan teks alert."
+        note="color memilih tema warna latar, border, ikon, dan teks alert."
       >
         {COLORS.map((color) => (
           <View key={color} style={styles.item}>

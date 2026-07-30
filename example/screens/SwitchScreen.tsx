@@ -11,7 +11,7 @@ export default function SwitchScreen() {
       description="Saklar on/off dengan label, hint, dan status error, cocok untuk pengaturan yang berlaku langsung."
     >
       <DemoSection
-        title="Controlled dasar"
+        title="Terkontrol dasar"
         note="value dan onChange mengendalikan status saklar; readout di bawah menampilkan nilai boolean saat ini."
       >
         <Switch label="Notifikasi push" value={value} onChange={setValue} />

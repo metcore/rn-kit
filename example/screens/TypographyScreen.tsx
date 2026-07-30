@@ -46,7 +46,7 @@ export default function TypographyScreen() {
 
       <DemoSection
         title="Ketebalan"
-        note="Prop weight mengatur ketebalan huruf tanpa mengubah ukuran variant."
+        note="weight mengatur ketebalan huruf tanpa mengubah ukuran variant."
       >
         {WEIGHTS.map((weight) => (
           <View key={weight}>
@@ -74,7 +74,7 @@ export default function TypographyScreen() {
 
       <DemoSection
         title="Perataan"
-        note="Prop center dan right mengatur perataan teks di dalam baris."
+        note="center dan right mengatur perataan teks di dalam baris."
       >
         <DemoLabel text="center" />
         <Typography variant="p2" center color={Color.gray[900]}>

@@ -5,7 +5,7 @@ import { DemoScreen, DemoSection } from '../components/demo';
 export default function PdfViewScreen() {
   return (
     <DemoScreen
-      title="PdfView"
+      title="Pdf Viewer"
       description="PdfView menampilkan file PDF dari URL memakai react-native-pdf, memenuhi kontainer flex yang membungkusnya."
     >
       <DemoSection

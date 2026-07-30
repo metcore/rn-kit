@@ -23,7 +23,7 @@ export default function RadioButtonScreen() {
       description="Grup pilihan tunggal berbentuk lingkaran radio, dengan dukungan opsi nonaktif dan layout horizontal."
     >
       <DemoSection
-        title="Grup controlled"
+        title="Grup terkontrol"
         note="selectedValue dan onChange mengendalikan opsi terpilih; readout di bawah menampilkan value saat ini."
       >
         <RadioButton

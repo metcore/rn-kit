@@ -45,7 +45,7 @@ export default function TimePickerScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Nilai awal"
+        title="Nilai pra-pilih"
         note="value mengontrol wheel dari luar sehingga picker terbuka langsung pada jam yang ditentukan."
       >
         <DemoLabel text="value={{ hour: 9, minute: 30 }}" />

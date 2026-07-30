@@ -32,7 +32,7 @@ export default function CheckBoxScreen() {
       description="Kotak centang untuk persetujuan tunggal atau daftar pilihan jamak dengan berbagai warna aktif."
     >
       <DemoSection
-        title="Controlled tunggal"
+        title="Terkontrol tunggal"
         note="checked dan onChange mengendalikan status centang; hint menampilkan keterangan di bawah label."
       >
         <CheckBox
@@ -63,7 +63,7 @@ export default function CheckBoxScreen() {
 
       <DemoSection
         title="Varian warna"
-        note="Prop color mengatur warna latar saat checkbox dicentang."
+        note="color mengatur warna latar saat checkbox dicentang."
       >
         <DemoRow>
           {COLORS.map((color) => (

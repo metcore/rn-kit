@@ -208,12 +208,12 @@ export default function IconScreen() {
 
   return (
     <DemoScreen
-      title="Icon"
+      title="Icons"
       description={`Kumpulan ${ICON_NAMES.length} ikon SVG siap pakai dengan ukuran dan warna yang bisa diatur lewat prop.`}
     >
       <DemoSection
         title="Ukuran"
-        note="Prop size mengatur ukuran ikon dalam piksel."
+        note="size mengatur ukuran ikon dalam piksel."
       >
         <DemoRow>
           {SIZES.map((size) => (
@@ -227,7 +227,7 @@ export default function IconScreen() {
 
       <DemoSection
         title="Warna"
-        note="Prop color menerima nilai warna string apa pun, biasanya diambil dari token Color."
+        note="color menerima nilai warna string apa pun, biasanya diambil dari token Color."
       >
         <DemoRow>
           {COLORS.map(({ label, value }) => (

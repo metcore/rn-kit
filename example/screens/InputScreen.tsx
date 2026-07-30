@@ -90,7 +90,7 @@ export default function InputScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Nonaktif"
+        title="Keadaan nonaktif"
         note="editable={false}, salah satu props bawaan TextInput, mengunci input agar tidak bisa diubah."
       >
         <DemoLabel text="editable={false}" />
@@ -98,7 +98,7 @@ export default function InputScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Controlled"
+        title="Terkontrol"
         note="value + onChangeText menjadikan Input terkontrol dari state; readout di bawah menampilkan nilainya."
       >
         <Input
