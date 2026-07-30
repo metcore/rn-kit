@@ -42,7 +42,7 @@ const HomeScreen: React.FC = () => {
       >
         <Container style={styles.container}>
           <View style={styles.topBar}>
-            <ReactLogo size={28} />
+            <ReactLogo size={28} color={Color.primary[1000]} />
             <View style={styles.flex}>
               <Input
                 icon="Search"
@@ -69,7 +69,7 @@ const HomeScreen: React.FC = () => {
               >
                 Example App
               </Typography>
-              <Typography variant="t3" color={Color.primary[200]}>
+              <Typography variant="t3" color={Color.primary[300]}>
                 Lihat contoh screen jadi dari komponen rn-kit
               </Typography>
             </View>
@@ -105,7 +105,7 @@ const HomeScreen: React.FC = () => {
                           <Icon
                             name={item.icon}
                             size={24}
-                            color={Color.primary[600]}
+                            color={Color.primary[1000]}
                           />
                         </View>
                         <Typography
@@ -148,13 +148,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    backgroundColor: Color.primary[500],
+    backgroundColor: Color.primary[1000],
     borderRadius: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
   bannerPressed: {
-    backgroundColor: Color.primary[600],
+    backgroundColor: Color.primary[950],
   },
   section: {
     gap: 12,
