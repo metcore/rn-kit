@@ -1,479 +1,89 @@
-// App.js
 import { useState } from 'react';
-import {
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
-import {
-  Alert,
-  BottomSheet,
-  Button,
-  Calendar,
-  Card,
-  Center,
-  Color,
-  Container,
-  Footer,
-  Label,
-  List,
-  ListItem,
-  Modal,
-  Step,
-  Typography,
-} from '@herca/rn-kit';
-import { StepItem } from '@herca/rn-kit';
-import { useNavigation } from '@react-navigation/native';
-import type { NavigationProps } from '../type/navigation';
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    leave_name: 'Sakit Dengan Surat Dokter',
-    max_day: 1,
-  },
-  {
-    id: 'bd7acbea-c1b1-426c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbea-c1b1-42622-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbea-czb1-426c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbea-cz3-426c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbea-czb1-42c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbea-czb1-242c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7a1cbea-czb1-42c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7a1cbea-cz1b1-42c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti dsNikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd73acbea-czb1-42c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbe3a-czb1-42c2-aed5-3ad53abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
-  {
-    id: 'bd7acbea-czb1-42c2-aed5-3ad531abb28ba',
-    leave_name: 'Cuti Nikah',
-    max_day: 20,
-  },
+import { StyleSheet, View } from 'react-native';
+import { Button, Color, Step, StepItem, Typography } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
+
+const STEPS = [
+  { title: 'Alamat', desc: 'Isi alamat lengkap tujuan pengiriman.' },
+  { title: 'Pembayaran', desc: 'Pilih metode pembayaran yang tersedia.' },
+  { title: 'Konfirmasi', desc: 'Periksa kembali detail sebelum mengirim.' },
 ];
 
-interface DataCutiProps {
-  id: string | number;
-  leave_name: string;
-  max_day: number;
-}
-
-interface LeaveData {
-  leave_id?: string | number;
-  date?: string;
-  remark?: string;
-  employee_id?: number;
-  status?: 'pending' | 'approved' | 'rejected';
-  day_type?: number;
-}
-
 export default function StepScreen() {
-  const navigation = useNavigation<NavigationProps>();
   const [current, setCurrent] = useState(0);
-  const [isOpenConrimSubmitBottomSheet, setIsOpenConrimSubmitBottomSheet] =
-    useState(false);
-  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState(false);
-  const [data, setData] = useState<LeaveData | null>(null);
-
-  const handleNextStep = () => {
-    setCurrent((prev) => Math.min(prev + 1, 3));
-  };
-
-  const handleChangeStep = (val: number) => {
-    console.log(val);
-  };
-
-  const handleSubmit = () => {
-    setIsOpenConrimSubmitBottomSheet(false);
-    setIsOpenSuccessModal(true);
-  };
-
-  const handleOnPressBottomSheetDayType = () => {
-    setCurrent((prev) => Math.min(prev + 1, 3));
-  };
-
-  const handleSetData = (name: string, val: string | number) => {
-    setData((prev) => ({
-      ...prev,
-      [name]: val,
-    }));
-  };
-
-  const Item = ({ item }: { item: DataCutiProps }) => (
-    <TouchableOpacity
-      onPress={() => handleSetData('leave_id', item.id)}
-      style={{ gap: 8, flex: 1 }}
-    >
-      <Card
-        style={[
-          {
-            marginBottom: 8,
-            gap: 8,
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-          },
-          data?.leave_id === item.id && {
-            backgroundColor: Color.primary[50],
-            borderColor: Color.primary[300],
-          },
-        ]}
-      >
-        <Label color="info">
-          <Typography
-            variant="t2"
-            weight="medium"
-            center
-            color={Color.info[500]}
-          >
-            {item.max_day}
-          </Typography>
-          <Typography variant="t3" weight="medium" color={Color.info[400]}>
-            Hari
-          </Typography>
-        </Label>
-        <Typography weight="semibold" variant="t2" color={Color.gray[800]}>
-          {item.leave_name}
-        </Typography>
-      </Card>
-    </TouchableOpacity>
-  );
-
-  const renderFooter = () => {
-    if (current === 3) {
-      return (
-        <View style={styles.containerFooter}>
-          <View>
-            <Typography variant="t2" weight="medium" color={Color.gray[500]}>
-              Pengajuan Cuti
-            </Typography>
-            <Typography variant="t1" weight="semibold" color={Color.gray[800]}>
-              25 Des 2024 (1 Hari)
-            </Typography>
-          </View>
-          <Button
-            color="primary"
-            title="Simpan"
-            onPress={() => setIsOpenConrimSubmitBottomSheet(true)}
-          />
-        </View>
-      );
-    }
-    return (
-      <Button title="Lanjutkan" color="primary" onPress={handleNextStep} />
-    );
-  };
 
   return (
-    <SafeAreaView style={styles.containerSafeAreaView}>
-      <Step current={current} onChangeStep={handleChangeStep}>
-        <StepItem title="Step 1">
-          <Container style={{ gap: 14 }}>
-            <View style={{ gap: 4 }}>
-              <Typography
-                variant="t2"
-                weight="semibold"
-                color={Color.gray[900]}
-              >
-                Tipe Cuti
-              </Typography>
-              <FlatList
-                data={DATA}
-                renderItem={({ item }) => <Item item={item} />}
-                keyExtractor={(item) => item.id}
-              />
-            </View>
-          </Container>
-        </StepItem>
-        <StepItem title="Step 2">
-          <Container>
-            <Typography variant="t2" weight="semibold" color={Color.gray[800]}>
-              Pilih Tanggal
-            </Typography>
-            <Card>
-              <Calendar />
-            </Card>
-            <Alert
-              message="Sisa cuti taghunanmu untuk tanggal yang dipilih ada 10 hari"
-              color="warning"
-            />
-          </Container>
-        </StepItem>
-        <StepItem title="Step 3">
-          <Container>
-            <View />
-          </Container>
-        </StepItem>
-        <StepItem title="Step 4">
-          <ScrollView>
-            <Container style={styles.containerStep1}>
-              <Alert
-                color="info"
-                message="Pastikan data yang kamu masukan sudah benar sebelum melanjutkan pengajuan."
-              />
-              <List>
-                <ListItem>
-                  <Typography
-                    variant="t2"
-                    weight="regular"
-                    color={Color.gray[600]}
-                  >
-                    Tipe Pengajuan
-                  </Typography>
-                  <Typography
-                    variant="t2"
-                    weight="semibold"
-                    color={Color.gray[800]}
-                  >
-                    25 Des 2024 (1 Hari)
-                  </Typography>
-                </ListItem>
-                <ListItem>
-                  <Typography
-                    variant="t2"
-                    weight="regular"
-                    color={Color.gray[600]}
-                  >
-                    Tipe Cuti
-                  </Typography>
-                  <Typography
-                    variant="t2"
-                    weight="semibold"
-                    color={Color.gray[800]}
-                  >
-                    Cuti Tahunan
-                  </Typography>
-                </ListItem>
-                <ListItem>
-                  <Typography
-                    variant="t2"
-                    weight="regular"
-                    color={Color.gray[600]}
-                  >
-                    Permintaan Cuti
-                  </Typography>
-                  <Typography
-                    variant="t2"
-                    weight="semibold"
-                    color={Color.gray[800]}
-                  >
-                    Cuti Setengah Hari (09:00 - 12:01)
-                  </Typography>
-                </ListItem>
-              </List>
-              <Typography variant="t2" weight="medium" color={Color.gray[600]}>
-                Dokumen
-              </Typography>
-              <List>
-                <ListItem>
-                  <View style={styles.containerImage}>
-                    <View style={{ justifyContent: 'center' }}>
-                      <Typography
-                        variant="t1"
-                        weight="semibold"
-                        color={Color.gray[600]}
-                      >
-                        Image.png
-                      </Typography>
-                      <Typography
-                        variant="t2"
-                        weight="regular"
-                        color={Color.gray[600]}
-                      >
-                        Image.png
-                      </Typography>
-                    </View>
-                  </View>
-                </ListItem>
-                <ListItem>
-                  <View style={styles.containerImage}>
-                    <View style={{ justifyContent: 'center' }}>
-                      <Typography
-                        variant="t1"
-                        weight="semibold"
-                        color={Color.gray[600]}
-                      >
-                        Image.png
-                      </Typography>
-                      <Typography
-                        variant="t2"
-                        weight="regular"
-                        color={Color.gray[600]}
-                      >
-                        Image.png
-                      </Typography>
-                    </View>
-                  </View>
-                </ListItem>
-                <ListItem>
-                  <View style={styles.containerImage}>
-                    <View style={{ justifyContent: 'center' }}>
-                      <Typography
-                        variant="t1"
-                        weight="semibold"
-                        color={Color.gray[600]}
-                      >
-                        Image.png
-                      </Typography>
-                      <Typography
-                        variant="t2"
-                        weight="regular"
-                        color={Color.gray[600]}
-                      >
-                        Image.png
-                      </Typography>
-                    </View>
-                  </View>
-                </ListItem>
-              </List>
-              <Typography variant="t2" weight="medium" color={Color.gray[600]}>
-                Catatan
-              </Typography>
-              <Card>
-                <Typography
-                  variant="t2"
-                  weight="regular"
-                  color={Color.gray[600]}
-                >
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec
-                  dictum viverra consequat vitae urna. Integer quis lobortis
-                  ullamcorper dui. Curabitur et libero non urna aliquet accumsan
-                  vitae eget magna. Sed vitae lacinia dolor. Vestibulum primis
-                  in faucibus orci luctus et ultrice posuere cubilia curae.
-                </Typography>
-              </Card>
-            </Container>
-          </ScrollView>
-        </StepItem>
-      </Step>
-      <Footer>
-        <Container>{renderFooter()}</Container>
-      </Footer>
-      <BottomSheet
-        isOpen={isOpenConrimSubmitBottomSheet}
-        onClose={() => setIsOpenConrimSubmitBottomSheet(false)}
+    <DemoScreen
+      title="Step"
+      description="Step menampilkan alur bertahap (wizard) dengan header horizontal; StepItem dengan index lebih kecil dari current otomatis ditandai selesai."
+    >
+      <DemoSection
+        title="Navigasi terkontrol"
+        note="current dari state luar menentukan langkah aktif; langkah sebelumnya otomatis bercentang hijau (selesai)."
       >
-        <View style={{ gap: 8 }}>
-          <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-            Apakah Kamu yakin ingin membuat Pengajuan Cuti?
-          </Typography>
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Pastikan data yang Kamu masukkan sudah benar sebelum melanjutkan
-            Pengajuan.
-          </Typography>
+        <DemoLabel text="current onChangeStep" />
+        <View style={styles.frame}>
+          <Step current={current} onChangeStep={setCurrent}>
+            {STEPS.map((step) => (
+              <StepItem key={step.title} title={step.title}>
+                <View style={styles.content}>
+                  <Typography
+                    variant="t2"
+                    weight="semibold"
+                    color={Color.gray[900]}
+                  >
+                    {step.title}
+                  </Typography>
+                  <Typography variant="t3" color={Color.gray[600]}>
+                    {step.desc}
+                  </Typography>
+                </View>
+              </StepItem>
+            ))}
+          </Step>
+        </View>
+        <DemoLabel text="Sebelumnya / Berikutnya" />
+        <View style={styles.actions}>
           <Button
-            title="Yaa, Buat Pengajuan"
+            title="Sebelumnya"
+            variant="outline"
             color="primary"
-            onPress={handleSubmit}
+            disabled={current === 0}
+            onPress={() => setCurrent((prev) => Math.max(prev - 1, 0))}
           />
           <Button
-            title="Cek Kembali"
-            variant="tertiary"
+            title="Berikutnya"
             color="primary"
-            onPress={() => handleOnPressBottomSheetDayType()}
+            disabled={current === STEPS.length - 1}
+            onPress={() =>
+              setCurrent((prev) => Math.min(prev + 1, STEPS.length - 1))
+            }
           />
         </View>
-      </BottomSheet>
-
-      <Modal
-        onClose={() => setIsOpenSuccessModal(false)}
-        isOpen={isOpenSuccessModal}
-      >
-        <Container>
-          <View style={styles.containerModalSuccess}>
-            <View>
-              <Center style={{ gap: 4 }}>
-                <Typography
-                  variant="p2"
-                  weight="semibold"
-                  color={Color.gray[800]}
-                >
-                  Berhasil dibuat
-                </Typography>
-                <Typography
-                  variant="t2"
-                  weight="regular"
-                  color={Color.gray[500]}
-                >
-                  Data pengajuan Cuti berhasil dibuat.
-                </Typography>
-              </Center>
-            </View>
-            <Button
-              title="Selesai"
-              variant="tertiary"
-              block
-              color="primary"
-              onPress={() => navigation.replace('LeaveDetail')}
-            />
-          </View>
-        </Container>
-      </Modal>
-    </SafeAreaView>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Langkah aktif: ${current + 1} dari ${STEPS.length} (${STEPS[current]?.title})`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  containerSafeAreaView: {
+  frame: {
+    height: 260,
+    borderRadius: 16,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: Color.gray[300],
+    backgroundColor: Color.base.white100,
+  },
+  content: {
     flex: 1,
-  },
-  containerStep1: {
-    gap: 12,
-  },
-  containerImage: {
-    flexDirection: 'row',
+    padding: 20,
     gap: 8,
   },
-  imageAttachment: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-  },
-  containerModalSuccess: {
-    gap: 32,
-    alignItems: 'center',
-  },
-  containerFooter: {
+  actions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: 12,
   },
 });
