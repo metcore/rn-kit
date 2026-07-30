@@ -1,142 +1,157 @@
-import {
-  Button,
-  Center,
-  Color,
-  Container,
-  Modal,
-  Typography,
-} from '@herca/rn-kit';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
-import { Image, View } from 'react-native';
-import type { NavigationProps } from '../type/navigation';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Color, Container, Modal, Typography } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
+import summaryData from '../assets/loremipsum.json';
 
 export default function ModalScreen() {
-  const navigation = useNavigation<NavigationProps>();
-  const [isOpenModalDefault, setOpenModalDefault] = useState(false);
-  const [isOpenModalDefaultCannotClose, setOpenModalDefaultCannotClose] =
-    useState(false);
-
-  const handleOnRequestClose = () => {
-    setOpenModalDefaultCannotClose(true);
-  };
-
-  const handleOnPres = () => {
-    setOpenModalDefault(false);
-    setOpenModalDefaultCannotClose(true);
-  };
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const [isOpenBasic, setIsOpenBasic] = useState(false);
+  const [isOpenFooter, setIsOpenFooter] = useState(false);
+  const [isOpenScroll, setIsOpenScroll] = useState(false);
+  const [isOpenLocked, setIsOpenLocked] = useState(false);
+  const [lastClosedVia, setLastClosedVia] = useState('-');
 
   return (
-    <View>
-      <Container style={{ gap: 8 }}>
-        <Button
-          title="Modal Default"
-          onPress={() => setOpenModalDefault(true)}
-          color="primary"
-        />
-        <Button
-          title="Modal Default Cannot Close"
-          onPress={() => setOpenModalDefaultCannotClose(true)}
-          color="primary"
-        />
-      </Container>
-      <Modal onClose={() => setIsVisible(false)} isOpen={isVisible}>
-        <Container>
-          <View style={{ gap: 32, alignItems: 'center' }}>
-            <Image source={require('../assets/positive-vote-1.png')} />
-            <Button
-              title="Ok, Mengerti"
-              block
-              color="primary"
-              onPress={() => setIsVisible(false)}
-            />
-          </View>
-        </Container>
-      </Modal>
-      <Modal
-        onClose={() => setOpenModalDefault(false)}
-        onRequestClose={handleOnRequestClose}
-        isOpen={isOpenModalDefault}
+    <DemoScreen
+      title="Modal"
+      description="Dialog pop-up di tengah layar dengan animasi skala, backdrop, dan tombol close opsional."
+    >
+      <DemoSection
+        title="Buka & tutup dasar"
+        note="isOpen mengontrol tampil/sembunyi; onClose dipanggil saat backdrop atau tombol X ditekan."
       >
-        <Container>
-          <View style={{ gap: 32, alignItems: 'center' }}>
-            <Image source={require('../assets/positive-vote-1.png')} />
-            <View>
-              <Center style={{ gap: 4 }}>
-                <Typography
-                  variant="p2"
-                  weight="semibold"
-                  color={Color.gray[800]}
-                >
-                  Berhasil disetujui
-                </Typography>
-                <Typography
-                  variant="t2"
-                  weight="regular"
-                  color={Color.gray[500]}
-                >
-                  Surat Peringatan berlaku selama 6 bulan, jika dalam masa
-                  tersebut kamu menerima Surat Peringatan lain, maka level surat
-                  Peringatan akan ditingkatkan.
-                </Typography>
-              </Center>
-            </View>
-            <Button
-              title="Ok, Mengerti"
-              onPress={handleOnPres}
-              block
-              color="primary"
-            />
-          </View>
-        </Container>
-      </Modal>
-      <Modal
-        onClose={() => setOpenModalDefaultCannotClose(false)}
-        closable={false}
-        isOpen={isOpenModalDefaultCannotClose}
+        <Button title="Buka modal dasar" onPress={() => setIsOpenBasic(true)} />
+        <Modal isOpen={isOpenBasic} onClose={() => setIsOpenBasic(false)}>
+          <Container style={styles.gap12}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Modal dasar
+            </Typography>
+            <Typography variant="t2" color={Color.gray[600]}>
+              Tekan backdrop atau tombol X di kanan atas untuk menutup.
+            </Typography>
+          </Container>
+        </Modal>
+      </DemoSection>
+
+      <DemoSection
+        title="Aksi di footer"
+        note="Modal tidak punya prop footer khusus; aksi ditempatkan sebagai children biasa, dibingkai agar terlihat seperti footer."
       >
-        <Container>
-          <View style={{ gap: 32, alignItems: 'center' }}>
-            <Image source={require('../assets/positive-vote-1.png')} />
-            <View>
-              <Center style={{ gap: 4 }}>
-                <Typography
-                  variant="p2"
-                  weight="semibold"
-                  color={Color.gray[800]}
-                >
-                  Berhasil disetujui
-                </Typography>
-                <Typography
-                  variant="t2"
-                  weight="regular"
-                  center
-                  color={Color.gray[500]}
-                >
-                  Surat Peringatan berlaku selama 6 bulan, jika dalam masa
-                  tersebut kamu menerima Surat Peringatan lain, maka level surat
-                  Peringatan akan ditingkatkan.
-                </Typography>
-              </Center>
+        <Button
+          title="Buka modal dengan aksi"
+          onPress={() => setIsOpenFooter(true)}
+        />
+        <Modal isOpen={isOpenFooter} onClose={() => setIsOpenFooter(false)}>
+          <Container style={styles.gap16}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Setujui pengajuan?
+            </Typography>
+            <View style={styles.row}>
+              <View style={styles.flex1}>
+                <Button
+                  title="Batal"
+                  variant="outline"
+                  block
+                  onPress={() => {
+                    setIsOpenFooter(false);
+                    setLastClosedVia('tombol Batal');
+                  }}
+                />
+              </View>
+              <View style={styles.flex1}>
+                <Button
+                  title="Setujui"
+                  color="primary"
+                  block
+                  onPress={() => {
+                    setIsOpenFooter(false);
+                    setLastClosedVia('tombol Setujui');
+                  }}
+                />
+              </View>
             </View>
+          </Container>
+        </Modal>
+      </DemoSection>
+
+      <DemoSection
+        title="Konten panjang"
+        note="Tinggi modal dibatasi maxHeight 80% layar; bungkus konten panjang dengan ScrollView sendiri agar bisa digulir."
+      >
+        <Button
+          title="Buka modal konten panjang"
+          onPress={() => setIsOpenScroll(true)}
+        />
+        <Modal isOpen={isOpenScroll} onClose={() => setIsOpenScroll(false)}>
+          <Container style={styles.gap12}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Syarat & ketentuan
+            </Typography>
+            <Typography variant="t2" color={Color.gray[600]}>
+              {summaryData.summary}
+            </Typography>
+          </Container>
+        </Modal>
+      </DemoSection>
+
+      <DemoSection
+        title="Tidak bisa ditutup"
+        note="closable={false} menyembunyikan tombol X dan menonaktifkan tutup lewat backdrop; hanya tombol di dalam yang bisa menutupnya."
+      >
+        <DemoLabel text="closable={false}" />
+        <Button
+          title="Buka modal terkunci"
+          onPress={() => setIsOpenLocked(true)}
+        />
+        <Modal
+          isOpen={isOpenLocked}
+          closable={false}
+          onClose={() => setIsOpenLocked(false)}
+        >
+          <Container style={styles.gap12Center}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Baca sampai selesai
+            </Typography>
             <Button
-              title="Ok, Mengerti"
-              block
+              title="Saya mengerti"
               color="primary"
-              onPress={() => navigation.replace('Home')}
+              onPress={() => {
+                setIsOpenLocked(false);
+                setLastClosedVia('tombol Saya mengerti');
+              }}
             />
-          </View>
-        </Container>
-      </Modal>
-    </View>
+          </Container>
+        </Modal>
+      </DemoSection>
+
+      <DemoSection
+        title="Status penutupan"
+        note="Readout ini hanya terisi dari tombol aksi di dalam modal (footer & terkunci), karena Modal tidak membedakan sumber saat backdrop/X ditekan."
+      >
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terakhir ditutup lewat: ${lastClosedVia}`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  gap12: {
+    gap: 12,
+  },
+  gap16: {
+    gap: 16,
+  },
+  gap12Center: {
+    gap: 12,
+    alignItems: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  flex1: {
+    flex: 1,
+  },
+});

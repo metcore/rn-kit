@@ -1,204 +1,123 @@
-import {
-  BottomSheet,
-  Button,
-  Center,
-  Color,
-  Container,
-  Input,
-  Typography,
-} from '@herca/rn-kit';
 import { useState } from 'react';
-import { View, Image, StyleSheet, ScrollView } from 'react-native';
-import summaryData from '../assets/loremipsum.json';
+import { StyleSheet, View } from 'react-native';
+import { BottomSheet, Button, Color, Input, Typography } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
 export default function BottomSheetScreen() {
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [isOpenBottomSheetPullBar, setIsOpenBottomSheetPullBar] =
-    useState(false);
-  const [isOpenBottomSheetFull, setIsOpenBottomSheetFull] = useState(false);
-  const [isOpenBottomSheetFooter, setIsOpenBottomSheetFooter] = useState(false);
-  const [isOpenBottomSheetInput, setIsOpenBottomSheetInput] = useState(false);
-  const [value, setValue] = useState<string | null>(null);
-  const [hasError, setHasError] = useState(false);
+  const [isOpenBasic, setIsOpenBasic] = useState(false);
+  const [isOpenForm, setIsOpenForm] = useState(false);
+  const [isOpenTall, setIsOpenTall] = useState(false);
+  const [isOpenClose, setIsOpenClose] = useState(false);
+  const [email, setEmail] = useState('');
+  const [savedEmail, setSavedEmail] = useState('-');
 
   return (
-    <Container>
-      <BottomSheet
-        isOpen={isOpenBottomSheet}
-        onClose={() => setIsOpenBottomSheet(false)}
+    <DemoScreen
+      title="Bottom Sheet"
+      description="Modal geser dari bawah dengan gesture drag, keyboard-aware, dan tinggi yang bisa diatur."
+    >
+      <DemoSection
+        title="Sheet dasar"
+        note="isOpen mengontrol tampil/sembunyi; onClose dipanggil saat backdrop ditarik atau ditekan."
       >
-        <View style={styles.containerBottomSheet}>
-          <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-            Judul Modal
-          </Typography>
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Ini modal biasa tanpa custom pull bar.
-          </Typography>
-          <Button
-            size="medium"
-            color="primary"
-            title="Close Bottom Sheet"
-            block
-            onPress={() => setIsOpenBottomSheet(false)}
-          />
-        </View>
-      </BottomSheet>
-
-      <BottomSheet
-        isOpen={isOpenBottomSheetPullBar}
-        onClose={() => setIsOpenBottomSheetPullBar(false)}
-        pullBar={
-          <View style={{ marginTop: -60 }}>
-            <Image
-              source={require('../assets/bottomsheet.png')}
-              width={50}
-              height={50}
-            />
+        <Button title="Buka sheet dasar" onPress={() => setIsOpenBasic(true)} />
+        <BottomSheet isOpen={isOpenBasic} onClose={() => setIsOpenBasic(false)}>
+          <View style={styles.gap12}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Sheet dasar
+            </Typography>
+            <Typography variant="t2" color={Color.gray[600]}>
+              Tarik ke bawah atau tekan area gelap untuk menutup.
+            </Typography>
           </View>
-        }
+        </BottomSheet>
+      </DemoSection>
+
+      <DemoSection
+        title="Konten form & footer"
+        note="footer menempelkan aksi di bawah konten yang bisa digulir; cocok untuk form dengan tombol simpan."
       >
-        <View>
-          <Center style={{ gap: 15 }}>
-            <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-              Judul Modal dengan PullBar
-            </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-              Ini modal dengan pull bar custom pakai image.
-            </Typography>
+        <Button title="Buka sheet form" onPress={() => setIsOpenForm(true)} />
+        <BottomSheet
+          isOpen={isOpenForm}
+          onClose={() => setIsOpenForm(false)}
+          footer={
             <Button
-              size="medium"
+              title="Simpan"
               color="primary"
-              title="Close Bottom Sheet"
               block
-              onPress={() => setIsOpenBottomSheetPullBar(false)}
+              onPress={() => {
+                setSavedEmail(email || '-');
+                setIsOpenForm(false);
+              }}
             />
-          </Center>
-        </View>
-      </BottomSheet>
-
-      <BottomSheet
-        isOpen={isOpenBottomSheetFull}
-        height={'100%'}
-        onClose={() => setIsOpenBottomSheetFull(false)}
-      >
-        <View style={styles.containerBottomSheet}>
-          <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-            Judul Modal
-          </Typography>
-          <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-            Ini modal biasa tanpa custom pull bar.
-          </Typography>
-          <Button
-            size="medium"
-            color="primary"
-            title="Close Bottom Sheet"
-            block
-            onPress={() => setIsOpenBottomSheetFull(false)}
+          }
+        >
+          <Input
+            label="Email customer"
+            placeholder="Masukkan email"
+            autoFocus
+            value={email}
+            onChangeText={setEmail}
           />
-        </View>
-      </BottomSheet>
+        </BottomSheet>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Email tersimpan: ${savedEmail}`}
+        </Typography>
+      </DemoSection>
 
-      <BottomSheet
-        isOpen={isOpenBottomSheetFooter}
-        height={'100%'}
-        onClose={() => setIsOpenBottomSheetFooter(false)}
-        footer={
-          <Button
-            title="click here"
-            onPress={() => setIsOpenBottomSheetFooter(false)}
-          />
-        }
+      <DemoSection
+        title="Tinggi kustom"
+        note="height mengatur tinggi sheet: angka, persen, atau 'auto' (default) mengikuti tinggi konten."
       >
-        <ScrollView>
-          <View style={styles.containerBottomSheet}>
-            <Typography variant="p2" weight="semibold" color={Color.gray[800]}>
-              Judul Modal
+        <DemoLabel text='height="90%"' />
+        <Button
+          title="Buka sheet tinggi 90%"
+          onPress={() => setIsOpenTall(true)}
+        />
+        <BottomSheet
+          isOpen={isOpenTall}
+          height="90%"
+          onClose={() => setIsOpenTall(false)}
+        >
+          <View style={styles.gap12}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Sheet tinggi
             </Typography>
-
-            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-              {summaryData.summary}
-            </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-              {summaryData.summary}
-            </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-              {summaryData.summary}
-            </Typography>
-            <Typography variant="t1" weight="regular" color={Color.gray[500]}>
-              {summaryData.summary}
+            <Typography variant="t2" color={Color.gray[600]}>
+              Sheet ini memakai height=&quot;90%&quot; dari layar.
             </Typography>
           </View>
-        </ScrollView>
-      </BottomSheet>
+        </BottomSheet>
+      </DemoSection>
 
-      <BottomSheet
-        isOpen={isOpenBottomSheetInput}
-        onClose={() => setIsOpenBottomSheetInput(false)}
-        footer={
-          <Button
-            title="click here"
-            color="primary"
-            onPress={() => {
-              if (!value) {
-                setHasError(true);
-              } else {
-                setIsOpenBottomSheetInput(false);
-              }
-            }}
-          />
-        }
+      <DemoSection
+        title="Tombol close"
+        note="buttonClose menambahkan tombol X di pojok sheet sebagai cara tutup tambahan selain drag dan backdrop."
       >
-        <View>
-          <Input
-            label="Email Customer"
-            placeholder="Masukan email"
-            hint={hasError ? 'Masukan email' : ''}
-            autoFocus={true}
-            onChangeText={(val) => {
-              setValue(val);
-              setHasError(false);
-            }}
-            hasError={hasError}
-          />
-        </View>
-      </BottomSheet>
-
-      {/* Tombol Aksi */}
-      <View style={{ gap: 10, marginTop: 20 }}>
+        <DemoLabel text="buttonClose" />
         <Button
-          title="Open Bottom Sheet"
-          color="primary"
-          onPress={() => setIsOpenBottomSheet(true)}
+          title="Buka sheet dengan tombol X"
+          onPress={() => setIsOpenClose(true)}
         />
-        <Button
-          title="Open Bottom Sheet w/ Custom PullBar"
-          color="primary"
-          onPress={() => setIsOpenBottomSheetPullBar(true)}
-        />
-        <Button
-          title="Open Bottom Sheet Full"
-          color="primary"
-          onPress={() => setIsOpenBottomSheetFull(true)}
-        />
-        <Button
-          title="Open Bottom With Footer"
-          color="primary"
-          onPress={() => setIsOpenBottomSheetFooter(true)}
-        />
-        <Button
-          title="Open Bottom Input"
-          color="primary"
-          onPress={() => setIsOpenBottomSheetInput(true)}
-        />
-      </View>
-    </Container>
+        <BottomSheet
+          isOpen={isOpenClose}
+          buttonClose
+          onClose={() => setIsOpenClose(false)}
+        >
+          <View style={styles.gap12}>
+            <Typography variant="p2" weight="semibold" color={Color.gray[900]}>
+              Sheet dengan tombol X
+            </Typography>
+          </View>
+        </BottomSheet>
+      </DemoSection>
+    </DemoScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  containerBottomSheet: {
-    gap: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+  gap12: {
+    gap: 12,
   },
 });
