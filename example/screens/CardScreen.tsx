@@ -1,72 +1,98 @@
-import { Card, Color, Container, Icon, Typography } from '@herca/rn-kit';
-import { ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Card, Color, Icon, Label, Typography } from '@herca/rn-kit';
+import {
+  DemoScreen,
+  DemoSection,
+  DemoLabel,
+  DemoSurface,
+} from '../components/demo';
 
 export default function CardScreen() {
   return (
-    <ScrollView>
-      <Container>
-        <Typography variant="h4" weight="semibold">
-          Default
-        </Typography>
-        <Card>
-          <Typography color={Color.gray[800]} weight="bold">
-            What is Lorem Ipsum?
-          </Typography>
-          <Typography color={Color.gray[800]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
-          </Typography>
-        </Card>
-        <Typography variant="h4" weight="semibold">
-          Background Image
-        </Typography>
-        <Card backgroundImage={require('../assets/sp_banner.png')}>
-          <Typography color={Color.base.white100} weight="bold">
-            What is Lorem Ipsum?
-          </Typography>
-          <Typography color={Color.base.white100}>
-            Lorem Ipsum is simply dummy text of
-          </Typography>
-        </Card>
-        <Typography variant="h4" weight="semibold">
-          Background Color
-        </Typography>
-        <Card backgroundColor={Color.primary[1000]}>
-          <Typography color={Color.base.white100} weight="bold">
-            What is Lorem Ipsum?
-          </Typography>
-          <Typography color={Color.base.white100}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </Typography>
-        </Card>
-        <Typography variant="h4" weight="semibold">
-          Border color
-        </Typography>
-        <Card
-          backgroundColor={Color.purple[50]}
-          borderColor={Color.purple[200]}
-          style={{ width: '48%' }}
-        >
-          <Icon
-            name="bookmark-user"
-            size={30}
-            color={Color.purple[500]}
-            style={{ marginBottom: 8 }}
-          />
-          <Typography color={Color.gray[900]} weight="semibold" variant="p3">
-            200 Juta Tiket
-          </Typography>
-          <Typography color={Color.gray[600]} variant="t3">
-            Selesai Dikerjakan
-          </Typography>
-        </Card>
-      </Container>
-    </ScrollView>
+    <DemoScreen
+      title="Card"
+      description="Card membungkus konten dengan border, padding, dan background yang konsisten; cocok untuk kartu informasi."
+    >
+      <DemoSection
+        title="Default"
+        note="Card putih dengan border tipis default, ditampilkan di atas panggung pastel agar tepinya terlihat."
+      >
+        <DemoSurface>
+          <Card>
+            <Typography variant="p3" weight="bold" color={Color.gray[900]}>
+              Judul Kartu
+            </Typography>
+            <Typography variant="t2" color={Color.gray[600]}>
+              Deskripsi singkat isi kartu ditampilkan di sini.
+            </Typography>
+          </Card>
+        </DemoSurface>
+      </DemoSection>
+
+      <DemoSection
+        title="Konten komposit"
+        note="Card dapat memuat kombinasi icon, judul, teks, dan Label sekaligus."
+      >
+        <DemoSurface>
+          <Card>
+            <Icon
+              name="bookmark-user"
+              size={28}
+              color={Color.purple[500]}
+              style={styles.icon}
+            />
+            <Typography variant="p3" weight="semibold" color={Color.gray[900]}>
+              200 Juta Tiket
+            </Typography>
+            <Typography variant="t3" color={Color.gray[600]}>
+              Selesai dikerjakan bulan ini
+            </Typography>
+            <Label label="Selesai" color="success" />
+          </Card>
+        </DemoSurface>
+      </DemoSection>
+
+      <DemoSection
+        title="Warna & style override"
+        note="backgroundColor, borderColor, dan style menimpa tampilan default Card."
+      >
+        <DemoLabel text="backgroundColor={Color.primary[1000]}" />
+        <DemoSurface>
+          <Card
+            backgroundColor={Color.primary[1000]}
+            borderColor={Color.primary[1000]}
+          >
+            <Typography variant="p3" weight="bold" color={Color.base.white100}>
+              Kartu gelap
+            </Typography>
+            <Typography variant="t2" color={Color.primary[200]}>
+              Teks tetap terbaca di atas background gelap.
+            </Typography>
+          </Card>
+        </DemoSurface>
+
+        <DemoLabel text="borderColor={Color.purple[200]} style={{ width: '60%' }}" />
+        <DemoSurface>
+          <Card
+            backgroundColor={Color.purple[50]}
+            borderColor={Color.purple[200]}
+            style={styles.compactCard}
+          >
+            <Typography variant="t2" color={Color.purple[500]}>
+              Border ungu, lebar dibatasi style
+            </Typography>
+          </Card>
+        </DemoSurface>
+      </DemoSection>
+    </DemoScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    marginBottom: 8,
+  },
+  compactCard: {
+    width: '60%',
+  },
+});
