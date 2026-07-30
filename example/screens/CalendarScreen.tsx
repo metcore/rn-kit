@@ -1,136 +1,89 @@
+import { useState } from 'react';
 import {
-  Button,
   Calendar,
-  Card,
   Color,
-  Container,
-  dateFormatter,
   Typography,
+  dateFormatter,
   type DateRangeProps,
 } from '@herca/rn-kit';
-import { useState } from 'react';
-import { ScrollView } from 'react-native';
-import type { DateProps } from '../../src/Calendar/CalendarPropsType';
+import {
+  DemoScreen,
+  DemoSection,
+  DemoLabel,
+  DemoSurface,
+} from '../components/demo';
+
+const localized = (date?: Date | null) =>
+  dateFormatter({ date, options: { format: 'localized', language: 'id' } }) ||
+  '-';
+const isoKey = (date?: Date | null) =>
+  dateFormatter({ date, options: { format: 'default' } });
 
 export default function CalendarScreen() {
+  const [single, setSingle] = useState<DateRangeProps>({});
+
   const today = new Date();
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-  const [startDate, setStartDate] = useState<string | null | undefined>(
-    dateFormatter({ date: firstDayOfMonth })
+  const [rangeStart, setRangeStart] = useState<string | null>(
+    isoKey(today) || null
   );
-  const [endDate, setEndDate] = useState<string | null | undefined>(
-    dateFormatter({ date: lastDayOfMonth })
-  );
+  const [rangeEnd, setRangeEnd] = useState<string | null>(null);
 
-  const formatDate = (date: DateProps) => {
-    if (!date) return null;
-    const y = date.getFullYear();
-    const m = `${date.getMonth() + 1}`.padStart(2, '0');
-    const d = `${date.getDate()}`.padStart(2, '0');
-    return `${y}-${m}-${d}`;
-  };
-
-  const hanOnChange = (obj: DateRangeProps) => {
-    setStartDate(formatDate(obj.startDate));
-    setEndDate(formatDate(obj.endDate));
-
-    console.log({ obj });
-  };
-
-  console.log({ startDate, endDate });
   return (
-    <Container>
-      <Button
-        title="reset"
-        onPress={() => {
-          setStartDate(undefined);
-          setEndDate(undefined);
-        }}
-      />
-      <ScrollView>
-        <Typography>Mode : Range</Typography>
-        <Card>
+    <DemoScreen
+      title="Calendar"
+      description="Kalender bulanan dengan navigasi bulan/tahun, mendukung mode tunggal atau rentang serta tanggal yang dinonaktifkan."
+    >
+      <DemoSection
+        title="Mode tunggal"
+        note="mode single (default) mengirim satu tanggal terpilih lewat onChange."
+      >
+        <DemoLabel text='mode="single"' />
+        <DemoSurface>
+          <Calendar mode="single" onChange={setSingle} />
+        </DemoSurface>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Nilai: ${localized(single.date)}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Mode rentang terkontrol"
+        note="dateStart & dateEnd (string YYYY-MM-DD) menjadikan Calendar terkontrol penuh dari state luar."
+      >
+        <DemoLabel text="dateStart dateEnd" />
+        <DemoSurface>
           <Calendar
             mode="range"
-            dateStart={startDate}
-            dateEnd={endDate}
-            onChange={hanOnChange}
-            onMonthChange={(month) => console.log({ month })}
-            onYearChange={(year) => console.log({ year })}
-            disabledDays={{
-              0: {
-                backgroundColor: Color.danger[50],
-                textColor: Color.danger[400],
-              },
-              6: true,
-              5: false,
+            dateStart={rangeStart}
+            dateEnd={rangeEnd}
+            onChange={(value) => {
+              setRangeStart(isoKey(value.startDate) || null);
+              setRangeEnd(isoKey(value.endDate) || null);
             }}
-            minDate={new Date(2025, 5, 5)}
-            // maxDate={new Date(2025, 6, 20)}
-            dayName={['sen', 'sel', 'rab', 'kam', 'jum', 'sab', 'ming']}
+          />
+        </DemoSurface>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Nilai: ${rangeStart ?? '-'} s/d ${rangeEnd ?? '-'}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Tanggal dinonaktifkan"
+        note="disabledDays menonaktifkan hari tertentu tiap minggu (di sini Minggu), sedangkan markedDates.disabled menonaktifkan tanggal spesifik."
+      >
+        <DemoLabel text="disabledDays markedDates" />
+        <DemoSurface>
+          <Calendar
+            mode="single"
+            disabledDays={{ 0: true }}
             markedDates={{
-              '2025-06-10': {
-                selected: true,
-                backgroundColor: Color.danger[300],
-                dots: [
-                  Color.primary[1000],
-                  Color.primary[200],
-                  Color.primary[300],
-                ],
-              },
-              '2025-06-11': {
-                dots: [Color.success[700], Color.danger[900]],
+              [isoKey(new Date(today.getFullYear(), today.getMonth(), 15))]: {
                 disabled: true,
-              },
-              '2025-06-12': {
-                dots: [Color.success[700], Color.danger[900]],
-                disabled: {
-                  backgroundColor: Color.warning[500],
-                  textColor: Color.success[900],
-                },
-              },
-              '2025-06-19': { selected: true },
-              '2025-06-20': {
-                selected: true,
-                textColor: Color.base.white100,
               },
             }}
           />
-        </Card>
-        {startDate && !endDate && (
-          <Typography>Please select end date</Typography>
-        )}
-        <Typography>
-          Selected Date : {startDate} - {endDate}
-        </Typography>
-        <Typography>Mode : Single</Typography>
-
-        <Calendar
-          mode="single"
-          minDate={new Date(2025, 5, 5)}
-          maxDate={new Date(2025, 5, 20)}
-          selectedBackgroundColor={Color.primary[200]}
-          markedDates={{
-            '2025-06-10': {
-              dots: [
-                Color.success[600],
-                Color.primary[1000],
-                Color.danger[600],
-              ],
-              selected: true,
-              backgroundColor: 'red',
-              textColor: 'white',
-            },
-            '2025-06-11': {
-              dots: [Color.base.black100, Color.success[600]],
-              disabled: true,
-            },
-          }}
-          disabledBackgroundColor={Color.danger[500]}
-        />
-      </ScrollView>
-    </Container>
+        </DemoSurface>
+      </DemoSection>
+    </DemoScreen>
   );
 }

@@ -1,84 +1,104 @@
+import { useState } from 'react';
 import {
-  Button,
-  Container,
-  dateFormatter,
+  Color,
   InputDate,
+  Typography,
+  dateFormatter,
   type DateProps,
   type DateRangeProps,
 } from '@herca/rn-kit';
-import { useState } from 'react';
-import { spacing } from '../../src/styles/spacing';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
 export default function InputDateScreen() {
-  const [singleDate, setSingleDate] = useState<DateProps>(new Date());
+  const [customDate, setCustomDate] = useState<DateProps>(new Date());
 
-  const endDate = new Date();
-  endDate.setDate(endDate.getDate() + 7);
-
-  const [dateRange, setDateRange] = useState<DateRangeProps>({
+  const initialEnd = new Date();
+  initialEnd.setDate(initialEnd.getDate() + 7);
+  const [customRange, setCustomRange] = useState<DateRangeProps>({
     startDate: new Date(),
-    endDate,
+    endDate: initialEnd,
   });
 
   return (
-    <Container style={spacing.gap[8]}>
-      <Button
-        title="Reset Date"
-        onPress={() =>
-          setDateRange({ startDate: undefined, endDate: undefined })
-        }
-      />
-      <InputDate label="Basic Single Date" placeholder="Select Date" />
+    <DemoScreen
+      title="Input Date"
+      description="Field tanggal berbentuk input, membuka Date Picker di dalam BottomSheet saat field disentuh."
+    >
+      <DemoSection
+        title="Dasar"
+        note="label dan placeholder menyusun tampilan field; menyentuh field membuka Date Picker."
+      >
+        <DemoLabel text="label placeholder" />
+        <InputDate label="Tanggal lahir" placeholder="Pilih tanggal" />
+      </DemoSection>
 
-      <InputDate
-        mode="range"
-        label="Basic Range Date"
-        placeholder="Select Date"
-        placeholderDateEnd="Select End Date"
-      />
+      <DemoSection
+        title="Rentang tanggal"
+        note="mode range menampilkan dua field, awal dan akhir, dari satu Date Picker rentang."
+      >
+        <DemoLabel text='mode="range"' />
+        <InputDate
+          mode="range"
+          label="Periode cuti"
+          placeholder="Tanggal mulai"
+          placeholderDateEnd="Tanggal selesai"
+        />
+      </DemoSection>
 
-      <InputDate
-        hasClear
-        label="Single Date Custom Value"
-        placeholder="Select Date"
-        value={dateFormatter({ date: singleDate })}
-        datePickerProps={{
-          value: {
-            date: singleDate,
-          },
-        }}
-        onDateChange={(val) => {
-          setSingleDate(val.date);
-        }}
-      />
+      <DemoSection
+        title="Format lewat dateFormatter"
+        note="value & onDateChange menjadikan field terkontrol; teks yang tampil diformat manual lewat dateFormatter."
+      >
+        <DemoLabel text="value + dateFormatter" />
+        <InputDate
+          hasClear
+          label="Tanggal kustom"
+          placeholder="Pilih tanggal"
+          value={dateFormatter({
+            date: customDate,
+            options: { format: 'localized', language: 'id' },
+          })}
+          datePickerProps={{ value: { date: customDate } }}
+          onDateChange={(value) => setCustomDate(value.date)}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Nilai: ${dateFormatter({ date: customDate, options: { format: 'default' } }) || '-'}`}
+        </Typography>
+      </DemoSection>
 
-      <InputDate
-        label="Date Range Custom Value"
-        mode="range"
-        placeholder="Select Date"
-        placeholderDateEnd="Select End Date"
-        value={dateFormatter({
-          date: dateRange?.startDate,
-        })}
-        valueDateEnd={dateFormatter({
-          date: dateRange?.endDate,
-        })}
-        datePickerProps={{
-          value: {
-            startDate: dateRange?.startDate,
-            endDate: dateRange?.endDate,
-          },
-        }}
-        onDateChange={(val) => {
-          setDateRange(val);
-        }}
-      />
+      <DemoSection
+        title="Rentang nilai kustom"
+        note="Pola yang sama berlaku untuk rentang: value & valueDateEnd mengisi kedua field dari state."
+      >
+        <DemoLabel text="value valueDateEnd" />
+        <InputDate
+          label="Periode kustom"
+          mode="range"
+          placeholder="Tanggal mulai"
+          placeholderDateEnd="Tanggal selesai"
+          value={dateFormatter({ date: customRange.startDate })}
+          valueDateEnd={dateFormatter({ date: customRange.endDate })}
+          datePickerProps={{
+            value: {
+              startDate: customRange.startDate,
+              endDate: customRange.endDate,
+            },
+          }}
+          onDateChange={setCustomRange}
+        />
+      </DemoSection>
 
-      <InputDate
-        label="Custom Language"
-        placeholder="Select Date"
-        language="en"
-      />
-    </Container>
+      <DemoSection
+        title="Bahasa tampilan"
+        note="language mengatur format tanggal terlokalisasi yang muncul di dalam Date Picker & readout field."
+      >
+        <DemoLabel text='language="en"' />
+        <InputDate
+          label="Custom Language"
+          placeholder="Select date"
+          language="en"
+        />
+      </DemoSection>
+    </DemoScreen>
   );
 }
