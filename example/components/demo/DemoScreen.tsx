@@ -32,7 +32,12 @@ const DemoScreen: React.FC<DemoScreenProps> = ({
           </Container>
         </ScrollView>
       ) : (
-        <Container style={styles.flexContainer}>{children}</Container>
+        <Container style={styles.flexContainer}>
+          <Typography variant="t2" color={Color.gray[600]}>
+            {description}
+          </Typography>
+          {children}
+        </Container>
       )}
     </View>
   );
