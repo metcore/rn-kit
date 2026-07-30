@@ -1,34 +1,42 @@
-import { Container, Drawing } from '@herca/rn-kit';
 import { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Color, Drawing, Typography } from '@herca/rn-kit';
+import {
+  DemoScreen,
+  DemoSection,
+  DemoLabel,
+  DemoSurface,
+} from '../components/demo';
 
 export default function DrawingScreen() {
-  const [value, setValue] = useState<string | undefined | null>();
-  const [enableScroll, setEnableScroll] = useState(true);
+  const [value, setValue] = useState<string | null | undefined>(null);
+
+  const preview = value ? `${value.slice(0, 40)}...` : '-';
+
   return (
-    <Container>
-      <ScrollView scrollEnabled={enableScroll}>
-        <Drawing
-          onChange={(val) => setValue(val)}
-          onEnd={() => setEnableScroll(true)}
-          onStart={() => setEnableScroll(false)}
-        />
-        {value && (
-          <Image
-            resizeMode="contain"
-            style={styles.image}
-            source={{ uri: value }}
-          />
-        )}
-        <Text>{value}</Text>
-      </ScrollView>
-    </Container>
+    <DemoScreen
+      title="Drawing"
+      description="Kanvas tanda tangan berbasis webview; hasil goresan dikirim sebagai string base64 lewat onChange."
+      scrollable={false}
+    >
+      <DemoSection
+        title="Kanvas tanda tangan"
+        note="onChange mengirim base64 tiap kali pengguna selesai menggores; tombol Clear bawaan mengosongkan kanvas dan memanggil onChange(null)."
+      >
+        <DemoLabel text="onChange" />
+        <DemoSurface style={styles.frame}>
+          <Drawing onChange={setValue} />
+        </DemoSurface>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Hasil: ${preview}`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  image: {
-    width: 335,
-    height: 114,
+  frame: {
+    height: 400,
   },
 });
