@@ -10,7 +10,7 @@ export interface ReactLogoProps {
 
 const ReactLogo: React.FC<ReactLogoProps> = ({
   size = 48,
-  color = '#4D46FF',
+  color = '#080355',
 }) => (
   <Svg width={size} height={size} viewBox="-11.5 -11.5 23 23">
     <Circle cx={0} cy={0} r={2.05} fill={color} />
