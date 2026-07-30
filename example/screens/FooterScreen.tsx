@@ -64,6 +64,7 @@ export default function FooterScreen() {
             ) : null}
           </Container>
         </Footer>
+        <View style={styles.footerSpacer} />
       </DemoSection>
     </DemoScreen>
   );
@@ -88,5 +89,8 @@ const styles = StyleSheet.create({
   },
   flexButton: {
     flex: 1,
+  },
+  footerSpacer: {
+    height: 96,
   },
 });

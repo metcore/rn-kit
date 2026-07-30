@@ -113,7 +113,7 @@ export default function TabScreen() {
 
 const styles = StyleSheet.create({
   frame: {
-    height: 190,
+    height: 160,
   },
   panel: {
     padding: 16,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.primary[1000],
   },
   stickyFrame: {
-    height: 170,
+    height: 150,
     borderRadius: 16,
     overflow: 'hidden',
     borderWidth: 1,
