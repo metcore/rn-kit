@@ -38,7 +38,7 @@ export default function InputOtpScreen() {
       </DemoSection>
 
       <DemoSection
-        title="Controlled + fokus"
+        title="Terkontrol & fokus"
         note="Komponen menyimpan isi tiap kotak secara internal (ref); onChange melaporkan gabungan nilainya ke parent untuk readout. Tidak ada prop autoFocus bawaan — fokus awal butuh ref manual bila diperlukan."
       >
         <InputOtp label="Kode verifikasi" onChange={setOtp} />
