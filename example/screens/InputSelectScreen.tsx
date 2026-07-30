@@ -14,6 +14,7 @@ export default function InputSelectScreen() {
   const [single, setSingle] = useState<ChipValue>(null);
   const [multi, setMulti] = useState<ChipValue[]>([]);
   const [preselected, setPreselected] = useState<ChipValue>(1);
+  const [selectClickCount, setSelectClickCount] = useState(0);
 
   const labelOf = (value: ChipValue) =>
     BRAND_OPTIONS.find((opt) => opt.value === value)?.label;
@@ -99,8 +100,11 @@ export default function InputSelectScreen() {
           label="Alamat pengiriman"
           value="Jl. Merdeka No. 1, Jakarta"
           useModal={false}
-          onSelectClick={() => console.log('Buka layar pilih alamat')}
+          onSelectClick={() => setSelectClickCount((count) => count + 1)}
         />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Ditekan: ${selectClickCount}x`}
+        </Typography>
       </DemoSection>
     </DemoScreen>
   );

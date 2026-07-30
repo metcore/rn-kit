@@ -5,6 +5,7 @@ import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
 export default function InputScreen() {
   const [name, setName] = useState('');
+  const [lastPressedIcon, setLastPressedIcon] = useState('-');
 
   return (
     <DemoScreen
@@ -31,9 +32,12 @@ export default function InputScreen() {
           iconRight="Search"
           label="Cari pengguna"
           placeholder="Ketik nama pengguna"
-          onPressIconLeft={() => console.log('Ikon kiri ditekan')}
-          onPressIconRight={() => console.log('Ikon kanan ditekan')}
+          onPressIconLeft={() => setLastPressedIcon('ikon kiri')}
+          onPressIconRight={() => setLastPressedIcon('ikon kanan')}
         />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terakhir ditekan: ${lastPressedIcon}`}
+        </Typography>
       </DemoSection>
 
       <DemoSection
