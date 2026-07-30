@@ -1,99 +1,133 @@
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Button, Container, Typography } from '@herca/rn-kit';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Color, Icon, Typography } from '@herca/rn-kit';
+import {
+  DemoScreen,
+  DemoSection,
+  DemoRow,
+  DemoLabel,
+} from '../components/demo';
 
-const ButtonScreen = () => {
-  const sizeButton = ['small', 'medium', 'large'] as const;
-  const variantButton = ['default', 'outline', 'tertiary'] as const;
-  const colorButton = [
-    'default',
-    'primary',
-    'success',
-    'danger',
-    'warning',
-    'info',
-    'orange',
-    'purple',
-  ] as const;
+const VARIANTS = ['default', 'outline', 'tertiary'] as const;
+const SIZES = ['small', 'medium', 'large'] as const;
+const COLORS = [
+  'default',
+  'primary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'orange',
+  'purple',
+] as const;
+
+export default function ButtonScreen() {
+  const [pressCount, setPressCount] = useState(0);
 
   return (
-    <ScrollView>
-      <Container style={{ gap: 3 }}>
-        <Button disabled title="Tes" color={'danger'} />
-        <Button disabled title="Tes" color={'primary'} />
-        <Button disabled title="Tes" color={'success'} />
-        <Button
-          disabled
-          variant="outline"
-          size="small"
-          title="Tes"
-          color={'danger'}
-        />
-        <Button disabled variant="outline" title="Tes" color={'primary'} />
-        <Button disabled variant="outline" title="Tes" color={'success'} />
-        <Button disabled variant="tertiary" title="Tes" color={'success'} />
-        {sizeButton.map((size) => (
-          <View key={size} style={styles.section}>
-            <Typography variant="h3" weight="bold" style={styles.sectionTitle}>
-              Size: {size}
-            </Typography>
-            {variantButton.map((variant) => (
-              <View key={variant} style={styles.variantSection}>
-                <Typography
-                  variant="p3"
-                  weight="semibold"
-                  style={styles.variantTitle}
-                >
-                  variant: {variant}
-                </Typography>
-                <View style={styles.buttonRow}>
-                  {colorButton.map((color) => (
-                    <View
-                      key={`${size}-${variant}-${color}`}
-                      style={styles.buttonWrapper}
-                    >
-                      <Button
-                        title={`${size} - ${variant} -${color}`}
-                        size={size}
-                        variant={variant}
-                        color={color}
-                        onPress={() =>
-                          console.log(`Pressed ${size}-${variant}-${color}`)
-                        }
-                      />
+    <DemoScreen
+      title="Button"
+      description="Tombol serbaguna dengan varian, ukuran, warna, dan status disabled/loading yang bisa dikombinasikan."
+    >
+      <DemoSection
+        title="Varian"
+        note="Prop variant mengubah gaya tampilan: default (penuh warna), outline (border saja), atau tertiary (minimalis)."
+      >
+        <DemoRow>
+          {VARIANTS.map((variant) => (
+            <View key={variant} style={styles.item}>
+              <Button title="Simpan" variant={variant} color="primary" />
+              <DemoLabel text={`variant="${variant}"`} />
+            </View>
+          ))}
+        </DemoRow>
+      </DemoSection>
 
-                      <Button
-                        title={`${size} - ${variant} -${color} - disabled`}
-                        size={size}
-                        disabled
-                        variant={variant}
-                        color={color}
-                        onPress={() =>
-                          console.log(`Pressed ${size}-${variant}-${color}`)
-                        }
-                      />
-                    </View>
-                  ))}
-                </View>
-              </View>
-            ))}
+      <DemoSection
+        title="Ukuran"
+        note="Prop size mengatur padding tombol: small, medium, atau large."
+      >
+        <DemoRow>
+          {SIZES.map((size) => (
+            <View key={size} style={styles.item}>
+              <Button title="Simpan" size={size} color="primary" />
+              <DemoLabel text={`size="${size}"`} />
+            </View>
+          ))}
+        </DemoRow>
+      </DemoSection>
+
+      <DemoSection
+        title="Warna"
+        note="Prop color memilih tema warna tombol pada variant default."
+      >
+        <DemoRow>
+          {COLORS.map((color) => (
+            <Button key={color} title={color} size="small" color={color} />
+          ))}
+        </DemoRow>
+      </DemoSection>
+
+      <DemoSection
+        title="Keadaan nonaktif & loading"
+        note="Prop disabled mengunci tombol; loading menampilkan indikator sambil menyembunyikan title."
+      >
+        <DemoRow>
+          <View style={styles.item}>
+            <Button title="Nonaktif" disabled color="primary" />
+            <DemoLabel text="disabled" />
           </View>
-        ))}
-      </Container>
-    </ScrollView>
+          <View style={styles.item}>
+            <Button title="Memuat" loading color="primary" />
+            <DemoLabel text="loading" />
+          </View>
+        </DemoRow>
+      </DemoSection>
+
+      <DemoSection
+        title="Lebar tombol"
+        note="Prop block membuat tombol memenuhi lebar kontainer; width mengatur lebar spesifik dalam piksel."
+      >
+        <DemoLabel text="block" />
+        <Button title="Lebar penuh" block color="primary" />
+        <DemoLabel text="width={160}" />
+        <Button title="Lebar tetap" width={160} color="primary" />
+      </DemoSection>
+
+      <DemoSection
+        title="Konten kustom"
+        note="Prop children menggantikan title sehingga isi tombol bisa berupa kombinasi ikon dan teks bebas."
+      >
+        <DemoLabel text="children" />
+        <Button color="primary">
+          <Icon name="Plus" size={16} color={Color.base.white100} />
+          <Typography variant="t1" weight="medium" color={Color.base.white100}>
+            {' '}
+            Tambah data
+          </Typography>
+        </Button>
+      </DemoSection>
+
+      <DemoSection
+        title="Interaksi onPress"
+        note="Callback onPress dipanggil setiap tombol ditekan; readout di bawah menghitung jumlah tekan."
+      >
+        <Button
+          title="Tekan saya"
+          color="primary"
+          onPress={() => setPressCount((count) => count + 1)}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Ditekan: ${pressCount}x`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  buttonRow: {
-    gap: 4,
+  item: {
+    alignItems: 'center',
+    gap: 8,
   },
-  section: {
-    gap: 12,
-  },
-  sectionTitle: {},
-  variantTitle: {},
-  buttonWrapper: {},
-  variantSection: {},
 });
-
-export default ButtonScreen;

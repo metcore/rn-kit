@@ -1,91 +1,99 @@
-import {
-  Container,
-  DropDown,
-  Icon,
-  Typography,
-  type ChipOptionProps,
-  type IconNameProps,
-} from '@herca/rn-kit';
-import { View } from 'react-native';
-import { layouting } from '../../src/styles/layouting';
-import { spacing } from '../../src/styles/spacing';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Color, DropDown, Icon, Typography } from '@herca/rn-kit';
+import type { ChipOptionProps, IconNameProps } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
-type OptionsProp = ChipOptionProps & {
-  icon: IconNameProps;
-  iconSize: number;
-  iconColor?: string;
-};
+const MENU_OPTIONS: ChipOptionProps[] = [
+  { label: 'Bagikan', value: 'share' },
+  { label: 'Ubah', value: 'edit' },
+  { label: 'Hapus', value: 'delete' },
+];
 
-const options: OptionsProp[] = [
-  {
-    label: 'Bagikan',
-    value: 0,
-    icon: 'share-up',
-    iconSize: 20,
-  },
-  {
-    label: 'Ubah Pengajuan',
-    value: 1,
-    icon: 'edit-square-outline',
-    iconSize: 20,
-  },
-  {
-    label: 'Pembayaran',
-    value: 2,
-    icon: 'Money',
-    iconSize: 20,
-  },
-  {
-    label: 'Tambah Komentar',
-    value: 3,
-    icon: 'comment-fill',
-    iconSize: 20,
-  },
-  {
-    label: 'Batalkan Pembayaran',
-    value: 4,
-    icon: 'Money',
-    iconSize: 20,
-    iconColor: 'red',
-  },
-  {
-    label: 'Hapus Pengajuan',
-    value: 5,
-    icon: 'Trash',
-    iconSize: 20,
-    iconColor: 'red',
-  },
+const ICON_OPTIONS: ChipOptionProps[] = [
+  { label: 'Bagikan', value: 'share', icon: 'share-up' },
+  { label: 'Ubah', value: 'edit', icon: 'edit-square-outline' },
+  { label: 'Hapus', value: 'delete', icon: 'Trash' },
 ];
 
 export default function DropDownScreen() {
-  // const [selected, setSelected] = useState<number | null>(null);
-  // const handleSelect = (val: number) => {
-  //   setSelected(val);
+  const [selected, setSelected] = useState<string | number | null>(null);
 
-  //   setTimeout(() => {
-  //     setSelected(null);
-  //   }, 300);
-  // };
   return (
-    <Container>
-      <DropDown
-        maxHeight={500}
-        options={options}
-        // value={selected}
-        // onSelect={(val) => handleSelect(val as number)}
-        renderButton={<Icon name="more-vertical" />}
-        renderItem={(item) => (
-          <View style={[layouting.flex.rowCenter, spacing.gap[4]]}>
-            <Icon
-              name={item.icon as IconNameProps}
-              size={item.iconSize as number}
-              style={layouting.flex.shrink}
-              color={item.iconColor as string}
-            />
-            <Typography variant="t2">{item.label}</Typography>
-          </View>
-        )}
-      />
-    </Container>
+    <DemoScreen
+      title="Drop Down"
+      description="Menu pilihan yang muncul di atas modal transparan, diposisikan otomatis relatif terhadap tombol pemicu."
+    >
+      <DemoSection
+        title="Menu dasar"
+        note="renderButton menampilkan elemen pemicu; onSelect dipanggil dengan value opsi yang dipilih."
+      >
+        <DropDown
+          options={MENU_OPTIONS}
+          onSelect={(val) => setSelected(val)}
+          renderButton={<Icon name="more-vertical" />}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Dipilih: ${selected ?? '-'}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Trigger kustom"
+        note="renderButton bebas diisi elemen apa pun, misalnya tombol berlabel dengan border."
+      >
+        <DemoLabel text="renderButton={<View>...</View>}" />
+        <DropDown
+          options={MENU_OPTIONS}
+          onSelect={(val) => setSelected(val)}
+          renderButton={
+            <View style={styles.customTrigger}>
+              <Typography variant="t2" weight="medium" color={Color.gray[800]}>
+                Aksi lain
+              </Typography>
+            </View>
+          }
+        />
+      </DemoSection>
+
+      <DemoSection
+        title="Item kustom"
+        note="renderItem mengganti tampilan tiap opsi, misalnya menambahkan ikon di samping label."
+      >
+        <DropDown
+          options={ICON_OPTIONS}
+          width={180}
+          onSelect={(val) => setSelected(val)}
+          renderButton={<Icon name="more-vertical" />}
+          renderItem={(item) => (
+            <View style={styles.itemRow}>
+              <Icon
+                name={item.icon as IconNameProps}
+                size={18}
+                color={Color.gray[700]}
+              />
+              <Typography variant="t2" color={Color.gray[800]}>
+                {item.label}
+              </Typography>
+            </View>
+          )}
+        />
+      </DemoSection>
+    </DemoScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  customTrigger: {
+    borderWidth: 1,
+    borderColor: Color.gray[300],
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+});
