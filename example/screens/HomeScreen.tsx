@@ -15,17 +15,25 @@ const HomeScreen: React.FC = () => {
     if (!normalizedQuery) {
       return COMPONENT_CATALOG;
     }
-    return COMPONENT_CATALOG.map((category) => ({
-      ...category,
-      items: category.items.filter((item) =>
-        item.label.toLowerCase().includes(normalizedQuery)
-      ),
-    })).filter((category) => category.items.length > 0);
+    return COMPONENT_CATALOG.map((category) => {
+      if (category.category.toLowerCase().includes(normalizedQuery)) {
+        return category;
+      }
+      return {
+        ...category,
+        items: category.items.filter((item) =>
+          item.label.toLowerCase().includes(normalizedQuery)
+        ),
+      };
+    }).filter((category) => category.items.length > 0);
   }, [query]);
 
   return (
     <SafeAreaView style={styles.flex}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
         <Container style={styles.container}>
           <View style={styles.header}>
             <ReactLogo size={48} />
@@ -48,6 +56,12 @@ const HomeScreen: React.FC = () => {
             onChangeText={setQuery}
             clearButton
           />
+
+          {filteredCatalog.length === 0 && (
+            <Typography variant="t1" style={styles.emptyState}>
+              No components found
+            </Typography>
+          )}
 
           {filteredCatalog.map((category) => (
             <View key={category.category} style={styles.section}>
@@ -95,6 +109,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
+  },
+  emptyState: {
+    textAlign: 'center',
+    marginTop: 24,
   },
 });
 

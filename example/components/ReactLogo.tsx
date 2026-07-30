@@ -1,3 +1,5 @@
+// Geometry mirrors example/assets/react-logo.svg (the source the splash PNGs
+// are rasterized from) — keep both in sync when either changes.
 import React from 'react';
 import Svg, { Circle, Ellipse, G } from 'react-native-svg';
 
