@@ -1,8 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Provider } from '@herca/rn-kit';
-import { ToastProvider } from '../../src/Toast/ToastContext';
+import { Provider, ToastProvider } from '@herca/rn-kit';
 import HeaderNavigation from '../components/Header/HeaderNavigation';
 import AccordionScreen from '../screens/AccordionScreen';
 import AlertScreen from '../screens/AlertScreen';
@@ -10,7 +9,7 @@ import AvatarGroupScreen from '../screens/AvatarGroupScreen';
 import AvatarScreen from '../screens/AvatarScreen';
 import BadgeIconScreen from '../screens/BadgeIconScreen';
 import BadgeScreen from '../screens/BadgeScreen';
-import BottomSheetScreen from '../screens/BottomSheetSreen';
+import BottomSheetScreen from '../screens/BottomSheetScreen';
 import ButtonScreen from '../screens/ButtonScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import CardScreen from '../screens/CardScreen';
@@ -52,9 +51,7 @@ import SkeletonScreen from '../screens/SkeletonScreen';
 import SpinnerScreen from '../screens/SpinnerScreen';
 import StepScreen from '../screens/StepScreen';
 import SwitchScreen from '../screens/SwitchScreen';
-import TabDefaultScreen from '../screens/TabDefaultScreen';
 import TabScreen from '../screens/TabScreen';
-import TabStickyScreen from '../screens/TabStickyScreen';
 import TextAreaScreen from '../screens/TextAreaScreen';
 import TextEditorScreen from '../screens/TextEditorScreen';
 import TimeLineScreen from '../screens/TimeLineScreen';
@@ -82,16 +79,13 @@ const App = () => {
           <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{
+              headerShown: false,
               contentStyle: {
                 backgroundColor: 'white',
               },
             }}
           >
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Container" component={ContainerScreen} />
             <Stack.Screen name="Card" component={CardScreen} />
             <Stack.Screen name="Button" component={ButtonScreen} />
@@ -118,9 +112,21 @@ const App = () => {
             <Stack.Screen name="Footer" component={FooterScreen} />
             <Stack.Screen name="Avatar" component={AvatarScreen} />
             <Stack.Screen name="AvatarGroup" component={AvatarGroupScreen} />
-            <Stack.Screen name="Example" component={ExampleScreen} />
-            <Stack.Screen name="SpSignature" component={SpSignatureScreen} />
-            <Stack.Screen name="SpLatter" component={SpLatterScreen} />
+            <Stack.Screen
+              name="Example"
+              component={ExampleScreen}
+              options={{ headerShown: true }}
+            />
+            <Stack.Screen
+              name="SpSignature"
+              component={SpSignatureScreen}
+              options={{ headerShown: true }}
+            />
+            <Stack.Screen
+              name="SpLatter"
+              component={SpLatterScreen}
+              options={{ headerShown: true }}
+            />
             <Stack.Screen name="Badge" component={BadgeScreen} />
             <Stack.Screen name="Alert" component={AlertScreen} />
             <Stack.Screen name="Drawing" component={DrawingScreen} />
@@ -133,14 +139,13 @@ const App = () => {
             <Stack.Screen name="Icons" component={IconScreen} />
             <Stack.Screen name="TimeLine" component={TimeLineScreen} />
             <Stack.Screen name="Tab" component={TabScreen} />
-            <Stack.Screen name="TabDefault" component={TabDefaultScreen} />
-            <Stack.Screen name="TabSticky" component={TabStickyScreen} />
             <Stack.Screen name="Step" component={StepScreen} />
             <Stack.Screen name="TextEditor" component={TextEditorScreen} />
             <Stack.Screen
               name="Sp"
               component={SpScreen}
               options={{
+                headerShown: true,
                 header: () => (
                   <HeaderNavigation
                     title="Surat Peringatan"
@@ -149,12 +154,17 @@ const App = () => {
                 ),
               }}
             />
-            <Stack.Screen name="SpDetail" component={SpDetailScreen} />
+            <Stack.Screen
+              name="SpDetail"
+              component={SpDetailScreen}
+              options={{ headerShown: true }}
+            />
 
             <Stack.Screen
               name="Leave"
               component={LeaveScreen}
               options={{
+                headerShown: true,
                 header: () => (
                   <HeaderNavigation
                     title="Pengajuan Cuti"
@@ -167,6 +177,7 @@ const App = () => {
               name="LeaveForm"
               component={LeaveFormScreen}
               options={{
+                headerShown: true,
                 header: () => (
                   <HeaderNavigation
                     title="Pengajuan Cuti"
@@ -179,6 +190,7 @@ const App = () => {
               name="LeaveDetail"
               component={LeaveDetailScreen}
               options={{
+                headerShown: true,
                 header: () => (
                   <HeaderNavigation
                     title="Pengajuan Cuti"
@@ -187,10 +199,18 @@ const App = () => {
                 ),
               }}
             />
-            <Stack.Screen name="LeaveApprove" component={LeaveApproveScreen} />
+            <Stack.Screen
+              name="LeaveApprove"
+              component={LeaveApproveScreen}
+              options={{ headerShown: true }}
+            />
             <Stack.Screen name="Accordion" component={AccordionScreen} />
             <Stack.Screen name="DropDown" component={DropDownScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: true }}
+            />
             <Stack.Screen name="Label" component={LabelScreen} />
             <Stack.Screen name="TimePicker" component={TimePickerScreen} />
             <Stack.Screen name="BadgeIcon" component={BadgeIconScreen} />
@@ -201,6 +221,7 @@ const App = () => {
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}
+              options={{ headerShown: true }}
             />
             <Stack.Screen name="Skeleton" component={SkeletonScreen} />
           </Stack.Navigator>
