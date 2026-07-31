@@ -25,6 +25,7 @@ import Color from '../Color/Color';
 import Icon, { type IconNameProps } from '../Icon';
 import Input from '../Input/Input';
 import LabelForm from '../LabelForm/LabelForm';
+import { getTestID } from '../helpers/getTestID';
 import Typography from '../Typography/Typography';
 import Footer from '../Ui/Footer';
 import type { TextEditorType } from './types';
@@ -67,6 +68,31 @@ interface ToolbarButton {
   label: string;
   isSpecial?: boolean;
 }
+
+// Single source of truth: the toolbar renders from this list, and the webview
+// is asked about exactly these commands. Adding a button therefore cannot
+// leave it without an active state -- the two used to be maintained apart, and
+// five buttons were never queried at all.
+const TOOLBAR_BUTTONS: ToolbarButton[] = [
+  { command: 'bold', icon: 'Bold', label: 'Bold' },
+  { command: 'italic', icon: 'Italic', label: 'Italic' },
+  { command: 'underline', icon: 'UnderLine', label: 'Underline' },
+  { command: 'strikeThrough', icon: 'strike-through', label: 'Strike' },
+  { command: 'link', icon: 'Link', label: 'Link', isSpecial: true },
+  {
+    command: 'insertUnorderedList',
+    icon: 'list-un-ordered',
+    label: 'Bullet',
+  },
+  { command: 'insertOrderedList', icon: 'list-ordered', label: 'Number' },
+  { command: 'justifyLeft', icon: 'align-left', label: 'Left' },
+  { command: 'justifyCenter', icon: 'align-center', label: 'Center' },
+  { command: 'justifyRight', icon: 'align-right', label: 'Right' },
+];
+
+const FORMAT_QUERY_COMMANDS = TOOLBAR_BUTTONS.filter(
+  (button) => !button.isSpecial
+).map((button) => button.command);
 
 const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
   (
@@ -253,12 +279,24 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           editor.addEventListener("keyup", updateFormats);
           editor.addEventListener("click", updateFormats);
 
+          // Caret moves that are not a click or keyup -- arrow keys held down,
+          // programmatic selection, autocorrect -- only surface here.
+          document.addEventListener('selectionchange', function () {
+            if (document.activeElement === editor) updateFormats();
+          });
+
+          var FORMAT_COMMANDS = ${JSON.stringify(FORMAT_QUERY_COMMANDS)};
+
           function updateFormats() {
-            const formats = [];
-            if (document.queryCommandState('bold')) formats.push('bold');
-            if (document.queryCommandState('italic')) formats.push('italic');
-            if (document.queryCommandState('underline')) formats.push('underline');
-            if (document.queryCommandState('strikeThrough')) formats.push('strikeThrough');
+            var formats = FORMAT_COMMANDS.filter(function (command) {
+              try {
+                return document.queryCommandState(command);
+              } catch (e) {
+                // queryCommandState throws for commands a browser does not
+                // know; treat those as simply not active.
+                return false;
+              }
+            });
 
             window.ReactNativeWebView.postMessage(JSON.stringify({
               type: 'formats',
@@ -418,8 +456,12 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     const formatText = (command: string) => {
       if (webviewRef.current) {
         if (Platform.OS === 'ios') {
+          // updateFormats() matters as much as the command itself: without it
+          // iOS applied the format but left the button unlit until the editor
+          // was touched again. Android gets this for free via handleMessage.
           webviewRef.current.injectJavaScript(`
             document.execCommand('${command}', false, '');
+            updateFormats();
             true; //di ios harus biar berfunsi boldnya
           `);
         } else {
@@ -586,7 +628,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       const showSub = Keyboard.addListener(
         'keyboardDidShow',
         (e: KeyboardEvent) => {
-          // setShowToolbar(true);
+          setShowToolbar(true);
           setKeyboardHeight(e.endCoordinates.height);
         }
       );
@@ -602,23 +644,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     }, []);
 
     const isFormatActive = (format: string) => activeFormats.has(format);
-
-    const toolbarButtons: ToolbarButton[] = [
-      { command: 'bold', icon: 'Bold', label: 'Bold' },
-      { command: 'italic', icon: 'Italic', label: 'Italic' },
-      { command: 'underline', icon: 'UnderLine', label: 'Underline' },
-      { command: 'strikeThrough', icon: 'strike-through', label: 'Strike' },
-      { command: 'link', icon: 'Link', label: 'Link', isSpecial: true },
-      {
-        command: 'insertUnorderedList',
-        icon: 'list-un-ordered',
-        label: 'Bullet',
-      },
-      { command: 'insertOrderedList', icon: 'list-ordered', label: 'Number' },
-      { command: 'justifyLeft', icon: 'align-left', label: 'Left' },
-      { command: 'justifyCenter', icon: 'align-center', label: 'Center' },
-      { command: 'justifyRight', icon: 'align-right', label: 'Right' },
-    ];
 
     return (
       <View testID={testID} style={styles.container}>
@@ -728,9 +753,11 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.toolbarContent}
             >
-              {toolbarButtons.map((button) => (
+              {TOOLBAR_BUTTONS.map((button) => (
                 <TouchableOpacity
                   key={button.command}
+                  testID={getTestID(testID, button.command)}
+                  accessibilityLabel={button.label}
                   onPress={() =>
                     button.isSpecial
                       ? openLinkModal()
