@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import InputDate from '../Input/InputDate';
 
 describe('InputDate testID', () => {
@@ -39,5 +39,60 @@ describe('InputDate testID', () => {
     );
 
     expect(queryByTestId('undefined-trigger')).toBeNull();
+  });
+});
+
+describe('InputDate behaviour', () => {
+  it('opens the date picker sheet when the trigger is pressed', () => {
+    const { getByTestId, queryByTestId } = render(
+      <InputDate testID="birthday" label="Birthday" placeholder="Pilih" />
+    );
+
+    expect(queryByTestId('birthday-sheet')).toBeNull();
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByTestId('birthday-sheet')).toBeTruthy();
+  });
+
+  it('reports a null range to onDateChange when cleared', () => {
+    const onDateChange = jest.fn();
+    const { getByTestId } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        value="2024-01-01"
+        hasClear
+        onDateChange={onDateChange}
+      />
+    );
+
+    fireEvent.press(getByTestId('birthday-clear'));
+
+    expect(onDateChange).toHaveBeenCalledWith({
+      date: null,
+      startDate: null,
+      endDate: null,
+    });
+  });
+
+  it('shows the placeholder until a value is given', () => {
+    const { getByText, queryByText, rerender } = render(
+      <InputDate testID="birthday" label="Birthday" placeholder="Pilih" />
+    );
+
+    expect(getByText('Pilih')).toBeTruthy();
+
+    rerender(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        value="2024-01-01"
+      />
+    );
+
+    expect(queryByText('Pilih')).toBeNull();
   });
 });

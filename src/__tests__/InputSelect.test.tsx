@@ -57,3 +57,66 @@ describe('InputSelect testID', () => {
     expect(queryByTestId('bogus-search-input')).toBeNull();
   });
 });
+
+describe('InputSelect behaviour', () => {
+  it('calls onSelectClick and opens the sheet when the trigger is pressed', () => {
+    const onSelectClick = jest.fn();
+    const { getByTestId, queryByTestId } = render(
+      <ToastProvider>
+        <InputSelect
+          testID="favorite"
+          label="Favorite"
+          onSelectClick={onSelectClick}
+        />
+      </ToastProvider>
+    );
+
+    expect(queryByTestId('favorite-sheet')).toBeNull();
+
+    fireEvent.press(getByTestId('favorite-trigger'));
+
+    expect(onSelectClick).toHaveBeenCalledTimes(1);
+    expect(getByTestId('favorite-sheet')).toBeTruthy();
+  });
+
+  it('calls onClear when the clear button is pressed', () => {
+    const onClear = jest.fn();
+    const { getByTestId } = render(
+      <ToastProvider>
+        <InputSelect
+          testID="favorite"
+          label="Favorite"
+          value="Apple"
+          onClear={onClear}
+        />
+      </ToastProvider>
+    );
+
+    fireEvent.press(getByTestId('favorite-clear'));
+
+    expect(onClear).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows the clear button only once there is a value', () => {
+    const { getByTestId, queryByTestId, rerender } = render(
+      <ToastProvider>
+        <InputSelect testID="favorite" label="Favorite" onClear={() => {}} />
+      </ToastProvider>
+    );
+
+    expect(queryByTestId('favorite-clear')).toBeNull();
+
+    rerender(
+      <ToastProvider>
+        <InputSelect
+          testID="favorite"
+          label="Favorite"
+          value="Apple"
+          onClear={() => {}}
+        />
+      </ToastProvider>
+    );
+
+    expect(getByTestId('favorite-clear')).toBeTruthy();
+  });
+});
