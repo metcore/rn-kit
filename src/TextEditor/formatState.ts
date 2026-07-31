@@ -106,3 +106,81 @@ export const buildCommandScript = () => `
     document.execCommand(command, false, '');
   }
 `;
+
+/**
+ * Builds the snippet that inserts or edits a hyperlink inside the webview.
+ *
+ * Defines `rnkitInsertLink(linkData)`. Both platforms call it -- iOS by
+ * injecting a call, Android from its message handler. It used to exist twice,
+ * once per platform, which is exactly how the two drifted apart before.
+ */
+export const buildLinkScript = () => `
+  function rnkitFindLinkInRange(range) {
+    var node = range.startContainer;
+    while (node && node !== editor) {
+      if (node.nodeName === 'A') return node;
+      node = node.parentNode;
+    }
+
+    if (range.commonAncestorContainer.nodeType === 1) {
+      return range.commonAncestorContainer.querySelector('a');
+    }
+    return null;
+  }
+
+  function rnkitReportContent() {
+    window.ReactNativeWebView.postMessage(JSON.stringify({
+      type: 'content',
+      html: editor.innerHTML,
+      characterCount: editor.textContent.trim().length
+    }));
+  }
+
+  function rnkitInsertLink(linkData) {
+    editor.focus();
+
+    var selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) {
+      rnkitReportContent();
+      return;
+    }
+
+    var range = selection.getRangeAt(0);
+
+    if (linkData.isExisting) {
+      var existing = rnkitFindLinkInRange(range);
+      if (existing) {
+        existing.href = linkData.url;
+        existing.textContent = linkData.text;
+        range.setStartAfter(existing);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        rnkitReportContent();
+        return;
+      }
+    }
+
+    var link = document.createElement('a');
+    link.href = linkData.url;
+    link.textContent = linkData.text;
+    link.target = '_blank';
+    range.deleteContents();
+    range.insertNode(link);
+
+    // A trailing space gives the caret somewhere outside the anchor to land,
+    // so the next keystroke is not swallowed into the link.
+    var space = document.createTextNode(' ');
+    if (link.parentNode) {
+      link.parentNode.insertBefore(space, link.nextSibling);
+      range.setStartAfter(space);
+    } else {
+      range.setStartAfter(link);
+    }
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    rnkitReportContent();
+  }
+`;

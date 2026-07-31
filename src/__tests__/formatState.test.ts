@@ -2,6 +2,7 @@ import vm from 'vm';
 import {
   buildCommandScript,
   buildFormatStateScript,
+  buildLinkScript,
 } from '../TextEditor/formatState';
 
 const TOGGLES = ['bold', 'italic', 'underline', 'strikeThrough'];
@@ -175,5 +176,81 @@ describe('buildCommandScript', () => {
       'removeFormat',
       'formatBlock',
     ]);
+  });
+});
+
+describe('buildLinkScript', () => {
+  const insert = (
+    data: { text: string; url: string; isExisting: boolean },
+    { insideLink = false }: { insideLink?: boolean } = {}
+  ) => {
+    const created: Array<Record<string, unknown>> = [];
+    const link: Record<string, unknown> = { nodeName: 'A' };
+    const editor = {
+      nodeName: 'DIV',
+      parentNode: null,
+      focus: () => {},
+      textContent: 'teks',
+      innerHTML: '<p>teks</p>',
+    };
+    link.parentNode = editor;
+
+    const range = {
+      // the link itself, not a copy -- the script edits it in place
+      startContainer: insideLink ? link : editor,
+      commonAncestorContainer: { nodeType: 1, querySelector: () => null },
+      deleteContents: () => {},
+      insertNode: () => {},
+      setStartAfter: () => {},
+      collapse: () => {},
+    };
+
+    const context = vm.createContext({
+      editor,
+      document: {
+        getElementById: () => editor,
+        createElement: (tag: string) => {
+          const node = { nodeName: tag.toUpperCase(), parentNode: null };
+          created.push(node);
+          return node;
+        },
+        createTextNode: () => ({ nodeName: '#text' }),
+      },
+      window: {
+        getSelection: () => ({
+          rangeCount: 1,
+          getRangeAt: () => range,
+          removeAllRanges: () => {},
+          addRange: () => {},
+        }),
+        ReactNativeWebView: { postMessage: () => {} },
+      },
+    });
+
+    vm.runInContext(buildLinkScript(), context);
+    vm.runInContext(`rnkitInsertLink(${JSON.stringify(data)})`, context);
+    return { created, link };
+  };
+
+  it('creates an anchor when there is nothing to edit', () => {
+    const { created } = insert({
+      text: 'Herca',
+      url: 'https://herca.id',
+      isExisting: false,
+    });
+
+    expect(created.map((node) => node.nodeName)).toContain('A');
+  });
+
+  it('updates the anchor in place when editing an existing link', () => {
+    const { created, link } = insert(
+      { text: 'Baru', url: 'https://baru.id', isExisting: true },
+      { insideLink: true }
+    );
+
+    expect(link.href).toBe('https://baru.id');
+    expect(link.textContent).toBe('Baru');
+    // Editing must not leave a second anchor behind.
+    expect(created.map((node) => node.nodeName)).not.toContain('A');
   });
 });
