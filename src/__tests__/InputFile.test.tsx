@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 
 // InputFile.tsx imports several native-module-backed packages at module
 // scope (document/image pickers, blob util) that have no native binary in
@@ -83,16 +83,39 @@ describe('InputFile testID', () => {
     expect(getByTestId('attachment-error-0')).toBeTruthy();
   });
 
-  // Deferred coverage: `-sheet` (ModalPicker) and `-modal-delete` (ModalDelete)
-  // only mount their content once the corresponding BottomSheet is opened via
-  // `fireEvent.press`, which starts a real (non-native-driver) Animated.spring.
-  // The spring keeps re-scheduling timers past the test's synchronous
-  // assertion and unmount, which react-native's jest preset then reports as
-  // "Jest environment torn down" noise and a nonzero process exit -- flaky in
-  // this suite for reasons unrelated to testID plumbing. The plumbing itself
-  // (`testID` flows into ModalPicker/ModalDelete's `...props` spread, which
-  // is BottomSheet's own already-covered testID prop, see
-  // src/__tests__/BottomSheet.test.tsx) is verified by inspection instead:
-  // ModalPicker/ModalDelete's Props extend React.ComponentProps<typeof
-  // BottomSheet> and forward `...props` straight through.
+  // ModalPicker's BottomSheet renders behind a Modal that only mounts its
+  // children once open, so the sheet ids are unreachable until the trigger is
+  // pressed.
+  it('derives sheet testIDs once the picker is opened', () => {
+    const { getByTestId } = render(
+      <InputFile value={[]} onChange={() => {}} testID="attachment" />
+    );
+
+    fireEvent.press(getByTestId('attachment-trigger'));
+
+    expect(getByTestId('attachment-sheet')).toBeTruthy();
+    expect(getByTestId('attachment-sheet-backdrop')).toBeTruthy();
+  });
+
+  it('renders no sheet testID when prop omitted', () => {
+    const { getByText, queryByTestId } = render(
+      <InputFile value={[]} onChange={() => {}} />
+    );
+
+    fireEvent.press(getByText('Choose File'));
+
+    // Prove the sheet really opened, so the null assertions below can only
+    // pass because getTestID returned undefined -- not because nothing moved.
+    expect(getByText('Upload Dokumen')).toBeTruthy();
+    expect(queryByTestId('undefined-sheet')).toBeNull();
+    expect(queryByTestId('undefined-sheet-backdrop')).toBeNull();
+  });
+
+  // Deferred coverage: `-modal-delete` (ModalDelete) mounts only after
+  // confirmDeleteFile runs, which is reachable exclusively through
+  // ItemPreview's delete TouchableOpacity -- and that button carries no
+  // testID of its own (neither does the ItemPreview that CardTriggerSmall
+  // nests). Opening it from a test would mean an UNSAFE_getAllByType index
+  // into the action row, which breaks on any layout change. Covering this
+  // properly needs a testID on ItemPreview's replace/delete actions first.
 });
