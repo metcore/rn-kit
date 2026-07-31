@@ -87,6 +87,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       inputLabelLinkUrl = 'Link URL',
       saveLinkButtonText = 'Simpan',
       cancelLinkButtonText = 'Batal',
+      testID,
     },
     ref
   ) => {
@@ -620,7 +621,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     ];
 
     return (
-      <View style={styles.container}>
+      <View testID={testID} style={styles.container}>
         {label ? <LabelForm title={label} /> : null}
         <KeyboardAvoidingView
           style={[styles.editorWrapper, { minHeight: height, height: height }]}

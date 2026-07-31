@@ -32,6 +32,7 @@ Komponen kalender ini dibuat menggunakan React Native dan memungkinkan pengguna 
 | `initialDate`             | `Date`                                 | `new Date(2026, 1, 1)`                                | Inisialisasi tanggal saat pertamakali render              |
 | `dateStart`               | `string \| null`                       | `2025-11-28`                                          | Kontroler tanggal mulai                                   |
 | `dateEnd`                 | `string \| null`                       | `2025-11-28`                                          | Kontroler tanggal selesai                                 |
+| `testID`                  | `string`                               | -                                                     | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ---
 

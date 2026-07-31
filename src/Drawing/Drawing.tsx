@@ -16,6 +16,7 @@ interface DrawingProps {
   disabled?: boolean;
   hint?: string;
   hasError?: boolean;
+  testID?: string;
 }
 
 const Drawing = ({
@@ -26,6 +27,7 @@ const Drawing = ({
   disabled,
   hint,
   hasError,
+  testID,
 }: DrawingProps) => {
   const ref = useRef<SignatureViewRef | null>(null);
 
@@ -108,7 +110,7 @@ const Drawing = ({
   }, [dataURL]);
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <View style={styles.drawerContainer}>
         <SignatureCanvas
           key={canvasKey}

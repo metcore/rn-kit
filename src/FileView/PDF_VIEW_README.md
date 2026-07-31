@@ -13,3 +13,14 @@ npm install react-native-pdf
 # atau
 yarn add react-native-pdf
 ```
+
+---
+
+## Props
+
+| Props    | Tipe                              | Wajib | Default | Deskripsi                                                                                             |
+| -------- | --------------------------------- | ----- | ------- | ----------------------------------------------------------------------------------------------------- |
+| `source` | `{ uri, headers, cache, ... }`    | ✅     | -       | Sumber dokumen PDF. Kalau kosong, komponen merender container placeholder.                            |
+| `testID` | `string`                          | ❌     | -       | ID untuk automation testing (Maestro/Detox/Appium). Tetap terpasang pada placeholder saat `source` kosong. |
+
+Props lain diteruskan apa adanya ke `Pdf` dari `react-native-pdf`.

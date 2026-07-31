@@ -67,6 +67,7 @@ export default function MyScreen() {
 | `inputLinkUrlPlacholder`  | `string`                 | `'https://www.example.com'`  | Placeholder untuk input URL                  |
 | `saveLinkButtonText`      | `string`                 | `'Simpan'`                   | Text tombol simpan link                      |
 | `cancelLinkButtonText`    | `string`                 | `'Batal'`                    | Text tombol batal link                       |
+| `testID`                  | `string`                 | -                            | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## Advanced Usage
 

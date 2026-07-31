@@ -72,4 +72,5 @@ export interface CalendarTypes {
   dateEnd?: string | null;
   onMonthChange?: (month: number) => void;
   onYearChange?: (year: number) => void;
+  testID?: string;
 }

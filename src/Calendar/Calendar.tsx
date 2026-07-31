@@ -50,6 +50,7 @@ const Calendar = ({
   dateEnd,
   onMonthChange,
   onYearChange,
+  testID,
 }: CalendarTypes) => {
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -322,7 +323,7 @@ const Calendar = ({
   const year = currentDate.getFullYear();
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.buttonNav} onPress={goToPrevMonth}>
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />

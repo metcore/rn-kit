@@ -14,13 +14,14 @@ type Source = {
 
 interface Props extends React.ComponentProps<typeof Pdf> {
   source: Source;
+  testID?: string;
 }
 
-const PdfView = ({ source, ...props }: Props) => {
-  if (!source) return <View />;
+const PdfView = ({ source, testID, ...props }: Props) => {
+  if (!source) return <View testID={testID} />;
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <Pdf source={source} style={styles.pdf} {...props} />
     </View>
   );

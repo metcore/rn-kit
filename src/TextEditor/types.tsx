@@ -4,4 +4,5 @@ export interface TextEditorType {
   hasError?: boolean;
   onChange?: (data: string) => void;
   height?: number;
+  testID?: string;
 }
