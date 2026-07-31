@@ -14,6 +14,7 @@ interface AlertProps {
   style?: ViewStyle;
   titleStyle?: StyleProp<ViewStyle>;
   messageStyle?: StyleProp<ViewStyle>;
+  testID?: string;
   hide?: boolean;
 }
 
@@ -75,11 +76,13 @@ const Alert: React.FC<AlertProps> = ({
   titleStyle,
   messageStyle,
   hide = false,
+  testID,
 }) => {
   const { background, fontColor, borderColor } = COLORS[color];
 
   return (
     <View
+      testID={testID}
       style={[
         styles.container,
         {

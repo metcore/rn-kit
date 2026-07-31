@@ -11,6 +11,7 @@
 | `color`    | `'default' \| 'success' \| 'danger' \| 'primary' \| 'warning' \| 'info' \| 'purple' \| 'orange'` | `'default'` | Variasi warna latar dan teks.                                                  |
 | `icon`     | `IconNameProps`                                                                                  | `undefined` | Menampilkan ikon di sebelah kiri teks.                                         |
 | `size`     | `'small' \| 'medium'`                                                                            | `'medium'`  | (Belum digunakan – untuk ekspansi ukuran ke depan.)                            |
+| `testID`   | `string`                                                                                         | -           | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ---
 

@@ -23,6 +23,7 @@ Komponen `Typography` digunakan untuk menampilkan teks dengan berbagai ukuran, k
 | `center`       | `boolean`                     | `false`     | Mengatur teks ke tengah                                         |
 | `right`        | `boolean`                     | `false`     | Mengatur teks ke kanan                                          |
 | `left`         | `boolean`                     | `false`     | Mengatur teks ke kiri                                           |
+| `testID` | `string` | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## 🔠 Varian & Ukuran
 

@@ -20,6 +20,7 @@ Komponen `Badge` digunakan untuk menampilkan label kecil yang memberikan informa
 | `size`     | `'small'` \\| `'medium'`             | `'medium'`  | Ukuran badge                                               |
 | `dot`      | `boolean`                            | `false`     | Jika `true`, hanya menampilkan titik kecil                 |
 | `children` | `React.ReactNode`                    | `undefined` | Jika ada, akan menggantikan `value` sebagai isi badge      |
+| `testID` | `string` | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## 🎨 Warna default yang Tersedia
 

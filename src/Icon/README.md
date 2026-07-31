@@ -45,6 +45,7 @@ export default function App() {
 | `size`  | number | 24      | Ukuran icon dalam piksel |
 | `color` | string | "#000"  | Warna icon               |
 | `style` | object | `{}`    | Gaya tambahan (optional) |
+| `testID` | `string` | - | ID untuk automation testing. Ikon dibungkus View ber-testID hanya saat prop ini diisi. |
 
 ## Daftar Icon
 

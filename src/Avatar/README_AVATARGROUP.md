@@ -16,6 +16,7 @@ The `AvatarGroup` component displays a group of user avatars. It supports image 
 | `avatars`    | `AvatarProps[]`                     | `[]`      | Array of avatar objects.                         |
 | `maxVisible` | `number`                            | `5`       | Max number of avatars to display.                |
 | `size`       | `'small' | 'medium' | 'large'`     | `'medium'` | Size of avatars.                                 |
+| `testID`     | `string`                            | -          | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ### `AvatarProps`
 

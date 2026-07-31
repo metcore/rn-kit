@@ -20,6 +20,7 @@ Komponen `Avatar` digunakan untuk menampilkan foto pengguna atau inisial nama ji
 | `backgroundColor` | `string`              | `'#ccc'`    | Warna latar belakang jika tanpa gambar                                 |
 | `textColor`     | `string`                | `'#fff'`    | Warna teks inisial jika tanpa gambar                                   |
 | `style`         | `ViewStyle`             | `undefined` | Gaya tambahan untuk container                                          |
+| `testID` | `string` | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## 📏 Ukuran Avatar
 

@@ -12,6 +12,7 @@ interface BadgeProps {
   variant?: Variant;
   dot?: boolean;
   children?: React.ReactNode;
+  testID?: string;
 }
 
 const COLORS: Record<Variant, { background: string; fontColor: string }> = {
@@ -47,6 +48,7 @@ const Badge: React.FC<BadgeProps> = ({
   color = 'default',
   dot = false,
   children,
+  testID,
 }) => {
   const safeSize: Size = ['small', 'medium'].includes(size) ? size : 'medium';
 
@@ -69,6 +71,7 @@ const Badge: React.FC<BadgeProps> = ({
   if (dot) {
     return (
       <View
+        testID={testID}
         style={[
           styles.dot,
           {
@@ -85,6 +88,7 @@ const Badge: React.FC<BadgeProps> = ({
 
   return (
     <View
+      testID={testID}
       style={[
         styles.badge,
         {

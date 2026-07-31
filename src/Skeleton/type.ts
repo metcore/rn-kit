@@ -7,4 +7,5 @@ export interface SkeletonProps {
   backgroundColor?: string;
   shimmerColor?: string;
   duration?: number;
+  testID?: string;
 }
