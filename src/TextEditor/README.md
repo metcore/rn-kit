@@ -68,7 +68,27 @@ export default function MyScreen() {
 | `inputLinkUrlPlacholder`  | `string`                 | `'https://www.example.com'`  | Placeholder untuk input URL                  |
 | `saveLinkButtonText`      | `string`                 | `'Simpan'`                   | Text tombol simpan link                      |
 | `cancelLinkButtonText`    | `string`                 | `'Batal'`                    | Text tombol batal link                       |
-| `testID`                  | `string`                 | -                            | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan ke elemen akar, dan menurunkan satu id per tombol toolbar (`-bold`, `-italic`, `-underline`, `-strikeThrough`, `-link`, `-insertUnorderedList`, `-insertOrderedList`, `-justifyLeft`, `-justifyCenter`, `-justifyRight`). |
+| `testID`                  | `string`                 | -                            | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan ke elemen akar, dan menurunkan satu id per tombol toolbar (`-bold`, `-italic`, `-underline`, `-strikeThrough`, `-link`, `-insertUnorderedList`, `-insertOrderedList`, `-justifyLeft`, `-justifyCenter`, `-justifyRight`, `-h1`, `-h2`, `-h3`, `-removeFormat`, `-undo`, `-redo`). |
+
+
+## Toolbar
+
+| Tombol | Perintah | Status aktif |
+| ------ | -------- | ------------ |
+| Bold, Italic, Underline, Strike | `execCommand` | `queryCommandState` |
+| Bullet, Number, Left/Center/Right | `execCommand` | `queryCommandState` |
+| H1, H2, H3 | `formatBlock` | `queryCommandValue('formatBlock')` |
+| Clear format, Undo, Redo | `execCommand` | tidak pernah menyala — ini aksi, bukan sakelar |
+| Link | membuka sheet | — |
+
+H1/H2/H3 memakai label teks, bukan ikon, karena tidak ada ikon heading di
+`Icon` — dan label teks memang lazim untuk heading di toolbar editor.
+
+**Catatan underline di dalam link.** Stylesheet editor menggarisbawahi setiap
+`<a>`, dan `queryCommandState('underline')` tidak bisa membedakannya dari `<u>`
+sungguhan. Karena itu saat kursor berada di dalam link, status underline
+ditentukan dari ada-tidaknya leluhur `<u>` di DOM. Tanpa ini tombolnya menyala
+begitu link disisipkan dan tidak pernah bisa dimatikan.
 
 ## Advanced Usage
 

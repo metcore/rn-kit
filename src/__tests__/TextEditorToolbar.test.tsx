@@ -116,3 +116,72 @@ describe('TextEditor showToolbar prop', () => {
     expect(mountWithKeyboard(false).queryByTestId('editor-bold')).toBeNull();
   });
 });
+
+describe('TextEditor added formats', () => {
+  const openToolbar = () => {
+    const listeners: Record<string, (e: unknown) => void> = {};
+    jest
+      .spyOn(Keyboard, 'addListener')
+      .mockImplementation((event: string, cb: (e: never) => void) => {
+        listeners[event] = cb as (e: unknown) => void;
+        return { remove: jest.fn() } as never;
+      });
+
+    const tree = render(
+      <Provider>
+        <TextEditor testID="editor" />
+      </Provider>
+    );
+    act(() => {
+      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
+    });
+    __spies.injectJavaScript.mockClear();
+    return tree;
+  };
+
+  const lastScript = () =>
+    (__spies.injectJavaScript.mock.calls.at(-1)?.[0] as string) ?? '';
+
+  it.each(['h1', 'h2', 'h3'])('routes %s through formatBlock', (heading) => {
+    const { getByTestId } = openToolbar();
+
+    fireEvent.press(getByTestId(`editor-${heading}`));
+
+    expect(lastScript()).toContain(`formatBlock', false, '<${heading}>'`);
+  });
+
+  it.each(['undo', 'redo', 'removeFormat'])(
+    'runs %s as a plain command',
+    (command) => {
+      const { getByTestId } = openToolbar();
+
+      fireEvent.press(getByTestId(`editor-${command}`));
+
+      expect(lastScript()).toContain(`execCommand('${command}', false, '')`);
+    }
+  );
+
+  it('labels the heading buttons with text, having no icon for them', () => {
+    const { getByText } = openToolbar();
+
+    expect(getByText('H1')).toBeTruthy();
+    expect(getByText('H2')).toBeTruthy();
+    expect(getByText('H3')).toBeTruthy();
+  });
+
+  it('asks the editor about the headings as blocks, not as toggles', () => {
+    const html = htmlOf(render(<TextEditor testID="editor" />));
+
+    expect(html).toContain("queryCommandValue('formatBlock')");
+    expect(html).toContain('"h1"');
+  });
+
+  it('never asks whether undo or redo is "active"', () => {
+    const html = htmlOf(render(<TextEditor testID="editor" />));
+    const toggles = html.slice(0, html.indexOf('queryCommandValue'));
+
+    expect(toggles).not.toContain('"undo"');
+    expect(toggles).not.toContain('"redo"');
+    expect(toggles).not.toContain('"removeFormat"');
+  });
+});

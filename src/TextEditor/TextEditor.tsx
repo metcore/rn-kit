@@ -28,6 +28,7 @@ import LabelForm from '../LabelForm/LabelForm';
 import { getTestID } from '../helpers/getTestID';
 import Typography from '../Typography/Typography';
 import Footer from '../Ui/Footer';
+import { buildFormatStateScript } from './formatState';
 import type { TextEditorType } from './types';
 
 export interface TextEditorRef {
@@ -66,12 +67,27 @@ type TextCommand =
   | 'insertOrderedList'
   | 'justifyLeft'
   | 'justifyCenter'
-  | 'justifyRight';
+  | 'justifyRight'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'undo'
+  | 'redo'
+  | 'removeFormat';
 
 interface ToolbarButton {
   command: TextCommand;
-  icon: IconNameProps;
+  /** Rendered as an icon, or as `text` when no icon fits (the headings). */
+  icon?: IconNameProps;
+  text?: string;
   label: string;
+  /**
+   * toggle  - on/off, answered by queryCommandState
+   * block   - a block name compared against queryCommandValue('formatBlock')
+   * action  - fires and forgets; never lights up
+   * special - opens the link sheet instead of running a command
+   */
+  kind?: 'toggle' | 'block' | 'action' | 'special';
   isSpecial?: boolean;
 }
 
@@ -94,11 +110,32 @@ const TOOLBAR_BUTTONS: ToolbarButton[] = [
   { command: 'justifyLeft', icon: 'align-left', label: 'Left' },
   { command: 'justifyCenter', icon: 'align-center', label: 'Center' },
   { command: 'justifyRight', icon: 'align-right', label: 'Right' },
+  { command: 'h1', text: 'H1', label: 'Heading 1', kind: 'block' },
+  { command: 'h2', text: 'H2', label: 'Heading 2', kind: 'block' },
+  { command: 'h3', text: 'H3', label: 'Heading 3', kind: 'block' },
+  {
+    command: 'removeFormat',
+    icon: 'ban-outline',
+    label: 'Clear format',
+    kind: 'action',
+  },
+  { command: 'undo', icon: 'ArrowBackAlt', label: 'Undo', kind: 'action' },
+  { command: 'redo', icon: 'ArrowForwardAlt', label: 'Redo', kind: 'action' },
 ];
 
-const FORMAT_QUERY_COMMANDS = TOOLBAR_BUTTONS.filter(
-  (button) => !button.isSpecial
+const TOGGLE_COMMANDS = TOOLBAR_BUTTONS.filter(
+  (button) => !button.isSpecial && (button.kind ?? 'toggle') === 'toggle'
 ).map((button) => button.command);
+
+const BLOCK_COMMANDS = TOOLBAR_BUTTONS.filter(
+  (button) => button.kind === 'block'
+).map((button) => button.command);
+
+// Headings go through formatBlock rather than a command of their own.
+const commandScript = (command: string) =>
+  /^h[1-3]$/.test(command)
+    ? `document.execCommand('formatBlock', false, '<${command}>')`
+    : `document.execCommand('${command}', false, '')`;
 
 const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
   (
@@ -296,18 +333,10 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
             if (document.activeElement === editor) updateFormats();
           });
 
-          var FORMAT_COMMANDS = ${JSON.stringify(FORMAT_QUERY_COMMANDS)};
+          ${buildFormatStateScript(TOGGLE_COMMANDS, BLOCK_COMMANDS)}
 
           function updateFormats() {
-            var formats = FORMAT_COMMANDS.filter(function (command) {
-              try {
-                return document.queryCommandState(command);
-              } catch (e) {
-                // queryCommandState throws for commands a browser does not
-                // know; treat those as simply not active.
-                return false;
-              }
-            });
+            var formats = rnkitActiveFormats();
 
             window.ReactNativeWebView.postMessage(JSON.stringify({
               type: 'formats',
@@ -438,6 +467,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
 
               // Update content dan character count
               const charCount = editor.textContent.trim().length;
+              updateFormats();
               window.ReactNativeWebView.postMessage(JSON.stringify({
                 type: 'content',
                 html: editor.innerHTML,
@@ -445,7 +475,11 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
               }));
             } else {
               editor.focus();
-              document.execCommand(command, false, null);
+              if (/^h[1-3]$/.test(command)) {
+                document.execCommand('formatBlock', false, '<' + command + '>');
+              } else {
+                document.execCommand(command, false, null);
+              }
               updateFormats();
             }
           };
@@ -471,7 +505,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           // iOS applied the format but left the button unlit until the editor
           // was touched again. Android gets this for free via handleMessage.
           webviewRef.current.injectJavaScript(`
-            document.execCommand('${command}', false, '');
+            ${commandScript(command)};
             updateFormats();
             true; //di ios harus biar berfunsi boldnya
           `);
@@ -577,6 +611,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           characterCount: charCount
         }));
         })();
+        updateFormats();
         true;
       `);
         } else {
@@ -781,13 +816,29 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
                     isFormatActive(button.command) && styles.toolButtonActive,
                   ]}
                 >
-                  <Icon
-                    name={button.icon}
-                    size={20}
-                    color={
-                      isFormatActive(button.command) ? '#fff' : Color.gray[900]
-                    }
-                  />
+                  {button.icon ? (
+                    <Icon
+                      name={button.icon}
+                      size={20}
+                      color={
+                        isFormatActive(button.command)
+                          ? '#fff'
+                          : Color.gray[900]
+                      }
+                    />
+                  ) : (
+                    <Typography
+                      variant="t2"
+                      weight="semibold"
+                      color={
+                        isFormatActive(button.command)
+                          ? '#fff'
+                          : Color.gray[900]
+                      }
+                    >
+                      {button.text}
+                    </Typography>
+                  )}
                 </TouchableOpacity>
               ))}
             </ScrollView>
