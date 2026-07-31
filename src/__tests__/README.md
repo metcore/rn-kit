@@ -77,8 +77,24 @@ Tersedia untuk `react-native-pdf`, `react-native-webview`, dan
 
 ## Timer
 
-`jest.setup.js` memasang fake timers global. Preset jest bawaan react-native
-mem-polyfill `requestAnimationFrame` sebagai `setTimeout(cb, 0)`, dan komponen
-ber-`Animated` (semua turunan `BottomSheet`) terus menjadwalkan ulang timer
-melewati unmount — tanpa fake timers, callback-nya menyala setelah environment
-dibongkar dan melempar `ReferenceError`.
+`jest.setup.js` memasang fake timers global lewat `beforeEach`. Preset jest
+bawaan react-native mem-polyfill `requestAnimationFrame` sebagai
+`setTimeout(cb, 0)` dan menutup animasi lewat `setTimeout(endCallback, 16)`.
+Komponen ber-`Animated` (semua turunan `BottomSheet`) terus menjadwalkan ulang
+timer melewati unmount — tanpa fake timers, callback-nya menyala setelah
+environment dibongkar dan melempar `ReferenceError`.
+
+**Jangan tambahkan `afterEach(() => jest.useRealTimers())`.** Hook di setup
+file terdaftar **sebelum** auto-cleanup milik RNTL, dan hook selevel jalan
+sesuai urutan pendaftaran — bukan terbalik. Jadi `useRealTimers` akan mendarat
+sebelum RNTL meng-unmount, lalu unmount-nya menjadwalkan timer asli yang
+berumur lebih panjang dari environment. Sudah diverifikasi: menambahkannya
+kembali memunculkan tepat satu error "torn down" di `BottomSheet.test.tsx`.
+
+Kalau sebuah test perlu menuntaskan animasi, majukan waktunya sendiri:
+
+```tsx
+act(() => {
+  jest.advanceTimersByTime(500);
+});
+```

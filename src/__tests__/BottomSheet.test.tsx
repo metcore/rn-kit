@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { act, fireEvent, render } from '@testing-library/react-native';
 import { Text } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 
@@ -84,5 +84,68 @@ describe('BottomSheet testID', () => {
     expect(queryByTestId('undefined-pullbar')).toBeNull();
     expect(queryByTestId('undefined-close')).toBeNull();
     expect(queryByTestId('undefined-footer')).toBeNull();
+  });
+});
+
+describe('BottomSheet behaviour', () => {
+  it('reports a close after the hide animation finishes', () => {
+    const onClose = jest.fn();
+    const { getByTestId } = render(
+      <BottomSheet isOpen onClose={onClose} testID="picker-sheet">
+        <Text>hi</Text>
+      </BottomSheet>
+    );
+
+    fireEvent.press(getByTestId('picker-sheet-backdrop'));
+
+    // hideModal runs a 300ms Animated.timing and only reports onClose from
+    // its completion callback, so nothing is reported until time moves.
+    expect(onClose).not.toHaveBeenCalled();
+
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    expect(onClose).toHaveBeenCalledWith(false);
+  });
+
+  it('stays open when not closable', () => {
+    const onClose = jest.fn();
+    const { getByTestId } = render(
+      <BottomSheet
+        isOpen
+        closable={false}
+        onClose={onClose}
+        testID="picker-sheet"
+      >
+        <Text>hi</Text>
+      </BottomSheet>
+    );
+
+    fireEvent.press(getByTestId('picker-sheet-backdrop'));
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    expect(onClose).not.toHaveBeenCalled();
+    expect(getByTestId('picker-sheet')).toBeTruthy();
+  });
+
+  it('calls onRequestClose as soon as the backdrop is pressed', () => {
+    const onRequestClose = jest.fn();
+    const { getByTestId } = render(
+      <BottomSheet
+        isOpen
+        onClose={() => {}}
+        onRequestClose={onRequestClose}
+        testID="picker-sheet"
+      >
+        <Text>hi</Text>
+      </BottomSheet>
+    );
+
+    fireEvent.press(getByTestId('picker-sheet-backdrop'));
+
+    expect(onRequestClose).toHaveBeenCalledTimes(1);
   });
 });
