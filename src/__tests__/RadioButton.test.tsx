@@ -18,13 +18,18 @@ describe('RadioButton testID', () => {
     );
     expect(getByTestId('gender-option-a')).toBeTruthy();
     expect(getByTestId('gender-option-b')).toBeTruthy();
+    expect(getByTestId('gender-option-a-label')).toBeTruthy();
+    expect(getByTestId('gender-option-b-label')).toBeTruthy();
   });
 
   it('renders no per-option testID when prop omitted', () => {
-    const { queryByTestId } = render(
+    const { getByText, queryByTestId } = render(
       <RadioButton items={items} selectedValue="a" onChange={() => {}} />
     );
+
+    expect(getByText('A')).toBeTruthy();
     expect(queryByTestId('gender-option-a')).toBeNull();
     expect(queryByTestId('gender-option-b')).toBeNull();
+    expect(queryByTestId('undefined-option-a-label')).toBeNull();
   });
 });

@@ -7,11 +7,14 @@ const options = [
   { label: 'B', value: 'b' },
 ];
 
-// Note: DropDown gates its overlay open state behind
-// findNodeHandle/UIManager.measureInWindow, which no-op under the RN jest
-// preset (no real native layout), so the overlay/option testIDs can't be
-// driven open in this environment. They are wired (see DropDown.tsx) but
-// only the trigger is asserted here; option coverage is deferred to manual/E2E.
+// The `-modal` and per-option testIDs stay uncovered here, deliberately.
+// handleToggle only calls setIsOpen(true) from inside the
+// UIManager.measureInWindow callback, which it reaches only when
+// findNodeHandle returns a handle -- and under react-test-renderer it does
+// not. Re-verified: pressing the trigger leaves queryByTestId('menu-modal')
+// null. Forcing it open would mean faking both RN internals, so the overlay
+// would exist only because the test built it. Deferred to E2E instead; the
+// ids themselves are wired in DropDown.tsx.
 describe('DropDown testID', () => {
   it('derives trigger testID', () => {
     const { getByTestId } = render(

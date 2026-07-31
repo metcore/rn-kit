@@ -7,6 +7,7 @@ describe('TimePicker testID', () => {
       <TimePicker testID="time" isOpen onClose={() => {}} />
     );
 
+    expect(getByTestId('time-sheet')).toBeTruthy();
     expect(getByTestId('time-cancel')).toBeTruthy();
     expect(getByTestId('time-confirm')).toBeTruthy();
     expect(getByTestId('time-hour')).toBeTruthy();
@@ -16,6 +17,7 @@ describe('TimePicker testID', () => {
   it('renders no testID when prop omitted', () => {
     const { queryByTestId } = render(<TimePicker isOpen onClose={() => {}} />);
 
+    expect(queryByTestId('undefined-sheet')).toBeNull();
     expect(queryByTestId('undefined-cancel')).toBeNull();
     expect(queryByTestId('undefined-confirm')).toBeNull();
   });

@@ -15,6 +15,7 @@ describe('Select testID', () => {
       </ToastProvider>
     );
 
+    expect(getByTestId('picker-sheet')).toBeTruthy();
     expect(getByTestId('picker-search-input')).toBeTruthy();
     expect(getByTestId('picker-option-a')).toBeTruthy();
     expect(getByTestId('picker-option-b')).toBeTruthy();
@@ -37,6 +38,7 @@ describe('Select testID', () => {
       </ToastProvider>
     );
 
+    expect(queryByTestId('undefined-sheet')).toBeNull();
     expect(queryByTestId('undefined-search-input')).toBeNull();
     expect(queryByTestId('undefined-option-a')).toBeNull();
   });

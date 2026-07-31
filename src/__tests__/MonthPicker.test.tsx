@@ -6,6 +6,7 @@ it('derives cancel, confirm and per-month option testIDs when open', () => {
     <MonthPicker isOpen onClose={() => {}} testID="month" />
   );
 
+  expect(getByTestId('month-sheet')).toBeTruthy();
   expect(getByTestId('month-cancel')).toBeTruthy();
   expect(getByTestId('month-confirm')).toBeTruthy();
   expect(getByTestId('month-option-0')).toBeTruthy();
@@ -14,6 +15,7 @@ it('derives cancel, confirm and per-month option testIDs when open', () => {
 it('renders no testID when prop omitted', () => {
   const { queryByTestId } = render(<MonthPicker isOpen onClose={() => {}} />);
 
+  expect(queryByTestId('undefined-sheet')).toBeNull();
   expect(queryByTestId('undefined-cancel')).toBeNull();
   expect(queryByTestId('undefined-confirm')).toBeNull();
 });

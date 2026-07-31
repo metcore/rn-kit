@@ -24,6 +24,7 @@ jest.mock('react-native-blob-util', () => ({
   config: jest.fn(() => ({ fetch: jest.fn() })),
 }));
 
+import { pick } from '@react-native-documents/picker';
 import InputFile from '../Input/InputFile';
 
 const pdfFile = [
@@ -61,6 +62,31 @@ describe('InputFile testID', () => {
     expect(getByTestId('attachment-error-0')).toBeTruthy();
   });
 
+  // The per-file label Input only mounts on the useChangeLabel branch. Note
+  // InputFile hands `file-N` to <Input> as a *base*, and Input namespaces it
+  // further -- it never renders the bare id, so `attachment-file-0` alone
+  // never exists. Same shape as InputSelect -> Select below.
+  it('derives per-file label input testIDs when useChangeLabel is set', () => {
+    const { getByTestId, queryByTestId } = render(
+      <InputFile
+        useChangeLabel
+        value={pdfFile}
+        onChange={() => {}}
+        testID="attachment"
+      />
+    );
+
+    expect(getByTestId('attachment-file-0-input')).toBeTruthy();
+    expect(getByTestId('attachment-file-0-label')).toBeTruthy();
+
+    // Same tree without the flag: the input is gone, not merely unlabelled.
+    const plain = render(
+      <InputFile value={pdfFile} onChange={() => {}} testID="attachment" />
+    );
+    expect(plain.queryByTestId('attachment-file-0-input')).toBeNull();
+    expect(queryByTestId('undefined-file-0-input')).toBeNull();
+  });
+
   it('derives small-variant trigger and error testIDs', () => {
     const { getByTestId } = render(
       <InputFile
@@ -72,6 +98,34 @@ describe('InputFile testID', () => {
     );
 
     expect(getByTestId('attachment-error-0')).toBeTruthy();
+  });
+
+  // The bare `-error` id (as opposed to the per-file `-error-N`) carries
+  // internalErrorMessage, which only validateMaxSize sets -- so it needs the
+  // picker actually driven with an oversized file.
+  it('derives small-variant error testID when a pick exceeds maxSize', async () => {
+    (pick as jest.Mock).mockResolvedValue([
+      {
+        uri: 'file://big.pdf',
+        name: 'big.pdf',
+        type: 'application/pdf',
+        size: 10 * 1024 * 1024, // maxSize defaults to 5MB
+      },
+    ]);
+
+    const { getByTestId, getByText, findByTestId } = render(
+      <InputFile
+        variant="small"
+        value={[]}
+        onChange={() => {}}
+        testID="attachment"
+      />
+    );
+
+    fireEvent.press(getByTestId('attachment-trigger'));
+    fireEvent.press(getByText('Pilih Dokumen'));
+
+    expect(await findByTestId('attachment-error')).toBeTruthy();
   });
 
   // ModalPicker's BottomSheet renders behind a Modal that only mounts its

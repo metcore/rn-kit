@@ -8,6 +8,7 @@ describe('YearPicker testID', () => {
       <YearPicker testID="year" isOpen onClose={() => {}} />
     );
 
+    expect(getByTestId('year-sheet')).toBeTruthy();
     expect(getByTestId('year-cancel')).toBeTruthy();
     expect(getByTestId('year-confirm')).toBeTruthy();
     expect(getByTestId(`year-option-${currentYear}`)).toBeTruthy();
@@ -16,6 +17,7 @@ describe('YearPicker testID', () => {
   it('renders no testID when prop omitted', () => {
     const { queryByTestId } = render(<YearPicker isOpen onClose={() => {}} />);
 
+    expect(queryByTestId('undefined-sheet')).toBeNull();
     expect(queryByTestId('undefined-cancel')).toBeNull();
     expect(queryByTestId('undefined-confirm')).toBeNull();
   });

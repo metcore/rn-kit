@@ -12,6 +12,7 @@ describe('DatePicker testID', () => {
       />
     );
 
+    expect(getByTestId('birthday-sheet')).toBeTruthy();
     expect(getByTestId('birthday-cancel')).toBeTruthy();
     expect(getByTestId('birthday-confirm')).toBeTruthy();
   });
@@ -35,6 +36,7 @@ describe('DatePicker testID', () => {
       <DatePicker isOpen onClose={() => {}} onChange={() => {}} />
     );
 
+    expect(queryByTestId('undefined-sheet')).toBeNull();
     expect(queryByTestId('undefined-cancel')).toBeNull();
     expect(queryByTestId('undefined-confirm')).toBeNull();
   });
