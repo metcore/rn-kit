@@ -15,9 +15,10 @@ export default DemoSurface;
 
 const styles = StyleSheet.create({
   surface: {
-    backgroundColor: Color.primary[50],
+    borderWidth: 1,
+    borderColor: Color.gray[300],
     borderRadius: 16,
-    padding: 16,
+    overflow: 'hidden',
     gap: 12,
   },
 });
