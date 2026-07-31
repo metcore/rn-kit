@@ -18,4 +18,5 @@ export interface AccordionProps {
 export interface AccordionItemProps {
   children: ReactNode;
   index?: number;
+  testID?: string;
 }
