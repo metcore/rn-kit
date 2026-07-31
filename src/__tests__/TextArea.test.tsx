@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import TextArea from '../Input/TextArea';
 
 describe('TextArea testID', () => {
@@ -24,5 +24,37 @@ describe('TextArea testID', () => {
     expect(queryByTestId('bio-input')).toBeNull();
     expect(queryByTestId('bio-label')).toBeNull();
     expect(queryByTestId('bio-error')).toBeNull();
+  });
+});
+
+describe('TextArea behaviour', () => {
+  it('reports typed text to onChangeText', () => {
+    const onChangeText = jest.fn();
+    const { getByTestId } = render(
+      <TextArea testID="bio" value="" onChangeText={onChangeText} />
+    );
+
+    fireEvent.changeText(getByTestId('bio-input'), 'about me');
+
+    expect(onChangeText).toHaveBeenCalledWith('about me');
+  });
+
+  it('renders the hint text only when a hint is given', () => {
+    const { getByTestId, queryByTestId, rerender } = render(
+      <TextArea testID="bio" value="" onChangeText={() => {}} />
+    );
+
+    expect(queryByTestId('bio-error')).toBeNull();
+
+    rerender(
+      <TextArea
+        testID="bio"
+        hint="Wajib diisi"
+        value=""
+        onChangeText={() => {}}
+      />
+    );
+
+    expect(getByTestId('bio-error')).toHaveTextContent('Wajib diisi');
   });
 });
