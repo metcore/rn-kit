@@ -32,6 +32,7 @@ dateFormatter({ date, options }: DateFormatterProps): string
 | `monthFormat` | `'numeric' \| '2-digit' \| 'long' \| 'short' \| 'narrow'` | `'long'`    | Format tampilan bulan (hanya untuk format localized)           |
 | `language`    | `'en' \| 'id'`                                            | `'en'`      | Bahasa untuk format localized                                  |
 | `format`      | `'default' \| 'iso' \| 'localized'`                       | `'default'` | Tipe format output                                             |
+| `pattern`     | `string`                                                  | -           | Pola token, mis. `'DD/MM/YYYY HH:mm'`. Menang atas `format`.   |
 
 ## Format Types
 
@@ -87,6 +88,40 @@ dateFormatter({
 });
 // Output: "15 March 2024"
 ```
+
+
+### 4. Pattern (custom)
+
+Isi `pattern` kalau ingin susunan bebas. Kalau diisi, ia menang atas `format`.
+
+| Token  | Contoh    | Token  | Contoh |
+| ------ | --------- | ------ | ------ |
+| `YYYY` | `2024`    | `DD`   | `05`   |
+| `YY`   | `24`      | `D`    | `5`    |
+| `MMMM` | `Januari` | `dddd` | `Jumat`|
+| `MMM`  | `Jan`     | `HH`   | `09`   |
+| `MM`   | `01`      | `mm`   | `30`   |
+| `M`    | `1`       | `ss`   | `05`   |
+
+Nama bulan dan hari mengikuti `language`.
+
+```js
+dateFormatter({ date, options: { pattern: 'MM YYYY' } });
+// "01 2024"
+
+dateFormatter({ date, options: { pattern: 'MMMM YYYY' } });
+// "Januari 2024"
+
+dateFormatter({ date, options: { pattern: 'DD/MM/YYYY HH:mm' } });
+// "05/01/2024 09:30"
+
+dateFormatter({ date, options: { pattern: 'dddd, DD MMMM YYYY', language: 'en' } });
+// "Friday, 05 January 2024"
+```
+
+Teks selain token disalin apa adanya, dan tidak ada sintaks escape — hindari
+teks literal yang mengandung token persis seperti di tabel.
+
 
 ## Contoh Penggunaan
 
