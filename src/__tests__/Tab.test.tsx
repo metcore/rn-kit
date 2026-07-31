@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import { Text } from 'react-native';
 import Tab from '../Tab/Tab';
 import TabItem from '../Tab/TabItem';
@@ -65,5 +65,43 @@ describe('Tab testID', () => {
       </Tab>
     );
     expect(queryByTestId('undefined-item-0')).toBeNull();
+  });
+});
+
+describe('Tab behaviour', () => {
+  it('reports the index of a newly tapped tab', () => {
+    const onChangeTab = jest.fn();
+    const { getByTestId } = render(
+      <Tab testID="settings" onChangeTab={onChangeTab}>
+        <TabItem name="One">
+          <Text>first</Text>
+        </TabItem>
+        <TabItem name="Two">
+          <Text>second</Text>
+        </TabItem>
+      </Tab>
+    );
+
+    fireEvent.press(getByTestId('settings-item-1'));
+
+    expect(onChangeTab).toHaveBeenCalledWith(1);
+  });
+
+  it('stays quiet when the active tab is tapped again', () => {
+    const onChangeTab = jest.fn();
+    const { getByTestId } = render(
+      <Tab testID="settings" onChangeTab={onChangeTab}>
+        <TabItem name="One">
+          <Text>first</Text>
+        </TabItem>
+        <TabItem name="Two">
+          <Text>second</Text>
+        </TabItem>
+      </Tab>
+    );
+
+    fireEvent.press(getByTestId('settings-item-0'));
+
+    expect(onChangeTab).not.toHaveBeenCalled();
   });
 });
