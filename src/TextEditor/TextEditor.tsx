@@ -28,7 +28,7 @@ import LabelForm from '../LabelForm/LabelForm';
 import { getTestID } from '../helpers/getTestID';
 import Typography from '../Typography/Typography';
 import Footer from '../Ui/Footer';
-import { buildFormatStateScript } from './formatState';
+import { buildCommandScript, buildFormatStateScript } from './formatState';
 import type { TextEditorType } from './types';
 
 export interface TextEditorRef {
@@ -130,12 +130,6 @@ const TOGGLE_COMMANDS = TOOLBAR_BUTTONS.filter(
 const BLOCK_COMMANDS = TOOLBAR_BUTTONS.filter(
   (button) => button.kind === 'block'
 ).map((button) => button.command);
-
-// Headings go through formatBlock rather than a command of their own.
-const commandScript = (command: string) =>
-  /^h[1-3]$/.test(command)
-    ? `document.execCommand('formatBlock', false, '<${command}>')`
-    : `document.execCommand('${command}', false, '')`;
 
 const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
   (
@@ -335,6 +329,8 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
 
           ${buildFormatStateScript(TOGGLE_COMMANDS, BLOCK_COMMANDS)}
 
+          ${buildCommandScript()}
+
           function updateFormats() {
             var formats = rnkitActiveFormats();
 
@@ -475,11 +471,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
               }));
             } else {
               editor.focus();
-              if (/^h[1-3]$/.test(command)) {
-                document.execCommand('formatBlock', false, '<' + command + '>');
-              } else {
-                document.execCommand(command, false, null);
-              }
+              rnkitRunCommand(command);
               updateFormats();
             }
           };
@@ -505,7 +497,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           // iOS applied the format but left the button unlit until the editor
           // was touched again. Android gets this for free via handleMessage.
           webviewRef.current.injectJavaScript(`
-            ${commandScript(command)};
+            rnkitRunCommand(${JSON.stringify(command)});
             updateFormats();
             true; //di ios harus biar berfunsi boldnya
           `);

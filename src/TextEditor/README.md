@@ -78,7 +78,8 @@ export default function MyScreen() {
 | Bold, Italic, Underline, Strike | `execCommand` | `queryCommandState` |
 | Bullet, Number, Left/Center/Right | `execCommand` | `queryCommandState` |
 | H1, H2, H3 | `formatBlock` | `queryCommandValue('formatBlock')` |
-| Clear format, Undo, Redo | `execCommand` | tidak pernah menyala — ini aksi, bukan sakelar |
+| Clear format | `removeFormat`, lalu `formatBlock <p>` bila blok saat ini heading | tidak pernah menyala — ini aksi |
+| Undo, Redo | `execCommand` | tidak pernah menyala — ini aksi |
 | Link | membuka sheet | — |
 
 H1/H2/H3 memakai label teks, bukan ikon, karena tidak ada ikon heading di
@@ -283,3 +284,15 @@ Component menggunakan styling internal yang sudah optimal. Jika perlu custom sty
 
 - `react-native-webview` - WebView component
 - Internal components: `BottomSheet`, `Button`, `Icon`, `Input`, `LabelForm`, `Typography`
+
+**Catatan clear format pada heading.** `removeFormat` menurut spesifikasi hanya
+membersihkan format *inline* — bold, italic, warna, font. Elemen blok seperti
+`<h1>` tidak tersentuh sama sekali. Karena itu tombol Clear format menjalankan
+`removeFormat` lalu, kalau blok saat ini heading, mengembalikannya ke `<p>`.
+Blok lain (mis. daftar) sengaja tidak diutak-atik.
+
+Eksekusi perintah tinggal di satu tempat (`rnkitRunCommand` di
+`formatState.ts`) dan dipanggil kedua platform — iOS lewat injeksi, Android
+lewat message handler. Sebelumnya keduanya ditulis terpisah, dan justru dari
+situ dua bug lahir: iOS tidak menyegarkan status setelah perintah, dan heading
+dipetakan di dua tempat berbeda.

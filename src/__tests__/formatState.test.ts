@@ -1,5 +1,8 @@
 import vm from 'vm';
-import { buildFormatStateScript } from '../TextEditor/formatState';
+import {
+  buildCommandScript,
+  buildFormatStateScript,
+} from '../TextEditor/formatState';
 
 const TOGGLES = ['bold', 'italic', 'underline', 'strikeThrough'];
 const BLOCKS = ['h1', 'h2', 'h3'];
@@ -116,5 +119,61 @@ describe('buildFormatStateScript blocks', () => {
 
   it('reports no heading for a plain paragraph', () => {
     expect(activeFormats({ block: 'p' })).toEqual([]);
+  });
+});
+
+describe('buildCommandScript', () => {
+  /** Runs a command against a stubbed document and returns the execCommand calls. */
+  const run = (command: string, block = 'p') => {
+    const calls: Array<[string, unknown, unknown]> = [];
+    const context = vm.createContext({
+      editor: { nodeName: 'DIV', parentNode: null, focus: () => {} },
+      document: {
+        execCommand: (name: string, ui: unknown, value: unknown) => {
+          calls.push([name, ui, value]);
+          return true;
+        },
+        queryCommandValue: () => block,
+        queryCommandState: () => false,
+      },
+      window: { getSelection: () => null },
+    });
+
+    vm.runInContext(buildCommandScript(), context);
+    vm.runInContext(`rnkitRunCommand(${JSON.stringify(command)})`, context);
+    return calls;
+  };
+
+  it('runs an inline command as itself', () => {
+    expect(run('bold')[0]?.[0]).toBe('bold');
+  });
+
+  it('routes a heading through formatBlock', () => {
+    expect(run('h2')).toEqual([['formatBlock', false, '<h2>']]);
+  });
+
+  // removeFormat is defined to strip inline formatting only -- headings are
+  // block level, so on its own it leaves an <h1> exactly as it found it.
+  it('drops back to a paragraph when clearing a heading', () => {
+    const calls = run('removeFormat', 'h1');
+
+    expect(calls.map(([name]) => name)).toEqual([
+      'removeFormat',
+      'formatBlock',
+    ]);
+    expect(calls[1]?.[2]).toBe('<p>');
+  });
+
+  it('leaves the block alone when clearing plain text', () => {
+    expect(run('removeFormat', 'p').map(([name]) => name)).toEqual([
+      'removeFormat',
+    ]);
+  });
+
+  it('clears a heading regardless of the case the browser reports', () => {
+    expect(run('removeFormat', 'H3').map(([name]) => name)).toEqual([
+      'removeFormat',
+      'formatBlock',
+    ]);
   });
 });

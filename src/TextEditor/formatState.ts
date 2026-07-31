@@ -64,3 +64,45 @@ export const buildFormatStateScript = (
     return formats;
   }
 `;
+
+/** Block names that `removeFormat` cannot touch, so clearing must undo them. */
+const BLOCK_LEVEL_FORMATS = ['h1', 'h2', 'h3'];
+
+/**
+ * Builds the snippet that runs a toolbar command inside the webview.
+ *
+ * Defines `rnkitRunCommand(command)`. Both platforms go through it -- iOS by
+ * injecting a call, Android by calling it from the message handler -- so the
+ * two paths cannot drift apart the way they had before.
+ */
+export const buildCommandScript = () => `
+  function rnkitCurrentBlock() {
+    try {
+      return String(document.queryCommandValue('formatBlock') || '')
+        .toLowerCase();
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function rnkitRunCommand(command) {
+    if (/^h[1-3]$/.test(command)) {
+      document.execCommand('formatBlock', false, '<' + command + '>');
+      return;
+    }
+
+    if (command === 'removeFormat') {
+      document.execCommand('removeFormat', false, '');
+
+      // removeFormat is defined to strip inline formatting only, so a heading
+      // survives it untouched. Drop the block back to a paragraph as well,
+      // which is what "clear formatting" means to anyone pressing it.
+      if (${JSON.stringify(BLOCK_LEVEL_FORMATS)}.indexOf(rnkitCurrentBlock()) !== -1) {
+        document.execCommand('formatBlock', false, '<p>');
+      }
+      return;
+    }
+
+    document.execCommand(command, false, '');
+  }
+`;

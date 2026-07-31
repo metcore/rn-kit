@@ -76,7 +76,7 @@ describe('TextEditor active-state wiring', () => {
     // used to run execCommand without asking for the state again -- so the
     // button stayed unlit until the editor was touched a second time.
     const script = __spies.injectJavaScript.mock.calls.at(-1)?.[0] ?? '';
-    expect(script).toContain("execCommand('bold'");
+    expect(script).toContain('rnkitRunCommand("bold")');
     expect(script).toContain('updateFormats()');
   });
 });
@@ -142,22 +142,24 @@ describe('TextEditor added formats', () => {
   const lastScript = () =>
     (__spies.injectJavaScript.mock.calls.at(-1)?.[0] as string) ?? '';
 
-  it.each(['h1', 'h2', 'h3'])('routes %s through formatBlock', (heading) => {
+  // What a command *does* is formatState's job and is executed for real in
+  // formatState.test.ts. All TextEditor owes is dispatching the right name.
+  it.each(['h1', 'h2', 'h3'])('dispatches %s to the editor', (heading) => {
     const { getByTestId } = openToolbar();
 
     fireEvent.press(getByTestId(`editor-${heading}`));
 
-    expect(lastScript()).toContain(`formatBlock', false, '<${heading}>'`);
+    expect(lastScript()).toContain(`rnkitRunCommand("${heading}")`);
   });
 
   it.each(['undo', 'redo', 'removeFormat'])(
-    'runs %s as a plain command',
+    'dispatches %s to the editor',
     (command) => {
       const { getByTestId } = openToolbar();
 
       fireEvent.press(getByTestId(`editor-${command}`));
 
-      expect(lastScript()).toContain(`execCommand('${command}', false, '')`);
+      expect(lastScript()).toContain(`rnkitRunCommand("${command}")`);
     }
   );
 
@@ -174,6 +176,12 @@ describe('TextEditor added formats', () => {
 
     expect(html).toContain("queryCommandValue('formatBlock')");
     expect(html).toContain('"h1"');
+  });
+
+  it('ships one command runner that both platforms call', () => {
+    const html = htmlOf(render(<TextEditor testID="editor" />));
+
+    expect(html).toContain('function rnkitRunCommand(');
   });
 
   it('never asks whether undo or redo is "active"', () => {
