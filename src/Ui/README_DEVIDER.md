@@ -60,3 +60,8 @@ import Divider from '@/components/Divider/Divider';
 }
 ```
 
+## Props
+
+| Props    | Tipe     | Wajib | Default | Deskripsi                                                                                      |
+| -------- | -------- | ----- | ------- | ---------------------------------------------------------------------------------------------- |
+| `testID` | `string` | ❌     | -       | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |

@@ -5,13 +5,14 @@ import type { ViewStyle } from 'react-native';
 interface GridProps {
   children: React.ReactNode;
   style: ViewStyle;
+  testID?: string;
 }
 
-const Grid: React.FC<GridProps> = ({ children, style }) => {
+const Grid: React.FC<GridProps> = ({ children, style, testID }) => {
   const childrenArray = React.Children.toArray(children).filter(Boolean);
 
   return (
-    <View style={[styles.row, style]}>
+    <View testID={testID} style={[styles.row, style]}>
       {childrenArray.map((child, index) => (
         <View key={index} style={styles.children}>
           {child}

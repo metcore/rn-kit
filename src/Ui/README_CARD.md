@@ -89,6 +89,7 @@ export default function CardScreen() {
 | `backgroundImage` | `ImageSourcePropType` (`any`) | ❌     | -       | Gambar latar belakang menggunakan `ImageBackground`. |
 | `backgroundColor` | `string`                      | ❌     | `#fff`  | Warna latar belakang Card.                           |
 | `borderColor`     | `string`                      | ❌     | `#F2F2F2`  | Warna border.                           |
+| `testID` | `string` | ❌ | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## Catatan 
 - Saat backgroundImage digunakan, ImageBackground akan membungkus children dan otomatis mengikuti styling dari Card.

@@ -14,6 +14,7 @@ interface CardProps {
   backgroundImage?: any;
   backgroundColor?: string;
   borderColor?: string;
+  testID?: string;
 }
 
 export default function Card({
@@ -22,10 +23,12 @@ export default function Card({
   backgroundImage,
   backgroundColor,
   borderColor = Color.gray['100'],
+  testID,
 }: CardProps) {
   if (backgroundImage) {
     return (
       <ImageBackground
+        testID={testID}
         source={backgroundImage}
         style={[styles.imageBackground, style, { borderColor: borderColor }]}
         imageStyle={styles.imageStyle}
@@ -36,6 +39,7 @@ export default function Card({
   }
   return (
     <View
+      testID={testID}
       style={[
         styles.container,
         style,

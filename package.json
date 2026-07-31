@@ -124,6 +124,9 @@
     "testMatch": [
       "**/__tests__/**/*.test.?([mc])[jt]s?(x)"
     ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation|react-native-.*)/)"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"

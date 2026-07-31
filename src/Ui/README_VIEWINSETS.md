@@ -47,6 +47,7 @@ function MyScreen() {
 | `useRight`  | `boolean`              | `false`      | Menambahkan padding right sesuai safe area inset kanan  |
 | `style`     | `StyleProp<ViewStyle>` | `undefined`  | Style tambahan untuk container                          |
 | `...rest`   | `ViewProps`            | -            | Props lainnya akan diteruskan ke komponen View          |
+| `testID`    | `string`               | `undefined`  | ID untuk automation testing (Maestro/Detox/Appium), diteruskan lewat `...rest` |
 
 ## Contoh Penggunaan
 

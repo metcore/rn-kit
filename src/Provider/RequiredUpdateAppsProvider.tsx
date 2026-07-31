@@ -1,6 +1,15 @@
 import { useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
-import { Button, Card, Color, Modal, Typography } from '..';
+// Imported from their own modules rather than the package barrel ('..'):
+// index.tsx re-exports Provider, so going through the barrel here made
+// index -> Provider -> index a cycle and dragged every native-backed export
+// (document picker, blob util, pdf, webview) into anything that renders a
+// Provider. Same modules, no cycle.
+import Button from '../Button/Button';
+import Card from '../Ui/Card';
+import Color from '../Color/Color';
+import Modal from '../Modal/Modal';
+import Typography from '../Typography/Typography';
 import type { RequiredUpdateAppsProviderProps } from './type';
 
 export default function RequiredUpdateAppsProvider({
