@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import CheckBoxList from '../CheckBox/CheckBoxList';
 
 const items = [
@@ -26,5 +26,39 @@ describe('CheckBoxList testID', () => {
     );
     expect(queryByTestId('roles-option-a')).toBeNull();
     expect(queryByTestId('roles-option-b')).toBeNull();
+  });
+});
+
+describe('CheckBoxList behaviour', () => {
+  it('adds a newly ticked value to the selection', () => {
+    const onChange = jest.fn();
+    const { getByTestId } = render(
+      <CheckBoxList
+        testID="roles"
+        items={items}
+        selectedValues={[]}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.press(getByTestId('roles-option-a'));
+
+    expect(onChange).toHaveBeenCalledWith(['a']);
+  });
+
+  it('removes a value that was already selected', () => {
+    const onChange = jest.fn();
+    const { getByTestId } = render(
+      <CheckBoxList
+        testID="roles"
+        items={items}
+        selectedValues={['a', 'b']}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.press(getByTestId('roles-option-a'));
+
+    expect(onChange).toHaveBeenCalledWith(['b']);
   });
 });
