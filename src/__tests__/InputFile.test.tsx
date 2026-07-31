@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { TouchableOpacity } from 'react-native';
 
 // InputFile.tsx imports several native-module-backed packages at module
 // scope (document/image pickers, blob util) that have no native binary in
@@ -25,6 +26,16 @@ jest.mock('react-native-blob-util', () => ({
 
 import InputFile from '../Input/InputFile';
 
+const pdfFile = [
+  {
+    uri: 'file://a.pdf',
+    name: 'a.pdf',
+    type: 'application/pdf',
+    hint: 'Upload gagal',
+    error: true,
+  },
+];
+
 describe('InputFile testID', () => {
   it('derives trigger testID', () => {
     const { getByTestId } = render(
@@ -42,18 +53,8 @@ describe('InputFile testID', () => {
   });
 
   it('derives per-file item and error testIDs (default variant)', () => {
-    const value = [
-      {
-        uri: 'file://a.pdf',
-        name: 'a.pdf',
-        type: 'application/pdf',
-        hint: 'Upload gagal',
-        error: true,
-      },
-    ];
-
     const { getByTestId } = render(
-      <InputFile value={value} onChange={() => {}} testID="attachment" />
+      <InputFile value={pdfFile} onChange={() => {}} testID="attachment" />
     );
 
     expect(getByTestId('attachment-item-0')).toBeTruthy();
@@ -61,20 +62,10 @@ describe('InputFile testID', () => {
   });
 
   it('derives small-variant trigger and error testIDs', () => {
-    const value = [
-      {
-        uri: 'file://a.pdf',
-        name: 'a.pdf',
-        type: 'application/pdf',
-        hint: 'Upload gagal',
-        error: true,
-      },
-    ];
-
     const { getByTestId } = render(
       <InputFile
         variant="small"
-        value={value}
+        value={pdfFile}
         onChange={() => {}}
         testID="attachment"
       />
@@ -111,11 +102,41 @@ describe('InputFile testID', () => {
     expect(queryByTestId('undefined-sheet-backdrop')).toBeNull();
   });
 
-  // Deferred coverage: `-modal-delete` (ModalDelete) mounts only after
-  // confirmDeleteFile runs, which is reachable exclusively through
-  // ItemPreview's delete TouchableOpacity -- and that button carries no
-  // testID of its own (neither does the ItemPreview that CardTriggerSmall
-  // nests). Opening it from a test would mean an UNSAFE_getAllByType index
-  // into the action row, which breaks on any layout change. Covering this
-  // properly needs a testID on ItemPreview's replace/delete actions first.
+  it('derives per-file replace and delete action testIDs', () => {
+    const { getByTestId } = render(
+      <InputFile value={pdfFile} onChange={() => {}} testID="attachment" />
+    );
+
+    expect(getByTestId('attachment-item-0-replace')).toBeTruthy();
+    expect(getByTestId('attachment-item-0-delete')).toBeTruthy();
+  });
+
+  // ModalDelete sits behind a Modal that mounts its children only once
+  // confirmDeleteFile has run, so the delete action is the only way in.
+  it('derives delete modal testIDs once a file delete is confirmed', () => {
+    const { getByTestId } = render(
+      <InputFile value={pdfFile} onChange={() => {}} testID="attachment" />
+    );
+
+    fireEvent.press(getByTestId('attachment-item-0-delete'));
+
+    expect(getByTestId('attachment-modal-delete')).toBeTruthy();
+    expect(getByTestId('attachment-modal-delete-backdrop')).toBeTruthy();
+  });
+
+  it('renders no delete modal testID when prop omitted', () => {
+    const { getByText, queryByTestId, UNSAFE_getAllByType } = render(
+      <InputFile value={pdfFile} onChange={() => {}} />
+    );
+
+    // No testID to grab without a base, so reach the delete action by type.
+    const actions = UNSAFE_getAllByType(TouchableOpacity);
+    fireEvent.press(actions[actions.length - 1]!);
+
+    // Prove the modal really opened, so the null assertions below can only
+    // pass because getTestID returned undefined -- not because nothing moved.
+    expect(getByText('Hapus Dokumen')).toBeTruthy();
+    expect(queryByTestId('undefined-modal-delete')).toBeNull();
+    expect(queryByTestId('undefined-modal-delete-backdrop')).toBeNull();
+  });
 });
