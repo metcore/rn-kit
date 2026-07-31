@@ -48,6 +48,12 @@ interface ExtendedTextEditorType extends TextEditorType {
   inputLinkUrlPlacholder?: string;
   saveLinkButtonText?: string;
   cancelLinkButtonText?: string;
+  /**
+   * Gates the floating toolbar. When true (default) it appears with the
+   * keyboard, as before. When false it stays away even while the keyboard is
+   * open -- it does not force the toolbar open on its own.
+   */
+  showToolbar?: boolean;
 }
 
 type TextCommand =
@@ -113,11 +119,12 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       inputLabelLinkUrl = 'Link URL',
       saveLinkButtonText = 'Simpan',
       cancelLinkButtonText = 'Batal',
+      showToolbar = true,
       testID,
     },
     ref
   ) => {
-    const [showToolbar, setShowToolbar] = useState<boolean>(false);
+    const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
     const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
     const [characterCount, setCharacterCount] = useState(0);
     const [showLinkModal, setShowLinkModal] = useState(false);
@@ -146,20 +153,24 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       setContent: (html: string) => {
         const escapedHtml = html.replace(/`/g, '\\`').replace(/\$/g, '\\$');
         webviewRef.current?.injectJavaScript(`
-        const editor = document.getElementById('editor');
-        editor.innerHTML = \`${escapedHtml}\`;
-        if (editor.textContent.trim()) {
-          editor.classList.remove('placeholder');
-        }
+        (function () {
+          const target = document.getElementById('editor');
+          target.innerHTML = \`${escapedHtml}\`;
+          if (target.textContent.trim()) {
+            target.classList.remove('placeholder');
+          }
+        })();
         true;
       `);
       },
       clearContent: () => {
         webviewRef.current?.injectJavaScript(`
-        const editor = document.getElementById('editor');
-        editor.innerHTML = '';
-        editor.classList.add('placeholder');
-        window.ReactNativeWebView.postMessage('');
+        (function () {
+          const target = document.getElementById('editor');
+          target.innerHTML = '';
+          target.classList.add('placeholder');
+          window.ReactNativeWebView.postMessage('');
+        })();
         true;
       `);
       },
@@ -501,6 +512,8 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       if (webviewRef.current) {
         if (Platform.OS === 'ios') {
           webviewRef.current.injectJavaScript(`
+        (function () {
+
         const linkData = ${linkData};
         const editor = document.getElementById('editor');
         editor.focus();
@@ -539,7 +552,6 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
                 html: editor.innerHTML,
                 characterCount: charCount
               }));
-              true;
               return;
             }
           }
@@ -564,6 +576,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           html: editor.innerHTML,
           characterCount: charCount
         }));
+        })();
         true;
       `);
         } else {
@@ -628,12 +641,12 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
       const showSub = Keyboard.addListener(
         'keyboardDidShow',
         (e: KeyboardEvent) => {
-          setShowToolbar(true);
+          setKeyboardVisible(true);
           setKeyboardHeight(e.endCoordinates.height);
         }
       );
       const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-        setShowToolbar(false);
+        setKeyboardVisible(false);
         setKeyboardHeight(0);
       });
 
@@ -736,7 +749,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           </View>
         </BottomSheet>
 
-        {showToolbar && (
+        {showToolbar && keyboardVisible && (
           <Footer
             style={[
               styles.toolbar,

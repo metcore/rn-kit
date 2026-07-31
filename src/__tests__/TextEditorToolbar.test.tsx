@@ -80,3 +80,39 @@ describe('TextEditor active-state wiring', () => {
     expect(script).toContain('updateFormats()');
   });
 });
+
+describe('TextEditor showToolbar prop', () => {
+  const mountWithKeyboard = (showToolbar?: boolean) => {
+    const listeners: Record<string, (e: unknown) => void> = {};
+    jest
+      .spyOn(Keyboard, 'addListener')
+      .mockImplementation((event: string, cb: (e: never) => void) => {
+        listeners[event] = cb as (e: unknown) => void;
+        return { remove: jest.fn() } as never;
+      });
+
+    const tree = render(
+      <Provider>
+        <TextEditor testID="editor" showToolbar={showToolbar} />
+      </Provider>
+    );
+
+    act(() => {
+      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
+    });
+
+    return tree;
+  };
+
+  it('shows the toolbar with the keyboard by default', () => {
+    expect(mountWithKeyboard().getByTestId('editor-bold')).toBeTruthy();
+  });
+
+  it('shows the toolbar with the keyboard when true', () => {
+    expect(mountWithKeyboard(true).getByTestId('editor-bold')).toBeTruthy();
+  });
+
+  it('keeps the toolbar away even when the keyboard opens when false', () => {
+    expect(mountWithKeyboard(false).queryByTestId('editor-bold')).toBeNull();
+  });
+});

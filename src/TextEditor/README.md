@@ -61,6 +61,7 @@ export default function MyScreen() {
 | `onChange`                | `(html: string) => void` | -                            | Callback saat konten berubah                 |
 | `onFocus`                 | `() => void`             | -                            | Callback saat editor focus                   |
 | `onBlur`                  | `() => void`             | -                            | Callback saat editor blur                    |
+| `showToolbar`             | `boolean`                | `true`                       | Gerbang toolbar mengambang. `true`: muncul bersama keyboard. `false`: tidak muncul walau keyboard terbuka. Tidak memaksa toolbar muncul sendiri. |
 | `inputLabelLinkText`      | `string`                 | `'Teks Link'`                | Label untuk input teks link                  |
 | `inputLabelLinkUrl`       | `string`                 | `'Link URL'`                 | Label untuk input URL link                   |
 | `inputLinkTextPlacholder` | `string`                 | `'Link URL'`                 | Placeholder untuk input teks link            |
