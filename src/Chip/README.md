@@ -11,7 +11,7 @@ Komponen `Chip` digunakan untuk menampilkan daftar pilihan seperti tag, filter, 
 | Nama Props       | Tipe                                         | Default        | Deskripsi                                                                 |
 |------------------|----------------------------------------------|----------------|--------------------------------------------------------------------------|
 | `options`        | `ChipOption[]`                               | –              | Daftar opsi yang akan ditampilkan. Setiap opsi memiliki `label`, `value`, dan opsional `disabled`. |
-| `selected`       | `string \| string[] \| null \| undefined` | `[]`           | Nilai yang dipilih. Bisa berupa string (single), array (multiple), atau null. |
+| `selected`       | `string \| string[] \| null \| undefined` | `[]`           | Nilai yang dipilih. Bisa string (single), array (multiple), atau null. Opsional: kalau dilewat, Chip menyimpan pilihannya sendiri (uncontrolled). |
 | `onSelect`       | `(value: string \| string[]) => void`       | –              | Fungsi callback saat chip dipilih. Akan mengembalikan value terpilih. |
 | `multiple`       | `boolean`                                    | `false`        | Jika `true`, bisa memilih lebih dari satu chip.                        |
 | `direction`      | `'horizontal' \| 'vertical'`                | `'horizontal'` | Arah layout chip: horizontal (dalam baris) atau vertical (ke bawah).    |
@@ -91,3 +91,26 @@ interface ChipOption {
 ---
 
 © 2025 – Komponen Chip by YourTeam
+
+## Controlled vs uncontrolled
+
+Kirim `selected` kalau state pilihan disimpan di luar. Chip akan mengikuti
+nilai prop itu setiap kali berubah:
+
+```jsx
+const [selected, setSelected] = useState(['apple']);
+
+<Chip options={options} selected={selected} onSelect={setSelected} multiple />
+```
+
+Lewati `selected` kalau tidak perlu menyimpannya sendiri. Chip mengurus
+pilihannya secara internal dan `onSelect` cukup dipakai untuk membaca hasil:
+
+```jsx
+<Chip options={options} onSelect={(value) => console.log(value)} multiple />
+```
+
+Jangan mengirim `selected` dengan nilai tetap sambil mengharapkan chip tidak
+pernah menyala — chip tetap menyala dari state internalnya. Untuk chip yang
+murni tampilan, kendalikan `selected` sungguhan dan jangan perbarui di
+`onSelect`.

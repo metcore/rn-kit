@@ -49,26 +49,7 @@ describe('Chip behaviour', () => {
     expect(onSelect).toHaveBeenCalledWith(['a', 'b']);
   });
 
-  // BUG (documented, not fixed here): Chip's sync effect lists
-  // `internalSelected` in its own dependency array and resets state back to
-  // the `selected` prop whenever the two differ. Uncontrolled, `selected`
-  // defaults to [], so every pick is wiped before the next one -- multiple
-  // mode can never accumulate. Characterised below; the `.failing` test above
-  // it will start failing (i.e. alerting) the moment the effect is fixed.
-  it('drops the previous pick when uncontrolled', () => {
-    const onSelect = jest.fn();
-    const { getByTestId } = render(
-      <Chip options={options} testID="tags" multiple onSelect={onSelect} />
-    );
-
-    fireEvent.press(getByTestId('tags-option-a'));
-    fireEvent.press(getByTestId('tags-option-b'));
-
-    // Should be ['a', 'b'] -- the reset effect throws 'a' away.
-    expect(onSelect).toHaveBeenLastCalledWith(['b']);
-  });
-
-  it.failing('keeps both values when multiple and uncontrolled', () => {
+  it('keeps both values when multiple and uncontrolled', () => {
     const onSelect = jest.fn();
     const { getByTestId } = render(
       <Chip options={options} testID="tags" multiple onSelect={onSelect} />
@@ -78,5 +59,72 @@ describe('Chip behaviour', () => {
     fireEvent.press(getByTestId('tags-option-b'));
 
     expect(onSelect).toHaveBeenLastCalledWith(['a', 'b']);
+  });
+
+  it('untoggles an uncontrolled pick that is tapped twice', () => {
+    const onSelect = jest.fn();
+    const { getByTestId } = render(
+      <Chip options={options} testID="tags" multiple onSelect={onSelect} />
+    );
+
+    fireEvent.press(getByTestId('tags-option-a'));
+    fireEvent.press(getByTestId('tags-option-a'));
+
+    expect(onSelect).toHaveBeenLastCalledWith([]);
+  });
+
+  // The regression this guards is invisible to onSelect: the reset effect used
+  // to report the right value while leaving the chip unlit, so compare the
+  // rendered tree instead. Uncontrolled-after-tap must match controlled, not
+  // untouched.
+  it('lights the tapped chip when uncontrolled', () => {
+    const uncontrolled = render(
+      <Chip options={options} testID="tags" onSelect={() => {}} />
+    );
+    fireEvent.press(uncontrolled.getByTestId('tags-option-a'));
+
+    const controlled = render(
+      <Chip
+        options={options}
+        testID="tags"
+        selected={['a']}
+        onSelect={() => {}}
+      />
+    );
+    const untouched = render(
+      <Chip options={options} testID="tags" onSelect={() => {}} />
+    );
+
+    // Serialised, not toEqual: the trees carry distinct handler identities, so
+    // a structural compare reports a difference that is not a visual one.
+    expect(JSON.stringify(uncontrolled.toJSON())).toEqual(
+      JSON.stringify(controlled.toJSON())
+    );
+    expect(JSON.stringify(uncontrolled.toJSON())).not.toEqual(
+      JSON.stringify(untouched.toJSON())
+    );
+  });
+
+  it('still follows the selected prop when it changes', () => {
+    const { toJSON, rerender } = render(
+      <Chip
+        options={options}
+        testID="tags"
+        selected={['a']}
+        onSelect={() => {}}
+      />
+    );
+    const withA = JSON.stringify(toJSON());
+
+    rerender(
+      <Chip
+        options={options}
+        testID="tags"
+        selected={['b']}
+        onSelect={() => {}}
+      />
+    );
+
+    expect(JSON.stringify(toJSON())).not.toEqual(withA);
   });
 });

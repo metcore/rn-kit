@@ -22,6 +22,8 @@ export default function ChipScreen() {
   const [single, setSingle] = useState<ChipSelectedProps>(['apple']);
   const [multi, setMulti] = useState<ChipSelectedProps>(['apple', 'orange']);
   const [itemSelected, setItemSelected] = useState(false);
+  const [uncontrolledReport, setUncontrolledReport] =
+    useState<ChipSelectedProps>([]);
 
   return (
     <DemoScreen
@@ -57,6 +59,26 @@ export default function ChipScreen() {
         />
         <Typography variant="t3" color={Color.gray[700]}>
           {`Terpilih: ${multi.join(', ') || '-'}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Tanpa prop selected (uncontrolled)"
+        note="Prop selected boleh dilewat. Chip menyimpan pilihannya sendiri dan tetap menyala; onSelect dipakai hanya untuk membaca hasilnya, bukan untuk mengembalikan state."
+      >
+        <DemoLabel text="multiple, tanpa selected" />
+        <Chip
+          options={FRUIT_OPTIONS}
+          multiple
+          color="warning"
+          onSelect={setUncontrolledReport}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Dilaporkan onSelect: ${
+            Array.isArray(uncontrolledReport)
+              ? uncontrolledReport.join(', ') || '-'
+              : uncontrolledReport
+          }`}
         </Typography>
       </DemoSection>
 

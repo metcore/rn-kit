@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import {
   type ChipOptionProps,
@@ -42,12 +42,22 @@ const Chip: React.FC<ChipProps> = ({
     normalizeSelected(selected)
   );
 
+  // Sync only when the `selected` prop's own value changes, tracked against a
+  // ref rather than against internalSelected. Comparing to internalSelected
+  // made this effect watch the state it writes: every internal pick differed
+  // from the prop and was immediately reverted, so an uncontrolled Chip could
+  // never hold — or show — a selection. The ref is needed because `selected`
+  // defaults to a fresh [] each render, which would otherwise retrigger the
+  // reset on every pass.
+  const lastSelectedProp = useRef(JSON.stringify(normalizeSelected(selected)));
+
   useEffect(() => {
-    const newSelected = normalizeSelected(selected);
-    if (JSON.stringify(newSelected) !== JSON.stringify(internalSelected)) {
-      setInternalSelected(newSelected);
+    const serialized = JSON.stringify(normalizeSelected(selected));
+    if (serialized !== lastSelectedProp.current) {
+      lastSelectedProp.current = serialized;
+      setInternalSelected(normalizeSelected(selected));
     }
-  }, [selected, internalSelected]);
+  }, [selected]);
 
   const isSelected = (value: ChipValue) => internalSelected.includes(value);
 
