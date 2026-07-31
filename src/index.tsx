@@ -85,6 +85,7 @@ export { default as TabItem } from './Tab/TabItem';
 export { default as Toast } from './Toast/Toast';
 export { default as TextArea } from './Input/TextArea';
 export { default as TextEditor } from './TextEditor/TextEditor';
+export type { TextEditorRef } from './TextEditor/TextEditor';
 // export { default as PdfView } from './FileView/PdfView';
 export { ToastProvider, useToast } from './Toast/ToastContext';
 export { default as Skeleton } from './Skeleton/Skeleton';

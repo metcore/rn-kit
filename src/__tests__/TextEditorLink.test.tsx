@@ -125,3 +125,28 @@ describe('TextEditor injected scripts', () => {
     });
   });
 });
+
+describe('TextEditor ref surface', () => {
+  it('exposes the three imperative methods', () => {
+    const ref = createRef<TextEditorRef>();
+    render(<TextEditor ref={ref} testID="ed" />);
+
+    expect(typeof ref.current?.getContent).toBe('function');
+    expect(typeof ref.current?.setContent).toBe('function');
+    expect(typeof ref.current?.clearContent).toBe('function');
+  });
+
+  it('escapes backticks so setContent cannot break out of the template', () => {
+    const ref = createRef<TextEditorRef>();
+    render(<TextEditor ref={ref} testID="ed" />);
+
+    __spies.injectJavaScript.mockClear();
+    act(() => ref.current?.setContent('<p>a ` b ${c}</p>'));
+
+    const script = __spies.injectJavaScript.mock.calls.at(-1)?.[0] ?? '';
+
+    // A raw backtick would close the injected template literal and leave the
+    // rest of the script as loose syntax.
+    expect(parses(script)).toBeNull();
+  });
+});

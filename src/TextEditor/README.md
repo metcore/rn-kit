@@ -5,6 +5,7 @@ Rich text editor component untuk React Native dengan toolbar formatting yang len
 ## Features
 
 - ✅ Rich text formatting (Bold, Italic, Underline, Strikethrough)
+- ✅ Heading H1–H3, clear formatting, undo/redo
 - ✅ Insert dan edit hyperlinks
 - ✅ Bullet dan numbered lists
 - ✅ Text alignment (Left, Center, Right)
@@ -181,6 +182,10 @@ Editor menyediakan toolbar dengan commands berikut:
 - **Align Left** - Align teks ke kiri
 - **Align Center** - Align teks ke tengah
 - **Align Right** - Align teks ke kanan
+- **H1 / H2 / H3** - Mengubah baris jadi heading (label teks, bukan ikon)
+- **Clear format** - Membersihkan format inline, sekaligus mengembalikan
+  heading ke paragraf biasa
+- **Undo / Redo** - Membatalkan atau mengulang perubahan terakhir
 
 ## Ref Methods
 
