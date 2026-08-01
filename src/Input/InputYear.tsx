@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import MonthPicker from '../DatePicker/MonthPicker';
-import { dateFormatter } from '../function/dateFormatter';
+import YearPicker from '../DatePicker/YearPicker';
 import PickerField from './partials/PickerField';
 import type { PickerFieldValue } from './type';
 
 interface BaseProps {
   label?: string;
   placeholder: string;
-  /** Month number, 1 (January) to 12 (December). */
+  /** A full year, e.g. 2024. */
   value?: number;
   onSelectClick?: () => void;
   onPickerClose?: () => void;
   onChange?: (value: PickerFieldValue) => void;
-  language?: 'en' | 'id';
   hasClear?: boolean;
+  /** Static text inside the sheet, so it can follow the host app's language. */
   title?: string;
   cancelLabel?: string;
   confirmLabel?: string;
@@ -33,7 +32,7 @@ type RangeModeProps = BaseProps & {
   valueEnd?: number;
 };
 
-export type InputMonthProps = SingleModeProps | RangeModeProps;
+export type InputYearProps = SingleModeProps | RangeModeProps;
 
 const EMPTY: PickerFieldValue = {
   value: null,
@@ -41,27 +40,14 @@ const EMPTY: PickerFieldValue = {
   endValue: null,
 };
 
-/**
- * Renders the month name for a 1-based month number in the requested language.
- *
- * Anything outside 1-12 renders nothing, so the field falls back to its
- * placeholder. Handing the number straight to Date would quietly roll over --
- * 0 would read as December of the previous year rather than January.
- *
- * The year given to the formatter is arbitrary; only the month is read back.
- */
-const monthLabel = (
-  month: number | null | undefined,
-  language?: 'en' | 'id'
-) =>
-  month === null || month === undefined || month < 1 || month > 12
-    ? null
-    : dateFormatter({
-        date: new Date(2000, month - 1, 1),
-        options: { pattern: 'MMMM', language },
-      });
+const yearLabel = (year: number | null | undefined) =>
+  year === null || year === undefined ? null : String(year);
 
-export default function InputMonth({
+/**
+ * Year counterpart to InputMonth. There is no `language` prop: a year is
+ * digits, and nothing about it changes between locales.
+ */
+export default function InputYear({
   label,
   placeholder,
   placeholderEnd,
@@ -71,18 +57,15 @@ export default function InputMonth({
   onSelectClick,
   onPickerClose,
   onChange,
-  language,
   hasClear,
   title,
   cancelLabel,
   confirmLabel,
   testID,
-}: InputMonthProps) {
+}: InputYearProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<PickerFieldValue>(EMPTY);
 
-  // A given prop wins, so the field can be driven from outside; otherwise it
-  // shows whatever was last picked.
   const start = value ?? (mode === 'range' ? selected.startValue : selected.value); // prettier-ignore
   const end = valueEnd ?? selected.endValue;
 
@@ -99,19 +82,9 @@ export default function InputMonth({
   const handleChange = (
     picked: number[] | { startDate: number | null; endDate: number | null }
   ) => {
-    // MonthPicker reports an array in single mode and a pair in range mode,
-    // both 0-based. Shift to 1-based on the way out, so January is 1 for the
-    // consumer -- the picker's indices never leak past this line.
-    const oneBased = (month: number | null | undefined) =>
-      month === null || month === undefined ? null : month + 1;
-
     const next: PickerFieldValue = Array.isArray(picked)
-      ? { value: oneBased(picked[0]), startValue: null, endValue: null }
-      : {
-          value: null,
-          startValue: oneBased(picked.startDate),
-          endValue: oneBased(picked.endDate),
-        };
+      ? { value: picked[0] ?? null, startValue: null, endValue: null }
+      : { value: null, startValue: picked.startDate, endValue: picked.endDate };
 
     setSelected(next);
     onChange?.(next);
@@ -129,15 +102,15 @@ export default function InputMonth({
         placeholder={placeholder}
         placeholderEnd={placeholderEnd}
         mode={mode}
-        display={monthLabel(start, language)}
-        displayEnd={monthLabel(end, language)}
+        display={yearLabel(start)}
+        displayEnd={yearLabel(end)}
         hasClear={hasClear}
         onPress={handleOpen}
         onClear={handleClear}
         testID={testID}
       />
 
-      <MonthPicker
+      <YearPicker
         testID={testID}
         isOpen={isOpen}
         mode={mode}

@@ -127,3 +127,16 @@ export type SmallVariantProps = BaseInputFileProps & {
 };
 
 export type InputFileProps = DefaultVariantProps | SmallVariantProps;
+
+/**
+ * What a picker-backed field reports back.
+ *
+ * `value` carries a single selection; `startValue`/`endValue` carry a range.
+ * Only one pair is ever populated, decided by the field's `mode`. Shared by
+ * InputMonth and InputYear so both read the same on the consumer side.
+ */
+export interface PickerFieldValue {
+  value: number | null;
+  startValue: number | null;
+  endValue: number | null;
+}

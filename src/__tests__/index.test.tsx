@@ -19,6 +19,8 @@ describe('package exports', () => {
     'Button',
     'Input',
     'InputFile',
+    'InputMonth',
+    'InputYear',
     'Select',
     'BottomSheet',
     'Modal',
