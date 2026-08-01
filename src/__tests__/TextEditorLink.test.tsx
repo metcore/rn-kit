@@ -1,6 +1,7 @@
 import { act, fireEvent, render } from '@testing-library/react-native';
 import { Keyboard } from 'react-native';
-import { createRef } from 'react';
+import { createRef, type Ref } from 'react';
+import { WebView } from 'react-native-webview';
 import vm from 'vm';
 
 const { __spies } = require('react-native-webview');
@@ -22,7 +23,14 @@ const parses = (script: string) => {
   }
 };
 
-const openToolbar = () => {
+/**
+ * Renders an editor with its toolbar on screen.
+ *
+ * The toolbar belongs to the focused editor, so focus has to arrive from the
+ * webview before the keyboard opens -- otherwise nothing mounts and the link
+ * button cannot be pressed.
+ */
+const openToolbar = (ref?: Ref<TextEditorRef>) => {
   const listeners: Record<string, (e: unknown) => void> = {};
   jest
     .spyOn(Keyboard, 'addListener')
@@ -30,7 +38,25 @@ const openToolbar = () => {
       listeners[event] = cb as (e: unknown) => void;
       return { remove: jest.fn() } as never;
     });
-  return listeners;
+
+  const tree = render(
+    <Provider>
+      <TextEditor ref={ref} testID="ed" />
+    </Provider>
+  );
+
+  act(() => {
+    fireEvent(tree.UNSAFE_getByType(WebView), 'message', {
+      nativeEvent: { data: JSON.stringify({ type: 'focus' }) },
+    });
+    jest.advanceTimersByTime(20);
+  });
+
+  act(() => {
+    listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
+  });
+
+  return tree;
 };
 
 describe('TextEditor injected scripts', () => {
@@ -39,16 +65,7 @@ describe('TextEditor injected scripts', () => {
   });
 
   it('injects a link script that parses as a program', () => {
-    const listeners = openToolbar();
-    const { getByTestId, getByText, getByPlaceholderText } = render(
-      <Provider>
-        <TextEditor testID="ed" />
-      </Provider>
-    );
-
-    act(() => {
-      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
-    });
+    const { getByTestId, getByText, getByPlaceholderText } = openToolbar();
 
     fireEvent.press(getByTestId('ed-link'));
     fireEvent.changeText(
@@ -82,16 +99,8 @@ describe('TextEditor injected scripts', () => {
 
   it('never redeclares the page script own bindings', () => {
     const ref = createRef<TextEditorRef>();
-    const listeners = openToolbar();
-    const { getByTestId, getByText, getByPlaceholderText } = render(
-      <Provider>
-        <TextEditor ref={ref} testID="ed" />
-      </Provider>
-    );
+    const { getByTestId, getByText, getByPlaceholderText } = openToolbar(ref);
 
-    act(() => {
-      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
-    });
     fireEvent.press(getByTestId('ed-link'));
     fireEvent.changeText(
       getByPlaceholderText('https://www.example.com'),

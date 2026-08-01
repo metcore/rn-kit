@@ -28,9 +28,9 @@ export interface ExtendedTextEditorType extends TextEditorType {
   saveLinkButtonText?: string;
   cancelLinkButtonText?: string;
   /**
-   * Gates the floating toolbar. When true (default) it appears with the
-   * keyboard, as before. When false it stays away even while the keyboard is
-   * open -- it does not force the toolbar open on its own.
+   * Gates the floating toolbar. When true (default) it appears while this
+   * editor holds the caret and the keyboard is open. When false it stays away
+   * regardless -- it does not force the toolbar open on its own.
    */
   showToolbar?: boolean;
 }

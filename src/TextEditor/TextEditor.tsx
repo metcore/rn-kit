@@ -61,6 +61,10 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
     ref
   ) => {
     const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+    // Whether the caret is in THIS editor. The keyboard is global, so without
+    // this every mounted editor would paint a toolbar the moment any field
+    // anywhere opened it -- see the toolbar gate at the bottom of the render.
+    const [isFocused, setIsFocused] = useState<boolean>(false);
     const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
     const [characterCount, setCharacterCount] = useState(0);
     const [showLinkModal, setShowLinkModal] = useState(false);
@@ -202,10 +206,12 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           });
         } else if (parsed.type === 'focus') {
           requestAnimationFrame(() => {
+            setIsFocused(true);
             onFocus?.();
           });
         } else if (parsed.type === 'blur') {
           requestAnimationFrame(() => {
+            setIsFocused(false);
             onBlur?.();
           });
         } else if (parsed.type === 'selectedText') {
@@ -327,7 +333,7 @@ const TextEditor = forwardRef<TextEditorRef, ExtendedTextEditorType>(
           cancelText={cancelLinkButtonText}
         />
 
-        {showToolbar && keyboardVisible && (
+        {showToolbar && keyboardVisible && isFocused && (
           <Toolbar
             keyboardHeight={keyboardHeight}
             isActive={isFormatActive}

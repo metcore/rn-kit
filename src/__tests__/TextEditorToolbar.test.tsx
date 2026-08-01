@@ -28,6 +28,43 @@ const commands = [
 const htmlOf = (tree: ReturnType<typeof render>) =>
   tree.UNSAFE_getByType(WebView).props.source.html as string;
 
+/**
+ * Puts an editor in the only state that shows a toolbar: focused, with the
+ * keyboard up.
+ *
+ * Keyboard has no emit() under the RN preset, so the listener TextEditor
+ * registers is captured and called directly. Focus arrives as a webview
+ * message -- the caret lives in the document, not in any native node.
+ */
+const mountFocusedWithKeyboard = (props?: { showToolbar?: boolean }) => {
+  const listeners: Record<string, (e: unknown) => void> = {};
+  jest
+    .spyOn(Keyboard, 'addListener')
+    .mockImplementation((event: string, cb: (e: never) => void) => {
+      listeners[event] = cb as (e: unknown) => void;
+      return { remove: jest.fn() } as never;
+    });
+
+  const tree = render(
+    <Provider>
+      <TextEditor testID="editor" {...props} />
+    </Provider>
+  );
+
+  act(() => {
+    fireEvent(tree.UNSAFE_getByType(WebView), 'message', {
+      nativeEvent: { data: JSON.stringify({ type: 'focus' }) },
+    });
+    jest.advanceTimersByTime(20);
+  });
+
+  act(() => {
+    listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
+  });
+
+  return tree;
+};
+
 describe('TextEditor active-state wiring', () => {
   beforeEach(() => {
     __spies.injectJavaScript.mockClear();
@@ -49,26 +86,7 @@ describe('TextEditor active-state wiring', () => {
   });
 
   it('re-reads the state after applying a command on iOS', () => {
-    // Keyboard has no emit() under the RN preset, so capture the listener
-    // TextEditor registers and call it directly -- the toolbar only mounts on
-    // keyboardDidShow.
-    const listeners: Record<string, (e: unknown) => void> = {};
-    jest
-      .spyOn(Keyboard, 'addListener')
-      .mockImplementation((event: string, cb: (e: never) => void) => {
-        listeners[event] = cb as (e: unknown) => void;
-        return { remove: jest.fn() } as never;
-      });
-
-    const { getByTestId } = render(
-      <Provider>
-        <TextEditor testID="editor" />
-      </Provider>
-    );
-
-    act(() => {
-      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
-    });
+    const { getByTestId } = mountFocusedWithKeyboard();
 
     fireEvent.press(getByTestId('editor-bold'));
 
@@ -82,7 +100,27 @@ describe('TextEditor active-state wiring', () => {
 });
 
 describe('TextEditor showToolbar prop', () => {
-  const mountWithKeyboard = (showToolbar?: boolean) => {
+  it('shows the toolbar with the keyboard by default', () => {
+    expect(mountFocusedWithKeyboard().getByTestId('editor-bold')).toBeTruthy();
+  });
+
+  it('shows the toolbar with the keyboard when true', () => {
+    expect(
+      mountFocusedWithKeyboard({ showToolbar: true }).getByTestId('editor-bold')
+    ).toBeTruthy();
+  });
+
+  it('keeps the toolbar away even when focused with the keyboard up', () => {
+    expect(
+      mountFocusedWithKeyboard({ showToolbar: false }).queryByTestId(
+        'editor-bold'
+      )
+    ).toBeNull();
+  });
+});
+
+describe('TextEditor toolbar ownership', () => {
+  const mount = (props?: { showToolbar?: boolean; testID?: string }) => {
     const listeners: Record<string, (e: unknown) => void> = {};
     jest
       .spyOn(Keyboard, 'addListener')
@@ -93,48 +131,65 @@ describe('TextEditor showToolbar prop', () => {
 
     const tree = render(
       <Provider>
-        <TextEditor testID="editor" showToolbar={showToolbar} />
+        <TextEditor testID="editor" {...props} />
       </Provider>
     );
 
-    act(() => {
-      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
-    });
+    const openKeyboard = () =>
+      act(() => {
+        listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
+      });
 
-    return tree;
+    // The editor lives in a webview and reports its own focus by message;
+    // there is no native node to fireEvent 'focus' on.
+    const sendFromEditor = (payload: object) =>
+      act(() => {
+        fireEvent(tree.UNSAFE_getByType(WebView), 'message', {
+          nativeEvent: { data: JSON.stringify(payload) },
+        });
+        jest.advanceTimersByTime(20);
+      });
+
+    return { ...tree, openKeyboard, sendFromEditor };
   };
 
-  it('shows the toolbar with the keyboard by default', () => {
-    expect(mountWithKeyboard().getByTestId('editor-bold')).toBeTruthy();
+  // Toolbar renders into a single global Footer slot, so an editor that paints
+  // one while unfocused puts it on screen over whatever the user is actually
+  // typing in -- including another editor that asked for no toolbar at all.
+  it('stays away when the keyboard opens for something else', () => {
+    const { openKeyboard, queryByTestId } = mount();
+
+    openKeyboard();
+
+    expect(queryByTestId('editor-bold')).toBeNull();
   });
 
-  it('shows the toolbar with the keyboard when true', () => {
-    expect(mountWithKeyboard(true).getByTestId('editor-bold')).toBeTruthy();
+  it('appears once this editor reports focus', () => {
+    const { openKeyboard, sendFromEditor, getByTestId } = mount();
+
+    sendFromEditor({ type: 'focus' });
+    openKeyboard();
+
+    expect(getByTestId('editor-bold')).toBeTruthy();
   });
 
-  it('keeps the toolbar away even when the keyboard opens when false', () => {
-    expect(mountWithKeyboard(false).queryByTestId('editor-bold')).toBeNull();
+  it('goes away again when this editor reports blur', () => {
+    const { openKeyboard, sendFromEditor, getByTestId, queryByTestId } =
+      mount();
+
+    sendFromEditor({ type: 'focus' });
+    openKeyboard();
+    expect(getByTestId('editor-bold')).toBeTruthy();
+
+    sendFromEditor({ type: 'blur' });
+
+    expect(queryByTestId('editor-bold')).toBeNull();
   });
 });
 
 describe('TextEditor added formats', () => {
   const openToolbar = () => {
-    const listeners: Record<string, (e: unknown) => void> = {};
-    jest
-      .spyOn(Keyboard, 'addListener')
-      .mockImplementation((event: string, cb: (e: never) => void) => {
-        listeners[event] = cb as (e: unknown) => void;
-        return { remove: jest.fn() } as never;
-      });
-
-    const tree = render(
-      <Provider>
-        <TextEditor testID="editor" />
-      </Provider>
-    );
-    act(() => {
-      listeners.keyboardDidShow?.({ endCoordinates: { height: 300 } });
-    });
+    const tree = mountFocusedWithKeyboard();
     __spies.injectJavaScript.mockClear();
     return tree;
   };

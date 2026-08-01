@@ -12,7 +12,7 @@ Rich text editor component untuk React Native dengan toolbar formatting yang len
 - ✅ Character counter dengan max length validation
 - ✅ Custom placeholder
 - ✅ WebView-based editor dengan contenteditable
-- ✅ Toolbar otomatis muncul saat keyboard aktif
+- ✅ Toolbar otomatis muncul saat editor dipakai dan keyboard aktif
 - ✅ Support iOS dan Android
 - ✅ Imperative methods (getContent, setContent, clearContent)
 
@@ -62,7 +62,7 @@ export default function MyScreen() {
 | `onChange`                | `(html: string) => void` | -                            | Callback saat konten berubah                 |
 | `onFocus`                 | `() => void`             | -                            | Callback saat editor focus                   |
 | `onBlur`                  | `() => void`             | -                            | Callback saat editor blur                    |
-| `showToolbar`             | `boolean`                | `true`                       | Gerbang toolbar mengambang. `true`: muncul bersama keyboard. `false`: tidak muncul walau keyboard terbuka. Tidak memaksa toolbar muncul sendiri. |
+| `showToolbar`             | `boolean`                | `true`                       | Gerbang toolbar mengambang. `true`: muncul selama editor ini memegang kursor dan keyboard terbuka. `false`: tidak muncul sama sekali. Tidak memaksa toolbar muncul sendiri. |
 | `inputLabelLinkText`      | `string`                 | `'Teks Link'`                | Label untuk input teks link                  |
 | `inputLabelLinkUrl`       | `string`                 | `'Link URL'`                 | Label untuk input URL link                   |
 | `inputLinkTextPlacholder` | `string`                 | `'Link URL'`                 | Placeholder untuk input teks link            |
@@ -85,6 +85,14 @@ export default function MyScreen() {
 
 H1/H2/H3 memakai label teks, bukan ikon, karena tidak ada ikon heading di
 `Icon` — dan label teks memang lazim untuk heading di toolbar editor.
+
+**Toolbar mengikuti kursor, bukan keyboard.** Toolbar dirender ke satu slot
+`Footer` yang dipakai bersama seluruh layar, dan keyboard itu global. Kalau
+gerbangnya hanya keyboard, setiap editor yang sedang ter-mount akan melukis
+toolbar begitu field mana pun membuka keyboard — termasuk menimpa editor lain
+yang justru meminta `showToolbar={false}`. Karena itu toolbar hanya muncul untuk
+editor yang sedang memegang kursor: satu layar boleh berisi banyak editor, dan
+hanya satu toolbar yang tampil.
 
 **Catatan underline di dalam link.** Stylesheet editor menggarisbawahi setiap
 `<a>`, dan `queryCommandState('underline')` tidak bisa membedakannya dari `<u>`
@@ -276,7 +284,9 @@ Component menggunakan styling internal yang sudah optimal. Jika perlu custom sty
 
 **Problem:** Toolbar tidak tampil saat keyboard aktif
 
-**Solution:** Pastikan component tidak di-wrap dengan View yang membatasi positioning absolute.
+**Solution:** Toolbar hanya muncul untuk editor yang sedang memegang kursor —
+keyboard yang terbuka karena field lain tidak memunculkannya. Pastikan juga
+component tidak di-wrap dengan View yang membatasi positioning absolute.
 
 ## Performance Tips
 

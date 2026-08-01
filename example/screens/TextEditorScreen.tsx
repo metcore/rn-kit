@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import {
   Button,
   Color,
-  Container,
   Switch,
   TextEditor,
   Typography,
@@ -42,15 +41,13 @@ export default function TextEditorScreen() {
         note="height diset tetap sejak awal. Jangan ubah height secara dinamis (mis. mengikuti tinggi keyboard) karena akan membuat WebView reload dan keyboard tertutup."
       >
         <DemoSurface>
-          <Container>
-            <TextEditor
-              label="Deskripsi"
-              placeholder="Tulis deskripsi di sini..."
-              height={EDITOR_HEIGHT}
-              maxLength={MAX_LENGTH}
-              onChange={setHtml}
-            />
-          </Container>
+          <TextEditor
+            label="Deskripsi"
+            placeholder="Tulis deskripsi di sini..."
+            height={EDITOR_HEIGHT}
+            maxLength={MAX_LENGTH}
+            onChange={setHtml}
+          />
         </DemoSurface>
         <Typography variant="t3" color={Color.gray[700]}>
           Ketuk area editor untuk memunculkan toolbar mengambang di atas
@@ -71,7 +68,7 @@ export default function TextEditorScreen() {
 
       <DemoSection
         title="Menyembunyikan toolbar"
-        note="showToolbar menggerbangi toolbar, bukan memaksanya. false menahannya tetap tersembunyi walau keyboard terbuka; true mengembalikan perilaku bawaan."
+        note="showToolbar menggerbangi toolbar, bukan memaksanya. false menahannya tetap tersembunyi; true mengembalikan perilaku bawaan. Layar ini berisi empat editor, jadi ia sekaligus memperagakan bahwa toolbar mengikuti editor yang sedang dipakai — mengetik di editor lain tidak memunculkan toolbar milik editor ini."
       >
         <Switch
           label="Tampilkan toolbar"
@@ -79,14 +76,12 @@ export default function TextEditorScreen() {
           onChange={setShowToolbar}
         />
         <DemoSurface>
-          <Container>
-            <TextEditor
-              label="Catatan singkat"
-              placeholder="Editor tanpa toolbar bila dimatikan..."
-              height={140}
-              showToolbar={showToolbar}
-            />
-          </Container>
+          <TextEditor
+            label="Catatan singkat"
+            placeholder="Editor tanpa toolbar bila dimatikan..."
+            height={140}
+            showToolbar={showToolbar}
+          />
         </DemoSurface>
       </DemoSection>
 
@@ -95,15 +90,13 @@ export default function TextEditorScreen() {
         note="getContent melaporkan HTML lewat onChange; setContent dan clearContent mengubah isi editor dari luar."
       >
         <DemoSurface>
-          <Container>
-            <TextEditor
-              ref={editorRef}
-              label="Isi terkontrol"
-              placeholder="Pakai tombol di bawah..."
-              height={160}
-              onChange={setReadBack}
-            />
-          </Container>
+          <TextEditor
+            ref={editorRef}
+            label="Isi terkontrol"
+            placeholder="Pakai tombol di bawah..."
+            height={160}
+            onChange={setReadBack}
+          />
         </DemoSurface>
         <View style={styles.actions}>
           <Button
