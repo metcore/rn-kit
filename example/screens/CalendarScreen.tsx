@@ -84,6 +84,20 @@ export default function CalendarScreen() {
           />
         </DemoSurface>
       </DemoSection>
+
+      <DemoSection
+        title="Penanda hari ini"
+        note="Angka hari ini diberi warna info[500] supaya mudah ditemukan. Warnanya bisa diganti lewat todayTextColor. Penanda ini kalah dari tanggal terpilih, tanggal nonaktif, dan markedDates — begitu hari ini dipilih, warnanya mengikuti warna terpilih."
+      >
+        <DemoLabel text="bawaan (info[500])" />
+        <DemoSurface>
+          <Calendar mode="single" />
+        </DemoSurface>
+        <DemoLabel text="todayTextColor={Color.orange[500]}" />
+        <DemoSurface>
+          <Calendar mode="single" todayTextColor={Color.orange[500]} />
+        </DemoSurface>
+      </DemoSection>
     </DemoScreen>
   );
 }

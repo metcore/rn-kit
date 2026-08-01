@@ -29,6 +29,7 @@ Komponen kalender ini dibuat menggunakan React Native dan memungkinkan pengguna 
 | `onChange`                | `(date: Date \| [Date, Date]) => void` | —                                                     | Fungsi callback saat tanggal dipilih                      |
 | `selectedBackgroundColor` | `string` (CSS color)                   | `'#0f62fe'`                                           | Warna latar belakang tanggal yang dipilih                 |
 | `selectedTextColor`       | `string` (CSS color)                   | `'#ffffff'`                                           | Warna teks pada tanggal yang dipilih                      |
+| `todayTextColor`          | `string` (CSS color)                   | `Color.info[500]`                                     | Warna angka tanggal hari ini. Hanya berlaku bila hari ini tidak sedang dipilih, dinonaktifkan, atau ditandai lewat `markedDates` — ketiganya menang atas ini. |
 | `initialDate`             | `Date`                                 | `new Date(2026, 1, 1)`                                | Inisialisasi tanggal saat pertamakali render              |
 | `dateStart`               | `string \| null`                       | `2025-11-28`                                          | Kontroler tanggal mulai                                   |
 | `dateEnd`                 | `string \| null`                       | `2025-11-28`                                          | Kontroler tanggal selesai                                 |

@@ -1,5 +1,7 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
 import Calendar from '../Calendar/Calendar';
+import Color from '../Color/Color';
 import Drawing from '../Drawing/Drawing';
 import PdfView from '../FileView/PdfView';
 import TextEditor from '../TextEditor/TextEditor';
@@ -135,5 +137,59 @@ describe('Calendar', () => {
     const last = onChange.mock.calls.at(-1)![0];
     expect(last.startDate.getDate()).toBe(10);
     expect(last.endDate.getDate()).toBe(20);
+  });
+});
+
+describe("Calendar today's date", () => {
+  // Pinned so "today" is a known cell rather than whatever day the suite runs.
+  const TODAY = new Date(2024, 0, 15);
+
+  const colorOf = (node: { props: { style: unknown } }) =>
+    (StyleSheet.flatten(node.props.style) as { color?: string }).color;
+
+  beforeEach(() => {
+    jest.setSystemTime(TODAY);
+  });
+
+  const renderCalendar = (props?: Record<string, unknown>) =>
+    render(<Calendar testID="cal" initialDate={TODAY} {...props} />);
+
+  it('marks today apart from the ordinary days', () => {
+    const { getByText } = renderCalendar();
+
+    expect(colorOf(getByText('15'))).toBe(Color.info[500]);
+    expect(colorOf(getByText('16'))).toBe(Color.gray[700]);
+  });
+
+  it('lets a caller restyle it', () => {
+    const { getByText } = renderCalendar({ todayTextColor: Color.orange[500] });
+
+    expect(colorOf(getByText('15'))).toBe(Color.orange[500]);
+  });
+
+  // Today is a hint about which day it is, not a state of its own -- anything
+  // the user or the caller actually decided has to win over it.
+  it('yields to the selected day', () => {
+    const { getByText } = renderCalendar();
+
+    fireEvent.press(getByText('15'));
+
+    expect(colorOf(getByText('15'))).toBe(Color.base.white100);
+  });
+
+  it('yields to a disabled day', () => {
+    const { getByText } = renderCalendar({ minDate: new Date(2024, 0, 20) });
+
+    expect(colorOf(getByText('15'))).toBe(Color.gray[400]);
+  });
+
+  it('yields to a marked day', () => {
+    const { getByText } = renderCalendar({
+      markedDates: {
+        '2024-01-15': { selected: true, textColor: Color.danger[500] },
+      },
+    });
+
+    expect(colorOf(getByText('15'))).toBe(Color.danger[500]);
   });
 });

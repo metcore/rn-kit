@@ -23,6 +23,7 @@ const DEFAULT_SELECTED_BACKGROUND_COLOR = Color.primary[1000];
 const DEFAULT_SELECTED_TEXT_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_BACKGROUND_COLOR = Color.base.white100;
 const DEFAULT_DISABLED_TEXT_COLOR = Color.gray[400];
+const DEFAULT_TODAY_TEXT_COLOR = Color.info[500];
 
 export const formatDate = (date: Date | undefined | null) => {
   if (!date) return null;
@@ -43,6 +44,7 @@ const Calendar = ({
   selectedTextColor = DEFAULT_SELECTED_TEXT_COLOR,
   disabledBackgroundColor = DEFAULT_DISABLED_BACKGROUND_COLOR,
   disabledTextColor = DEFAULT_DISABLED_TEXT_COLOR,
+  todayTextColor = DEFAULT_TODAY_TEXT_COLOR,
   dayName = DAYS,
   language = 'en',
   initialDate = new Date(),
@@ -256,6 +258,10 @@ const Calendar = ({
     }
 
     if (mark?.selected) return mark?.textColor || selectedTextColor;
+
+    // Last before the ordinary colour: today is a hint about which day it is,
+    // so anything the user or the caller actually decided outranks it.
+    if (isSameDate(new Date(), date)) return todayTextColor;
 
     return Color.gray[700];
   };
