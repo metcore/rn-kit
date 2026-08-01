@@ -43,6 +43,8 @@ export const COMPONENT_CATALOG: ComponentCatalogCategory[] = [
       { label: 'Input OTP', screen: 'InputOtp', icon: 'scan-qr' },
       { label: 'Input Select', screen: 'InputSelect', icon: 'clipboard-list' },
       { label: 'Input Date', screen: 'InputDate', icon: 'calendar-edit' },
+      { label: 'Input Month', screen: 'InputMonth', icon: 'calendar-clock' },
+      { label: 'Input Year', screen: 'InputYear', icon: 'calendar-plus' },
       {
         label: 'Text Area',
         screen: 'TextArea',

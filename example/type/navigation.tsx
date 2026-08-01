@@ -56,6 +56,8 @@ export type RootStackParamList = {
   PdfView: undefined;
   InputSelect: undefined;
   InputDate: undefined;
+  InputMonth: undefined;
+  InputYear: undefined;
   Spinner: undefined;
 };
 

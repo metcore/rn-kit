@@ -35,6 +35,8 @@ import FooterScreen from '../screens/FooterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import IconScreen from '../screens/IconScreen';
 import InputDateScreen from '../screens/InputDateScreen';
+import InputMonthScreen from '../screens/InputMonthScreen';
+import InputYearScreen from '../screens/InputYearScreen';
 import InputFileScreen from '../screens/InputFileScreen';
 import InputOtpScreen from '../screens/InputOtpScreen';
 import InputPasswordScreen from '../screens/InputPasswordScreen';
@@ -218,6 +220,8 @@ const App = () => {
             <Stack.Screen name="PdfView" component={PdfViewScreen} />
             <Stack.Screen name="InputSelect" component={InputSelectScreen} />
             <Stack.Screen name="InputDate" component={InputDateScreen} />
+            <Stack.Screen name="InputMonth" component={InputMonthScreen} />
+            <Stack.Screen name="InputYear" component={InputYearScreen} />
             <Stack.Screen
               name="ForgotPassword"
               component={ForgotPasswordScreen}
