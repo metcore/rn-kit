@@ -16,6 +16,9 @@ interface YearPickerProps {
     value: number[] | { startDate: number | null; endDate: number | null }
   ) => void;
   mode?: PickerMode;
+  title?: string;
+  cancelLabel?: string;
+  confirmLabel?: string;
   testID?: string;
 }
 
@@ -24,6 +27,9 @@ export default function YearPicker({
   onClose,
   onChange,
   mode = 'single',
+  title = 'Pilih Tahun',
+  cancelLabel = 'Batal',
+  confirmLabel = 'Pilih',
   testID,
 }: YearPickerProps) {
   const currentYear = new Date().getFullYear();
@@ -114,7 +120,7 @@ export default function YearPicker({
           <View style={styles.flex1}>
             <Button
               testID={getTestID(testID, 'cancel')}
-              title="Batal"
+              title={cancelLabel}
               variant="tertiary"
               size="medium"
               color="primary"
@@ -124,7 +130,7 @@ export default function YearPicker({
           <View style={styles.flex1}>
             <Button
               testID={getTestID(testID, 'confirm')}
-              title="Pilih"
+              title={confirmLabel}
               color="primary"
               size="medium"
               onPress={handleSubmit}
@@ -142,7 +148,7 @@ export default function YearPicker({
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
         </TouchableOpacity>
         <Typography variant="t1" weight="semibold" color={Color.gray[900]}>
-          Pilih Tahun
+          {title}
         </Typography>
         <TouchableOpacity
           style={styles.buttonNav}

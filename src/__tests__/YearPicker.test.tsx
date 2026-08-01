@@ -54,3 +54,33 @@ describe('YearPicker behaviour', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('YearPicker labels', () => {
+  it('ships Indonesian defaults', () => {
+    const { getByText } = render(
+      <YearPicker isOpen testID="year" onClose={() => {}} />
+    );
+
+    expect(getByText('Pilih Tahun')).toBeTruthy();
+    expect(getByText('Batal')).toBeTruthy();
+    expect(getByText('Pilih')).toBeTruthy();
+  });
+
+  it('lets every static string be replaced', () => {
+    const { getByText, queryByText } = render(
+      <YearPicker
+        isOpen
+        testID="year"
+        title="Choose a year"
+        cancelLabel="Cancel"
+        confirmLabel="Apply"
+        onClose={() => {}}
+      />
+    );
+
+    expect(getByText('Choose a year')).toBeTruthy();
+    expect(getByText('Cancel')).toBeTruthy();
+    expect(getByText('Apply')).toBeTruthy();
+    expect(queryByText('Pilih Tahun')).toBeNull();
+  });
+});
