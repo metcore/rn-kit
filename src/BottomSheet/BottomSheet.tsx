@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  View,
-  StyleSheet,
-  PanResponder,
-  TouchableOpacity,
   Animated,
-  Modal,
-  KeyboardAvoidingView,
-  Keyboard,
   Dimensions,
-  SafeAreaView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  PanResponder,
   Platform,
+  SafeAreaView,
   StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
   type KeyboardEvent,
 } from 'react-native';
-import Container from '../Ui/Container';
-import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
 import { getTestID } from '../helpers/getTestID';
+import Icon from '../Icon';
+import Container from '../Ui/Container';
 import type { BottomSheetHeighProps, BottomSheetProops } from './type';
 
 const statusBarHeight =
@@ -180,7 +180,7 @@ export default function BottomSheet({
                 onPress={handleRequestClose}
                 style={styles.closeButton}
               >
-                <Typography>x</Typography>
+                <Icon name="times-new" color={Color.gray[900]} size={20} />
               </TouchableOpacity>
             )}
             {closable && (
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     paddingVertical: 10,
-    paddingHorizontal: 14,
+    paddingHorizontal: 10,
     borderRadius: 50,
     top: -50,
     right: 24,
