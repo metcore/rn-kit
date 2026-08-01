@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react-native';
+import { fireEvent, render, within } from '@testing-library/react-native';
 import InputDate from '../Input/InputDate';
 
 describe('InputDate testID', () => {
@@ -141,5 +141,51 @@ describe('InputDate label passthrough', () => {
 
     expect(getByText('Apply')).toBeTruthy();
     expect(queryByText('From nested props')).toBeNull();
+  });
+});
+
+describe('InputDate display formatting', () => {
+  // Both triggers read from their own branch of `dateValue`, so the end one
+  // needs a range pick to be reached at all — single mode never renders it.
+  it('applies language to both ends of a picked range', () => {
+    const tree = render(
+      <InputDate
+        testID="d"
+        mode="range"
+        label="P"
+        placeholder="Mulai"
+        placeholderDateEnd="Selesai"
+        language="id"
+        datePickerProps={{ initialDate: new Date(2024, 0, 15) }}
+      />
+    );
+
+    fireEvent.press(tree.getByTestId('d-trigger'));
+    fireEvent.press(tree.getByText('10'));
+    fireEvent.press(tree.getByText('20'));
+    fireEvent.press(tree.getByTestId('d-confirm'));
+
+    expect(
+      within(tree.getByTestId('d-trigger')).getByText('10 Januari 2024')
+    ).toBeTruthy();
+    expect(
+      within(tree.getByTestId('d-trigger-end')).getByText('20 Januari 2024')
+    ).toBeTruthy();
+  });
+
+  // A controlled value is the caller's own string and is shown verbatim;
+  // `language` only ever shapes what the picker hands back.
+  it('leaves a controlled value alone', () => {
+    const { getByText } = render(
+      <InputDate
+        testID="d"
+        label="P"
+        placeholder="Mulai"
+        language="id"
+        value="2024-01-10"
+      />
+    );
+
+    expect(getByText('2024-01-10')).toBeTruthy();
   });
 });
