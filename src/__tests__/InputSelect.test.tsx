@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import { act, fireEvent, render } from '@testing-library/react-native';
 import InputSelect from '../Input/InputSelect';
 import { ToastProvider } from '../Toast/ToastContext';
 
@@ -118,5 +118,45 @@ describe('InputSelect behaviour', () => {
     );
 
     expect(getByTestId('favorite-clear')).toBeTruthy();
+  });
+});
+
+describe('InputSelect multiple submit', () => {
+  const data = [
+    { label: 'A', value: 'a' },
+    { label: 'B', value: 'b' },
+  ];
+
+  it('closes the sheet after submitting a multiple selection', () => {
+    const onSelectClose = jest.fn();
+    const { getByTestId, queryByTestId } = render(
+      <ToastProvider>
+        <InputSelect
+          testID="favorite"
+          label="Favorite"
+          options={data}
+          selectProps={{ multiple: true }}
+          onSelectClose={onSelectClose}
+        />
+      </ToastProvider>
+    );
+
+    fireEvent.press(getByTestId('favorite-trigger'));
+    expect(getByTestId('favorite-sheet')).toBeTruthy();
+
+    fireEvent.press(getByTestId('favorite-option-a'));
+    fireEvent.press(getByTestId('favorite-submit'));
+
+    // The symptom was here: the selection was reported but close was never
+    // asked for, so the sheet stayed up.
+    expect(onSelectClose).toHaveBeenCalledTimes(1);
+
+    // BottomSheet only unmounts from its hide-animation callback, so the
+    // element lingers until the clock moves.
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    expect(queryByTestId('favorite-sheet')).toBeNull();
   });
 });

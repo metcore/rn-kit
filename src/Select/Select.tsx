@@ -51,13 +51,17 @@ export default function Select({
     [onClose]
   );
 
-  const handleOnPresSubmitSelect = (): boolean => {
+  const handleOnPresSubmitSelect = () => {
     if (required && (!selected || selected.length === 0)) {
       show('Please fill a item');
-      return false;
+      return;
     }
+
     onSubmit?.(selected ? selected : []);
-    return true;
+
+    // The single-select path closes itself right after onSubmit; this one used
+    // to just return a boolean that nothing read, so the sheet stayed open.
+    handleOnCloseBottom(false);
   };
 
   const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
