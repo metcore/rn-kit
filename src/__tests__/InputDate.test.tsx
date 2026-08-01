@@ -96,3 +96,50 @@ describe('InputDate behaviour', () => {
     expect(queryByText('Pilih')).toBeNull();
   });
 });
+
+describe('InputDate label passthrough', () => {
+  it('restates the picker buttons from its own props', () => {
+    const { getByTestId, getByText } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        confirmLabel="Apply"
+        cancelLabel="Cancel"
+      />
+    );
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByText('Apply')).toBeTruthy();
+    expect(getByText('Cancel')).toBeTruthy();
+  });
+
+  it('keeps the picker defaults when nothing is passed', () => {
+    const { getByTestId, getByText } = render(
+      <InputDate testID="birthday" label="Birthday" placeholder="Pilih" />
+    );
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByText('Terapkan')).toBeTruthy();
+    expect(getByText('Batalkan')).toBeTruthy();
+  });
+
+  it('lets the explicit prop win over datePickerProps', () => {
+    const { getByTestId, getByText, queryByText } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        confirmLabel="Apply"
+        datePickerProps={{ confirmLabel: 'From nested props' }}
+      />
+    );
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByText('Apply')).toBeTruthy();
+    expect(queryByText('From nested props')).toBeNull();
+  });
+});

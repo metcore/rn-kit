@@ -265,3 +265,20 @@ Ini memastikan `placeholderDateEnd` hanya required ketika `mode="range"`.
 ## License
 
 MIT
+
+## Teks statis pada picker
+
+`confirmLabel` dan `cancelLabel` mengganti teks tombol di sheet, tanpa perlu
+menyusurinya lewat `datePickerProps`:
+
+```jsx
+<InputDate
+  label="Date"
+  placeholder="Pick a date"
+  confirmLabel="Apply"
+  cancelLabel="Cancel"
+/>
+```
+
+Default-nya `'Terapkan'` dan `'Batalkan'`. Kalau kunci yang sama juga diisi di
+`datePickerProps`, prop eksplisit di atas yang menang.

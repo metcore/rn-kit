@@ -32,6 +32,8 @@ interface BaseProps {
   mode?: CalendarModeType;
   language?: 'en' | 'id';
   hasClear?: boolean;
+  confirmLabel?: string;
+  cancelLabel?: string;
   testID?: string;
 }
 
@@ -60,6 +62,8 @@ export default function InputDate({
   mode = 'single',
   language,
   hasClear,
+  confirmLabel,
+  cancelLabel,
   testID,
   ...props
 }: Props) {
@@ -194,11 +198,7 @@ export default function InputDate({
             {hasClear && (value || dateValue) && (
               <TouchableOpacity
                 testID={getTestID(testID, 'clear')}
-                style={{
-                  backgroundColor: Color.gray[600],
-                  borderRadius: 999,
-                  padding: 3,
-                }}
+                style={styles.clearBtn}
                 onPress={() => {
                   onDateChange?.({
                     date: null,
@@ -250,6 +250,8 @@ export default function InputDate({
         onChange={(val: DateRangeProps) => {
           handleDateChange(val);
         }}
+        {...(confirmLabel ? { confirmLabel } : {})}
+        {...(cancelLabel ? { cancelLabel } : {})}
       />
     </View>
   );
@@ -277,5 +279,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     alignItems: 'center',
+  },
+  clearBtn: {
+    backgroundColor: Color.gray[600],
+    borderRadius: 999,
+    padding: 3,
   },
 });

@@ -98,6 +98,41 @@ export default function InputDateScreen() {
           placeholder="Select date"
           language="en"
         />
+        <InputDate
+          label="Periode kustom"
+          mode="range"
+          placeholder="Tanggal mulai"
+          placeholderDateEnd="Tanggal selesai"
+          value={dateFormatter({
+            date: customRange.startDate,
+            options: { format: 'localized', language: 'id' },
+          })}
+          valueDateEnd={dateFormatter({
+            date: customRange.endDate,
+            options: { format: 'localized', language: 'id' },
+          })}
+          datePickerProps={{
+            value: {
+              startDate: customRange.startDate,
+              endDate: customRange.endDate,
+            },
+          }}
+          onDateChange={setCustomRange}
+        />
+      </DemoSection>
+
+      <DemoSection
+        title="Teks statis picker"
+        note="confirmLabel dan cancelLabel mengganti teks tombol di sheet, tanpa perlu menyusurinya lewat datePickerProps. language mengatur format tanggal, bukan tombolnya — keduanya terpisah."
+      >
+        <DemoLabel text='confirmLabel="Apply" cancelLabel="Cancel"' />
+        <InputDate
+          label="Date"
+          placeholder="Pick a date"
+          language="en"
+          confirmLabel="Apply"
+          cancelLabel="Cancel"
+        />
       </DemoSection>
     </DemoScreen>
   );
