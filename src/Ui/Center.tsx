@@ -4,10 +4,15 @@ interface CenterProps {
   children: React.ReactNode;
   size?: number;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
-const Center = ({ children, style }: CenterProps) => {
-  return <View style={[styles.center, style]}>{children}</View>;
+const Center = ({ children, style, testID }: CenterProps) => {
+  return (
+    <View testID={testID} style={[styles.center, style]}>
+      {children}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

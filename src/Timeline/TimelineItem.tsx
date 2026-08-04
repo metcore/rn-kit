@@ -19,12 +19,14 @@ interface TimelineItemProps {
   children: React.ReactNode;
   color?: ColorKey;
   isLast?: boolean;
+  testID?: string;
 }
 
 export default function TimelineItem({
   children,
   color = 'primary',
   isLast = false,
+  testID,
 }: TimelineItemProps) {
   const [contentHeight, setContentHeight] = useState(0);
   const renderDashes = (count: number) => {
@@ -34,7 +36,7 @@ export default function TimelineItem({
   };
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <View style={styles.contentLeft}>
         <Icon name="RadioButton" color={COLOR_MAP[color]} />
         <View>

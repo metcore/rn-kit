@@ -62,6 +62,11 @@ export interface CalendarTypes {
   selectedTextColor?: string;
   disabledBackgroundColor?: string;
   disabledTextColor?: string;
+  /**
+   * Colour of today's number. Applies only when today is not selected,
+   * disabled or marked -- those outrank it.
+   */
+  todayTextColor?: string;
   disabledDays?: {
     [day in WeekDay]?: boolean | DisabledDayStyle;
   };
@@ -72,4 +77,5 @@ export interface CalendarTypes {
   dateEnd?: string | null;
   onMonthChange?: (month: number) => void;
   onYearChange?: (year: number) => void;
+  testID?: string;
 }

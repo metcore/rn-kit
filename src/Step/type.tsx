@@ -10,9 +10,11 @@ export interface StepItemProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
   title?: string;
+  testID?: string;
 }
 export interface StepProps {
   children: ReactElement<StepItemProps> | ReactElement<StepItemProps>[];
   current: number;
   onChangeStep: (e: any) => void;
+  testID?: string;
 }

@@ -38,6 +38,7 @@ export default function SettingMenu() {
 | ---------- | ----------- | ----- | ------- | ------------------------------ |
 | `children` | `ReactNode` | ✅     | —       | Satu atau beberapa `ListItem`. |
 | `style`    | `ViewStyle` | ❌     | —       | Gaya tambahan untuk container. |
+| `testID`   | `string`    | ❌     | —       | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ### ListItem
 | Prop       | Type                   | Wajib | Default | Deskripsi                                                                 |
@@ -47,3 +48,4 @@ export default function SettingMenu() {
 | `style`    | `StyleProp<ViewStyle>` | ❌     | —       | Gaya tambahan untuk baris.                                                |
 | `isLast`   | `boolean`              | 🚫    | —       | Diisi otomatis oleh `List` untuk menghapus border bawah pada baris akhir. |
 | `index`    | `number`               | 🚫    | —       | Tidak digunakan—disediakan untuk extensibility.                           |
+| `testID`   | `string`               | ❌    | —       | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |

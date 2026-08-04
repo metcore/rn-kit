@@ -24,3 +24,4 @@ export default function HomeScreen() {
 | ---------- | ---------------------- | ----- | ------- | ------------------------------------------------------------ |
 | `children` | `ReactNode`            | ✅     | -       | Komponen atau tampilan yang dibungkus di dalam container.    |
 | `style`    | `StyleProp<ViewStyle>` | ❌     | -       | Tambahan gaya jika ingin menimpa atau menambah gaya default. |
+| `testID` | `string` | ❌ | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |

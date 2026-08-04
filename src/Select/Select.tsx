@@ -14,6 +14,7 @@ import Loading from '../Loading/Loading';
 import { useToast } from '../Toast/ToastContext';
 import { type SelectProps } from './type';
 import { useRef } from 'react';
+import { getTestID } from '../helpers/getTestID';
 export default function Select({
   isOpen,
   data,
@@ -35,6 +36,7 @@ export default function Select({
   searchValue,
   value,
   onSelectedChange,
+  testID,
 }: SelectProps) {
   const [selected, setSelected] = useState<ChipSelectedProps>();
   const [searchQuery, setSearchQuery] = useState<string>(searchValue || '');
@@ -49,13 +51,17 @@ export default function Select({
     [onClose]
   );
 
-  const handleOnPresSubmitSelect = (): boolean => {
+  const handleOnPresSubmitSelect = () => {
     if (required && (!selected || selected.length === 0)) {
       show('Please fill a item');
-      return false;
+      return;
     }
+
     onSubmit?.(selected ? selected : []);
-    return true;
+
+    // The single-select path closes itself right after onSubmit; this one used
+    // to just return a boolean that nothing read, so the sheet stayed open.
+    handleOnCloseBottom(false);
   };
 
   const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -94,12 +100,14 @@ export default function Select({
   }, [searchValue]);
   return (
     <BottomSheet
+      testID={getTestID(testID, 'sheet')}
       onClose={(val: boolean) => handleOnCloseBottom(val)}
       isOpen={isOpen}
       height={height}
       footer={
         multiple ? (
           <Button
+            testID={getTestID(testID, 'submit')}
             title={submitBtnLabel ?? 'Lanjutkan'}
             color="primary"
             disabled={(!selected || selected.length === 0) && required}
@@ -115,6 +123,7 @@ export default function Select({
             accessible={false}
           >
             <Input
+              testID={getTestID(testID, 'search')}
               submitBehavior="submit"
               icon="Search"
               placeholder="Search"
@@ -128,6 +137,7 @@ export default function Select({
         ) : (
           <View style={styles.containerChip}>
             <Chip
+              testID={testID}
               options={data}
               direction="vertical"
               scrollable={true}

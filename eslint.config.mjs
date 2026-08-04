@@ -33,6 +33,17 @@ export default defineConfig([
     },
   },
   {
+    // Sits outside __tests__/, so the shared config's jest env doesn't reach it.
+    files: ['jest.setup.js'],
+    languageOptions: {
+      globals: {
+        jest: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+      },
+    },
+  },
+  {
     ignores: [
       'node_modules/',
       'lib/'

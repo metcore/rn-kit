@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import LabelForm from '../LabelForm/LabelForm';
 import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
+import { getTestID } from '../helpers/getTestID';
 
 interface SwitchProps {
   label?: string;
@@ -12,6 +13,7 @@ interface SwitchProps {
   hint?: string;
   hasError?: true;
   disabled?: boolean;
+  testID?: string;
 }
 export default function Switch({
   label,
@@ -21,6 +23,7 @@ export default function Switch({
   hint,
   hasError,
   disabled = false,
+  testID,
 }: SwitchProps) {
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState<boolean>(false);
@@ -62,8 +65,11 @@ export default function Switch({
 
   return (
     <View style={{ gap: 4, opacity: disabled ? 0.5 : 1 }}>
-      {label ? <LabelForm title={label} /> : null}
+      {label ? (
+        <LabelForm title={label} testID={getTestID(testID, 'label')} />
+      ) : null}
       <Pressable
+        testID={testID}
         style={styles.touchArea}
         onPress={handlePress}
         disabled={disabled}

@@ -66,6 +66,7 @@ function MyForm() {
 | `mode`              | `'single' \| 'range'`             | `'single'`         | Mode pemilihan tanggal                             |
 | `language`          | `'en' \| 'id'`                    | `undefined`        | Bahasa untuk format tanggal                        |
 | `hasClear`          | `boolean`                         | `false`            | Nilai boolean untuk menampilkan opsi hapus tanggal |
+| `testID`            | `string`                          | `undefined`        | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-trigger`, `-trigger-end` (mode range), `-label`, `-clear`. `testID` mentah diteruskan ke `DatePicker`, yang menurunkan suffix-nya sendiri: `-sheet`, `-cancel`, `-confirm`, `-error`. |
 
 ### Single Mode Specific Props
 
@@ -264,3 +265,20 @@ Ini memastikan `placeholderDateEnd` hanya required ketika `mode="range"`.
 ## License
 
 MIT
+
+## Teks statis pada picker
+
+`confirmLabel` dan `cancelLabel` mengganti teks tombol di sheet, tanpa perlu
+menyusurinya lewat `datePickerProps`:
+
+```jsx
+<InputDate
+  label="Date"
+  placeholder="Pick a date"
+  confirmLabel="Apply"
+  cancelLabel="Cancel"
+/>
+```
+
+Default-nya `'Terapkan'` dan `'Batalkan'`. Kalau kunci yang sama juga diisi di
+`datePickerProps`, prop eksplisit di atas yang menang.

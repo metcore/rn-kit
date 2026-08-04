@@ -41,6 +41,7 @@ export default function OrderHistory() {
 | Prop       | Type        | Wajib | Default | Deskripsi                          |
 | ---------- | ----------- | ----- | ------- | ---------------------------------- |
 | `children` | `ReactNode` | ✅    | —       | Satu atau beberapa `TimelineItem`. |
+| `testID`   | `string`    | ❌    | —       | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ### TimelineItem
 
@@ -49,6 +50,7 @@ export default function OrderHistory() {
 | `children` | `ReactNode`                                                                       | ✅    | —           | Konten untuk node timeline: teks, ikon tambahan, dsb.            |
 | `color`    | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'purple'\| 'info'\| 'orange'` | ❌    | `'primary'` | Skema warna titik (`RadioButton`) dan garis vertikal.            |
 | `isLast`   | `boolean`                                                                         | ❌    | `false`     | Menentukan apakah garis garis di kiri itu dimunculkan atau tidak |
+| `testID`   | `string`                                                                          | ❌    | —           | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## ⚙️ Cara Kerja
 

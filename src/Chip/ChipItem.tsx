@@ -13,6 +13,7 @@ export default function ChipItem({
   isHorizontal,
   onPress,
   onLayout,
+  itemTestID,
 }: ChipItem) {
   const validColors: ColorVariantType[] = [
     'default',
@@ -67,6 +68,7 @@ export default function ChipItem({
   return (
     <Pressable
       key={item.value}
+      testID={itemTestID}
       style={[
         styles.chip,
         getSizeStyle(),

@@ -1,17 +1,18 @@
-import {
-  Color,
-  DatePicker,
-  Icon,
-  Typography,
-  type CalendarModeType,
-  type DateRangeProps,
-} from '@herca/rn-kit';
+import Color from '../Color/Color';
+import DatePicker from '../DatePicker/DatePicker';
+import Icon from '../Icon/Icon';
+import Typography from '../Typography/Typography';
+import type {
+  CalendarModeType,
+  DateRangeProps,
+} from '../Calendar/CalendarPropsType';
 import { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import type { FormattedDateRangeProps } from '../Calendar/CalendarPropsType';
 import { dateFormatter } from '../function/dateFormatter';
 import { layouting } from '../styles/layouting';
 import { spacing } from '../styles/spacing';
+import { getTestID } from '../helpers/getTestID';
 
 type DatePickerProps = React.ComponentProps<typeof DatePicker>;
 type DatePickerPropsWithoutOnChange = Omit<
@@ -31,6 +32,9 @@ interface BaseProps {
   mode?: CalendarModeType;
   language?: 'en' | 'id';
   hasClear?: boolean;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  testID?: string;
 }
 
 type SingleModeProps = BaseProps & {
@@ -58,6 +62,9 @@ export default function InputDate({
   mode = 'single',
   language,
   hasClear,
+  confirmLabel,
+  cancelLabel,
+  testID,
   ...props
 }: Props) {
   const [isDatePickerOpen, setSelectOpen] = useState<boolean>(false);
@@ -156,15 +163,27 @@ export default function InputDate({
     }
   }, [value, valueDateEnd]);
 
+  // Strip any caller-provided testID out of datePickerProps before spreading
+  // it onto <DatePicker>, so it can never clobber the derived `-sheet` id
+  // below (mirrors the selectProps fix in InputSelect.tsx).
+  const datePickerPropsWithoutTestID = { ...datePickerProps };
+  delete (datePickerPropsWithoutTestID as { testID?: string }).testID;
+
   return (
     <View style={styles.gap4}>
-      <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
+      <Typography
+        testID={getTestID(testID, 'label')}
+        variant="t2"
+        weight="semibold"
+        color={Color.gray[900]}
+      >
         {label}
       </Typography>
 
       <View style={styles.wrapper}>
         {/* sart date */}
         <Pressable
+          testID={getTestID(testID, 'trigger')}
           style={[
             styles.pickerTrigger,
             (value || dateValue) && styles.hasValue,
@@ -178,11 +197,8 @@ export default function InputDate({
           <View style={[layouting.flex.rowCenter, spacing.gap[8]]}>
             {hasClear && (value || dateValue) && (
               <TouchableOpacity
-                style={{
-                  backgroundColor: Color.gray[600],
-                  borderRadius: 999,
-                  padding: 3,
-                }}
+                testID={getTestID(testID, 'clear')}
+                style={styles.clearBtn}
                 onPress={() => {
                   onDateChange?.({
                     date: null,
@@ -207,6 +223,7 @@ export default function InputDate({
         {/* end date */}
         {mode === 'range' && (
           <Pressable
+            testID={getTestID(testID, 'trigger-end')}
             style={[
               styles.pickerTrigger,
               (value || dateValue) && styles.hasValue,
@@ -223,7 +240,8 @@ export default function InputDate({
       </View>
 
       <DatePicker
-        {...datePickerProps}
+        testID={testID}
+        {...datePickerPropsWithoutTestID}
         mode={mode}
         isOpen={isDatePickerOpen}
         onClose={handleCloseDatePicker}
@@ -232,6 +250,8 @@ export default function InputDate({
         onChange={(val: DateRangeProps) => {
           handleDateChange(val);
         }}
+        {...(confirmLabel ? { confirmLabel } : {})}
+        {...(cancelLabel ? { cancelLabel } : {})}
       />
     </View>
   );
@@ -259,5 +279,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     alignItems: 'center',
+  },
+  clearBtn: {
+    backgroundColor: Color.gray[600],
+    borderRadius: 999,
+    padding: 3,
   },
 });

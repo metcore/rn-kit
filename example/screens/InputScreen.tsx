@@ -1,115 +1,126 @@
-import { Color, Container, Input, Typography } from '@herca/rn-kit';
-import { useEffect, useRef } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Color, Input, Typography } from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
 export default function InputScreen() {
-  const inputRef = useRef<TextInput>(null);
+  const [name, setName] = useState('');
+  const [lastPressedIcon, setLastPressedIcon] = useState('-');
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <DemoScreen
+      title="Input"
+      description="Input teks dasar dengan label, ikon, tombol clear, prefix, dan status error yang bisa dikombinasikan."
     >
-      <ScrollView>
-        <Container style={styles.container}>
-          <Input
-            label="Basic"
-            placeholder="Type here ..."
-            required
-            ref={inputRef}
-          />
-          <Input
-            icon="User"
-            label="With Left Icon"
-            placeholder="Type here ..."
-          />
-          <Input
-            icon="User"
-            iconRight="Eye"
-            label="With Right Icon"
-            placeholder="Type here ..."
-            clearButton={true}
-          />
+      <DemoSection
+        title="Dasar"
+        note="label menampilkan judul field; required menambah tanda bintang merah di label."
+      >
+        <DemoLabel text="label required" />
+        <Input label="Nama lengkap" placeholder="Tulis nama kamu" required />
+      </DemoSection>
 
-          <Input
-            label="On Click Icon"
-            icon="User"
-            iconRight="Search"
-            placeholder="Type Here ... "
-            clearButton
-            onPressIconLeft={() => console.log('Kiri')}
-            onPressIconRight={() => console.log('Kanan')}
-          />
-          <Input
-            icon="User"
-            label="With Clear Button"
-            placeholder="Type here ..."
-            clearButton={true}
-          />
-          <Input
-            icon="User"
-            label="With Hint"
-            placeholder="Type here ..."
-            clearButton={true}
-            hint="Masukan angka 50 karakter"
-          />
-          <Input
-            icon="User"
-            label="Has Error"
-            placeholder="Type here ..."
-            clearButton={true}
-            hasError={true}
-            hint="Masukan angka 50 karakter"
-          />
+      <DemoSection
+        title="Ikon"
+        note="icon menampilkan ikon di kiri, iconRight di kanan; onPressIconLeft/onPressIconRight menangani tekanannya."
+      >
+        <DemoLabel text='icon="User"' />
+        <Input icon="User" label="Username" placeholder="Tulis username" />
+        <DemoLabel text='iconRight="Search" onPressIconRight' />
+        <Input
+          icon="User"
+          iconRight="Search"
+          label="Cari pengguna"
+          placeholder="Ketik nama pengguna"
+          onPressIconLeft={() => setLastPressedIcon('ikon kiri')}
+          onPressIconRight={() => setLastPressedIcon('ikon kanan')}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terakhir ditekan: ${lastPressedIcon}`}
+        </Typography>
+      </DemoSection>
 
-          <Input
-            label="On Click Icon With Custom Icon Color"
-            icon="Search"
-            iconRight="Scanner"
-            placeholder="Type Here ... "
-            clearButton
-            onPressIconLeft={() => console.log('Kiri')}
-            onPressIconRight={() => console.log('Kanan')}
-            iconRightColor={Color.primary[950]}
-          />
+      <DemoSection
+        title="Tombol hapus"
+        note="clearButton menampilkan tombol x untuk mengosongkan isi input saat ada teks."
+      >
+        <DemoLabel text="clearButton" />
+        <Input
+          icon="User"
+          label="Bisa dihapus"
+          placeholder="Tulis lalu hapus"
+          clearButton
+        />
+      </DemoSection>
 
-          <Input
-            label="Input With Prefix"
-            prefix={
-              <View style={styles.countryCode}>
-                <Typography variant="t2" weight="semibold">
-                  +62
-                </Typography>
-              </View>
-            }
-            placeholder="Type Here ... "
-            clearButton
-            onPressIconLeft={() => console.log('Kiri')}
-            onPressIconRight={() => console.log('Kanan')}
-          />
-        </Container>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <DemoSection
+        title="Prefix"
+        note="prefix menyisipkan react node bebas di depan field, misalnya kode negara."
+      >
+        <DemoLabel text="prefix" />
+        <Input
+          label="Nomor telepon"
+          placeholder="8123456789"
+          prefix={
+            <View style={styles.prefix}>
+              <Typography
+                variant="t2"
+                weight="semibold"
+                color={Color.gray[900]}
+              >
+                +62
+              </Typography>
+            </View>
+          }
+        />
+      </DemoSection>
+
+      <DemoSection
+        title="Error & hint"
+        note="hasError mengubah border jadi merah; hint menampilkan teks kecil di bawah field untuk pesan atau petunjuk."
+      >
+        <DemoLabel text="hasError hint" />
+        <Input
+          icon="User"
+          label="Email"
+          placeholder="Tulis email"
+          hasError
+          hint="Format email tidak valid"
+        />
+      </DemoSection>
+
+      <DemoSection
+        title="Keadaan nonaktif"
+        note="editable={false}, salah satu props bawaan TextInput, mengunci input agar tidak bisa diubah."
+      >
+        <DemoLabel text="editable={false}" />
+        <Input label="Terkunci" value="Tidak bisa diedit" editable={false} />
+      </DemoSection>
+
+      <DemoSection
+        title="Terkontrol"
+        note="value + onChangeText menjadikan Input terkontrol dari state; readout di bawah menampilkan nilainya."
+      >
+        <Input
+          icon="User"
+          label="Nama panggilan"
+          placeholder="Tulis nama panggilan"
+          clearButton
+          value={name}
+          onChangeText={setName}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Nilai: ${name || '-'}`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  countryCode: {
-    borderWidth: 1,
+  prefix: {
+    borderRightWidth: 1,
     borderColor: Color.gray[100],
-    borderRadius: 16,
-    paddingHorizontal: 8,
-  },
-  container: {
-    gap: 12,
+    paddingRight: 8,
   },
 });

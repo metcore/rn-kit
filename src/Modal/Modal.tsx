@@ -1,4 +1,3 @@
-import { Color, Icon } from '@herca/rn-kit';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
@@ -11,6 +10,9 @@ import {
   Platform,
   type ViewStyle,
 } from 'react-native';
+import Color from '../Color/Color';
+import Icon from '../Icon/Icon';
+import { getTestID } from '../helpers/getTestID';
 
 interface ModalPopUpProps {
   isOpen: boolean;
@@ -24,6 +26,7 @@ interface ModalPopUpProps {
   height?: DimensionValue;
   containerStyle?: ViewStyle;
   modalStyle?: ViewStyle;
+  testID?: string;
 }
 
 const ModalPopUp: React.FC<ModalPopUpProps> = ({
@@ -37,6 +40,7 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
   width = '90%',
   containerStyle,
   modalStyle,
+  testID,
 }) => {
   const [isVisible, setIsVisible] = useState(isOpen ?? false);
   const scaleAnim = useState(() => new Animated.Value(0))[0];
@@ -98,15 +102,23 @@ const ModalPopUp: React.FC<ModalPopUpProps> = ({
       <View style={[styles.modalContainer, containerStyle]}>
         {backdrop && (
           <TouchableOpacity
+            testID={getTestID(testID, 'backdrop')}
             style={[styles.backdrop, styles.backdropTouch]}
             activeOpacity={1}
             onPress={handleBackdropPress}
           />
         )}
-        <Animated.View style={[styles.modalContent, modalContentStyle]}>
+        <Animated.View
+          testID={testID}
+          style={[styles.modalContent, modalContentStyle]}
+        >
           {closable && (
             <View style={styles.closeButtonContainer}>
-              <TouchableOpacity onPress={userClose} style={styles.closeButton}>
+              <TouchableOpacity
+                testID={getTestID(testID, 'close')}
+                onPress={userClose}
+                style={styles.closeButton}
+              >
                 <View style={styles.iconButtonClose}>
                   <Icon name="Times" size={13} color={Color.gray[900]} />
                 </View>

@@ -1,22 +1,23 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  View,
-  StyleSheet,
-  PanResponder,
-  TouchableOpacity,
   Animated,
-  Modal,
-  KeyboardAvoidingView,
-  Keyboard,
   Dimensions,
-  SafeAreaView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  PanResponder,
   Platform,
+  SafeAreaView,
   StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
   type KeyboardEvent,
 } from 'react-native';
-import Container from '../Ui/Container';
-import Typography from '../Typography/Typography';
 import Color from '../Color/Color';
+import { getTestID } from '../helpers/getTestID';
+import Icon from '../Icon';
+import Container from '../Ui/Container';
 import type { BottomSheetHeighProps, BottomSheetProops } from './type';
 
 const statusBarHeight =
@@ -39,6 +40,7 @@ export default function BottomSheet({
   height,
   pullBar,
   footer,
+  testID,
 }: BottomSheetProops) {
   const [isVisible, setIsVisible] = useState(false);
   const [heightFooter, setHeightFooter] = useState(0);
@@ -149,6 +151,7 @@ export default function BottomSheet({
     >
       <View style={[styles.modalContainer, backdrop && styles.backdrop]}>
         <TouchableOpacity
+          testID={getTestID(testID, 'backdrop')}
           onPress={handleRequestClose}
           activeOpacity={1}
           style={styles.backdropTouchable}
@@ -160,6 +163,7 @@ export default function BottomSheet({
           style={styles.keyboardAvoiding}
         >
           <Animated.View
+            testID={testID}
             style={[
               styles.bottomSheet,
               {
@@ -172,15 +176,17 @@ export default function BottomSheet({
           >
             {buttonClose && (
               <TouchableOpacity
+                testID={getTestID(testID, 'close')}
                 onPress={handleRequestClose}
                 style={styles.closeButton}
               >
-                <Typography>x</Typography>
+                <Icon name="times-new" color={Color.gray[900]} size={20} />
               </TouchableOpacity>
             )}
             {closable && (
               <View
                 {...panResponder.panHandlers}
+                testID={getTestID(testID, 'pullbar')}
                 style={styles.dragIndicatorContainer}
               >
                 {pullBar ? pullBar : <View style={styles.dragIndicator} />}
@@ -196,6 +202,7 @@ export default function BottomSheet({
             </SafeAreaView>
             {footer && (
               <SafeAreaView
+                testID={getTestID(testID, 'footer')}
                 onLayout={(event) => {
                   const { height: layoutHeight } = event.nativeEvent.layout;
                   setHeightFooter(layoutHeight);
@@ -235,7 +242,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     paddingVertical: 10,
-    paddingHorizontal: 14,
+    paddingHorizontal: 10,
     borderRadius: 50,
     top: -50,
     right: 24,

@@ -40,6 +40,7 @@ export default function CheckoutWizard() {
 | `children`     | `ReactElement<StepItemProps>` \| array | ✅     | —       | Satu atau beberapa `StepItem`.                                              |
 | `current`      | `number`                               | ✅     | —       | Indeks langkah aktif (dimulai dari `0`).                                    |
 | `onChangeStep` | `(activeIndex: number) => void`        | ✅     | —       | Callback yang dipicu setiap kali nilai `current` berubah di dalam komponen. |
+| `testID`       | `string`                               | ❌     | —       | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 
 ### StepItem
@@ -55,6 +56,7 @@ Sebagai konten – ditampilkan bila index-nya sama dengan current.
 | `children` | `ReactNode`                                                   | ✅     | —           | Konten yang muncul ketika langkah ini aktif.                       |
 | `color`    | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'purple'` | ❌     | `'primary'` | Warna lingkaran & garis pada header.                               |
 | `title`    | `string`                                                      | ❌     | `''`        | (Opsional) Judul untuk ditampilkan di header (bisa dikustom lagi). |
+| `testID`   | `string`                                                      | ❌     | —           | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## ⚙️ Cara Kerja
 

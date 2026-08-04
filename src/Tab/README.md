@@ -95,6 +95,7 @@ Setiap tab dibungkus dalam `ScrollView` vertikal, sehingga bisa discroll ke bawa
 | `current?`     | `number`                  | Indeks tab aktif (default: 0)      |
 | `onChangeTab?` | `(index: number) => void` | Callback saat tab berpindah        |
 | `renderHeader` | `React.ReactElement`      | tambahan react element di atas tab |
+| `testID`       | `string`                  | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-item-{index}` untuk tiap tab header dan `-panel-{index}` untuk tiap konten tab. |
 
 ### `TabItemProps`
 

@@ -115,6 +115,7 @@ const Button: React.FC<ButtonProps> = ({
   width,
   block = false,
   loading = false,
+  testID,
 }) => {
   const sizeStyles = sizeStyleMap[size];
   const fontVariant = fontVariantMap[size];
@@ -131,6 +132,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
+      testID={testID}
       onPress={onPress}
       disabled={disabled}
       style={({ pressed }) => {

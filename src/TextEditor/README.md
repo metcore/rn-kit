@@ -5,13 +5,14 @@ Rich text editor component untuk React Native dengan toolbar formatting yang len
 ## Features
 
 - ✅ Rich text formatting (Bold, Italic, Underline, Strikethrough)
+- ✅ Heading H1–H3, clear formatting, undo/redo
 - ✅ Insert dan edit hyperlinks
 - ✅ Bullet dan numbered lists
 - ✅ Text alignment (Left, Center, Right)
 - ✅ Character counter dengan max length validation
 - ✅ Custom placeholder
 - ✅ WebView-based editor dengan contenteditable
-- ✅ Toolbar otomatis muncul saat keyboard aktif
+- ✅ Toolbar otomatis muncul saat editor dipakai dan keyboard aktif
 - ✅ Support iOS dan Android
 - ✅ Imperative methods (getContent, setContent, clearContent)
 
@@ -61,12 +62,43 @@ export default function MyScreen() {
 | `onChange`                | `(html: string) => void` | -                            | Callback saat konten berubah                 |
 | `onFocus`                 | `() => void`             | -                            | Callback saat editor focus                   |
 | `onBlur`                  | `() => void`             | -                            | Callback saat editor blur                    |
+| `showToolbar`             | `boolean`                | `true`                       | Gerbang toolbar mengambang. `true`: muncul selama editor ini memegang kursor dan keyboard terbuka. `false`: tidak muncul sama sekali. Tidak memaksa toolbar muncul sendiri. |
 | `inputLabelLinkText`      | `string`                 | `'Teks Link'`                | Label untuk input teks link                  |
 | `inputLabelLinkUrl`       | `string`                 | `'Link URL'`                 | Label untuk input URL link                   |
 | `inputLinkTextPlacholder` | `string`                 | `'Link URL'`                 | Placeholder untuk input teks link            |
 | `inputLinkUrlPlacholder`  | `string`                 | `'https://www.example.com'`  | Placeholder untuk input URL                  |
 | `saveLinkButtonText`      | `string`                 | `'Simpan'`                   | Text tombol simpan link                      |
 | `cancelLinkButtonText`    | `string`                 | `'Batal'`                    | Text tombol batal link                       |
+| `testID`                  | `string`                 | -                            | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan ke elemen akar, dan menurunkan satu id per tombol toolbar (`-bold`, `-italic`, `-underline`, `-strikeThrough`, `-link`, `-insertUnorderedList`, `-insertOrderedList`, `-justifyLeft`, `-justifyCenter`, `-justifyRight`, `-h1`, `-h2`, `-h3`, `-removeFormat`, `-undo`, `-redo`). |
+
+
+## Toolbar
+
+| Tombol | Perintah | Status aktif |
+| ------ | -------- | ------------ |
+| Bold, Italic, Underline, Strike | `execCommand` | `queryCommandState` |
+| Bullet, Number, Left/Center/Right | `execCommand` | `queryCommandState` |
+| H1, H2, H3 | `formatBlock` | `queryCommandValue('formatBlock')` |
+| Clear format | `removeFormat`, lalu `formatBlock <p>` bila blok saat ini heading | tidak pernah menyala — ini aksi |
+| Undo, Redo | `execCommand` | tidak pernah menyala — ini aksi |
+| Link | membuka sheet | — |
+
+H1/H2/H3 memakai label teks, bukan ikon, karena tidak ada ikon heading di
+`Icon` — dan label teks memang lazim untuk heading di toolbar editor.
+
+**Toolbar mengikuti kursor, bukan keyboard.** Toolbar dirender ke satu slot
+`Footer` yang dipakai bersama seluruh layar, dan keyboard itu global. Kalau
+gerbangnya hanya keyboard, setiap editor yang sedang ter-mount akan melukis
+toolbar begitu field mana pun membuka keyboard — termasuk menimpa editor lain
+yang justru meminta `showToolbar={false}`. Karena itu toolbar hanya muncul untuk
+editor yang sedang memegang kursor: satu layar boleh berisi banyak editor, dan
+hanya satu toolbar yang tampil.
+
+**Catatan underline di dalam link.** Stylesheet editor menggarisbawahi setiap
+`<a>`, dan `queryCommandState('underline')` tidak bisa membedakannya dari `<u>`
+sungguhan. Karena itu saat kursor berada di dalam link, status underline
+ditentukan dari ada-tidaknya leluhur `<u>` di DOM. Tanpa ini tombolnya menyala
+begitu link disisipkan dan tidak pernah bisa dimatikan.
 
 ## Advanced Usage
 
@@ -158,6 +190,10 @@ Editor menyediakan toolbar dengan commands berikut:
 - **Align Left** - Align teks ke kiri
 - **Align Center** - Align teks ke tengah
 - **Align Right** - Align teks ke kanan
+- **H1 / H2 / H3** - Mengubah baris jadi heading (label teks, bukan ikon)
+- **Clear format** - Membersihkan format inline, sekaligus mengembalikan
+  heading ke paragraf biasa
+- **Undo / Redo** - Membatalkan atau mengulang perubahan terakhir
 
 ## Ref Methods
 
@@ -248,7 +284,9 @@ Component menggunakan styling internal yang sudah optimal. Jika perlu custom sty
 
 **Problem:** Toolbar tidak tampil saat keyboard aktif
 
-**Solution:** Pastikan component tidak di-wrap dengan View yang membatasi positioning absolute.
+**Solution:** Toolbar hanya muncul untuk editor yang sedang memegang kursor —
+keyboard yang terbuka karena field lain tidak memunculkannya. Pastikan juga
+component tidak di-wrap dengan View yang membatasi positioning absolute.
 
 ## Performance Tips
 
@@ -261,3 +299,15 @@ Component menggunakan styling internal yang sudah optimal. Jika perlu custom sty
 
 - `react-native-webview` - WebView component
 - Internal components: `BottomSheet`, `Button`, `Icon`, `Input`, `LabelForm`, `Typography`
+
+**Catatan clear format pada heading.** `removeFormat` menurut spesifikasi hanya
+membersihkan format *inline* — bold, italic, warna, font. Elemen blok seperti
+`<h1>` tidak tersentuh sama sekali. Karena itu tombol Clear format menjalankan
+`removeFormat` lalu, kalau blok saat ini heading, mengembalikannya ke `<p>`.
+Blok lain (mis. daftar) sengaja tidak diutak-atik.
+
+Eksekusi perintah tinggal di satu tempat (`rnkitRunCommand` di
+`formatState.ts`) dan dipanggil kedua platform — iOS lewat injeksi, Android
+lewat message handler. Sebelumnya keduanya ditulis terpisah, dan justru dari
+situ dua bug lahir: iOS tidak menyegarkan status setelah perintah, dan heading
+dipetakan di dua tempat berbeda.

@@ -1,83 +1,115 @@
-import { Button, Container, RadioButton, useToast } from '@herca/rn-kit';
 import { useState } from 'react';
-import type { ColorVariantType } from '../../src/Color/type';
-import { Alert } from 'react-native';
+import {
+  Button,
+  Color,
+  Typography,
+  useToast,
+  type ColorVariantType,
+} from '@herca/rn-kit';
+import {
+  DemoScreen,
+  DemoSection,
+  DemoRow,
+  DemoLabel,
+} from '../components/demo';
+
+const COLORS: ColorVariantType[] = [
+  'default',
+  'primary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'orange',
+  'purple',
+];
 
 export default function ToastScreen() {
-  const [selectedColor, setSelectedColor] = useState<
-    ColorVariantType | 'action-primary'
-  >('default');
   const toast = useToast();
+  const [lastTriggered, setLastTriggered] = useState('-');
 
-  const showToast = () => {
-    if (selectedColor !== 'action-primary') {
-      toast.show('Tes', {
-        color: selectedColor,
-      });
-    } else {
-      toast.show('Tes', {
-        color: 'primary',
-        children: (
-          <Button
-            title="Click Me"
-            onPress={() => Alert.alert('Wow! It Works!')}
-            variant="outline"
-            color="primary"
-            size="small"
-          />
-        ),
-      });
-    }
+  const trigger = (color: ColorVariantType, duration?: number) => {
+    toast.show(`Toast warna ${color}`, { color, duration });
+    setLastTriggered(
+      `color="${color}"${duration ? ` duration={${duration}}` : ''}`
+    );
   };
 
-  const handleChangeSelectColor = (val: string) => {
-    setSelectedColor(val as ColorVariantType);
-  };
   return (
-    <Container>
-      <RadioButton
-        items={[
-          {
-            label: 'default',
-            value: 'default',
-          },
-          {
-            label: 'primary',
-            value: 'primary',
-          },
-          {
-            label: 'info',
-            value: 'info',
-          },
-          {
-            label: 'warning',
-            value: 'warning',
-          },
-          {
-            label: 'orange',
-            value: 'orange',
-          },
-          {
-            label: 'danger',
-            value: 'danger',
-          },
-          {
-            label: 'success',
-            value: 'success',
-          },
-          {
-            label: 'purple',
-            value: 'purple',
-          },
-          {
-            label: 'action primary',
-            value: 'action-primary',
-          },
-        ]}
-        selectedValue={selectedColor}
-        onChange={handleChangeSelectColor}
-      />
-      <Button title="Tes" onPress={showToast} />
-    </Container>
+    <DemoScreen
+      title="Toast"
+      description="Notifikasi sekilas yang dipicu secara imperatif lewat hook useToast, tampil di bagian bawah layar lalu hilang otomatis."
+    >
+      <DemoSection
+        title="Varian warna"
+        note="Opsi color pada toast.show(message, options) memilih tema warna toast."
+      >
+        <DemoRow>
+          {COLORS.map((color) => (
+            <Button
+              key={color}
+              title={color}
+              size="small"
+              variant="outline"
+              color="primary"
+              onPress={() => trigger(color)}
+            />
+          ))}
+        </DemoRow>
+      </DemoSection>
+
+      <DemoSection
+        title="Durasi tampil"
+        note="Opsi duration (ms) mengatur berapa lama toast tampil sebelum hilang; default 3000ms."
+      >
+        <DemoLabel text="duration={1000}" />
+        <DemoLabel text="duration={6000}" />
+        <DemoRow>
+          <Button
+            title="Cepat"
+            size="small"
+            onPress={() => trigger('info', 1000)}
+          />
+          <Button
+            title="Lama"
+            size="small"
+            onPress={() => trigger('info', 6000)}
+          />
+        </DemoRow>
+      </DemoSection>
+
+      <DemoSection
+        title="Konten kustom"
+        note="Opsi children menyisipkan elemen tambahan, misal tombol aksi, di sisi kanan toast."
+      >
+        <DemoLabel text="children" />
+        <Button
+          title="Toast dengan tombol aksi"
+          onPress={() =>
+            toast.show('Berkas berhasil diunggah', {
+              color: 'success',
+              children: (
+                <Button
+                  title="Lihat"
+                  size="small"
+                  variant="outline"
+                  color="primary"
+                  onPress={() => setLastTriggered('tombol aksi "Lihat"')}
+                />
+              ),
+            })
+          }
+        />
+      </DemoSection>
+
+      <DemoSection
+        title="Status pemicu"
+        note="Readout ini menampilkan opsi toast terakhir yang dipicu dari tombol di atas."
+      >
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terakhir dipicu: ${lastTriggered}`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
 }

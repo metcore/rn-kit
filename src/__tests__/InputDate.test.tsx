@@ -1,0 +1,191 @@
+import { fireEvent, render, within } from '@testing-library/react-native';
+import InputDate from '../Input/InputDate';
+
+describe('InputDate testID', () => {
+  it('derives trigger, label and clear testIDs', () => {
+    const { getByTestId } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Select here"
+        value="2024-01-01"
+        hasClear
+      />
+    );
+
+    expect(getByTestId('birthday-trigger')).toBeTruthy();
+    expect(getByTestId('birthday-label')).toBeTruthy();
+    expect(getByTestId('birthday-clear')).toBeTruthy();
+  });
+
+  it('derives range end trigger testID in range mode', () => {
+    const { getByTestId } = render(
+      <InputDate
+        testID="stay"
+        label="Stay"
+        placeholder="Start"
+        placeholderDateEnd="End"
+        mode="range"
+      />
+    );
+
+    expect(getByTestId('stay-trigger')).toBeTruthy();
+    expect(getByTestId('stay-trigger-end')).toBeTruthy();
+  });
+
+  it('renders no testID when prop omitted', () => {
+    const { queryByTestId } = render(
+      <InputDate label="Birthday" placeholder="Select here" />
+    );
+
+    expect(queryByTestId('undefined-trigger')).toBeNull();
+  });
+});
+
+describe('InputDate behaviour', () => {
+  it('opens the date picker sheet when the trigger is pressed', () => {
+    const { getByTestId, queryByTestId } = render(
+      <InputDate testID="birthday" label="Birthday" placeholder="Pilih" />
+    );
+
+    expect(queryByTestId('birthday-sheet')).toBeNull();
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByTestId('birthday-sheet')).toBeTruthy();
+  });
+
+  it('reports a null range to onDateChange when cleared', () => {
+    const onDateChange = jest.fn();
+    const { getByTestId } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        value="2024-01-01"
+        hasClear
+        onDateChange={onDateChange}
+      />
+    );
+
+    fireEvent.press(getByTestId('birthday-clear'));
+
+    expect(onDateChange).toHaveBeenCalledWith({
+      date: null,
+      startDate: null,
+      endDate: null,
+    });
+  });
+
+  it('shows the placeholder until a value is given', () => {
+    const { getByText, queryByText, rerender } = render(
+      <InputDate testID="birthday" label="Birthday" placeholder="Pilih" />
+    );
+
+    expect(getByText('Pilih')).toBeTruthy();
+
+    rerender(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        value="2024-01-01"
+      />
+    );
+
+    expect(queryByText('Pilih')).toBeNull();
+  });
+});
+
+describe('InputDate label passthrough', () => {
+  it('restates the picker buttons from its own props', () => {
+    const { getByTestId, getByText } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        confirmLabel="Apply"
+        cancelLabel="Cancel"
+      />
+    );
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByText('Apply')).toBeTruthy();
+    expect(getByText('Cancel')).toBeTruthy();
+  });
+
+  it('keeps the picker defaults when nothing is passed', () => {
+    const { getByTestId, getByText } = render(
+      <InputDate testID="birthday" label="Birthday" placeholder="Pilih" />
+    );
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByText('Terapkan')).toBeTruthy();
+    expect(getByText('Batalkan')).toBeTruthy();
+  });
+
+  it('lets the explicit prop win over datePickerProps', () => {
+    const { getByTestId, getByText, queryByText } = render(
+      <InputDate
+        testID="birthday"
+        label="Birthday"
+        placeholder="Pilih"
+        confirmLabel="Apply"
+        datePickerProps={{ confirmLabel: 'From nested props' }}
+      />
+    );
+
+    fireEvent.press(getByTestId('birthday-trigger'));
+
+    expect(getByText('Apply')).toBeTruthy();
+    expect(queryByText('From nested props')).toBeNull();
+  });
+});
+
+describe('InputDate display formatting', () => {
+  // Both triggers read from their own branch of `dateValue`, so the end one
+  // needs a range pick to be reached at all — single mode never renders it.
+  it('applies language to both ends of a picked range', () => {
+    const tree = render(
+      <InputDate
+        testID="d"
+        mode="range"
+        label="P"
+        placeholder="Mulai"
+        placeholderDateEnd="Selesai"
+        language="id"
+        datePickerProps={{ initialDate: new Date(2024, 0, 15) }}
+      />
+    );
+
+    fireEvent.press(tree.getByTestId('d-trigger'));
+    fireEvent.press(tree.getByText('10'));
+    fireEvent.press(tree.getByText('20'));
+    fireEvent.press(tree.getByTestId('d-confirm'));
+
+    expect(
+      within(tree.getByTestId('d-trigger')).getByText('10 Januari 2024')
+    ).toBeTruthy();
+    expect(
+      within(tree.getByTestId('d-trigger-end')).getByText('20 Januari 2024')
+    ).toBeTruthy();
+  });
+
+  // A controlled value is the caller's own string and is shown verbatim;
+  // `language` only ever shapes what the picker hands back.
+  it('leaves a controlled value alone', () => {
+    const { getByText } = render(
+      <InputDate
+        testID="d"
+        label="P"
+        placeholder="Mulai"
+        language="id"
+        value="2024-01-10"
+      />
+    );
+
+    expect(getByText('2024-01-10')).toBeTruthy();
+  });
+});

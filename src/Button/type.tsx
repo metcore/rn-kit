@@ -15,6 +15,7 @@ export interface ButtonProps {
   width?: number | string;
   block?: boolean;
   loading?: boolean;
+  testID?: string;
 }
 
 export const COLOR_MAP: Record<

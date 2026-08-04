@@ -1,94 +1,142 @@
-import {
-  Button,
-  Color,
-  Container,
-  Icon,
-  Tab,
-  TabItem,
-  Typography,
-} from '@herca/rn-kit';
-import LeaveApproveScreen from './example/Leave/LeaveApproveScreen';
-import LeaveDetailScreen from './example/Leave/LeaveDetailScreen';
-import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Color, Tab, TabItem, Typography } from '@herca/rn-kit';
+import {
+  DemoScreen,
+  DemoSection,
+  DemoLabel,
+  DemoSurface,
+} from '../components/demo';
 
 export default function TabScreen() {
-  const [tabItemHeight, setTabItemHeight] = useState(0);
-  const [tabLeaveHeight, setTabLeaveHeight] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
+  const [stickyTab, setStickyTab] = useState(0);
+  const [panelHeight, setPanelHeight] = useState(0);
 
   return (
-    <Container style={styles.container}>
-      <Button title="tes" />
-      <Tab
-        onChangeTab={(number) => console.log('Change tab : ', number)}
-        renderHeader={<Header />}
+    <DemoScreen
+      title="Tab"
+      description="Tab menampilkan beberapa panel konten yang berpindah lewat tap atau swipe, dengan label dan header opsional yang bisa sticky saat discroll."
+      scrollable={false}
+    >
+      <DemoSection
+        title="Tab dasar & label kustom"
+        note="name memberi label teks bawaan; renderTabName mengganti label dengan tampilan sendiri, di sini berupa pill berwarna saat aktif."
       >
-        <TabItem name={'name1'} height={tabItemHeight}>
-          <View
-            onLayout={({ nativeEvent }) =>
-              setTabItemHeight(nativeEvent.layout.height)
+        <View style={styles.frame}>
+          <Tab onChangeTab={setActiveTab}>
+            <TabItem name="Ringkasan">
+              <View style={styles.panel}>
+                <Typography variant="t2" color={Color.gray[700]}>
+                  Konten ringkasan akun ditampilkan di sini.
+                </Typography>
+              </View>
+            </TabItem>
+            <TabItem name="Riwayat">
+              <View style={styles.panel}>
+                <Typography variant="t2" color={Color.gray[700]}>
+                  Daftar riwayat transaksi ditampilkan di sini.
+                </Typography>
+              </View>
+            </TabItem>
+            <TabItem
+              renderTabName={({ isActive }) => (
+                <View style={[styles.pill, isActive && styles.pillActive]}>
+                  <Typography
+                    variant="t2"
+                    weight="semibold"
+                    color={isActive ? Color.base.white100 : Color.gray[700]}
+                  >
+                    Bantuan
+                  </Typography>
+                </View>
+              )}
+            >
+              <View style={styles.panel}>
+                <Typography variant="t2" color={Color.gray[700]}>
+                  Label tab ini dirender lewat renderTabName, bukan name.
+                </Typography>
+              </View>
+            </TabItem>
+          </Tab>
+        </View>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Tab aktif: ${activeTab}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Header sticky"
+        note="renderHeader menambah konten tetap terlihat di atas tab bar; height pada TabItem membatasi tinggi panel agar pas dalam frame."
+      >
+        <DemoLabel text="renderHeader height" />
+        <View style={styles.stickyFrame}>
+          <Tab
+            onChangeTab={setStickyTab}
+            renderHeader={
+              <DemoSurface style={styles.stickyHeader}>
+                <Typography
+                  variant="t2"
+                  weight="semibold"
+                  color={Color.gray[900]}
+                >
+                  Ringkasan saldo
+                </Typography>
+              </DemoSurface>
             }
           >
-            <LeaveApproveScreen />
-            <LeaveApproveScreen />
-            <LeaveApproveScreen />
-            <LeaveApproveScreen />
-          </View>
-        </TabItem>
-        <TabItem name={'name1'} height={tabLeaveHeight}>
-          <View
-            onLayout={({ nativeEvent }) =>
-              setTabLeaveHeight(nativeEvent.layout.height)
-            }
-          >
-            <LeaveApproveScreen />
-          </View>
-        </TabItem>
-        <TabItem
-          renderTabName={({ isActive }) => (
-            <View style={[styles.tabButton, isActive && styles.tabActive]}>
-              <Icon
-                name="info-circle-outline"
-                size={19}
-                color={isActive ? Color.base.white100 : Color.gray[700]}
-              />
-              <Typography
-                center
-                variant="t2"
-                weight="semibold"
-                color={isActive ? Color.base.white100 : Color.gray[700]}
+            <TabItem name="Info" height={panelHeight}>
+              <View
+                onLayout={(e) => setPanelHeight(e.nativeEvent.layout.height)}
               >
-                {isActive ? 'Wow it works!' : 'Click Me!'}
-              </Typography>
-            </View>
-          )}
-        >
-          <LeaveDetailScreen />
-        </TabItem>
-      </Tab>
-    </Container>
+                <Typography variant="t2" color={Color.gray[700]}>
+                  Saldo aktif, mutasi, dan poin ditampilkan di panel ini.
+                </Typography>
+              </View>
+            </TabItem>
+            <TabItem name="Lainnya" height={panelHeight}>
+              <View>
+                <Typography variant="t2" color={Color.gray[700]}>
+                  Panel kedua tetap berbagi header sticky yang sama.
+                </Typography>
+              </View>
+            </TabItem>
+          </Tab>
+        </View>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Tab sticky aktif: ${stickyTab}`}
+        </Typography>
+      </DemoSection>
+    </DemoScreen>
   );
 }
 
-const Header = () => {
-  return <View style={styles.header} />;
-};
-
 const styles = StyleSheet.create({
-  header: { height: 200, backgroundColor: 'black' },
-  container: { flex: 1, gap: 5 },
-  tabButton: {
+  frame: {
+    height: 160,
+  },
+  panel: {
+    padding: 16,
+  },
+  pill: {
     borderRadius: 8,
     paddingVertical: 6,
     paddingHorizontal: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginRight: 8,
-    flexDirection: 'row',
-    gap: 4,
+    backgroundColor: Color.gray[100],
   },
-  tabActive: {
+  pillActive: {
     backgroundColor: Color.primary[1000],
-    borderRadius: 8,
+  },
+  stickyFrame: {
+    height: 150,
+    borderRadius: 16,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: Color.gray[300],
+  },
+  stickyHeader: {
+    borderRadius: 0,
+    marginBottom: 0,
   },
 });

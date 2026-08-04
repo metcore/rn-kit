@@ -56,3 +56,4 @@ export default function SignatureForm() {
 | Prop     | Tipe                                   | Default     | Deskripsi                                                                                                             |
 | -------- | -------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------- |
 | `onDraw` | `(value?: string \| undefined) ⇒ void` | `undefined` | Callback berisi tanda tangan **base64** saat pengguna menggambar (dipicu otomatis di `onDraw`). |
+| `testID` | `string` | `undefined` | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |

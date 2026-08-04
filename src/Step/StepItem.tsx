@@ -18,10 +18,11 @@ const StepItem = ({
   isHeader,
   children,
   style,
+  testID,
 }: StepItemProps) => {
   if (isHeader) {
     return (
-      <View style={[styles.headerItem, style]}>
+      <View testID={testID} style={[styles.headerItem, style]}>
         <View
           style={[
             styles.circle,
@@ -56,7 +57,11 @@ const StepItem = ({
     });
   }
 
-  return <View style={styles.content}>{children}</View>;
+  return (
+    <View testID={testID} style={styles.content}>
+      {children}
+    </View>
+  );
 };
 const styles = StyleSheet.create({
   headerItem: {

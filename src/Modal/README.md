@@ -37,3 +37,4 @@ export default function ExampleModal() {
 | `height`         | `DimensionValue`             | `undefined` | Tinggi modal (opsional, gunakan scroll jika tidak cukup).             |
 | `containerStyle` | `ViewStyle`                  | `undefined` | Gaya tambahan untuk wrapper container (pusat layar).                  |
 | `modalStyle`     | `ViewStyle`                  | `undefined` | Gaya tambahan untuk modal box.                                        |
+| `testID`         | `string`                     | `undefined` | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan pada elemen konten modal (tanpa suffix); menurunkan `-backdrop` dan `-close`. |

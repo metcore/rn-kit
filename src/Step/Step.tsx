@@ -5,7 +5,7 @@ import type { StepItemProps, StepProps } from './type';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const Step = ({ children, current = 0, onChangeStep }: StepProps) => {
+const Step = ({ children, current = 0, onChangeStep, testID }: StepProps) => {
   const childrenArray = React.Children.toArray(children).filter(
     React.isValidElement
   ) as React.ReactElement<StepItemProps>[];
@@ -25,7 +25,7 @@ const Step = ({ children, current = 0, onChangeStep }: StepProps) => {
   }, [current, onChangeStep]);
 
   return (
-    <View style={styles.container}>
+    <View testID={testID} style={styles.container}>
       <View style={[styles.headerContainer]}>
         <ScrollView
           ref={scrollRef}

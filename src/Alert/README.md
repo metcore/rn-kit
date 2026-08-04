@@ -22,6 +22,7 @@ Komponen `Alert` digunakan untuk menampilkan pesan notifikasi dengan ikon, judul
 | `style`        | `ViewStyle`                                                          | `undefined`         | Gaya tambahan untuk container                                             |
 | `titleStyle`   | `StyleProp<ViewStyle>`                                               | `undefined`         | Gaya tambahan untuk judul                                                 |
 | `messageStyle` | `StyleProp<ViewStyle>`                                               | `undefined`         | Gaya tambahan untuk pesan                                                 |
+| `testID` | `string` | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ## 🎨 Warna yang Didukung
 

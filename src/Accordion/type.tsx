@@ -13,8 +13,10 @@ export interface AccordionProps {
   isOpen?: boolean;
   onCollapse?: (isOpen: boolean) => void;
   variant?: 'default' | 'borderless';
+  testID?: string;
 }
 export interface AccordionItemProps {
   children: ReactNode;
   index?: number;
+  testID?: string;
 }

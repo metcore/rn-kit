@@ -13,6 +13,7 @@
 | `color`   | `Variant` \| `HexColor`              | `"default"` | Warna badge. Bisa berupa nama varian yang tersedia atau kode warna HEX.   |
 | `size`    | `"small"` \| `"medium"` \| `"large"` | `"medium"`  | Ukuran badge. Mengatur tinggi, lebar minimum, padding, dan radius border. |
 | `variant` | `Variant`                            | -           | Alias untuk varian warna (tidak digunakan langsung di komponen ini).      |
+| `testID`  | `string`                             | -           | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ---
 

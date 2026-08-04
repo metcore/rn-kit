@@ -4,6 +4,7 @@ import Color from '../Color/Color';
 import Icon from '../Icon';
 import type { CounterButtonType } from './type';
 import { fontSizeMap } from '../Typography/type';
+import { getTestID } from '../helpers/getTestID';
 
 export default function CounterButton({
   variant = 'default',
@@ -13,6 +14,7 @@ export default function CounterButton({
   max,
   disabledDecrease = false,
   disabledIncrease = false,
+  testID,
 }: CounterButtonType) {
   const [count, setCount] = useState<number>(value);
   const [inputValue, setInputValue] = useState<string>(String(value));
@@ -74,6 +76,7 @@ export default function CounterButton({
       ]}
     >
       <Pressable
+        testID={getTestID(testID, 'decrement')}
         style={[
           variant === 'default' ? styles.buttonDefault : styles.buttonColor,
           isDecreaseDisabled && variant === 'color'
@@ -99,6 +102,7 @@ export default function CounterButton({
       </Pressable>
 
       <TextInput
+        testID={getTestID(testID, 'input')}
         style={[
           styles.input,
           { fontSize: fontSizeMap['t3'], color: Color.gray[900] },
@@ -109,6 +113,7 @@ export default function CounterButton({
       />
 
       <Pressable
+        testID={getTestID(testID, 'increment')}
         style={[
           variant === 'default' ? styles.buttonDefault : styles.buttonColor,
           isIncreaseDisabled && variant === 'color'

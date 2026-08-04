@@ -13,16 +13,19 @@ import { useOptionalFocusEffect } from '../hooks/useOptionalFocusEffect';
 interface FooterProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
-const Footer: React.FC<FooterProps> = ({ children, style }) => {
+const Footer: React.FC<FooterProps> = ({ children, style, testID }) => {
   const { setFooter } = useFooter();
 
   const footerElement = useMemo(
     () => (
-      <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
+      <SafeAreaView testID={testID} style={[styles.container, style]}>
+        {children}
+      </SafeAreaView>
     ),
-    [children, style]
+    [children, style, testID]
   );
 
   useOptionalFocusEffect(() => {

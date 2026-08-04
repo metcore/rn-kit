@@ -1,6 +1,6 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   Button: undefined;
   Typography: undefined;
@@ -47,8 +47,6 @@ type RootStackParamList = {
   LeaveApprove: undefined;
   TimeLine: undefined;
   Tab: undefined;
-  TabDefault: undefined;
-  TabSticky: undefined;
   TextEditor: undefined;
   Step: undefined;
   Icons: undefined;
@@ -58,6 +56,8 @@ type RootStackParamList = {
   PdfView: undefined;
   InputSelect: undefined;
   InputDate: undefined;
+  InputMonth: undefined;
+  InputYear: undefined;
   Spinner: undefined;
 };
 

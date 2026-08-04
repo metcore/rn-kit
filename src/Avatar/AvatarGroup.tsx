@@ -13,13 +13,14 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({
   avatars = [],
   maxVisible = 5,
   size = 'medium',
+  testID,
 }) => {
   const avatarSize = SIZE_MAP[size] || SIZE_MAP.medium;
   const visibleAvatars = avatars.slice(0, maxVisible);
   const remainingCount = avatars.length - maxVisible;
 
   return (
-    <View style={[styles.container, { height: avatarSize }]}>
+    <View testID={testID} style={[styles.container, { height: avatarSize }]}>
       {visibleAvatars.map((avatar, index) => {
         const hasImage = avatar.source;
         const initials = avatar.name;

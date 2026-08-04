@@ -6,6 +6,7 @@ interface LoadingProps {
   size?: 'small' | 'large' | number;
   color?: string;
   variant?: 'circle' | 'square';
+  testID?: string;
 }
 
 const Loading: React.FC<LoadingProps> = ({
@@ -13,9 +14,10 @@ const Loading: React.FC<LoadingProps> = ({
   size = 'large',
   color = '#007AFF',
   variant = 'circle',
+  testID,
 }) => {
   return (
-    <View style={styles.wrapper}>
+    <View testID={testID} style={styles.wrapper}>
       <View
         style={[
           styles.container,

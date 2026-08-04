@@ -9,6 +9,7 @@ import Card from '../../../Ui/Card';
 import Color from '../../../Color/Color';
 import Typography from '../../../Typography/Typography';
 import Icon from '../../../Icon';
+import { getTestID } from '../../../helpers/getTestID';
 import type { FileItem } from '../../type';
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
   onDelete: (index: number) => void;
   variant?: 'default' | 'small';
   loading?: boolean;
+  testID?: string;
 }
 
 export default function ItemPreview({
@@ -29,12 +31,14 @@ export default function ItemPreview({
   onReplace,
   variant = 'default',
   loading = false,
+  testID,
 }: Props) {
   const Wrapper = variant === 'default' ? Card : View;
 
   return (
     <Wrapper>
       <TouchableOpacity
+        testID={testID}
         onPress={onPress}
         style={styles.containerPreview}
         activeOpacity={0.7}
@@ -125,11 +129,17 @@ export default function ItemPreview({
               />
             )}
 
-            <TouchableOpacity onPress={() => onReplace(index)}>
+            <TouchableOpacity
+              testID={getTestID(testID, 'replace')}
+              onPress={() => onReplace(index)}
+            >
               <Icon name="rotate-right" size={18} color={Color.gray[700]} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => onDelete(index)}>
+            <TouchableOpacity
+              testID={getTestID(testID, 'delete')}
+              onPress={() => onDelete(index)}
+            >
               <Icon name="Times" size={12} color={Color.gray[700]} />
             </TouchableOpacity>
           </View>

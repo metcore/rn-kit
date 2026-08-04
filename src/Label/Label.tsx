@@ -12,6 +12,7 @@ interface LabelProps {
   color?: string;
   icon?: IconNameProps;
   size?: 'medium' | 'small';
+  testID?: string;
 }
 
 type LabelColor = ColorVariantType;
@@ -73,6 +74,7 @@ export default function Label({
   icon,
   children,
   color = 'default',
+  testID,
 }: LabelProps) {
   const safeColor = validColors.includes(color as LabelColor)
     ? (color as LabelColor)
@@ -81,6 +83,7 @@ export default function Label({
 
   return (
     <View
+      testID={testID}
       style={[styles.container, { backgroundColor: colors.backgroundColor }]}
     >
       {children ? (

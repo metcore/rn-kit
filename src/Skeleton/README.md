@@ -14,6 +14,7 @@ Komponen `Skeleton` adalah placeholder UI yang menampilkan efek shimmer animasi,
 | `backgroundColor` | `string`         | `"#F0F0F0"`                  | Warna latar belakang dari blok skeleton.                                           |
 | `shimmerColor`    | `string`         | `"rgba(255, 255, 255, 0.7)"` | Warna efek shimmer yang bergerak.                                                  |
 | `duration`        | `number`         | `1500`                       | Durasi animasi shimmer (dalam milidetik).                                          |
+| `testID` | `string` | - | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan langsung ke elemen akar, tanpa suffix. |
 
 ---
 

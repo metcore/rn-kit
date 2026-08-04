@@ -8,10 +8,12 @@ export interface AvatarProps {
   backgroundColor?: string;
   textColor?: string;
   style?: object;
+  testID?: string;
 }
 
 export interface AvatarGroupProps {
   avatars?: AvatarProps[];
   maxVisible?: number;
   size?: AvatarSizeType;
+  testID?: string;
 }

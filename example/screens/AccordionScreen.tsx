@@ -1,307 +1,120 @@
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   Accordion,
   AccordionItem,
-  Badge,
   Color,
-  Container,
   Icon,
   Typography,
 } from '@herca/rn-kit';
-import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
+
+const Header = ({ label, isOpen }: { label: string; isOpen?: boolean }) => (
+  <View style={styles.header}>
+    <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
+      {label}
+    </Typography>
+    <Icon
+      name={isOpen ? 'ArrowUp' : 'ArrowDown'}
+      size={16}
+      color={Color.gray[600]}
+    />
+  </View>
+);
 
 export default function AccordionScreen() {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-  const [isOpenBorderless, setIsOpenBorderless] = useState<boolean>(true);
-  const [isOpenSub, setIsOpenSub] = useState<boolean>(true);
-  const renderHeader = () => (
-    <View style={styles.containerHeaderAccordion}>
-      <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
-        Ini Header Accordion
-      </Typography>
-      <Icon
-        name={isOpen ? 'ArrowDown' : 'ArrowUp'}
-        color={Color.gray[600]}
-        size={15}
-      />
-    </View>
-  );
+  const [isOpenDefault, setIsOpenDefault] = useState(true);
+  const [isOpenBorderless, setIsOpenBorderless] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
-  const renderHeaderBorderless = () => (
-    <View style={styles.containerHeaderAccordion}>
-      <Typography variant="t2" weight="semibold" color={Color.gray[900]}>
-        Ini Header Accordion Borderless
-      </Typography>
-      <Icon
-        name={isOpenBorderless ? 'ArrowDown' : 'ArrowUp'}
-        color={Color.gray[600]}
-        size={15}
-      />
-    </View>
-  );
-
-  const handleCollapseAccordion = (collapse: boolean) => {
-    setIsOpen(collapse);
-  };
-  const handleCollapseAccordionBorderless = (collapse: boolean) => {
-    setIsOpenBorderless(collapse);
-  };
   return (
-    <Container>
-      <Accordion
-        isOpen={isOpen}
-        renderHeader={renderHeader()}
-        onCollapse={handleCollapseAccordion}
+    <DemoScreen
+      title="Accordion"
+      description="Accordion menyembunyikan atau menampilkan AccordionItem secara dinamis, cocok untuk FAQ atau daftar konten bertingkat."
+    >
+      <DemoSection
+        title="Default vs borderless"
+        note="variant='borderless' menghapus border List pembungkus; setiap accordion di sini mengatur status buka/tutupnya sendiri lewat onCollapse agar ikon panah selalu sesuai keadaan asli."
       >
-        <AccordionItem>
-          <View style={{ gap: 12 }}>
-            <View style={styles.containerAccordionItem}>
-              <View>
-                <Typography
-                  weight="semibold"
-                  variant="t2"
-                  color={Color.gray[900]}
-                >
-                  Ban Bocor
-                </Typography>
-                <Typography
-                  weight="medium"
-                  variant="t3"
-                  color={Color.gray[700]}
-                >
-                  Ban Bocor
-                </Typography>
-              </View>
-              <View>
-                <Typography
-                  weight="regular"
-                  variant="t3"
-                  color={Color.gray[700]}
-                >
-                  2.00x
-                </Typography>
-              </View>
-            </View>
-            <View style={styles.containerAccordionItem}>
-              <View>
-                <Badge value="0.00%" size="small" color="danger" />
-              </View>
-              <View>
-                <Typography
-                  weight="semibold"
-                  variant="t2"
-                  color={Color.gray[900]}
-                >
-                  2.00x
-                </Typography>
-              </View>
-            </View>
-          </View>
-        </AccordionItem>
+        <DemoLabel text='variant="default"' />
+        <Accordion
+          renderHeader={
+            <Header label="Ketentuan pengiriman" isOpen={isOpenDefault} />
+          }
+          isOpen={isOpenDefault}
+          onCollapse={setIsOpenDefault}
+        >
+          <AccordionItem>
+            <Typography variant="t2" color={Color.gray[700]}>
+              Pesanan dikirim maksimal 1x24 jam setelah pembayaran dikonfirmasi.
+            </Typography>
+          </AccordionItem>
+        </Accordion>
+        <DemoLabel text='variant="borderless"' />
+        <Accordion
+          variant="borderless"
+          renderHeader={
+            <Header label="Kebijakan pengembalian" isOpen={isOpenBorderless} />
+          }
+          isOpen={isOpenBorderless}
+          onCollapse={setIsOpenBorderless}
+        >
+          <AccordionItem>
+            <Typography variant="t2" color={Color.gray[700]}>
+              Barang dapat dikembalikan dalam 7 hari selama kemasan masih utuh.
+            </Typography>
+          </AccordionItem>
+        </Accordion>
+      </DemoSection>
 
-        <AccordionItem>
-          <TouchableOpacity onPress={() => setIsOpenSub(!isOpenSub)}>
-            <Typography variant="t1">Show more</Typography>
-          </TouchableOpacity>
-          <Accordion isOpen={isOpenSub}>
-            <AccordionItem>
-              <Typography variant="t2">Item</Typography>
-            </AccordionItem>
-            <AccordionItem>
-              <Typography variant="t2">Quantity</Typography>
-            </AccordionItem>
-          </Accordion>
-        </AccordionItem>
-        <AccordionItem>
-          <View style={{ gap: 12 }}>
-            <View style={styles.containerAccordionItem}>
-              <View>
-                <Typography
-                  weight="semibold"
-                  variant="t2"
-                  color={Color.gray[900]}
-                >
-                  Ban Bocor
-                </Typography>
-                <Typography
-                  weight="medium"
-                  variant="t3"
-                  color={Color.gray[700]}
-                >
-                  Ban Bocor
-                </Typography>
-              </View>
-              <View>
-                <Typography
-                  weight="regular"
-                  variant="t3"
-                  color={Color.gray[700]}
-                >
-                  2.00x
-                </Typography>
-              </View>
-            </View>
-            <View style={styles.containerAccordionItem}>
-              <View>
-                <Badge value="0.00%" size="small" color="danger" />
-              </View>
-              <View>
-                <Typography
-                  weight="semibold"
-                  variant="t2"
-                  color={Color.gray[900]}
-                >
-                  2.00x
-                </Typography>
-              </View>
-            </View>
-          </View>
-        </AccordionItem>
-        <AccordionItem>
-          <TouchableOpacity onPress={() => setIsOpenSub(!isOpenSub)}>
-            <Typography variant="t1">Show more</Typography>
-          </TouchableOpacity>
-          <Accordion isOpen={isOpenSub}>
-            <AccordionItem>
-              <Typography variant="t2">Item</Typography>
-            </AccordionItem>
-            <AccordionItem>
-              <Typography variant="t2">Quantity</Typography>
-            </AccordionItem>
-          </Accordion>
-        </AccordionItem>
-      </Accordion>
-
-      <Accordion
-        variant="borderless"
-        renderHeader={renderHeaderBorderless()}
-        isOpen={isOpenBorderless}
-        onCollapse={handleCollapseAccordionBorderless}
+      <DemoSection
+        title="Terkontrol & onCollapse"
+        note="isOpen dari state luar mengendalikan buka/tutup; onCollapse dipanggil setiap status berubah, dipakai untuk readout dan ikon panah."
       >
-        <AccordionItem>
-          <View style={{ gap: 12 }}>
-            <View style={styles.containerAccordionItem}>
-              <View>
-                <Typography
-                  weight="semibold"
-                  variant="t2"
-                  color={Color.gray[900]}
-                >
-                  Ban Bocor
+        <DemoLabel text="isOpen onCollapse" />
+        <Accordion
+          renderHeader={<Header label="Metode pembayaran" isOpen={isOpen} />}
+          isOpen={isOpen}
+          onCollapse={setIsOpen}
+        >
+          <AccordionItem>
+            <Typography variant="t2" color={Color.gray[700]}>
+              Mendukung transfer bank, kartu kredit, dan e-wallet.
+            </Typography>
+          </AccordionItem>
+        </Accordion>
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Status: ${isOpen ? 'terbuka' : 'tertutup'}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Bersarang"
+        note="Accordion dapat diletakkan di dalam AccordionItem lain untuk struktur konten bertingkat."
+      >
+        <Accordion renderHeader={<Header label="Pertanyaan umum" />} isOpen>
+          <AccordionItem>
+            <Accordion
+              renderHeader={<Header label="Berapa lama pengiriman?" />}
+              isOpen
+            >
+              <AccordionItem>
+                <Typography variant="t2" color={Color.gray[700]}>
+                  Rata-rata 2-3 hari kerja untuk area Jabodetabek.
                 </Typography>
-                <Typography
-                  weight="medium"
-                  variant="t3"
-                  color={Color.gray[700]}
-                >
-                  Ban Bocor
-                </Typography>
-              </View>
-              <View>
-                <Typography
-                  weight="regular"
-                  variant="t3"
-                  color={Color.gray[700]}
-                >
-                  2.00x
-                </Typography>
-              </View>
-            </View>
-            <View style={styles.containerAccordionItem}>
-              <View>
-                <Badge value="0.00%" size="small" color="danger" />
-              </View>
-              <View>
-                <Typography
-                  weight="semibold"
-                  variant="t2"
-                  color={Color.gray[900]}
-                >
-                  2.00x
-                </Typography>
-              </View>
-            </View>
-          </View>
-        </AccordionItem>
-        <AccordionItem>
-          <TouchableOpacity onPress={() => setIsOpenSub(!isOpenSub)}>
-            <Typography variant="t1">Show more</Typography>
-          </TouchableOpacity>
-          <Accordion isOpen={isOpenSub}>
-            <AccordionItem>
-              <Typography variant="t2">Item</Typography>
-            </AccordionItem>
-            <AccordionItem>
-              <Typography variant="t2">Quantity</Typography>
-            </AccordionItem>
-          </Accordion>
-        </AccordionItem>
-      </Accordion>
-    </Container>
+              </AccordionItem>
+            </Accordion>
+          </AccordionItem>
+        </Accordion>
+      </DemoSection>
+    </DemoScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  containerHeaderAccordion: {
+  header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  containerAccordionItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  item: {
-    flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    paddingVertical: 1,
-  },
-  itemGrid: {
-    gap: 0,
-  },
-  productTitleWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flex: 1,
-    gap: 12,
-  },
-  productTitle: {
-    flexShrink: 1,
-    flex: 1,
-  },
-  productInfoWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flex: 1,
-    gap: 8,
-  },
-  borderBottomNone: {
-    borderBottomColor: 'transparent',
-  },
-  productGrandTotal: {
-    alignItems: 'flex-end',
-    flex: 1,
-  },
-  paddingNone: { paddingHorizontal: 0, paddingVertical: 0 },
-  borderNone: { borderWidth: 0 },
-  list: {
-    borderWidth: 0,
-    paddingVertical: 12,
-  },
-  accordionItem: {
-    borderWidth: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    borderColor: Color.gray[100],
-    gap: 5,
-  },
-  productArrowWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
   },
 });

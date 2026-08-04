@@ -18,6 +18,7 @@ const Typography: React.FC<TypographyProps> = ({
   center,
   right,
   left,
+  testID,
 }) => {
   const textStyle: TextStyle = {
     fontSize: fontSizeMap[variant],
@@ -28,7 +29,11 @@ const Typography: React.FC<TypographyProps> = ({
   };
 
   return (
-    <Text style={[styles.text, textStyle, style]} numberOfLines={numberOfLines}>
+    <Text
+      testID={testID}
+      style={[styles.text, textStyle, style]}
+      numberOfLines={numberOfLines}
+    >
       {children}
     </Text>
   );

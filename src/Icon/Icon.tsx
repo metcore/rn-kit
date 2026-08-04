@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ViewStyle } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
 import AirPlane from './icons/AirPlane';
 import AlignCenter from './icons/AlignCenter';
 import AlignLeft from './icons/AlignLeft';
@@ -353,6 +353,7 @@ const Icon: React.FC<IconProps> = ({
   size = 24,
   color = '#000',
   style,
+  testID,
 }) => {
   const SelectedIcon = icons[name];
 
@@ -360,7 +361,14 @@ const Icon: React.FC<IconProps> = ({
     return null;
   }
 
-  return <SelectedIcon size={size} color={color} style={style} />;
+  const icon = <SelectedIcon size={size} color={color} style={style} />;
+
+  // The 170 files in ./icons take only size/color and spread nothing, so a
+  // testID handed to them would be dropped. Wrapping is the one-file fix --
+  // and only when an id is actually asked for, so existing call sites keep
+  // their exact tree. Teaching every icon to forward testID would be the
+  // thorough fix; it is a 170-file codemod and not what this change is.
+  return testID ? <View testID={testID}>{icon}</View> : icon;
 };
 
 export default Icon;

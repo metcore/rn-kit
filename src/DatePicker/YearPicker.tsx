@@ -5,6 +5,7 @@ import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Color from '../Color/Color';
 import Icon from '../Icon';
+import { getTestID } from '../helpers/getTestID';
 
 type PickerMode = 'single' | 'range' | 'multiple';
 
@@ -15,6 +16,10 @@ interface YearPickerProps {
     value: number[] | { startDate: number | null; endDate: number | null }
   ) => void;
   mode?: PickerMode;
+  title?: string;
+  cancelLabel?: string;
+  confirmLabel?: string;
+  testID?: string;
 }
 
 export default function YearPicker({
@@ -22,6 +27,10 @@ export default function YearPicker({
   onClose,
   onChange,
   mode = 'single',
+  title = 'Pilih Tahun',
+  cancelLabel = 'Batal',
+  confirmLabel = 'Pilih',
+  testID,
 }: YearPickerProps) {
   const currentYear = new Date().getFullYear();
   const pageSize = 9;
@@ -103,13 +112,15 @@ export default function YearPicker({
 
   return (
     <BottomSheet
+      testID={getTestID(testID, 'sheet')}
       isOpen={isOpen}
       onClose={onClose}
       footer={
         <View style={styles.containerBottomSheetFooter}>
           <View style={styles.flex1}>
             <Button
-              title="Batal"
+              testID={getTestID(testID, 'cancel')}
+              title={cancelLabel}
               variant="tertiary"
               size="medium"
               color="primary"
@@ -118,7 +129,8 @@ export default function YearPicker({
           </View>
           <View style={styles.flex1}>
             <Button
-              title="Pilih"
+              testID={getTestID(testID, 'confirm')}
+              title={confirmLabel}
               color="primary"
               size="medium"
               onPress={handleSubmit}
@@ -136,7 +148,7 @@ export default function YearPicker({
           <Icon name="ArrowLeft" color={Color.base.white100} size={10} />
         </TouchableOpacity>
         <Typography variant="t1" weight="semibold" color={Color.gray[900]}>
-          Pilih Tahun
+          {title}
         </Typography>
         <TouchableOpacity
           style={styles.buttonNav}
@@ -162,6 +174,7 @@ export default function YearPicker({
             return (
               <View style={styles.yearItem}>
                 <TouchableOpacity
+                  testID={getTestID(testID, `option-${item}`)}
                   onPress={() => handleSelectYear(item)}
                   style={[
                     styles.option,

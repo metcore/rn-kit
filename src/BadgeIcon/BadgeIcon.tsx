@@ -9,6 +9,7 @@ interface BaseBadgeProps {
   color?: Variant | HexColor;
   size?: Size;
   variant?: Variant;
+  testID?: string;
 }
 
 interface IconBadgeProps extends BaseBadgeProps {
@@ -67,6 +68,7 @@ const BadgeIcon: React.FC<BadgeProps> = ({
   size = 'medium',
   color = 'default',
   children,
+  testID,
 }) => {
   const safeSize: Size = ['small', 'medium', 'large'].includes(size)
     ? size
@@ -91,6 +93,7 @@ const BadgeIcon: React.FC<BadgeProps> = ({
 
   return (
     <View
+      testID={testID}
       style={[
         styles.badge,
         {

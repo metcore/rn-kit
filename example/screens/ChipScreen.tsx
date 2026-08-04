@@ -1,127 +1,121 @@
-import {
-  Chip,
-  Color,
-  Container,
-  Icon,
-  Typography,
-  ChipItem,
-  type ChipOptionProps,
-  type ChipSelectedProps,
-} from '@herca/rn-kit';
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Chip, ChipItem, Color, Icon, Typography } from '@herca/rn-kit';
+import type {
+  ChipOptionProps,
+  ChipSelectedProps,
+  IconNameProps,
+} from '@herca/rn-kit';
+import { DemoScreen, DemoSection, DemoLabel } from '../components/demo';
 
-const options = [
-  { label: 'Option 1', value: '1' },
-  { label: 'Option 23123 2', value: '2', disabled: true },
-  { label: 'Optionzzz 3', value: '3' },
-  { label: 'Option tambahan', value: '4' },
-  { label: 'Option 1', value: '5' },
-  { label: 'Option 1', value: '6' },
-  { label: 'Option 1', value: '7' },
-  { label: 'Option 1', value: '8' },
-  { label: 'Option 1', value: '9' },
+const FRUIT_OPTIONS: ChipOptionProps[] = [
+  { label: 'Apel', value: 'apple' },
+  { label: 'Jeruk', value: 'orange' },
+  { label: 'Mangga', value: 'mango', disabled: true },
 ];
 
-const ChipScreen = () => {
-  const [selectedDefault, setSelectedDefault] = useState<ChipSelectedProps>();
-  const [selectedCustom, setSelectedCustom] = useState<ChipSelectedProps>();
-  const handleOnSelectCustom = (val: ChipSelectedProps) => {
-    setSelectedCustom(val);
-  };
+const ICON_OPTIONS: ChipOptionProps[] = [
+  { label: 'Profil', value: 'profile', icon: 'User' },
+  { label: 'Terverifikasi', value: 'verified', icon: 'Check' },
+];
 
-  const handleOnSelectDefault = (value: ChipSelectedProps) => {
-    setSelectedDefault(value);
-  };
-
-  const [isChipSatuanSelected, setIsChipSatuanSelected] = useState(false);
+export default function ChipScreen() {
+  const [single, setSingle] = useState<ChipSelectedProps>(['apple']);
+  const [multi, setMulti] = useState<ChipSelectedProps>(['apple', 'orange']);
+  const [itemSelected, setItemSelected] = useState(false);
+  const [uncontrolledReport, setUncontrolledReport] =
+    useState<ChipSelectedProps>([]);
 
   return (
-    <Container>
-      <ScrollView>
-        <Typography variant="p2" weight="semibold">
-          Chip Satuan
-        </Typography>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
-          <ChipItem
-            item={{
-              label: 'Chip Satuan',
-              value: '1',
-            }}
-            onPress={() => setIsChipSatuanSelected(!isChipSatuanSelected)}
-            isSelected={() => isChipSatuanSelected}
-            color="primary"
-          />
-        </View>
-        <Typography variant="p2" weight="semibold">
-          Chip Default
-        </Typography>
+    <DemoScreen
+      title="Chip Select"
+      description="Chip menampilkan daftar opsi ringkas berbentuk pil, dipakai untuk filter, tag, atau pilihan tunggal/jamak."
+    >
+      <DemoSection
+        title="Pilihan tunggal"
+        note="Tanpa prop multiple, memilih chip lain akan menggantikan pilihan sebelumnya; opsi mangga dinonaktifkan via disabled."
+      >
         <Chip
-          options={options}
-          selected={selectedDefault}
-          onSelect={handleOnSelectDefault}
-          direction="horizontal"
+          options={FRUIT_OPTIONS}
+          selected={single}
+          onSelect={setSingle}
           color="primary"
         />
-        <Typography variant="p2" weight="semibold">
-          Chip 2
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terpilih: ${single.join(', ') || '-'}`}
         </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Pilihan jamak"
+        note="multiple mengizinkan lebih dari satu chip terpilih sekaligus."
+      >
+        <DemoLabel text="multiple" />
         <Chip
-          options={options}
-          selected={selectedDefault}
-          scrollable={false}
-          onSelect={handleOnSelectDefault}
-          direction="vertical"
-          color="danger"
-          block
-        />
-        <Typography variant="p2" weight="semibold">
-          Chip Custom
-        </Typography>
-        <Chip
-          options={options}
-          selected={selectedCustom}
-          scrollable={false}
-          onSelect={handleOnSelectCustom}
-          direction="vertical"
-          size="large"
-          color="primary"
-          header={<Typography>Ini Header Chip</Typography>}
-          footer={<Typography>Ini Footer Chip</Typography>}
+          options={FRUIT_OPTIONS}
+          selected={multi}
+          onSelect={setMulti}
           multiple
-          renderItem={(
-            item: ChipOptionProps,
-            isSelected: boolean,
-            isDisabled: boolean
-          ) => (
-            <Typography
-              variant="t2"
-              color={
-                isDisabled
-                  ? Color.base.white100
-                  : isSelected
-                    ? Color.primary[1000]
-                    : Color.primary[1000]
-              }
-            >
+          color="success"
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Terpilih: ${multi.join(', ') || '-'}`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Tanpa prop selected (uncontrolled)"
+        note="Prop selected boleh dilewat. Chip menyimpan pilihannya sendiri dan tetap menyala; onSelect dipakai hanya untuk membaca hasilnya, bukan untuk mengembalikan state."
+      >
+        <DemoLabel text="multiple, tanpa selected" />
+        <Chip
+          options={FRUIT_OPTIONS}
+          multiple
+          color="warning"
+          onSelect={setUncontrolledReport}
+        />
+        <Typography variant="t3" color={Color.gray[700]}>
+          {`Dilaporkan onSelect: ${
+            Array.isArray(uncontrolledReport)
+              ? uncontrolledReport.join(', ') || '-'
+              : uncontrolledReport
+          }`}
+        </Typography>
+      </DemoSection>
+
+      <DemoSection
+        title="Item kustom via renderItem"
+        note="Objek opsi bisa membawa properti tambahan (mis. icon) yang dibaca ulang lewat renderItem."
+      >
+        <DemoLabel text="renderItem={(item) => ...}" />
+        <Chip
+          options={ICON_OPTIONS}
+          selected={[]}
+          color="primary"
+          renderItem={(item) => (
+            <Typography variant="t2" color={Color.primary[1000]}>
               <Icon
-                name="User"
-                size={10}
-                color={
-                  isDisabled
-                    ? Color.base.white100
-                    : isSelected
-                      ? Color.primary[1000]
-                      : Color.primary[1000]
-                }
-              />
+                name={item.icon as IconNameProps}
+                size={12}
+                color={Color.primary[1000]}
+              />{' '}
               {item.label}
             </Typography>
           )}
         />
-      </ScrollView>
-    </Container>
-  );
-};
+      </DemoSection>
 
-export default ChipScreen;
+      <DemoSection
+        title="ChipItem tunggal"
+        note="ChipItem adalah komponen presentasional satu chip, cocok dipakai lepas dari daftar Chip."
+      >
+        <DemoLabel text="<ChipItem item={...} isSelected={...} />" />
+        <ChipItem
+          item={{ label: 'Chip satuan', value: 'single' }}
+          isSelected={() => itemSelected}
+          onPress={() => setItemSelected((prev) => !prev)}
+          color="danger"
+        />
+      </DemoSection>
+    </DemoScreen>
+  );
+}

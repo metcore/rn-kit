@@ -2,7 +2,17 @@ import { useRef, useEffect } from 'react';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Stop, Circle } from 'react-native-svg';
 
-export default function Spinner({ size = 48, color = '#FFFFFF' }) {
+interface SpinnerProps {
+  size?: number;
+  color?: string;
+  testID?: string;
+}
+
+export default function Spinner({
+  size = 48,
+  color = '#FFFFFF',
+  testID,
+}: SpinnerProps) {
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -29,7 +39,10 @@ export default function Spinner({ size = 48, color = '#FFFFFF' }) {
   const darkerColor = '#999';
 
   return (
-    <View style={[styles.container, { width: size, height: size }]}>
+    <View
+      testID={testID}
+      style={[styles.container, { width: size, height: size }]}
+    >
       <Animated.View
         style={{
           transform: [{ rotate: rotateInterpolate }],

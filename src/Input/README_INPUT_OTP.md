@@ -32,6 +32,7 @@ Salin file `InputOtp.tsx` ke proyek React Native Anda dan import sesuai kebutuha
 | `hint`        | `string`                | -       | Pesan kecil di bawah input (misal instruksi atau error)                                  |
 | `hasError`    | `boolean`               | false   | Jika `true`, border input berubah warna merah (indikasi error)                           |
 | `inputCenter` | `boolean`               | false   | Jika `true`, maka seluruh input field akan memposisikan diri ke tengah secara horizontal |
+| `testID`      | `string`                | -       | ID untuk automation testing (Maestro/Detox/Appium). Menurunkan `-item-{index}` untuk tiap kotak digit, `-label`, dan `-error`. |
 
 ---
 

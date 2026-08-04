@@ -17,6 +17,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
   backgroundColor = '#F0F0F0',
   shimmerColor = 'rgba(255, 255, 255, 0.7)',
   duration = 1500,
+  testID,
 }) => {
   const shimmerAnimation = useRef(new Animated.Value(0)).current;
   const skeletonWidth = useRef(0);
@@ -59,6 +60,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
 
   return (
     <View
+      testID={testID}
       onLayout={handleLayout}
       style={[
         styles.skeletonCard,

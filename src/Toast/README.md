@@ -62,6 +62,22 @@ Menyediakan context global toast. Harus membungkus komponen root Anda.
 | `duration` | `number` (ms)      | `3000`              | Waktu tampil Toast sebelum hilang.                                      |
 | `children` | `React.ReactNode`  | `-`                 | Konten opsional yang bisa diisi dengan Semua komponen di dalam aplikasi |
 
+### 🧪 Automation Testing (testID)
+
+Komponen `Toast` (yang di-export langsung dari package) mendukung prop `testID` untuk kebutuhan automation testing (Maestro/Detox/Appium):
+
+```tsx
+import { Toast } from '@herca/rn-kit';
+
+<Toast testID="save-toast" visible message="Data berhasil disimpan" />
+```
+
+| Prop     | Type     | Description                                                                                     |
+| -------- | -------- | ------------------------------------------------------------------------------------------------ |
+| `testID` | `string` | ID untuk automation testing. Diterapkan ke root Toast; menurunkan `-message` dan `-clear`.        |
+
+> ⚠️ **Catatan:** `testID` saat ini **belum** diteruskan lewat `ToastOptions` pada `useToast().show()` (API imperatif via `ToastProvider`). Jika automation testing untuk Toast dibutuhkan, render komponen `Toast` secara langsung seperti contoh di atas.
+
 ### 🎨 ToastColor (Available Values)
 
 | Value     | Keterangan        |

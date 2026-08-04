@@ -47,3 +47,4 @@ export default function App() {
 | `disabled`    | `boolean`                                                              | Jika `true`, checkbox tidak bisa ditekan. Default: `false`.                  |
 | `renderLabel` | `() => React.ReactNode`                                                | Alternatif render untuk label kustom selain `label`.                         |
 | `renderHint`  | `() => React.ReactNode`                                                | Alternatif render untuk hint kustom selain `hint`.                           |
+| `testID`      | `string`                                                               | ID untuk automation testing (Maestro/Detox/Appium). Diterapkan ke `Pressable`; menurunkan `-label` untuk elemen label. |

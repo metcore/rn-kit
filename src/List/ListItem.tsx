@@ -8,11 +8,13 @@ export default function ListItem({
   onPress,
   style,
   isLast = false,
+  testID,
 }: ListItemProps) {
   const Wrapper = onPress ? TouchableOpacity : View;
 
   return (
     <Wrapper
+      testID={testID}
       onPress={onPress}
       style={[styles.container, !isLast && styles.withBorder, style]}
     >

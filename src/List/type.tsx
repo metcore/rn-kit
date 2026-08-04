@@ -6,9 +6,11 @@ export interface ListItemProps {
   style?: StyleProp<ViewStyle>;
   isLast?: boolean;
   index?: number;
+  testID?: string;
 }
 
 export interface ListProps {
   children: React.ReactNode;
   style?: ViewStyle;
+  testID?: string;
 }

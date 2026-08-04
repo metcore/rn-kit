@@ -4,13 +4,13 @@ import Color from '../Color/Color';
 import Theme from '../Theme/Theme';
 import type { ListItemProps, ListProps } from './type';
 
-export default function List({ children, style }: ListProps) {
+export default function List({ children, style, testID }: ListProps) {
   const validChildren = React.Children.toArray(children).filter((child) =>
     React.isValidElement(child)
   );
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID={testID} style={[styles.container, style]}>
       {React.Children.map(validChildren, (child, index) => {
         const isLast = index === validChildren.length - 1;
         return React.isValidElement<ListItemProps>(child)

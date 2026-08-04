@@ -16,11 +16,13 @@ const Avatar: React.FC<AvatarProps> = ({
   backgroundColor = '#ccc',
   textColor = '#fff',
   style,
+  testID,
 }) => {
   const avatarSize = SIZE_MAP[size] || SIZE_MAP.medium;
 
   return (
     <View
+      testID={testID}
       style={[
         styles.container,
         {

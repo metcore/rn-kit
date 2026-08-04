@@ -11,6 +11,7 @@ import {
   type DateRangeProps,
 } from '../Calendar/CalendarPropsType';
 import Color from '../Color/Color';
+import { getTestID } from '../helpers/getTestID';
 
 interface DatePickerProps extends CalendarTypes {
   onChange: (selectedDate: DateRangeProps) => void;
@@ -26,6 +27,7 @@ interface DatePickerProps extends CalendarTypes {
   cancelLabel?: string;
   isCancelButtonDisabled?: boolean;
   isConfirmButtonDisabled?: boolean;
+  testID?: string;
 }
 
 export default function DatePicker({
@@ -42,6 +44,7 @@ export default function DatePicker({
   cancelLabel = 'Batalkan',
   isCancelButtonDisabled = false,
   isConfirmButtonDisabled = false,
+  testID,
   ...calendarProps
 }: DatePickerProps) {
   const [errorValidate, setErrorValidate] = useState<boolean>(false);
@@ -136,12 +139,14 @@ export default function DatePicker({
   return (
     <View>
       <BottomSheet
+        testID={getTestID(testID, 'sheet')}
         isOpen={isOpen}
         onClose={onClose}
         footer={
           <View style={styles.footerContainer}>
             <View style={styles.buttonWrapper}>
               <Button
+                testID={getTestID(testID, 'cancel')}
                 variant="tertiary"
                 title={cancelLabel}
                 color="primary"
@@ -151,6 +156,7 @@ export default function DatePicker({
             </View>
             <View style={styles.buttonWrapper}>
               <Button
+                testID={getTestID(testID, 'confirm')}
                 title={confirmLabel}
                 color="primary"
                 onPress={handleOnPressSubmitButton}
@@ -166,11 +172,21 @@ export default function DatePicker({
           onChange={handleOnChangeCalendar}
           {...calendarProps}
         />
-        <Alert
-          color="danger"
-          message={hint ? hint : 'Error validation'}
-          hide={!errorValidate}
-        />
+        {testID ? (
+          <View testID={getTestID(testID, 'error')}>
+            <Alert
+              color="danger"
+              message={hint ? hint : 'Error validation'}
+              hide={!errorValidate}
+            />
+          </View>
+        ) : (
+          <Alert
+            color="danger"
+            message={hint ? hint : 'Error validation'}
+            hide={!errorValidate}
+          />
+        )}
       </BottomSheet>
     </View>
   );
