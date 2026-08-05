@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Typography from '../Typography/Typography';
@@ -16,6 +16,12 @@ interface MonthPickerProps {
     value: number[] | { startDate: number | null; endDate: number | null }
   ) => void;
   mode?: PickerMode;
+  /**
+   * The selection to open on, shaped exactly like what `onChange` reports:
+   * an array of 0-based months for single/multiple, a pair for range. Leave
+   * it out to let the sheet keep whatever it was last given by a tap.
+   */
+  value?: number[] | { startDate: number | null; endDate: number | null };
   title?: string;
   cancelLabel?: string;
   confirmLabel?: string;
@@ -27,6 +33,7 @@ export default function MonthPicker({
   onClose,
   onChange,
   mode = 'single',
+  value,
   cancelLabel = 'Batal',
   confirmLabel = 'pilih',
   title = 'Pilih Bulan',
@@ -38,6 +45,31 @@ export default function MonthPicker({
   }>({ startDate: null, endDate: null });
   const [multipleValue, setMultipleValue] = useState<number[]>([]);
   const [singleValue, setSingleValue] = useState<number | null>(null);
+
+  // Compared as a string, not by reference: a parent that rebuilds the value
+  // object on every render would otherwise wipe a selection mid-sheet.
+  const valueKey = JSON.stringify(value ?? null);
+
+  useEffect(() => {
+    const incoming = JSON.parse(valueKey);
+
+    // No value at all means uncontrolled -- the sheet's own state is the
+    // only record of the selection, so don't touch it.
+    if (!isOpen || incoming === null) return;
+
+    if (Array.isArray(incoming)) {
+      setSingleValue(incoming[0] ?? null);
+      setMultipleValue(incoming);
+      setRangeValue({ startDate: null, endDate: null });
+    } else {
+      setSingleValue(null);
+      setMultipleValue([]);
+      setRangeValue({
+        startDate: incoming.startDate ?? null,
+        endDate: incoming.endDate ?? null,
+      });
+    }
+  }, [isOpen, valueKey]);
 
   const handleSelectMonth = useCallback(
     (month: number) => {

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Typography from '../Typography/Typography';
@@ -16,6 +16,12 @@ interface YearPickerProps {
     value: number[] | { startDate: number | null; endDate: number | null }
   ) => void;
   mode?: PickerMode;
+  /**
+   * The selection to open on, shaped exactly like what `onChange` reports:
+   * an array of years for single/multiple, a pair for range. Leave it out to
+   * let the sheet keep whatever it was last given by a tap.
+   */
+  value?: number[] | { startDate: number | null; endDate: number | null };
   title?: string;
   cancelLabel?: string;
   confirmLabel?: string;
@@ -27,6 +33,7 @@ export default function YearPicker({
   onClose,
   onChange,
   mode = 'single',
+  value,
   title = 'Pilih Tahun',
   cancelLabel = 'Batal',
   confirmLabel = 'Pilih',
@@ -58,6 +65,41 @@ export default function YearPicker({
     const start = pageIndex * pageSize;
     return years.slice(start, start + pageSize);
   }, [years, pageIndex]);
+
+  // Compared as a string, not by reference: a parent that rebuilds the value
+  // object on every render would otherwise wipe a selection mid-sheet.
+  const valueKey = JSON.stringify(value ?? null);
+
+  useEffect(() => {
+    const incoming = JSON.parse(valueKey);
+
+    // No value at all means uncontrolled -- the sheet's own state is the
+    // only record of the selection, so don't touch it.
+    if (!isOpen || incoming === null) return;
+
+    // The year the sheet should be looking at: a lone selection, or the start
+    // of a range. Years run 121 deep across pages, so without this the sheet
+    // opens on the current year and the highlight is off-screen.
+    let anchor: number | null;
+
+    if (Array.isArray(incoming)) {
+      setSingleValue(incoming[0] ?? null);
+      setMultipleValue(incoming);
+      setRangeValue({ startDate: null, endDate: null });
+      anchor = incoming[0] ?? null;
+    } else {
+      setSingleValue(null);
+      setMultipleValue([]);
+      setRangeValue({
+        startDate: incoming.startDate ?? null,
+        endDate: incoming.endDate ?? null,
+      });
+      anchor = incoming.startDate ?? null;
+    }
+
+    const anchorIndex = anchor === null ? -1 : years.indexOf(anchor);
+    if (anchorIndex !== -1) setPageIndex(Math.floor(anchorIndex / pageSize));
+  }, [isOpen, valueKey, years]);
 
   const handleSelectYear = useCallback(
     (year: number) => {

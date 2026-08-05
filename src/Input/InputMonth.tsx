@@ -61,6 +61,15 @@ const monthLabel = (
         options: { pattern: 'MMMM', language },
       });
 
+/**
+ * Back to the 0-based index MonthPicker indexes its options by. Anything
+ * outside 1-12 maps to nothing, matching what the field renders.
+ */
+const zeroBased = (month: number | null | undefined) =>
+  month === null || month === undefined || month < 1 || month > 12
+    ? null
+    : month - 1;
+
 export default function InputMonth({
   label,
   placeholder,
@@ -85,6 +94,14 @@ export default function InputMonth({
   // shows whatever was last picked.
   const start = value ?? (mode === 'range' ? selected.startValue : selected.value); // prettier-ignore
   const end = valueEnd ?? selected.endValue;
+
+  // What the sheet should open on. Without this the picker only knows about
+  // taps it saw itself, so a value coming from a prop -- or a clear -- would
+  // show in the field but leave the sheet blank.
+  const pickerValue =
+    mode === 'range'
+      ? { startDate: zeroBased(start), endDate: zeroBased(end) }
+      : ([zeroBased(start)].filter((m) => m !== null) as number[]);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -141,6 +158,7 @@ export default function InputMonth({
         testID={testID}
         isOpen={isOpen}
         mode={mode}
+        value={pickerValue}
         onClose={handleClose}
         onChange={handleChange}
         {...(title ? { title } : {})}

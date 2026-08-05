@@ -1,5 +1,6 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import YearPicker from '../DatePicker/YearPicker';
+import { isHighlighted } from './helpers/isHighlighted';
 
 describe('YearPicker testID', () => {
   it('derives cancel, confirm and per-year option testIDs when open', () => {
@@ -82,5 +83,77 @@ describe('YearPicker labels', () => {
     expect(getByText('Cancel')).toBeTruthy();
     expect(getByText('Apply')).toBeTruthy();
     expect(queryByText('Pilih Tahun')).toBeNull();
+  });
+});
+
+describe('YearPicker value', () => {
+  const currentYear = new Date().getFullYear();
+
+  it('highlights the year it was handed when it opens', () => {
+    const { getByTestId } = render(
+      <YearPicker
+        isOpen
+        testID="year"
+        value={[currentYear]}
+        onClose={() => {}}
+      />
+    );
+
+    expect(isHighlighted(getByTestId(`year-option-${currentYear}`))).toBe(true);
+  });
+
+  it('pages to the year it was handed', () => {
+    const target = currentYear - 20;
+    const { getByTestId } = render(
+      <YearPicker isOpen testID="year" value={[target]} onClose={() => {}} />
+    );
+
+    // Two decades back is off the default page entirely; it has to turn to it.
+    expect(isHighlighted(getByTestId(`year-option-${target}`))).toBe(true);
+  });
+
+  it('highlights every year inside a handed range', () => {
+    const { getByTestId } = render(
+      <YearPicker
+        isOpen
+        mode="range"
+        testID="year"
+        value={{ startDate: currentYear - 1, endDate: currentYear + 1 }}
+        onClose={() => {}}
+      />
+    );
+
+    [currentYear - 1, currentYear, currentYear + 1].forEach((y) =>
+      expect(isHighlighted(getByTestId(`year-option-${y}`))).toBe(true)
+    );
+  });
+
+  it('keeps a fresh tap over the value it was handed', () => {
+    const props = { isOpen: true, testID: 'year', value: [currentYear] };
+    const { getByTestId, rerender } = render(
+      <YearPicker {...props} onClose={() => {}} />
+    );
+
+    fireEvent.press(getByTestId(`year-option-${currentYear + 1}`));
+    rerender(<YearPicker {...props} onClose={() => {}} />);
+
+    expect(isHighlighted(getByTestId(`year-option-${currentYear + 1}`))).toBe(
+      true
+    );
+    expect(isHighlighted(getByTestId(`year-option-${currentYear}`))).toBe(
+      false
+    );
+  });
+
+  it('leaves its own selection alone when handed no value', () => {
+    const { getByTestId, rerender } = render(
+      <YearPicker isOpen testID="year" onClose={() => {}} />
+    );
+
+    fireEvent.press(getByTestId(`year-option-${currentYear}`));
+    rerender(<YearPicker isOpen={false} testID="year" onClose={() => {}} />);
+    rerender(<YearPicker isOpen testID="year" onClose={() => {}} />);
+
+    expect(isHighlighted(getByTestId(`year-option-${currentYear}`))).toBe(true);
   });
 });
