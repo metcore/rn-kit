@@ -69,6 +69,14 @@ export default function InputYear({
   const start = value ?? (mode === 'range' ? selected.startValue : selected.value); // prettier-ignore
   const end = valueEnd ?? selected.endValue;
 
+  // What the sheet should open on. Without this the picker only knows about
+  // taps it saw itself, so a value coming from a prop -- or a clear -- would
+  // show in the field but leave the sheet blank.
+  const pickerValue =
+    mode === 'range'
+      ? { startDate: start ?? null, endDate: end ?? null }
+      : ([start].filter((y) => y !== null && y !== undefined) as number[]);
+
   const handleOpen = () => {
     setIsOpen(true);
     onSelectClick?.();
@@ -114,6 +122,7 @@ export default function InputYear({
         testID={testID}
         isOpen={isOpen}
         mode={mode}
+        value={pickerValue}
         onClose={handleClose}
         onChange={handleChange}
         {...(title ? { title } : {})}

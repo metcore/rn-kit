@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import InputMonth from '../Input/InputMonth';
 import InputYear from '../Input/InputYear';
+import { isHighlighted } from './helpers/isHighlighted';
 
 const currentYear = new Date().getFullYear();
 
@@ -409,5 +410,140 @@ describe('picker label passthrough', () => {
 
     expect(tree.getByText('Pilih Tahun')).toBeTruthy();
     expect(tree.getByText('Batal')).toBeTruthy();
+  });
+});
+
+describe('picker preselection', () => {
+  const open = (tree: ReturnType<typeof render>, id: string) => {
+    fireEvent.press(tree.getByTestId(`${id}-trigger`));
+    return tree;
+  };
+
+  it('opens the month sheet on the month already held', () => {
+    const tree = open(
+      render(
+        <InputMonth testID="m" label="Bulan" placeholder="Pilih" value={3} />
+      ),
+      'm'
+    );
+
+    // value is 1-based, the sheet's options are 0-based: March is option-2.
+    expect(isHighlighted(tree.getByTestId('m-option-2'))).toBe(true);
+    expect(isHighlighted(tree.getByTestId('m-option-3'))).toBe(false);
+  });
+
+  it('opens the month sheet on the whole range already held', () => {
+    const tree = open(
+      render(
+        <InputMonth
+          testID="p"
+          mode="range"
+          label="Periode"
+          placeholder="Mulai"
+          placeholderEnd="Selesai"
+          value={1}
+          valueEnd={3}
+        />
+      ),
+      'p'
+    );
+
+    [0, 1, 2].forEach((m) =>
+      expect(isHighlighted(tree.getByTestId(`p-option-${m}`))).toBe(true)
+    );
+    expect(isHighlighted(tree.getByTestId('p-option-3'))).toBe(false);
+  });
+
+  it('highlights nothing for a month outside 1-12', () => {
+    const tree = open(
+      render(
+        <InputMonth testID="m" label="Bulan" placeholder="Pilih" value={0} />
+      ),
+      'm'
+    );
+
+    expect(isHighlighted(tree.getByTestId('m-option-11'))).toBe(false);
+    expect(isHighlighted(tree.getByTestId('m-option-0'))).toBe(false);
+  });
+
+  it('reopens the month sheet on what was last picked', () => {
+    const tree = render(
+      <InputMonth testID="m" label="Bulan" placeholder="Pilih" />
+    );
+
+    open(tree, 'm');
+    fireEvent.press(tree.getByTestId('m-option-6'));
+    fireEvent.press(tree.getByTestId('m-confirm'));
+    open(tree, 'm');
+
+    expect(isHighlighted(tree.getByTestId('m-option-6'))).toBe(true);
+  });
+
+  it('drops the highlight once the month is cleared', () => {
+    const tree = render(
+      <InputMonth testID="m" label="Bulan" placeholder="Pilih" hasClear />
+    );
+
+    open(tree, 'm');
+    fireEvent.press(tree.getByTestId('m-option-6'));
+    fireEvent.press(tree.getByTestId('m-confirm'));
+    fireEvent.press(tree.getByTestId('m-clear'));
+    open(tree, 'm');
+
+    expect(isHighlighted(tree.getByTestId('m-option-6'))).toBe(false);
+  });
+
+  it('opens the year sheet on the year already held', () => {
+    const tree = open(
+      render(
+        <InputYear
+          testID="y"
+          label="Tahun"
+          placeholder="Pilih"
+          value={currentYear - 20}
+        />
+      ),
+      'y'
+    );
+
+    expect(
+      isHighlighted(tree.getByTestId(`y-option-${currentYear - 20}`))
+    ).toBe(true);
+  });
+
+  it('opens the year sheet on the whole range already held', () => {
+    const tree = open(
+      render(
+        <InputYear
+          testID="y"
+          mode="range"
+          label="Periode"
+          placeholder="Mulai"
+          placeholderEnd="Selesai"
+          value={currentYear}
+          valueEnd={currentYear + 2}
+        />
+      ),
+      'y'
+    );
+
+    [currentYear, currentYear + 1, currentYear + 2].forEach((y) =>
+      expect(isHighlighted(tree.getByTestId(`y-option-${y}`))).toBe(true)
+    );
+  });
+
+  it('reopens the year sheet on what was last picked', () => {
+    const tree = render(
+      <InputYear testID="y" label="Tahun" placeholder="Pilih" />
+    );
+
+    open(tree, 'y');
+    fireEvent.press(tree.getByTestId(`y-option-${currentYear}`));
+    fireEvent.press(tree.getByTestId('y-confirm'));
+    open(tree, 'y');
+
+    expect(isHighlighted(tree.getByTestId(`y-option-${currentYear}`))).toBe(
+      true
+    );
   });
 });
