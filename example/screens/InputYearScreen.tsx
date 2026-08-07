@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import {
+  Button,
   Color,
   Grid,
   InputMonth,
@@ -102,6 +103,14 @@ export default function InputYearScreen() {
               onChange={({ value }) => setPeriodYear(value ?? undefined)}
             />
           </Grid>
+
+          <Button
+            title="Clear"
+            onPress={() => {
+              setPeriodMonth(undefined);
+              setPeriodYear(undefined);
+            }}
+          />
         </DemoSurface>
         <Typography variant="t3" color={Color.gray[700]}>
           {`Periode: ${periodMonth ?? '-'} / ${periodYear ?? '-'}`}
