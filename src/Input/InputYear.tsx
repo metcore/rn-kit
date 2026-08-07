@@ -47,27 +47,34 @@ const yearLabel = (year: number | null | undefined) =>
  * Year counterpart to InputMonth. There is no `language` prop: a year is
  * digits, and nothing about it changes between locales.
  */
-export default function InputYear({
-  label,
-  placeholder,
-  placeholderEnd,
-  value,
-  valueEnd,
-  mode = 'single',
-  onSelectClick,
-  onPickerClose,
-  onChange,
-  hasClear,
-  title,
-  cancelLabel,
-  confirmLabel,
-  testID,
-}: InputYearProps) {
+export default function InputYear(props: InputYearProps) {
+  const {
+    label,
+    placeholder,
+    placeholderEnd,
+    value,
+    valueEnd,
+    mode = 'single',
+    onSelectClick,
+    onPickerClose,
+    onChange,
+    hasClear,
+    title,
+    cancelLabel,
+    confirmLabel,
+    testID,
+  } = props;
+
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<PickerFieldValue>(EMPTY);
 
-  const start = value ?? (mode === 'range' ? selected.startValue : selected.value); // prettier-ignore
-  const end = valueEnd ?? selected.endValue;
+  // Presence of the prop decides ownership, not its contents: `value ??`
+  // would read a parent's clear as "no prop given" and fall back to the last
+  // pick, leaving what was cleared on screen.
+  const start = 'value' in props
+    ? value ?? null
+    : mode === 'range' ? selected.startValue : selected.value; // prettier-ignore
+  const end = 'valueEnd' in props ? (valueEnd ?? null) : selected.endValue;
 
   // What the sheet should open on. Without this the picker only knows about
   // taps it saw itself, so a value coming from a prop -- or a clear -- would

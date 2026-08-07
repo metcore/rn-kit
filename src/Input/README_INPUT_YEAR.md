@@ -55,8 +55,8 @@ const [year, setYear] = useState<number>();
 | `label`          | `string`                        | ❌     | -          | Teks label di atas trigger. Kalau kosong, elemen labelnya tidak dirender.    |
 | `placeholder`    | `string`                        | ✅     | -          | Teks trigger saat belum ada nilai.                                           |
 | `placeholderEnd` | `string`                        | ✅\*   | -          | Placeholder trigger kedua. Wajib dan hanya berlaku saat `mode="range"`.      |
-| `value`          | `number`                        | ❌     | -          | Tahun penuh, mis. `2024`. Kalau diisi, ia menang atas pilihan internal.      |
-| `valueEnd`       | `number`                        | ❌     | -          | Tahun akhir. Hanya berlaku saat `mode="range"`.                              |
+| `value`          | `number`                        | ❌     | -          | Tahun penuh, mis. `2024`. Begitu prop ini dipasang, ia yang pegang nilai: `undefined` berarti kosong, bukan "pakai pilihan internal". |
+| `valueEnd`       | `number`                        | ❌     | -          | Tahun akhir. Sama aturannya dengan `value`. Hanya berlaku saat `mode="range"`. |
 | `mode`           | `'single' \| 'range'`           | ❌     | `'single'` | Satu tahun, atau rentang dua tahun.                                          |
 | `hasClear`       | `boolean`                       | ❌     | `false`    | Menampilkan tombol clear saat ada nilai.                                     |
 | `onChange`       | `(v: PickerFieldValue) => void` | ❌     | -          | Dipanggil saat pilihan dikonfirmasi atau dibersihkan.                        |
