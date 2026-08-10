@@ -70,30 +70,35 @@ const zeroBased = (month: number | null | undefined) =>
     ? null
     : month - 1;
 
-export default function InputMonth({
-  label,
-  placeholder,
-  placeholderEnd,
-  value,
-  valueEnd,
-  mode = 'single',
-  onSelectClick,
-  onPickerClose,
-  onChange,
-  language,
-  hasClear,
-  title,
-  cancelLabel,
-  confirmLabel,
-  testID,
-}: InputMonthProps) {
+export default function InputMonth(props: InputMonthProps) {
+  const {
+    label,
+    placeholder,
+    placeholderEnd,
+    value,
+    valueEnd,
+    mode = 'single',
+    onSelectClick,
+    onPickerClose,
+    onChange,
+    language,
+    hasClear,
+    title,
+    cancelLabel,
+    confirmLabel,
+    testID,
+  } = props;
+
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<PickerFieldValue>(EMPTY);
 
-  // A given prop wins, so the field can be driven from outside; otherwise it
-  // shows whatever was last picked.
-  const start = value ?? (mode === 'range' ? selected.startValue : selected.value); // prettier-ignore
-  const end = valueEnd ?? selected.endValue;
+  // Presence of the prop decides ownership, not its contents: `value ??`
+  // would read a parent's clear as "no prop given" and fall back to the last
+  // pick, leaving what was cleared on screen.
+  const start = 'value' in props
+    ? value ?? null
+    : mode === 'range' ? selected.startValue : selected.value; // prettier-ignore
+  const end = 'valueEnd' in props ? (valueEnd ?? null) : selected.endValue;
 
   // What the sheet should open on. Without this the picker only knows about
   // taps it saw itself, so a value coming from a prop -- or a clear -- would

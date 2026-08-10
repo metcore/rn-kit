@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react-native';
+import { fireEvent, render, within } from '@testing-library/react-native';
 import InputMonth from '../Input/InputMonth';
 import InputYear from '../Input/InputYear';
 import { isHighlighted } from './helpers/isHighlighted';
@@ -545,5 +545,158 @@ describe('picker preselection', () => {
     expect(isHighlighted(tree.getByTestId(`y-option-${currentYear}`))).toBe(
       true
     );
+  });
+});
+
+// The pick before each clear is what matters: it leaves a copy inside the
+// component, and that copy is what an undefined `value` used to fall back to.
+describe('clearing from the outside', () => {
+  const pickMonth = (
+    tree: ReturnType<typeof render>,
+    id: string,
+    opt: number
+  ) => {
+    fireEvent.press(tree.getByTestId(`${id}-trigger`));
+    fireEvent.press(tree.getByTestId(`${id}-option-${opt}`));
+    fireEvent.press(tree.getByTestId(`${id}-confirm`));
+  };
+
+  // The sheet stays mounted and spells out the same months and years, so a
+  // read only means anything scoped to the trigger.
+  const fieldText = (
+    tree: ReturnType<typeof render>,
+    id: string,
+    text: string
+  ) => within(tree.getByTestId(id)).queryByText(text);
+
+  it('drops the month once the value prop goes undefined', () => {
+    const tree = render(
+      <InputMonth
+        testID="m"
+        label="Bulan"
+        placeholder="Pilih bulan"
+        value={3}
+      />
+    );
+
+    pickMonth(tree, 'm', 2);
+    expect(fieldText(tree, 'm-trigger', 'Maret')).toBeTruthy();
+
+    tree.rerender(
+      <InputMonth
+        testID="m"
+        label="Bulan"
+        placeholder="Pilih bulan"
+        value={undefined}
+      />
+    );
+
+    expect(fieldText(tree, 'm-trigger', 'Maret')).toBeNull();
+    expect(fieldText(tree, 'm-trigger', 'Pilih bulan')).toBeTruthy();
+  });
+
+  it('drops the month range once both value props go undefined', () => {
+    const tree = render(
+      <InputMonth
+        testID="p"
+        mode="range"
+        label="Periode"
+        placeholder="Mulai"
+        placeholderEnd="Selesai"
+        value={1}
+        valueEnd={3}
+      />
+    );
+
+    fireEvent.press(tree.getByTestId('p-trigger'));
+    fireEvent.press(tree.getByTestId('p-option-0'));
+    fireEvent.press(tree.getByTestId('p-option-2'));
+    fireEvent.press(tree.getByTestId('p-confirm'));
+
+    expect(fieldText(tree, 'p-trigger', 'Januari')).toBeTruthy();
+    expect(fieldText(tree, 'p-trigger-end', 'Maret')).toBeTruthy();
+
+    tree.rerender(
+      <InputMonth
+        testID="p"
+        mode="range"
+        label="Periode"
+        placeholder="Mulai"
+        placeholderEnd="Selesai"
+        value={undefined}
+        valueEnd={undefined}
+      />
+    );
+
+    expect(fieldText(tree, 'p-trigger', 'Januari')).toBeNull();
+    expect(fieldText(tree, 'p-trigger-end', 'Maret')).toBeNull();
+    expect(fieldText(tree, 'p-trigger', 'Mulai')).toBeTruthy();
+    expect(fieldText(tree, 'p-trigger-end', 'Selesai')).toBeTruthy();
+  });
+
+  it('drops the year once the value prop goes undefined', () => {
+    const tree = render(
+      <InputYear
+        testID="y"
+        label="Tahun"
+        placeholder="Pilih tahun"
+        value={currentYear}
+      />
+    );
+
+    fireEvent.press(tree.getByTestId('y-trigger'));
+    fireEvent.press(tree.getByTestId(`y-option-${currentYear}`));
+    fireEvent.press(tree.getByTestId('y-confirm'));
+
+    expect(fieldText(tree, 'y-trigger', String(currentYear))).toBeTruthy();
+
+    tree.rerender(
+      <InputYear
+        testID="y"
+        label="Tahun"
+        placeholder="Pilih tahun"
+        value={undefined}
+      />
+    );
+
+    expect(fieldText(tree, 'y-trigger', String(currentYear))).toBeNull();
+    expect(fieldText(tree, 'y-trigger', 'Pilih tahun')).toBeTruthy();
+  });
+
+  it('opens the month sheet blank after the value prop goes undefined', () => {
+    const tree = render(
+      <InputMonth testID="m" label="Bulan" placeholder="Pilih" value={3} />
+    );
+
+    pickMonth(tree, 'm', 2);
+    tree.rerender(
+      <InputMonth
+        testID="m"
+        label="Bulan"
+        placeholder="Pilih"
+        value={undefined}
+      />
+    );
+    fireEvent.press(tree.getByTestId('m-trigger'));
+
+    expect(isHighlighted(tree.getByTestId('m-option-2'))).toBe(false);
+  });
+
+  // An absent prop is not a prop set to undefined: nobody claimed the value,
+  // so the pick stays.
+  it('keeps a picked month when no value prop is passed at all', () => {
+    const tree = render(
+      <InputMonth testID="m" label="Bulan" placeholder="Pilih" />
+    );
+
+    fireEvent.press(tree.getByTestId('m-trigger'));
+    fireEvent.press(tree.getByTestId('m-option-6'));
+    fireEvent.press(tree.getByTestId('m-confirm'));
+
+    expect(fieldText(tree, 'm-trigger', 'Juli')).toBeTruthy();
+
+    tree.rerender(<InputMonth testID="m" label="Bulan" placeholder="Pilih" />);
+
+    expect(fieldText(tree, 'm-trigger', 'Juli')).toBeTruthy();
   });
 });

@@ -60,8 +60,8 @@ const [range, setRange] = useState({ start: undefined, end: undefined });
 | `label`          | `string`                   | ❌     | -          | Teks label di atas trigger. Kalau kosong, elemen labelnya tidak dirender sama sekali.             |
 | `placeholder`    | `string`                   | ✅     | -          | Teks trigger saat belum ada nilai.                                                                |
 | `placeholderEnd` | `string`                   | ✅\*   | -          | Placeholder trigger kedua. Wajib dan hanya berlaku saat `mode="range"`.                           |
-| `value`          | `number`                   | ❌     | -          | Nomor bulan, `1` (Januari) sampai `12` (Desember). Kalau diisi, ia menang atas pilihan internal. Di luar 1–12 dianggap kosong. |
-| `valueEnd`       | `number`                   | ❌     | -          | Nomor bulan akhir, `1`–`12`. Hanya berlaku saat `mode="range"`.                                    |
+| `value`          | `number`                   | ❌     | -          | Nomor bulan, `1` (Januari) sampai `12` (Desember). Begitu prop ini dipasang, ia yang pegang nilai: `undefined` berarti kosong, bukan "pakai pilihan internal". Di luar 1–12 dianggap kosong. |
+| `valueEnd`       | `number`                   | ❌     | -          | Nomor bulan akhir, `1`–`12`. Sama aturannya dengan `value`. Hanya berlaku saat `mode="range"`.      |
 | `mode`           | `'single' \| 'range'`      | ❌     | `'single'` | Satu bulan, atau rentang dua bulan.                                                               |
 | `language`       | `'en' \| 'id'`             | ❌     | `'id'`     | Bahasa nama bulan yang ditampilkan.                                                               |
 | `hasClear`       | `boolean`                  | ❌     | `false`    | Menampilkan tombol clear saat ada nilai.                                                          |
