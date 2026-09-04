@@ -44,7 +44,9 @@ import ClipBoardListCheck from './icons/ClipBoardListCheck';
 import ClipBoardListCheck2 from './icons/ClipBoardListCheck2';
 import ClipBoardListCheckOutline from './icons/ClipBoardListCheckOutline';
 import Clock from './icons/Clock';
+import ClockLeftCircle from './icons/ClockLeftCircle';
 import ClockOutline from './icons/ClockOutline';
+import ClockPlusAlt from './icons/ClockPlusAlt';
 import ClockSquareFill from './icons/ClockSquareFill';
 import CommentFill from './icons/CommentFill';
 import CopyFill from './icons/CopyFill';
@@ -348,6 +350,8 @@ const icons: Record<
   'file-list-star-fill': FileListStar,
   'text-fill': TextFill,
   'exchange-horizontal': ExchangeHorizontal,
+  'clock-left-circle': ClockLeftCircle,
+  'clock-plus-alt': ClockPlusAlt,
 };
 
 const Icon: React.FC<IconProps> = ({

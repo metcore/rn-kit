@@ -173,7 +173,9 @@ export type IconNameProps =
   | 'file-list-star-fill'
   | 'text-fill'
   | 'cube-scan'
-  | 'exchange-horizontal';
+  | 'exchange-horizontal'
+  | 'clock-left-circle'
+  | 'clock-plus-alt';
 export interface IconProps {
   name: IconNameProps;
   size?: number;

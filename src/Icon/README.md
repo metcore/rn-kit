@@ -199,3 +199,5 @@ export default function App() {
 - play-fill
 - ban-outline
 - exchange-horizontal
+- clock-left-circle
+- clock-plus-alt
