@@ -25,6 +25,7 @@ interface MonthPickerProps {
   title?: string;
   cancelLabel?: string;
   confirmLabel?: string;
+  language?: 'en' | 'id';
   testID?: string;
 }
 
@@ -37,6 +38,7 @@ export default function MonthPicker({
   cancelLabel = 'Batal',
   confirmLabel = 'pilih',
   title = 'Pilih Bulan',
+  language = 'id',
   testID,
 }: MonthPickerProps) {
   const [rangeValue, setRangeValue] = useState<{
@@ -166,7 +168,7 @@ export default function MonthPicker({
 
       <View style={styles.container}>
         <FlatList
-          data={generateMonthOptions()}
+          data={generateMonthOptions(language)}
           numColumns={3}
           keyExtractor={(item) => item.value.toString()}
           contentContainerStyle={styles.yearList}

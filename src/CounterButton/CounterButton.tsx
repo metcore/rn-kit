@@ -54,7 +54,6 @@ export default function CounterButton({
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (value !== count) {
       setCount(value);
@@ -105,7 +104,7 @@ export default function CounterButton({
         testID={getTestID(testID, 'input')}
         style={[
           styles.input,
-          { fontSize: fontSizeMap['t3'], color: Color.gray[900] },
+          { fontSize: fontSizeMap.t3, color: Color.gray[900] },
         ]}
         keyboardType="numeric"
         value={inputValue}

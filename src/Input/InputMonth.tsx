@@ -166,6 +166,7 @@ export default function InputMonth(props: InputMonthProps) {
         value={pickerValue}
         onClose={handleClose}
         onChange={handleChange}
+        {...(language ? { language } : {})}
         {...(title ? { title } : {})}
         {...(cancelLabel ? { cancelLabel } : {})}
         {...(confirmLabel ? { confirmLabel } : {})}
