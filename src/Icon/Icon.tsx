@@ -61,6 +61,7 @@ import DocumentListPay from './icons/DocumentListPay';
 import Download from './icons/Download';
 import EditSquareOutline from './icons/Edit';
 import Envelope from './icons/Envelope';
+import ExchangeHorizontal from './icons/ExchangeHorizontal';
 import ExclamationMark from './icons/ExclamationMark';
 import ExclamationTriangle from './icons/ExclamationTriangle';
 import Eye from './icons/Eye';
@@ -346,6 +347,7 @@ const icons: Record<
   'ban-outline': BanOutline,
   'file-list-star-fill': FileListStar,
   'text-fill': TextFill,
+  'exchange-horizontal': ExchangeHorizontal,
 };
 
 const Icon: React.FC<IconProps> = ({

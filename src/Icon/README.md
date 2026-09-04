@@ -39,13 +39,13 @@ export default function App() {
 
 ## Props
 
-| Prop    | Tipe   | Default | Deskripsi                |
-| ------- | ------ | ------- | ------------------------ |
-| `name`  | string | null    | Jenis Icon               |
-| `size`  | number | 24      | Ukuran icon dalam piksel |
-| `color` | string | "#000"  | Warna icon               |
-| `style` | object | `{}`    | Gaya tambahan (optional) |
-| `testID` | `string` | - | ID untuk automation testing. Ikon dibungkus View ber-testID hanya saat prop ini diisi. |
+| Prop     | Tipe     | Default | Deskripsi                                                                              |
+| -------- | -------- | ------- | -------------------------------------------------------------------------------------- |
+| `name`   | string   | null    | Jenis Icon                                                                             |
+| `size`   | number   | 24      | Ukuran icon dalam piksel                                                               |
+| `color`  | string   | "#000"  | Warna icon                                                                             |
+| `style`  | object   | `{}`    | Gaya tambahan (optional)                                                               |
+| `testID` | `string` | -       | ID untuk automation testing. Ikon dibungkus View ber-testID hanya saat prop ini diisi. |
 
 ## Daftar Icon
 
@@ -198,3 +198,4 @@ export default function App() {
 - file-list-plus-fill-bulk
 - play-fill
 - ban-outline
+- exchange-horizontal

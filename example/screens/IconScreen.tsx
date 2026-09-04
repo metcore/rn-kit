@@ -185,6 +185,7 @@ const ICON_NAMES: IconNameProps[] = [
   'ban-outline',
   'file-list-star-fill',
   'text-fill',
+  'exchange-horizontal',
 ];
 
 const SIZES = [16, 24, 40] as const;

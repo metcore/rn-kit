@@ -172,7 +172,8 @@ export type IconNameProps =
   | 'ban-outline'
   | 'file-list-star-fill'
   | 'text-fill'
-  | 'cube-scan';
+  | 'cube-scan'
+  | 'exchange-horizontal';
 export interface IconProps {
   name: IconNameProps;
   size?: number;
