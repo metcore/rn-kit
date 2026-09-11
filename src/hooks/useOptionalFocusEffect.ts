@@ -7,7 +7,6 @@ export function useOptionalFocusEffect(callback: () => void | (() => void)) {
 
   const effect = useCallback(callback, [callback]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   if (navigation) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useFocusEffect(effect);

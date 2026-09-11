@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import Color from '../Color/Color';
 import type {
@@ -36,6 +36,7 @@ export const formatDate = (date: Date | undefined | null) => {
 const Calendar = ({
   markedDates = {},
   disabledDays,
+  disabledDates,
   minDate = null,
   maxDate = null,
   mode = 'single',
@@ -184,9 +185,20 @@ const Calendar = ({
 
   const isWeekDay = (day: number): day is WeekDay => day >= 0 && day <= 6;
 
+  const disabledDateKeys = useMemo(
+    () =>
+      new Set(
+        (disabledDates ?? []).map((value) =>
+          typeof value === 'string' ? value : formatDateKey(value)
+        )
+      ),
+    [disabledDates]
+  );
+
   const isDisabledDate = (date: Date) => {
     const dayOfWeek = date.getDay();
     if (isWeekDay(dayOfWeek) && disabledDays?.[dayOfWeek]) return true;
+    if (disabledDateKeys.has(formatDateKey(date))) return true;
     if (minDate && date < minDate) return true;
     if (maxDate && date > maxDate) return true;
     return false;

@@ -87,6 +87,28 @@ describe('MonthPicker behaviour', () => {
   });
 });
 
+describe('MonthPicker language', () => {
+  it('labels months in Indonesian by default', () => {
+    const { getByText, queryByText } = render(
+      <MonthPicker isOpen onClose={() => {}} testID="month" />
+    );
+
+    expect(getByText('Mei')).toBeTruthy();
+    expect(getByText('Des')).toBeTruthy();
+    expect(queryByText('May')).toBeNull();
+  });
+
+  it('labels months in English when language="en"', () => {
+    const { getByText, queryByText } = render(
+      <MonthPicker isOpen onClose={() => {}} testID="month" language="en" />
+    );
+
+    expect(getByText('May')).toBeTruthy();
+    expect(getByText('Dec')).toBeTruthy();
+    expect(queryByText('Mei')).toBeNull();
+  });
+});
+
 describe('MonthPicker value', () => {
   it('highlights the month it was handed when it opens', () => {
     const { getByTestId } = render(

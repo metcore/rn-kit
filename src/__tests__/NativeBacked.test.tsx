@@ -192,4 +192,24 @@ describe("Calendar today's date", () => {
 
     expect(colorOf(getByText('15'))).toBe(Color.danger[500]);
   });
+
+  // A range's start/end date can land on a day that's separately marked
+  // (e.g. an off day in a work schedule preview) -- that marking is more
+  // informative than the plain "this is the boundary" pin, so it wins.
+  it('yields to a marked day even when it is the range start/end', () => {
+    const { getByText } = renderCalendar({
+      mode: 'range',
+      dateStart: '2024-01-15',
+      dateEnd: '2024-01-20',
+      markedDates: {
+        '2024-01-15': {
+          selected: true,
+          backgroundColor: Color.danger[50],
+          textColor: Color.danger[500],
+        },
+      },
+    });
+
+    expect(colorOf(getByText('15'))).toBe(Color.danger[500]);
+  });
 });

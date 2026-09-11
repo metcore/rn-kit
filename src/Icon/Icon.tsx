@@ -44,7 +44,9 @@ import ClipBoardListCheck from './icons/ClipBoardListCheck';
 import ClipBoardListCheck2 from './icons/ClipBoardListCheck2';
 import ClipBoardListCheckOutline from './icons/ClipBoardListCheckOutline';
 import Clock from './icons/Clock';
+import ClockLeftCircle from './icons/ClockLeftCircle';
 import ClockOutline from './icons/ClockOutline';
+import ClockPlusAlt from './icons/ClockPlusAlt';
 import ClockSquareFill from './icons/ClockSquareFill';
 import CommentFill from './icons/CommentFill';
 import CopyFill from './icons/CopyFill';
@@ -61,6 +63,7 @@ import DocumentListPay from './icons/DocumentListPay';
 import Download from './icons/Download';
 import EditSquareOutline from './icons/Edit';
 import Envelope from './icons/Envelope';
+import ExchangeHorizontal from './icons/ExchangeHorizontal';
 import ExclamationMark from './icons/ExclamationMark';
 import ExclamationTriangle from './icons/ExclamationTriangle';
 import Eye from './icons/Eye';
@@ -346,6 +349,9 @@ const icons: Record<
   'ban-outline': BanOutline,
   'file-list-star-fill': FileListStar,
   'text-fill': TextFill,
+  'exchange-horizontal': ExchangeHorizontal,
+  'clock-left-circle': ClockLeftCircle,
+  'clock-plus-alt': ClockPlusAlt,
 };
 
 const Icon: React.FC<IconProps> = ({

@@ -172,7 +172,10 @@ export type IconNameProps =
   | 'ban-outline'
   | 'file-list-star-fill'
   | 'text-fill'
-  | 'cube-scan';
+  | 'cube-scan'
+  | 'exchange-horizontal'
+  | 'clock-left-circle'
+  | 'clock-plus-alt';
 export interface IconProps {
   name: IconNameProps;
   size?: number;

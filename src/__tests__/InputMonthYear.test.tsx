@@ -112,6 +112,32 @@ describe('InputMonth behaviour', () => {
     expect(getByText('January')).toBeTruthy();
   });
 
+  it('labels the sheet options in Indonesian by default', () => {
+    const { getByTestId, getByText } = render(
+      <InputMonth testID="birth" label="Bulan" placeholder="Pilih" />
+    );
+
+    fireEvent.press(getByTestId('birth-trigger'));
+
+    expect(getByText('Mei')).toBeTruthy();
+  });
+
+  it('labels the sheet options in English when language="en"', () => {
+    const { getByTestId, getByText, queryByText } = render(
+      <InputMonth
+        testID="birth"
+        label="Bulan"
+        placeholder="Pilih"
+        language="en"
+      />
+    );
+
+    fireEvent.press(getByTestId('birth-trigger'));
+
+    expect(getByText('May')).toBeTruthy();
+    expect(queryByText('Mei')).toBeNull();
+  });
+
   it('opens the picker and reports the month that was confirmed', () => {
     const onChange = jest.fn();
     const { getByTestId } = render(
