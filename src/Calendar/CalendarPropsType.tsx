@@ -70,6 +70,13 @@ export interface CalendarTypes {
   disabledDays?: {
     [day in WeekDay]?: boolean | DisabledDayStyle;
   };
+  /**
+   * Individual dates that cannot be picked, as `YYYY-MM-DD` strings or `Date`
+   * objects. Use this instead of a `markedDates` entry with `disabled: true`:
+   * marks also drive colours, so disabling through them fights whatever the
+   * caller (or the DatePicker) already painted on the day.
+   */
+  disabledDates?: (string | Date)[];
   dayName?: DayNameTuple;
   language?: 'en' | 'id';
   initialDate?: Date;
