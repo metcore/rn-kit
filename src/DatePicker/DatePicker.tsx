@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import BottomSheet from '../BottomSheet/BottomSheet';
 import Calendar, { formatDate } from '../Calendar/Calendar';
@@ -40,10 +40,13 @@ export default function DatePicker({
   hint,
   mode,
   value,
+  markedDates: callerMarkedDates,
   confirmLabel = 'Terapkan',
   cancelLabel = 'Batalkan',
   isCancelButtonDisabled = false,
   isConfirmButtonDisabled = false,
+  selectedBackgroundColor = Color.primary[1000],
+  selectedTextColor = Color.base.white100,
   testID,
   ...calendarProps
 }: DatePickerProps) {
@@ -95,7 +98,11 @@ export default function DatePicker({
 
     if (mode === 'single' && value?.date) {
       updatedMarkDates = {
-        [formatDate(value.date) as string]: { selected: true },
+        [formatDate(value.date) as string]: {
+          selected: true,
+          backgroundColor: selectedBackgroundColor,
+          textColor: selectedTextColor,
+        },
       };
     }
 
@@ -134,7 +141,21 @@ export default function DatePicker({
         date: null,
       }
     );
-  }, [isOpen, value, mode]);
+  }, [isOpen, value, mode, selectedBackgroundColor, selectedTextColor]);
+
+  // the value the caller already applied has to survive the marks the caller
+  // paints for its own reasons -- an override would drop the selection, and a
+  // caller's colours on that same day would hide it, so the selection sits on
+  // top of the mark it shares a day with and leaves the rest of it alone
+  const markedDates = useMemo(() => {
+    const merged: CalendarMarkDatesType = { ...callerMarkedDates };
+
+    Object.entries(markDates ?? {}).forEach(([date, mark]) => {
+      merged[date] = { ...merged[date], ...mark };
+    });
+
+    return merged;
+  }, [callerMarkedDates, markDates]);
 
   return (
     <View>
@@ -167,10 +188,12 @@ export default function DatePicker({
         }
       >
         <Calendar
-          markedDates={markDates}
+          {...calendarProps}
+          markedDates={markedDates}
+          selectedBackgroundColor={selectedBackgroundColor}
+          selectedTextColor={selectedTextColor}
           mode={mode}
           onChange={handleOnChangeCalendar}
-          {...calendarProps}
         />
         {testID ? (
           <View testID={getTestID(testID, 'error')}>
