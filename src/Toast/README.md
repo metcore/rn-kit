@@ -61,6 +61,7 @@ Menyediakan context global toast. Harus membungkus komponen root Anda.
 | `icon`     | `IconNameProps`    | `'ExclamationMark'` | Ikon di samping pesan.                                                  |
 | `duration` | `number` (ms)      | `3000`              | Waktu tampil Toast sebelum hilang.                                      |
 | `children` | `React.ReactNode`  | `-`                 | Konten opsional yang bisa diisi dengan Semua komponen di dalam aplikasi |
+| `closable` | `boolean`          | `true`              | Tampilkan tombol tutup (✕). Set `false` untuk menyembunyikannya.        |
 
 ### 🧪 Automation Testing (testID)
 
@@ -75,6 +76,19 @@ import { Toast } from '@herca/rn-kit';
 | Prop     | Type     | Description                                                                                     |
 | -------- | -------- | ------------------------------------------------------------------------------------------------ |
 | `testID` | `string` | ID untuk automation testing. Diterapkan ke root Toast; menurunkan `-message` dan `-clear`.        |
+
+### Toast (komponen langsung)
+
+Selain `testID`, komponen `Toast` menerima:
+
+| Prop       | Type                   | Default | Description                                                                 |
+| ---------- | ---------------------- | ------- | --------------------------------------------------------------------------- |
+| `closable` | `boolean`              | `true`  | Tampilkan tombol tutup (✕).                                                  |
+| `style`    | `StyleProp<ViewStyle>` | `-`     | Gaya tambahan untuk root Toast, misal mengubah posisi `bottom`.              |
+
+### 📚 Toast bertumpuk
+
+`useToast().show()` boleh dipanggil berkali-kali berturut-turut. Setiap toast tampil bertumpuk di bagian bawah layar dengan waktu tampilnya masing-masing, jadi toast baru tidak lagi menghapus toast yang sedang tampil. Toast masuk dengan fade + slide dari bawah, dan saat satu toast hilang, toast lain bergeser ke posisinya dengan animasi.
 
 > ⚠️ **Catatan:** `testID` saat ini **belum** diteruskan lewat `ToastOptions` pada `useToast().show()` (API imperatif via `ToastProvider`). Jika automation testing untuk Toast dibutuhkan, render komponen `Toast` secara langsung seperti contoh di atas.
 
