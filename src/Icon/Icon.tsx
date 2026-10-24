@@ -116,6 +116,7 @@ import Pencil from './icons/Pencil';
 import Phone from './icons/Phone';
 import PlaneFillBulk from './icons/PlaneFillBulk';
 import PlayFill from './icons/PlayFill';
+import Plug from './icons/Plug';
 import Plus from './icons/Plus';
 import PlusSquare from './icons/PlusSquare';
 import QuestionCircleOutline from './icons/QuestionCircleOutline';
@@ -352,6 +353,7 @@ const icons: Record<
   'exchange-horizontal': ExchangeHorizontal,
   'clock-left-circle': ClockLeftCircle,
   'clock-plus-alt': ClockPlusAlt,
+  'plug': Plug,
 };
 
 const Icon: React.FC<IconProps> = ({

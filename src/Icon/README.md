@@ -201,3 +201,4 @@ export default function App() {
 - exchange-horizontal
 - clock-left-circle
 - clock-plus-alt
+- plug

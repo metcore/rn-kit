@@ -188,6 +188,7 @@ const ICON_NAMES: IconNameProps[] = [
   'exchange-horizontal',
   'clock-left-circle',
   'clock-plus-alt',
+  'plug',
 ];
 
 const SIZES = [16, 24, 40] as const;
