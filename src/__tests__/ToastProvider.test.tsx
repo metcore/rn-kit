@@ -81,4 +81,19 @@ describe('ToastProvider', () => {
 
     configureNext.mockRestore();
   });
+
+  it('only animates the shift of the stack, leaving the fade to the toast itself', () => {
+    const configureNext = jest.spyOn(LayoutAnimation, 'configureNext');
+    const { getByTestId } = renderWith(['Pertama']);
+
+    fireEvent.press(getByTestId('trigger'));
+
+    const config = configureNext.mock.calls[0]?.[0];
+
+    expect(config?.update).toBeDefined();
+    expect(config?.create).toBeUndefined();
+    expect(config?.delete).toBeUndefined();
+
+    configureNext.mockRestore();
+  });
 });

@@ -37,7 +37,10 @@ if (
 }
 
 const animateStack = () =>
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  LayoutAnimation.configureNext({
+    duration: 300,
+    update: { type: LayoutAnimation.Types.easeInEaseOut },
+  });
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
