@@ -103,6 +103,23 @@ export default function ToastScreen() {
       </DemoSection>
 
       <DemoSection
+        title="Tanpa tombol tutup"
+        note="Opsi closable={false} menyembunyikan tombol ✕, misal untuk toast yang hilang sendiri saat kondisinya selesai."
+      >
+        <DemoLabel text="closable" />
+        <Button
+          title="Toast tanpa tombol tutup"
+          onPress={() =>
+            toast.show('Koneksi Internet Terputus!', {
+              color: 'danger',
+              icon: 'plug',
+              closable: false,
+            })
+          }
+        />
+      </DemoSection>
+
+      <DemoSection
         title="Status pemicu"
         note="Readout ini menampilkan opsi toast terakhir yang dipicu dari tombol di atas."
       >

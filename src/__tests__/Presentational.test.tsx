@@ -155,6 +155,14 @@ describe('Icon', () => {
 
     expect(toJSON()).toBeNull();
   });
+
+  it('renders the plug icon', () => {
+    const { toJSON } = render(
+      <Icon testID="icon" name="plug" color="#F04438" />
+    );
+
+    expect(toJSON()).not.toBeNull();
+  });
 });
 
 describe('Loading', () => {

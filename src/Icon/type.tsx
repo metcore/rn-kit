@@ -175,7 +175,8 @@ export type IconNameProps =
   | 'cube-scan'
   | 'exchange-horizontal'
   | 'clock-left-circle'
-  | 'clock-plus-alt';
+  | 'clock-plus-alt'
+  | 'plug';
 export interface IconProps {
   name: IconNameProps;
   size?: number;

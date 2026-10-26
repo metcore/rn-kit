@@ -1,9 +1,19 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Pressable, StyleSheet, View } from 'react-native';
+import {
+  Animated,
+  Pressable,
+  StyleSheet,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import Color from '../Color/Color';
 import Typography from '../Typography/Typography';
 import Icon, { type IconNameProps } from '../Icon';
 import { getTestID } from '../helpers/getTestID';
+
+const SLIDE_DISTANCE = 16;
+const CLOSE_HIT_SLOP = { top: 12, bottom: 12, left: 12, right: 12 };
 
 type ToastColor =
   | 'default'
@@ -74,6 +84,8 @@ interface ToastProps {
   onClear?: (val: boolean) => void;
   onHide?: (val: boolean) => void;
   children?: React.ReactNode;
+  closable?: boolean;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 }
 const Toast = ({
@@ -85,9 +97,13 @@ const Toast = ({
   icon = 'ExclamationMark',
   onClear,
   children,
+  closable = true,
+  style,
   testID,
 }: ToastProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const onHideRef = useRef(onHide);
+  onHideRef.current = onHide;
   const validColors: ToastColor[] = [
     'default',
     'success',
@@ -105,36 +121,71 @@ const Toast = ({
     borderColor: COLOR_MAP[safeColor].border,
   });
 
+  const animationRef = useRef<Animated.CompositeAnimation | null>(null);
+  const isClearing = useRef(false);
+
   const handlePressClearButton = () => {
-    onClear?.(true);
+    if (isClearing.current) return;
+
+    isClearing.current = true;
+    animationRef.current?.stop();
+
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 250,
+      useNativeDriver: true,
+    }).start(() => {
+      isClearing.current = false;
+      onClear?.(true);
+    });
   };
 
   useEffect(() => {
-    if (visible) {
-      Animated.sequence([
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-        Animated.delay(duration),
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        if (onHide) onHide(true);
-      });
-    }
-  }, [visible, duration, onHide, fadeAnim]);
+    if (!visible) return;
+
+    const animation = Animated.sequence([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.delay(duration),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]);
+
+    animationRef.current = animation;
+    animation.start(({ finished }) => {
+      if (finished) onHideRef.current?.(true);
+    });
+
+    return () => animation.stop();
+  }, [visible, duration, fadeAnim]);
 
   if (!visible) return null;
 
   return (
     <Animated.View
       testID={testID}
-      style={[styles.toast, baseContainerStyle, { opacity: fadeAnim }]}
+      style={[
+        styles.toast,
+        baseContainerStyle,
+        style,
+        {
+          opacity: fadeAnim,
+          transform: [
+            {
+              translateY: fadeAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [SLIDE_DISTANCE, 0],
+              }),
+            },
+          ],
+        },
+      ]}
     >
       <View style={styles.wrapper}>
         <View style={styles.container}>
@@ -150,12 +201,20 @@ const Toast = ({
           </View>
           <View style={styles.actionWrapper}>
             {children}
-            <Pressable
-              testID={getTestID(testID, 'clear')}
-              onPress={handlePressClearButton}
-            >
-              <Icon name="Times" size={10} color={COLOR_MAP[safeColor].text} />
-            </Pressable>
+            {closable && (
+              <Pressable
+                testID={getTestID(testID, 'clear')}
+                onPress={handlePressClearButton}
+                hitSlop={CLOSE_HIT_SLOP}
+                style={styles.closeButton}
+              >
+                <Icon
+                  name="Times"
+                  size={10}
+                  color={COLOR_MAP[safeColor].text}
+                />
+              </Pressable>
+            )}
           </View>
         </View>
       </View>
@@ -191,6 +250,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     minHeight: 48,
     justifyContent: 'center',
+  },
+  closeButton: {
+    padding: 4,
   },
   actionWrapper: {
     flexDirection: 'row',
